@@ -1,0 +1,634 @@
+﻿@using Freshlo.Web.Models.CategoriesVM;
+@model MainCatgoriesVM;
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var aliyunpath = Model.businessInfo.aliyunPath;
+
+}
+
+<style>
+    .category-item-img {
+        height: 200px;
+        width: 100%;
+        position: relative
+    }
+
+        .category-item-img img {
+            height: 100% !important;
+            width: 100% !important;
+            object-fit: contain;
+        }
+
+        .category-item-img figcaption {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 2;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
+            opacity: 0;
+            background-color: #fff;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            box-shadow: 0 14px 28px rgb(0 0 0 / 25%), 0 10px 10px rgb(0 0 0 / 22%);
+        }
+
+        .category-item-img:hover figcaption {
+            opacity: 1;
+        }
+</style>
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Category Management</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item">
+                    <a href="/Category/Manage/" class="text-link">
+                        Manage
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <span>
+                        Detail
+                    </span>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#newCategory">
+                <i class="la la-plus"></i>
+                Add Category
+            </button>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="m-portlet" style="position: sticky !important;top: 80px;z-index: 1;">
+                <div class="m-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="m-card-profile">
+                                <div class="m-card-profile__pic">
+                                    <div class="m-card-profile__pic-wrapper mb-2" style="border:none;">
+                                        <img alt="MainCategory Image" src="https://freshlo.oss-ap-south-1.aliyuncs.com/@aliyunpath/category-images/@(Model.GetmaincateDetails.MainCategoryId).png" onerror="this.onerror = null;
+                                                          this.src = 'https://freshlo.oss-ap-south-1.aliyuncs.com/@aliyunpath/no-image.png';" style="border-radius:5px;object-fit:contain" />
+                                    </div>
+                                    <div class="text-center">
+                                        <h6 class="mb-0 font-medium-2 text-bold-600" id="Maincat_Name">@Model.GetmaincateDetails.Name</h6>
+                                        <span class="font-small-3 white-space-nowrap" title="">
+                                            @Model.GetmaincateDetails.Description
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-4">
+                            <form class="m-form m-form--fit">
+                                <input type="text" id="Visiblitychk" value="@Model.GetmaincateDetails.Visibility" style="display:none" />
+                                <div class="form-group row mb-0 mt-0">
+                                    <label class="col-md-8 col-sm-12 col-12">Visibility</label>
+                                    <div class="col-md-4 col-sm-3 col-6 ">
+                                        <label class="ab-switch float-right">
+                                            <input type="checkbox" value="@Model.GetmaincateDetails.Visibility" class="seasonSale" name="seasonSales" id="seasonSales" checked>
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-0 mt-0">
+                                    <label class="col-md-8 col-sm-12 col-12">Is it Moving in Branch ?</label>
+                                    <div class="col-md-4 col-sm-3 col-6 ">
+                                        @if (Model.hubMappedCountDetails > 0)
+                                        {
+                                            <label class="ab-switch float-right">
+                                                <input type="checkbox" value="@Model.GetmaincateDetails.MainCategoryId" class="mappedMainCatwithHub" name="mappedMainCatwithHub" id="mappedMainCatwithHub" checked>
+                                                <span class="slider round"></span>
+                                            </label>
+                                        }
+                                        else
+                                        {
+                                            <label class="ab-switch float-right">
+                                                <input type="checkbox" value="@Model.GetmaincateDetails.MainCategoryId" class="mappedMainCatwithHub" name="mappedMainCatwithHub" id="mappedMainCatwithHub">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        }
+
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="form-group row mb-0 mt-0">
+                                    <label class="col-md-8 col-sm-12 col-12">Edit Main Category</label>
+                                    <div class="col-md-4">
+                                        <div class="float-right">
+                                            <button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#editMainCategory">
+                                                Edit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="text" id="Aliyunkey" name="Aliyunkey" value="@aliyunpath" hidden />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">
+                                List of Category
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Category Name</th>
+                                            <th>SubCategory Count</th>
+                                            <th>Sequence</th>
+                                            <th>Visibility</th>
+                                            <th>Created On / By</th>
+                                            <th>Edit</th>
+                                            <th>Action</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="connectedSortable" id="tablei">
+                                        @foreach (var item in Model.Getitemcategorieslist)
+                                        {
+
+                                            <tr>
+
+                                                <td><a href="#" class="text-link GetCategoriesDetails" data-toggle="modal" data-target="#EditCategory" data-id="@item.CategoryId">@item.CategoriesName </a></td>
+                                                <td><span class="m-badge m-badge--rounded m-badge--danger m-badge--brand font-small-3">@item.SubCategoryCount</span></td>
+                                                <td><span class="m-badge m-badge--rounded m-badge--wide m-badge--brand font-small-3">@item.CategorySequence</span></td>
+                                                <td>
+                                                    @if (item.CategVisibility == true)
+                                                    {
+                                                        <span class="m-badge m-badge--rounded m-badge--wide m-badge--success font-small-3">1</span>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="m-badge m-badge--rounded m-badge--wide m-badge--success font-small-3">0</span>
+
+                                                    }
+                                                </td>
+                                                <td>@item.AddedDate <span class="font-small-3 display-block">@item.AddedBy</span></td>
+                                                <td><a href="#" class="text-link GetCategoriesDetails" data-toggle="modal" data-target="#EditCategory" data-id="@item.CategoryId"> <i class="flaticon-edit"></i> </a></td>
+                                                <td>
+                                                    <a href="#" class="text-danger deleteCategoryId" data-id="@item.CategoryId"> <i class="flaticon-delete"> </i></a>
+                                                    <a href="#" class="text-dark viewcategory ml-2" id="viewcategorylanguage" data-id="@item.CategoryId"><i class="fa fa-eye"> </i></a>
+
+
+                                                </td>
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="editMainCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Main Category</h5>
+                <button type="button" class="close CloseNewCat" data-dismiss="modal" aria-label="Close" id="CloseNewCat">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" id="MainCategoryUpdate" method="post" asp-action="EditMainCategory" asp-controller="Category">
+                            <input type="text" id="MainCategoryId" name="MainCategoryId" asp-for="GetmaincateDetails.MainCategoryId" style="display:none" />
+                            <input type="text" id="Id" name="Id" asp-for="GetmaincateDetails.Id" style="display:none" />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="cabinet center-block">
+                                                <figure class="category-item-img">
+                                                    <img alt="MainCategory Image" src="https://freshlo.oss-ap-south-1.aliyuncs.com/@aliyunpath/category-images/@(Model.GetmaincateDetails.MainCategoryId).png" class=" img-responsive img-thumbnail" id="item-img-output1" />
+                                                    <figcaption><i class="fa fa-camera"></i></figcaption>
+                                                </figure>
+                                                <input type="file" class="item-img file center-block" name="imageFiles" id="imageFiles" style="display:none" onchange="readURL(this);" />
+                                            </label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label>Main Category Name</label>
+                                                <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="CatName" name="Name" placeholder="Main Category Name" asp-for="GetmaincateDetails.Name" />
+                                                <span class="text-danger font-small-3 " style="display:none;" id="SpnCatName"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Description</label>
+                                                <textarea rows="4" class="form-control m-input m-input--solid SpaceValidation" placeholder="description" asp-for="GetmaincateDetails.Description" id="CatDescription" name="Description"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Sequence</label>
+                                                <input type="number" class="form-control m-input m-input--solid SpaceValidation" min="0" maxlength="3" placeholder="eg. 02" asp-for="GetmaincateDetails.Sequence" name="Sequence" id="CatSequence" />
+                                                <span class="text-danger font-small-3 " style="display:none;" id="SpnCatSequence"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Visibility</label>
+                                                <select class="form-control m-input m-input--solid" asp-for="GetmaincateDetails.Visibility" id="Visibility" name="Visibility">
+                                                    <option value="1">Yes</option>
+                                                    <option value="0">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="text" id="Aliyunkey" name="Aliyunkey" value="@aliyunpath" hidden />
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link CloseNewCat" data-dismiss="modal" id="CloseNewCat">Close</button>
+                <button type="button" class="btn btn-danger" id="UpdateMainCategory">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="newCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">New Category</h5>
+                <button type="button" class="close closeCategories" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" id="CatgoreisAdd" method="post" asp-action="AddCategories" asp-controller="Category">
+                            <input type="text" id="MainCategoryId" name="MainCategoryId" value="@ViewBag.maincatId" style="display:none" />
+                            <input type="text" id="MainCateId" name="MainCateId" asp-for="GetmaincateDetails.Id" style="display:none" />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="cabinet center-block w-100">
+                                                <figure class="category-item-img">
+                                                    <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/no-image.png" class="gambar img-responsive img-thumbnail" id="CategoryImg" />
+                                                    <figcaption><i class="fa fa-camera"></i></figcaption>
+                                                </figure>
+                                                <input type="file" class="item-img file center-block" name="ImagePath" id="ImagePath" style="display:none" onchange="readURL(this);" />
+                                            </label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Category Name</label>
+                                                        <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="CategoriesName" name="CategoriesName" placeholder=" Category Name" />
+                                                        <span class="text-danger font-small-3 " style="display:none;" id="SpnCategoriesName"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Sequence</label>
+                                                        <input type="number" class="form-control m-input m-input--solid SpaceValidation" min="0" maxlength="3" placeholder="eg. 02" id="CategorySequence" name="CategorySequence" />
+                                                        <span class="text-danger font-small-3 " style="display:none;" id="SpnCategorySequence"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Visibility</label>
+                                                        <select class="form-control m-input m-input--solid" id="CategVisibility" name="CategVisibility">
+                                                            <option value="True">Yes</option>
+                                                            <option value="false">No</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Description</label>
+                                                <textarea rows="4" class="form-control m-input m-input--solid SpaceValidation" placeholder="description" name="CategDescription" id="CategDescription"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <input type="text" id="Aliyunkey" name="Aliyunkey" value="@aliyunpath" hidden />
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link closeCategories" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" id="AddCategories">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="EditCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Category</h5>
+                <button type="button" class="close closeUpdateCat" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" id="ItemCategoryUpdate" method="post" asp-action="EditCateogry" asp-controller="Category">
+                            <input type="text" id="MainCategoryId" name="MainCategoryId" asp-for="GetmaincateDetails.MainCategoryId" style="display:none" />
+                            <input type="text" id="MainCateId" name="MainCateId" asp-for="GetmaincateDetails.Id" style="display:none" />
+                            <input type="text" id="Id" name="Id" asp-for="ItemCategoreisDetails.Id" class="Ids" style="display:none" />
+                            <input class="CategoryId" type="text" id="CategoryId" name="CategoryId" asp-for="ItemCategoreisDetails.CategoryId" style="display:none" />
+
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="cabinet center-block w-100">
+                                                <figure class="category-item-img">
+                                                   <img src="" class="gambar img-responsive img-thumbnail" id="CategoryImg1" />
+
+                                                    <figcaption><i class="fa fa-camera"></i></figcaption>
+                                                </figure>
+                                                <input type="file" class="item-img file center-block" name="ImagePath" id="ImagePath" style="display:none" onchange="readURL(this);" />
+                                            </label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Category  Name</label>
+                                                        <input type="text" class="form-control m-input m-input--solid NameCategories SpaceValidation" id="CategoriesName" name="CategoriesName" placeholder=" Category Name" />
+                                                        <span class="text-danger font-small-3 " style="display:none;" id="SpnNameCategories"></span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Sequence</label>
+                                                        <input type="number" class="form-control m-input m-input--solid Squence SpaceValidation" min="0" maxlength="3" placeholder="eg. 02" id="CategorySequence" name="CategorySequence" />
+                                                        <span class="text-danger font-small-3 " style="display:none;" id="SpnSquence"></span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Visibility</label>
+                                                        <select class="form-control m-input m-input--solid visible" id="CategVisibility" name="CategVisibility">
+                                                            <option value="True">Yes</option>
+                                                            <option value="false">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Description</label>
+                                                        <textarea rows="4" class="form-control m-input m-input--solid disc SpaceValidation" placeholder="description" name="CategDescription" id="CategDescription"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="m-portlet">
+                                        <div class="m-portlet__head">
+                                            <div class="m-portlet__head-caption">
+                                                <div class="m-portlet__head-title">
+                                                    <h3 class="m-portlet__head-text">
+                                                        List of Subcategory
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                            <div class="m-portlet__head-tools">
+                                                <div class="">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control m-input m-input--solid clearitem SpaceValidation" placeholder="New Subcategory" id="SubCategoryName" name="SubCategoryName" />
+
+                                                        <div class="input-group-append">
+                                                            <button type="button" class="btn btn-dark my-0" id="SubmitSubCategories">Add</button>
+                                                        </div>
+                                                    </div>
+                                                    <span class="text-danger font-small-3 " style="display:none;" id="SpnSubCategoryName"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table" id="Subcategorytbl">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>SubcategoryId</th>
+                                                                    <th>Name</th>
+                                                                    <th>AddedBy / On</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="Subcategorydata">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="text" id="Aliyunkey" name="Aliyunkey" value="@aliyunpath" hidden />
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link closeUpdateCat" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" id="UpdateItemCategory">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Priview" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Maincategory Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/@aliyunpath/category-images/@(Model.GetmaincateDetails.MainCategoryId).png" id="imgfiles" onerror="this.onerror=null;this.src='https://freshlo.oss-ap-south-1.aliyuncs.com/dubaicreekstriders/DefaultFolder/no-image-found.png';" alt="" class="img-fluid" style="height:250px;width:100%;" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Priview" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Maincategory Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/@aliyunpath/category-images/@(Model.ItemCategoreisDetails.CategoryId).png" id="imgpath" onerror="this.onerror=null;this.src='https://freshlo.oss-ap-south-1.aliyuncs.com/dubaicreekstriders/DefaultFolder/no-image-found.png';" alt="" class="img-fluid" style="height:250px;width:100%;" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="category_translation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Category Language Translation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0">
+                <div class="table-responsive">
+                    <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless" id="table-draggable2">
+                        <thead>
+                            <tr>
+                                <th width="40%">Category Name</th>
+                                <th width="50%">Description</th>
+                                <th width="10%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="languageSubCateId"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $('.table-middle').DataTable({
+            "pageLength": 10,
+            "ordering": false,
+            "sorting": true
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#blah').attr('src', e.target.result).width(150).height(200);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#CategoryImg1').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Add this function to set the image path based on the categoryId
+        function setImagePath(categoryId) {
+            var aliyunpath = $('#Aliyunkey').val();
+            var imagePath = aliyunpath + "/category-images/" + categoryId + ".png";
+            $('#CategoryImg1').attr('src', imagePath);
+        }
+
+        // Call setImagePath function when the page loads
+        $(document).ready(function () {
+            var categoryId = $('#CategoryId').val(); // Get the categoryId
+            setImagePath(categoryId); // Set the image path initially
+        });
+
+        // function readURL(input) {
+        //     if (input.files && input.files[0]) {
+        //         var reader = new FileReader();
+        //         reader.onload = function (e) {
+        //             $('#CategoryImg1')
+        //                 .attr('src', e.target.result) // Set the image source to the base64 encoded URL
+        //                 .width(150) // Adjust width if needed
+        //                 .height(200); // Adjust height if needed
+        //         };
+        //         reader.readAsDataURL(input.files[0]); // Read the selected file as a URL
+        //     }
+        // }
+
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#item-img-output1').attr('src', e.target.result).width(150).height(200);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#CategoryImg').attr('src', e.target.result).width(150).height(200);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(document).ready(function () {
+            $('.modal').on('hidden.bs.modal', function () {
+                $(this).find('form')[0].reset();
+                $(this).find('img')[0].reset();
+            });
+        });
+
+    </script>
+    <script src="~/assets/scripts/category/Detail.js"></script>
+    <script src="~/assets/img_crop/js/img_crop.js"></script>
+    <script src="~/assets/img_crop/js/img_crop_main.js"></script>
+    <script src="~/assets/scripts/settings/language.js"></script>
+}
+

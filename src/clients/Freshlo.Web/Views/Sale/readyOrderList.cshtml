@@ -1,0 +1,171 @@
+﻿@using Freshlo.Web.Models.Sale;
+@model SalesManageVM;
+@{
+    ViewData["Title"] = "readyOrderList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .accept-ready-itrem-list {
+        padding: 1rem 0;
+    }
+
+    .list-of-ongoing-orders h3 {
+        color: #5A4514;
+        text-transform: none;
+    }
+
+    .accept-ready-itrem-list .card {
+        border: 1px dashed #FFFFFF;
+        height: auto;
+        padding: 10px 0 10px 0px;
+        margin-bottom: 1rem;
+        color: #3E3E3E;
+        text-decoration: none;
+        background-color: #F95151;
+        border-radius: 5px;
+    }
+
+    /*    .close-item {
+        background-color: #40b567!important;
+    }*/
+
+    .close-item .close-card {
+        background-color: #40b567 !important;
+    }
+
+    .accept-ready-itrem-list .card.ready-card {
+        background-color: #474747;
+    }
+
+    .accept-ready-itrem-list .card:last-child {
+        margin-bottom: 0;
+    }
+
+    .accept-ready-itrem-list .card .media {
+        font-family: sans-serif;
+    }
+
+    .ongoing-time {
+        color: #914340;
+        padding: 0.2rem 0.8rem;
+        background-color: #F8CCCB;
+        display: inline-block;
+        border-radius: 25px;
+    }
+
+    .accept-ready-itrem-list .card .media .media-body {
+        padding: 0.5rem 0;
+        padding-right: 5px;
+        position: relative;
+    }
+
+        .accept-ready-itrem-list .card .media .media-body h5 {
+            margin-bottom: 0.8rem;
+            color: #FFFFFF;
+            font-size: 16px;
+        }
+
+        .accept-ready-itrem-list .card .media .media-body .next-direction {
+            top: 50%;
+            right: 1rem;
+            position: absolute;
+            font-size: 1.5rem;
+            transform: translateY(-50%);
+            -webkit-transform: translateY(-50%);
+        }
+
+    .accept-ready-itrem-list .card .media .media-left {
+        padding: 0 1.5rem;
+        height: 100%;
+        border-right: 1px dashed #FFFFFF;
+        font-size: 2rem;
+        font-weight: bold;
+        color: #FFFFFF;
+        display: flex;
+        align-items: center;
+    }
+
+    .card-cutom-footer {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        padding: 0 0.2rem 0 0;
+    }
+
+        .card-cutom-footer .mins {
+            color: #FFFFFF;
+        }
+
+    .accept-ready-itrem-list .card .media .media-body .btn-danger.accept-btn,
+    .accept-ready-itrem-list .card .media .media-body .btn-danger.ready-btn {
+        border-radius: 25px;
+        background-color: #FECACA;
+        border-color: #FECACA;
+        padding: 0.3rem 2rem;
+        color: #6f2927;
+    }
+
+    .accept-ready-itrem-list .card .media .media-body .btn-danger.ready-btn {
+        background-color: #23711a;
+        border-color: #23BB11;
+        color: #FFFFFF;
+    }
+
+    .cutom-item-tab.nav-tabs .nav-item.show .nav-link,
+    .cutom-item-tab.nav-tabs .nav-link.active {
+        border-color: transparent;
+        background-color: #F2F3F8;
+        border-bottom: 2px solid #8A8A8A;
+    }
+
+    .m-grid.m-grid--hor.m-grid--root.m-page {
+        /*margin-top: -100px;*/
+    }
+</style>
+
+
+
+<div class="m-content">
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="text-left mb-4">
+                    <h5 class="text-muted text-bold-500">Ready Order List</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 text-right">
+                    <button type="button" class="btn btn-danger ready-btn text-uppercase btn-closedAll btn-sm ml-2">ALL FOOD READY</button>
+                </div>
+            </div>
+
+        </div>
+    <div class="" id="readyOrderList">
+        <div class="row">
+
+            <div class="col-sm-12">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="">
+                            <div class="">
+                                <div class="text-left mb-4">
+                                    <h5 class="text-muted text-bold-500">Ready Order List</h5>
+                                </div>
+                                <div class="row _ReadyOrderList" id="_readyOrderList">
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/assets/scripts/sales/readyOrderList.js"></script>
+}
+
+

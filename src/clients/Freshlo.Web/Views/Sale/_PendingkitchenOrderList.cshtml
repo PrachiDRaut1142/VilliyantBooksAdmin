@@ -1,0 +1,58 @@
+﻿@using Freshlo.Web.Models.Sale;
+@model SalesManageVM;
+@{
+    ViewData["Title"] = "_PendingkitchenOrderList";
+}
+
+<div class="col-md-12" id="">
+    <div class="tab-content">
+        <div class="tab-pane animated fadeIn active" id="aaceptItem" role="tabpanel">
+            @foreach (var item in Model.GetKitcheOrderList)
+            {
+                @if (item.Status == "Pending")
+                {
+                    <div class="accept-ready-itrem-list">
+                        <div class="card">
+                            <div class="media">
+                                <div class="media-left mr-3">@item.tableName</div>
+                                <div class="media-body">
+                                    <h3 class="mt-0 text-white">@item.PluName @item.Size</h3>
+                                    <hr class="border-white" />
+                                    <div class="card-cutom-footer">
+                                        <h2 class="font-weight-bold text-white">@item.QuantityValue <small>Nos</small></h2>
+                                        <button type="button" class="btn btn-danger accept-btn text-uppercase  btn-approval btn-lg" data-id="@item.SalesId" data-approval="@item.SalesListId">START COOKING</button>
+                                        <input class="allId1" id="@item.SalesId" hidden >
+                                        <input class="allId2" id="@item.SalesListId" hidden>
+
+                                    </div>                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (item.Status == "Accepted")
+                {
+                    <div class="accept-ready-itrem-list">
+                        <div class="card ready-card">
+                            <div class="media">
+                                <div class="media-left mr-3">@item.tableName</div>
+                                <div class="media-body">
+                                    <h3 class="mt-0 text-white">@item.PluName @item.Size</h3>
+                                    <hr class="border-white" />
+                                    <div class="card-cutom-footer">
+                                        <h2 class="font-weight-bold text-white">@item.QuantityValue <small>Nos</small></h2>
+                                        <button type="button" class="btn btn-danger ready-btn text-uppercase btn-ready btn-lg" data-id="@item.SalesId" data-approval="@item.SalesListId">FOOD READY</button>
+                                        <input class="allIds1" id="@item.SalesId" hidden >
+                                        <input class="allIdss2" id="@item.SalesListId" hidden>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+

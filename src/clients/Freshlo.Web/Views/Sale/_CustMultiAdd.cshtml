@@ -1,0 +1,73 @@
+﻿@model SalesVM;
+<tr>
+    @if (Model.CustomerList != null)
+        {
+            foreach (var Custlist in Model.CustomerList)
+            {
+                if (Custlist.Type == "Default")
+                {
+                    <td>
+                        <div class="item_list" style="width:250px;">
+                            <div class="mb-2">
+                                <h6>@Custlist.RoomNo @Custlist.BuildingName</h6>
+                                <h6>@Custlist.Sector</h6>
+                                <h6>@Custlist.Landmark</h6>
+                                <h6>Loc :@(Custlist.Locality == null ? "NA" : Custlist.Locality)</h6>
+                                <h6>@Custlist.City - @Custlist.ZipCode</h6>
+                                <h6>@Custlist.Country</h6>
+                                <span   id="spnaddress">@Custlist.AddId</span>
+                                <span  id="spncustid">@Custlist.CustomerId</span>
+                                <span  id="spnid">@Custlist.Id</span>
+                                <div class="row mt-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                <input type="checkbox" value="1" checked="checked"> Default
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#"  onclick="CustEdit('@Custlist.Id,@Custlist.AddId')" class="ml-3 text-danger text-bold-500">Edit</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                }
+            }
+            foreach (var Custlist in Model.CustomerList)
+            {
+                if (Custlist.Type == "Normal")
+                {
+                    <td>
+                        <div class="item_list" style="width:250px;">
+                            <div class="mb-2">
+                                <h6>@Custlist.RoomNo @Custlist.BuildingName</h6>
+                                <h6>@Custlist.Sector</h6>
+                                <h6>@Custlist.Landmark</h6>
+                                <h6>Loc : @(Custlist.Locality == null?"NA": Custlist.Locality)</h6>
+                                <h6>@Custlist.City - @Custlist.ZipCode</h6>
+                                <h6>@Custlist.Country</h6>
+                                <div class="row mt-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                <input type="checkbox" onclick="CustChekbox('@Custlist.AddId,@Custlist.CustomerId,@Custlist.Type,@Custlist.Id')" value="45"> Select
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#" onclick="CustDelete('@Custlist.AddId')" class="ml-3 text-danger text-bold-500">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                }
+            }
+        }
+</tr>
+
+

@@ -1,0 +1,140 @@
+﻿@using Freshlo.Web.Models.VendorVM;
+@model VendorVm
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Vendor Management</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item">
+                    <a href="/Setting/Index/" class=" text-link">
+                        <span class="m-nav__link-text">Manage</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator"> - </li>
+                <li class="m-nav__item">
+                    <span class="m-nav__link-text">New Vendor</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon m--hide">
+                        <i class="la la-gear"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                        New Vendor
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="m-form m-form--fit m-form--label-align-right" id="CreVendor" asp-controller="Vendor" asp-action="Create" method="post">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Status</label>
+                            <div class="col-md-3">
+                                <select class="form-control m-input m-input--solid" id="Status" name="Status">
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Supplier Business Name <span class="text-warning">*</span></label>
+                            <div class="col-md-3 ">
+                                <input type="text" class="form-control m-input m-input--solid" id="Business" name="Business" placeholder="Enter Supplier Name">
+                                <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Contact Person Name <span class="text-warning">*</span></label>
+                            <div class="col-md-3 ">
+                                <input type="text" class="form-control m-input m-input--solid" id="Person" name="Person" placeholder="Enter Contact Person  Name">
+                                <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Contact Email Address<span class="text-warning">*</span></label>
+                            <div class="col-md-3 ">
+                                <input type="text" class="form-control m-input m-input--solid" id="EmailId" name="EmailId" placeholder="Enter Contact Email Address">
+                                <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Mobile Number <span class="text-warning">*</span></label>
+                            <div class="col-md-3 ">
+                                <input type="text" class="form-control m-input m-input--solid" id="ContactNo" name="ContactNo" placeholder="Enter Mobile Number">
+                                <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Select Product Categories<span class="text-warning">*</span></label>
+                            <div class="col-md-3 ">
+                                <select class="form-control m-bootstrap-select m_selectpicker m-input m-input--solid" id="productTypesValues" name="productTypesValues" data-live-search="true" multiple asp-items="@Model.GetMainCatlist"></select>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Commission % <span class="text-warning">*</span></label>
+                            <div class="col-md-3 ">
+                                <input type="number" class="form-control m-input m-input--solid" id="Commission" name="Commission" placeholder="Define %">
+                                <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">GST Number<span class="text-warning">*</span></label>
+                            <div class="col-md-3 ">
+                                <input type="text" class="form-control m-input m-input--solid" id="GSTNumber" name="GSTNumber" placeholder="Enter GST Number">
+                                <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Bank Account Number<span class="text-warning">*</span></label>
+                            <div class="col-md-3 ">
+                                <input type="text" class="form-control m-input m-input--solid" id="BankAccountNumber" name="BankAccountNumber" placeholder="Enter Bank Account Number">
+                                <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">IFSC Code<span class="text-warning">*</span></label>
+                            <div class="col-md-3 ">
+                                <input type="text" class="form-control m-input m-input--solid" id="IFSCNumber" name="IFSCNumber" placeholder="Enter IFSC Code">
+                                <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label"></label>
+                            <div class="col-md-8 col-sm-9 col-6">
+                                <button type="button" class="btn btn-success mr-2" id="SubmitVendor"><i class="la la-upload"></i> Submit </button>
+                                <button type="button" class="btn btn-link"><i class="la la-times"></i> Clear</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/assets/demo/demo6/custom/crud/forms/widgets/bootstrap-select.js" type="text/javascript"></script>
+    <script src="~/assets/scripts/Vendor/Create.js"></script>
+}

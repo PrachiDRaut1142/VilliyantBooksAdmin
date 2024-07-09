@@ -1,0 +1,233 @@
+﻿@using Freshlo.Web.Models.DashboardVM;
+@model FinancialDashboardVM;
+@{
+    ViewData["Title"] = "Financial";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var GetCountData = Model.GetallCountDashbaord;
+
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+    <div class="col-md-12">
+        <div class="">
+            <h3 class="m-subheader__title m-subheader__title--separator">Finance Dashboard</h3>
+        </div>
+    </div>
+    <div class="">
+         <div class="row">
+              <div class="col-md-12">
+                  <div class="form-group row">
+                      <div class="col-md-4 col-sm-4 col-4">
+                          <div class='input-group'>
+                              <input type='text' class="form-control datetimerange" name="DeliveryDate" id="deliverydate" placeholder="Select Date Range" />
+                              <span class="input-group-addon" id="DateTimeIcon" onclick="clearError();"><span class="icon-calendar"></span></span>
+                          </div>
+                      </div>
+                      <div class="col-md-3">
+                          <div class="form-group">
+                              <button type="submit" class="btn btn-dark " onclick="filterData();" id="filterButton">Filter</button>
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content" id="FinancialCount"></div>
+
+@section Scripts{
+
+   <script src="~/assets/scripts/Dashboard/Financialdashboard.js"></script>
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<div class="row">
+        <div class="col-md-3">
+            <a href="/Sale/PendingOrders/">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>Total Orders</h6>
+                            <h4 class="text-bold-600">1209</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="/Sale/PendingOrders/">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>Total Pending</h6>
+                            <h4 class="text-bold-600">800</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="/Sale/PendingOrders/">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>Deliver</h6>
+                            <h4 class="text-bold-600 text-success">309</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="#">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>Cancel</h6>
+                            <h4 class="text-bold-600 text-danger">100</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>*@
+
+
+@*<div class="row mb-2">
+        <div class="col-md-12">
+            <div class="text-left">
+                <h4>Sale Amounts</h4>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <a href="/Sale/Manage/">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>Cash Sale Amount</h6>
+                            <h4 class="text-bold-600"><small>Rs. </small>1209</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="/Sale/Manage/">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>Online Sale Amount</h6>
+                            <h4 class="text-bold-600"><small>Rs. </small>800</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="/Sale/Manage/">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>Card Payment</h6>
+                            <h4 class="text-bold-600"><small>Rs. </small>309</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="/Sale/Manage/">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>UPI Payment</h6>
+                            <h4 class="text-bold-600"><small>Rs. </small>100</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="/Sale/Manage/">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>Overall Pending Payment</h6>
+                            <h4 class="text-bold-600 text-danger"><small>Rs. </small>100</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>*@
+
+
+@*<div class="row mb-2">
+        <div class="col-md-12">
+            <div class="text-left">
+                <h4>Purchase and Expensive</h4>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <a href="/Purchase/ItemSummary/">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>Total Purchase</h6>
+                            <h4 class="text-bold-600">1209</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="/Purchase/Manage/">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>Total Expensive on Purchase</h6>
+                            <h4 class="text-bold-600">800</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="/Financial/Manage/">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>operating expenses</h6>
+                            <h4 class="text-bold-600 text-success">309</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>*@

@@ -1,0 +1,90 @@
+﻿@using Freshlo.Web.Models.VendorVM;
+@model VendorVm
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Vendor Management</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item">
+                    <a href="/Vendor/Manage/" class=" text-link">
+                        <span class="m-nav__link-text">Manage</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator"> - </li>
+                <li class="m-nav__item">
+                    <span class="m-nav__link-text">New Vendor</span>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <button type="button" class="btn btn-dark" onclick="window.location.href='/Vendor/Create/'"><i class="la la-plus"></i> Create New</button>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon m--hide">
+                        <i class="la la-gear"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                        List of Vendors
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle  m-data-table">
+                            <thead>
+                                <tr>
+                                    <th>Contact Person</th>
+                                    <th>Vendor Role</th>
+                                    <th>Business</th>
+                                    <th>Email Address</th>
+                                    <th>Contact Number</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.getAllVendorList)
+                                {
+                                <tr id="@item.Id">
+                                    <td><a href="/Vendor/Detail/@item.Id" class="text-link">@item.Person</a></td>
+                                    <td>@item.Role</td>
+                                    <td>@item.Business</td>
+                                    <td>@item.EmailId</td>
+                                    <td>@item.ContactNo</td>
+                                    <td><span class="tag tag-@(item.Status=="Active"?"success":"danger")">@item.Status</span></td>
+                                    <td><a href="#" class="text-danger deleteId" data-id="@item.Id"> <i class="flaticon-delete deleteId"> </i></a></td>
+
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<input type="hidden" id="viewMessage1" value="@(Model.ViewMessage ??"")" />
+    <input type="hidden" id="errorMessage1" value="@(Model.ErrorMessage ?? "")" />*@
+
+@section Scripts{
+    <script src="~/assets/demo/demo6/custom/crud/forms/widgets/bootstrap-select.js" type="text/javascript"></script>
+    <script src="~/assets/scripts/Vendor/Manage.js"></script>>
+}

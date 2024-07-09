@@ -1,0 +1,138 @@
+.account-flex {
+    display: flex;
+    height: 100%;
+}
+
+.account-flex-column {
+    width: 50%;
+    height: 100%;
+    flex: 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.account-flex-column.second {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url("/assets/app/media/img//bg/bg-10.png");
+}
+
+.account-flex-column.second::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    background-color: rgb(0 0 0 / 60%);
+}
+
+.account-form {
+    width: 430px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    position: relative;
+    z-index: 10;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.account-form .logo {
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+.account-form .form .form-control {
+    border-color: #e1e3ea;
+    height: 50px;
+    font-weight: 500;
+    font-size: 16px;
+    background-color: transparent;
+}
+
+.account-form .form .form-control::placeholder {
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.account-form .form button {
+    height: 40px;
+}
+
+.top-logo {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    z-index: 3;
+}
+
+.left-panel-content {
+    margin: 15vh auto;
+    min-width: 83.33%;
+    padding: 3rem 3rem;
+    position: relative;
+    z-index: 3;
+}
+
+.left-bottom {
+    left: 0;
+    bottom: 0;
+    z-index: 3;
+    position: absolute;
+}
+
+@media only screen and (max-width: 768px) {
+    .account-flex-column {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-image: url(/assets/img/2.jpg);
+    }
+
+        .account-flex-column:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1;
+            background-color: rgb(34 34 34 / 40%);
+        }
+
+        .account-flex-column.second {
+            display: none;
+        }
+
+        .account-flex-column.second .logo-mb {
+        }
+}
+
+@media only screen and (max-width: 480px) {
+    .account-flex {
+        display: block;
+    }
+
+    .account-flex-column {
+        width: 100%;
+    }
+
+    .account-form {
+        width: 95%;
+        margin: 0 auto;
+    }
+
+    .account-flex-column.second {
+        display: none;
+    }
+
+        .account-flex-column.second .logo-mb {
+        }
+}

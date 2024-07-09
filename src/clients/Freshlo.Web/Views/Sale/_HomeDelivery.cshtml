@@ -1,0 +1,21 @@
+﻿@using Freshlo.DomainEntities;
+
+
+    <div class="col-md-2" id="divId_@Model.ItemId" disabled="false">
+        <div class="text-center">
+            <div class="mb-3 item_list">
+                <label class="">
+                    <input type="checkbox" class="homedelivery" onclick="CheckboxId('@Model.ItemId')" id="@Model.ItemId" value="@Model.ItemId" name="Check">
+                    <img id="Img_@Model.ItemId" src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/@(Model.ItemId).png" onerror="this.onerror = null;this.src = 'https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/no-image.png';" alt="" style="width:60px;" class="img-fluid" />
+                    <h6 class="mb-0 font-medium-1">@Model.PluName</h6>
+
+                </label>
+                @*<span hidden id="Totalitemstock_">@Item.itemstock</span>
+                    <span hidden id="ItemType_">@Item.ItemType</span>
+                    <span hidden id="stockId_@Item.ItemId">@Item.stockId</span>
+                    <span hidden id="purchaseprice_@Item.ItemId">@Item.Purchaseprice</span>*@
+            </div>
+        </div>
+
+    </div>
+

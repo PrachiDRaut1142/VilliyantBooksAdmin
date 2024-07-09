@@ -1,0 +1,20 @@
+﻿@using Freshlo.Web.Models.ItemMaster;
+@model ItemMasterVM;
+
+@foreach (var item in Model.getProductSpecList)
+{
+    <tr>
+        <td>
+            <input class="form-control m-input" type="text" placeholder="Enter Header Name" id="Desctype" name="Desctype" autocomplete="off" value="@item.DescType" />
+        </td>
+        <td>
+            <input class="form-control m-input" type="text" placeholder="Enter Content" id="descvalue" data-Spec="@item.DescType" data-Id="@item.productCatId"  data-ProductId="@item.ProductSubCatId" autocomplete="off" value="@item.DescValue" />
+        </td>
+       @*  <td class="w-0">
+            <a href="#" class="text-link" title="Remove">
+                <i class="flaticon-delete text-danger"></i>
+            </a>
+        </td> *@
+    </tr>  
+}
+

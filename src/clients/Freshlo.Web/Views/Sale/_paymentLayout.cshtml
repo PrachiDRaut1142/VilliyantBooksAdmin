@@ -1,0 +1,128 @@
+﻿@using Freshlo.Web.Models.Sale;
+@using Freshlo.Web.Helpers;
+@model SalesDetailVM
+
+@{
+}
+
+@if (Convert.ToString(User.FindFirst("userRole").Value) == "System Admin")
+{
+
+    <div class="row display-inline-flex pr-2" style="display:block">
+        <div class="mr-2">
+            @*<label>Order Status</label>*@
+            <select class="form-control text-bold-600" id="OrderStatusId" name="OrderStatus" asp-for="SaleData.OrderdStatus" asp-items="@SalesHelpers.StatusList">
+                <option selected disabled>Select Order Status</option>
+            </select>
+            <span hidden name="SalesId" id="SalesId" asp-for="@Model.SaleData.SalesOrderId">@Model.SaleData.SalesOrderId</span>
+            <input hidden id="SalesId" name="SalesId" asp-for="@Model.SaleData.SalesOrderId" />
+            @*<select asp-items="@SalesHelpers.StatusList" class="form-control m-input m-input--solid" id="pending_Status">
+                    <option value="">Select Order Status</option>
+                </select>*@
+        </div>
+        <button type="button" class="btn btn-success mr-2" id="UpdateSalesOrder"><i class="fa fa-save"> </i> Save</button>
+        <a class="btn btn-dark mr-2" href="@Url.Action("Index", "Print", new { id1 = @Model.SaleData.SalesOrderId })">
+            <i class="flaticon-technology"></i>
+        </a>
+        @*<button type="button" class="btn btn-dark" id="PrintBill"><i class="m-nav__link-icon flaticon-technology">  </i></button>*@
+        <button type="button" class="btn btn-danger mr-2" id="ChanePaymentStatus" data-toggle="modal" data-target="#changepaymentStatus"><i class="m-nav__link-icon flaticon-file">  </i>Payment Status</button><br><br>
+        <div class="m-dropdown m-dropdown--inline  m-dropdown--arrow m-dropdown--align-right float-right" m-dropdown-toggle="click">
+            <a href="#" class="m-dropdown__toggle btn btn-dark dropdown-toggle" style="height: 38px; line-height: 20px">
+                <i class="m-nav__link-icon flaticon-settings">  </i>
+                Options
+            </a>
+            <div class="m-dropdown__wrapper">
+                <span class="m-dropdown__arrow m-dropdown__arrow--right"></span>
+                <div class="m-dropdown__inner">
+                    <div class="m-dropdown__body">
+                        <div class="m-dropdown__content">
+                            <ul class="m-nav">
+                                <li class="m-nav__section m-nav__section--first">
+
+                                    <span class="m-nav__section-text">Update Order</span>
+                                </li>
+                                @*  @if(Model.SaleData.OrderdStatus != "Ordered" ){*@
+                                <li class="m-nav__item">
+                                    <a href="#" class="m-nav__link" id="ChangeDeliveryDate" data-toggle="modal" data-target="#changeDeliveryDate">
+                                        <i class="m-nav__link-icon flaticon-file"></i>
+                                        <span class="m-nav__link-text">Change Delivery Date</span>
+                                    </a>
+                                </li>
+                                <li class="m-nav__item">
+                                    <a href="#" class="m-nav__link" data-toggle="modal" data-target="#updateDeliveryCharges">
+                                        <i class="m-nav__link-icon flaticon-file"></i>
+                                        <span class="m-nav__link-text">Update Delivery Charges</span>
+                                    </a>
+                                </li>
+                                @*<li class="m-nav__item">
+                                        <a href="@Url.Action("Index","Print",new { id1 = @Model.SaleData.SalesOrderId })" class="m-nav__link" target="popup">
+                                            <i class="m-nav__link-icon flaticon-technology"></i>
+                                            <span class="m-nav__link-text">Print Bill</span>
+                                        </a>
+                                    </li>*@
+
+                                @*}*@
+                                <li class="m-nav__item">
+                                    <a href="#" class="m-nav__link" data-toggle="modal" data-target="#refundInitiateds">
+                                        <i class="m-nav__link-icon flaticon-file"></i>
+                                        <span class="m-nav__link-text">Initiate Refund</span>
+                                    </a>
+                                </li>
+                                <li class="m-nav__item">
+                                    <a href="#" class="m-nav__link" data-toggle="modal" data-target="#applyCouponCode">
+                                        <i class="m-nav__link-icon flaticon-file"></i>
+                                        <span class="m-nav__link-text">Apply Coupon Code</span>
+                                    </a>
+                                </li>
+                                @if (Model.SaleData.PaymentStatus != "Paid")
+                                {
+                                    @*<li class="m-nav__item">
+                                            <a href="#" class="m-nav__link" data-toggle="modal" data-target="#changepaymentStatus">
+                                                <i class="m-nav__link-icon flaticon-file"></i>
+                                                <span class="m-nav__link-text">Change Payment Status</span>
+                                            </a>
+                                        </li>*@
+                                }
+                                <li class="m-nav__item" id="DeliveryPerson_li" style="display:none">
+                                    <a href="#" class="m-nav__link" data-toggle="modal" id="AssignDelivery-DrpDwn">
+                                        <i class="m-nav__link-icon flaticon-file"></i>
+                                        <span class="m-nav__link-text">Assign Delivery Person</span>
+                                    </a>
+                                </li>
+                                @if (Model.SaleData.TransactionId != "NA")
+                                {
+                                    <li class="m-nav__item" id="Refresh_li">
+                                        <a href="#" class="m-nav__link" id="Refresh">
+                                            <i class="m-nav__link-icon flaticon-file"></i>
+                                            <span class="m-nav__link-text">Refresh</span>
+                                        </a>
+                                    </li>
+
+                                }
+
+                                @*<li class="m-nav__item">
+                                        <a href="#" class="m-nav__link">
+                                            <i class="m-nav__link-icon flaticon-file-2"></i>
+                                            <span class="m-nav__link-text">Print Bill</span>
+                                        </a>
+                                    </li>*@
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+}
+else
+{
+    <div class="row display-inline-flex pr-2">
+
+
+    </div>
+
+}

@@ -1,0 +1,85 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h2>@ViewData["Title"]</h2>
+
+<div class="">
+    <div class="col-md-12" style="padding: 30px 30px 0px 30px;background-color:#5075e4;">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Product Code / Name" list="pNumber" />
+                    <datalist id="pNumber">
+                        <option>01002 - Onion</option>
+                        <option>02001 - Apple</option>
+                        <option>03031 - Fish</option>
+                        <option>03031 - Bread</option>
+                        <option>03031 - Fresh Cream</option>
+                        <option>03031 - Meat</option>
+                        <option>03031 - Dairy Milk</option>
+                        <option>03031 - Mango</option>
+                    </datalist>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group" style="display:inline-flex">
+                    <input type="text" class="form-control" style="width:60px;" />
+                    <small class="ml-2 text-white">Bundle</small>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <a class="text-white ml-3 mr-3">1kg /250.50 X 5 = <span class="text-bold-600 font-medium-5">501.00</span></a>
+                    <button type="button" class="btn btn-secondary">Add to cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-borderless table-middle m-data-table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="m-widget4__img m-widget4__img--logo">
+                                <img src="~/assets/app/media/img/client-logos/logo5.png" alt="">
+                            </div>
+                        </td>
+                        <td>
+                            <h6 class="mb-1">
+                                Trump Themes
+                            </h6>
+                            <span class="display-block font-small-3 text-bold-500 text-muted">Milk Product</span>
+                        </td>
+                        <td><span class="text-bold-400"> 1 kg X Rs.250.50</span></td>
+                        <td>
+                            <div style="width:200px;">
+                                <div class="input-group">
+                                    <input type="text" class="form-control m-input" placeholder="" aria-describedby="basic-addon2">
+                                    <div class="input-group-append"><span class="input-group-text" id="basic-addon2">X 250.00</span></div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div style="width:100px;">
+                                <div class="input-group m-input-group m-input-group--square">
+                                    <input type="text" class="form-control m-input" placeholder="100" aria-describedby="basic-addon1">
+                                    <div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">%</span></div>
+                                </div>
+
+                            </div>
+                        </td>
+                        <td><span class="text-bold-500 text-info"> -30.00 / Rs.250.50</span></td>
+                        <td>
+                            <button type="button" class="btn btn-outline-primary">+Add</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

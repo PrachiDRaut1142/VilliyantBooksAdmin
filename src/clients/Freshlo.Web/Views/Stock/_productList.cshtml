@@ -1,0 +1,25 @@
+﻿@using Freshlo.DomainEntities.Stock
+@using Freshlo.Web.Helpers
+@model List<Stock>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@foreach (var list in Model)
+{
+
+    var image = list.ItemId + ".png";
+    <div class="col-md-2">
+        <a href="#" class="text-center" data-toggle="modal" data-target="#stockdetail">
+            <div class="mb-3 item_list">
+                <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/@image" onerror="this.onerror=null;this.src='https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/no-image.png';" alt="Item Image" class="img-fluid mb-2" style="width:100px;height:100px;" />
+                <h6 class="font-medium-1">@list.PluName</h6>
+                <h6 class="font-small-4"><span class="text-success text-bold-500">In Stock</span>@list.StockValue</h6>
+                <h6 class="font-small-3">@list.Weight @list.Measurement X @SalesHelpers.Data @list.ItemPrice</h6>
+
+            </div>
+        </a>
+        @*<div class="">
+                <input type="text" class="form-control" />
+            </div>*@
+    </div>
+}

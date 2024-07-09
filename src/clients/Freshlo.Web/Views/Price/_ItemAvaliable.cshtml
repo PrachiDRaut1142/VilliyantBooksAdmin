@@ -1,0 +1,73 @@
+﻿@using Freshlo.Web.Models.PricelistVM;
+@model PricelistVM
+@{
+    ViewData["Title"] = "_ItemAvaliable";
+}
+
+@foreach (var list in Model.getItemAvaliablePricelist)
+{
+<tr id="@list.Id">
+    <td style="width:250px;">
+        <a href="/ItemMaster/Detail/@list.Id" class="font-medium-1" id="pluName" data-id="@list.Id" name="pluNames">@list.pluName</a>
+        <input hidden value="@list.Id" name="Ids" />
+    </td>
+    <td>
+        <div class="display-inline-flex">
+            <h6 class="font-medium-3" id="OrderQty">@list.OrderQty <small class="font-small-3">@list.Measurement</small> </h6>
+        </div>
+    </td>
+    @if (list.seasonSale == "N")
+    {
+        <td>
+            <label class="ab-switch">
+                <input type="checkbox" value="@list.seasonSale" class="seasonSaleOne" id="seasonSales1">
+                <span class="slider round"></span>
+            </label>
+        </td>
+    }
+    else
+    {
+        <td>
+            <label class="ab-switch">
+                <input type="checkbox" value="@list.seasonSale" class="seasonSaleTwo" id="seasonSales2" checked>
+                <span class="slider round"></span>
+            </label>
+        </td>
+    }
+    <td>
+        <input style="width:100px;" type="text" class="form-control m-input m-input--solid WasteagePerc-Cls font-medium-2 font-weight-bold WasteagePerc" id="WasteagePerc" name="WasteagePercs" value="@list.WasteagePerc" asp-for="@list.WasteagePerc" data-id="@list.ItemId" hidden>
+    </td>
+
+    <td>
+        <input style="width:100px;" type="text" name="PurchasePrices" class=" form-control m-input m-input--solid font-medium-2 font-weight-bold PurchasePrice" id="PurchasePrice" value="@list.PurchasePrice" asp-for="@list.PurchasePrice" data-id="@list.ItemId" hidden>
+    </td>
+    <td>
+        <input style="width:100px;" type="text" name="SellingProfitPers" class="form-control m-input m-input--solid font-medium-2 font-weight-bold SellingProfitPer" id="SellingProfitPer" value="@list.SellingProfitPer" asp-for="@list.SellingProfitPer" data-id="@list.ItemId" hidden>
+    </td>
+    <td>
+        <span class="width-50 font-medium-2 font-weight-bold" id="TotalPrice" name="TotalPrices" value="@list.TotalPrice" hidden>@list.TotalPrice</span>
+        <input style="width:100px;" type="text" name="TotalPrices" class="form-control m-input m-input--solid font-medium-2 font-weight-bold" id="TotalPricetxt" value="@list.TotalPrice" asp-for="@list.TotalPrice" data-id="@list.ItemId" hidden>
+        <input style="width:100px;" type="text" name="seasonSales" class="form-control m-input m-input--solid font-medium-2 font-weight-bold seasonSale" id="seasonSalechange" value="@list.seasonSale" asp-for="@list.seasonSale" data-id="@list.ItemId" hidden>
+
+    </td>
+    <td>
+        <input style="width:100px;" type="text" class="form-control m-input m-input--solid font-medium-2 font-weight-bold ProfitMargin" id="ProfitMargin" name="ProfitMargins" value="@list.ProfitMargin" asp-for="@list.ProfitMargin" data-id="@list.ItemId" hidden>
+    </td>
+    <td>
+        <input style="width:100px;" type="text" class="form-control m-input m-input--solid font-medium-2 font-weight-bold MarketPrice" name="MarketPrices" id="MarketPrice" value="@list.MarketPrice" asp-for="@list.MarketPrice" data-id="@list.ItemId" hidden>
+    </td>
+    <td>
+        <input style="width:100px;" type="text" class="form-control m-input m-input--solid font-medium-2 font-weight-bold SellingPrice" name="SellingPrices" id="SellingPrice" value="@list.SellingPrice" asp-for="@list.SellingPrice" data-id="@list.ItemId" hidden>
+    </td>
+</tr>
+}
+
+@{
+    <script>
+        $('.m-data-table').DataTable({
+            "pageLength": 100,
+            "ordering": false,
+            "sorting": true
+        });
+    </script>
+}

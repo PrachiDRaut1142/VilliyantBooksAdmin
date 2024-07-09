@@ -1,0 +1,969 @@
+﻿@{
+    ViewData["Title"] = "Customer Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Customer Dashboard</h3>
+
+        </div>
+        <span class="font-medium-2">Filter :<span>   </span> </span>
+        <div>
+            <select class="form-control m-input" id="">
+                <option value="1">Today</option>
+                <option value="2">Yesterday</option>
+                <option value="3">This Week</option>
+                <option value="4">Previous Week</option>
+                <option value="5">This Month</option>
+                <option value="6">Previous Month</option>
+            </select>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+
+
+
+<div class="m-content" id="">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="m-portlet">
+                <div class="m-portlet__body">
+                    <div class="text-left mb-4">
+                        <h5 class="text-muted text-bold-500">New Customers Summary</h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <a href="">
+                                <div class="text-left">
+                                    <h6>Total Downloads</h6>
+                                    <h4 class="text-bold-600 mb-1 font-large-1"> 230</h4>
+
+                                    @*<small>View Detail  --></small>*@
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-2">
+                            <a href="">
+                                <div class="text-left">
+                                    <h6>Total Registered </h6>
+                                    <h4 class="text-bold-600 mb-1 font-large-1">22</h4>
+                                    @*<small>View Detail  --></small>*@
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-2">
+                            <a href="">
+                                <div class="text-left">
+                                    <h6>Total Unregistered </h6>
+                                    <h4 class="text-bold-600 text-danger mb-1 font-large-1">342 </h4>
+                                    @*<small>View Detail  --></small>*@
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-2">
+                            <a href="">
+                                <div class="text-left">
+                                    <h6>Registered but not ordered</h6>
+                                    <h4 class="text-bold-600 text-danger mb-1 font-large-1">342 </h4>
+                                    @*<small>View Detail  --></small>*@
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-2">
+                            <a href="">
+                                <div class="text-left">
+                                    <h6> Customers Ordered</h6>
+                                    <h4 class="text-bold-600 text-success mb-1 font-large-1"> 23 <small> (Rs.  2342)</small></h4>
+                                    @*<small>View Detail  --></small>*@
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-2">
+                            <a href="">
+                                <div class="text-left">
+                                    <h6> Customers Ordered</h6>
+                                    <h4 class="text-bold-600 text-success mb-1 font-large-1"> 23 <small> (Rs.  2342)</small></h4>
+                                    @*<small>View Detail  --></small>*@
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="m-portlet">
+            <div class="m-portlet__body">
+                <div class="text-left mb-4">
+                    <h5 class="text-muted text-bold-500">Customers Order Bifurcation</h5>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <a href="">
+                            <div class="text-left">
+                                <h6>20+ Orders</h6>
+                                <h4 class="text-bold-600 mb-1 font-large-1"> 230</h4>
+
+                                @*<small>View Detail  --></small>*@
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="">
+                            <div class="text-left">
+                                <h6>10 to 20 Orders</h6>
+                                <h4 class="text-bold-600 mb-1 font-large-1"> 230</h4>
+
+                                @*<small>View Detail  --></small>*@
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="">
+                            <div class="text-left">
+                                <h6>5 to 10 orders </h6>
+                                <h4 class="text-bold-600 mb-1 font-large-1">22</h4>
+                                @*<small>View Detail  --></small>*@
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="">
+                            <div class="text-left">
+                                <h6>1 to 5 Orders</h6>
+                                <h4 class="text-bold-600 mb-1 font-large-1">342 </h4>
+                                @*<small>View Detail  --></small>*@
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="">
+                            <div class="text-left">
+                                <h6>1 Order</h6>
+                                <h4 class="text-bold-600  mb-1 font-large-1">342 </h4>
+                                @*<small>View Detail  --></small>*@
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="">
+                            <div class="text-left">
+                                <h6> 0 Orders</h6>
+                                <h4 class="text-bold-600 text-danger mb-1 font-large-1"> 23 </h4>
+                                @*<small>View Detail  --></small>*@
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="col-md-3">
+            <div class="m-portlet">
+                <div class="m-portlet__body">
+                    <div class="text-left mb-4">
+                        <h5 class="text-muted text-bold-500">Area wise count</h5>
+                    </div>
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table class="table table-striped-even ab-table-head-bg-warning-light " id="">
+                                <thead>
+                                    <tr>
+                                        <th>Zip Code</th>
+                                        <th>Total Customers</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="saleslist">
+                                    <tr id="">
+                                        <td class="font-medium-4">
+                                            400706
+                                        </td>
+                                        <td class="font-medium-4">23423</td>
+
+                                    </tr>
+                                    <tr id="">
+                                        <td class="font-medium-4">
+                                            400706
+                                        </td>
+                                        <td class="font-medium-4">23423</td>
+
+                                    </tr>
+                                    <tr id="">
+                                        <td class="font-medium-4">
+                                            400706
+                                        </td>
+                                        <td class="font-medium-4">23423</td>
+
+                                    </tr>
+                                    <tr id="">
+                                        <td class="font-medium-4">
+                                            400706
+                                        </td>
+                                        <td class="font-medium-4">23423</td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="m-portlet">
+                <div class="m-portlet__body">
+                    <div class="text-left mb-4">
+                        <h5 class="text-muted text-bold-500">Area wise count</h5>
+                    </div>
+                    <div class="row">
+                        <div class="m-widget14">
+                            <div class="m-widget14__header m--margin-bottom-30">
+                                <h3 class="m-widget14__title">
+                                    Daily Order Summary
+                                </h3>
+                                <span class="m-widget14__desc">
+                                    Check out each collumn for more details
+                                </span>
+                            </div>
+                            <div class="m-widget14__chart" style="height:120px;">
+                                <canvas id="m_chart_daily_sales"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    
+</div>
+       
+    
+
+
+
+<div class="m-content" id="WeeklyBasedData" style="display:none">
+    @*<div class="row">
+            <div class="col-md-12">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-left mb-4">
+                            <h5 class="text-muted text-bold-500">Order Summary</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <a href="/Sale/PendingOrders/">
+                                    <div class="text-left">
+                                        <h6>Total Orders Received</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1">@Model.GetallCountDashbaord.TotalOrderReceived <small>(Rs. @Model.GetallCountDashbaord.TotalOrderReceivedAmount)</small></h4>
+
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/Sale/PendingOrders/">
+                                    <div class="text-left">
+                                        <h6>Total Pending Orders</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1">@Model.GetallCountDashbaord.TotalPendingOrder <small>(Rs. @Model.GetallCountDashbaord.TotalpendingPaymentAmount)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/Sale/PendingOrders/">
+                                    <div class="text-left">
+                                        <h6>Total Delivered Orders</h6>
+                                        <h4 class="text-bold-600 text-success mb-1 font-large-1">@Model.GetallCountDashbaord.TotalOrderDelivered <small>(Rs. @Model.GetallCountDashbaord.TotalOrderDeliveredAmount)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/Sale/PendingOrders/">
+                                    <div class="text-left">
+                                        <h6>Total Cancelled Orders</h6>
+                                        <h4 class="text-bold-600 text-danger mb-1 font-large-1">@Model.GetallCountDashbaord.TotalOrderCancelled <small>(Rs. @Model.GetallCountDashbaord.TotalOrderCancelledAmount)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+    @*<div class="row">
+            <div class="col-md-12">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-left mb-4">
+                            <h5 class="text-muted text-bold-500">Sale Amounts Summary <small class="text-muted">(as per delivery date)</small></h5>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <a href="/Sale/Manage/">
+                                    <div class="text-left">
+                                        <h6>Cash Sale Amount</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"><small>Rs. </small>@Model.GetallCountDashbaord.TotalCashSaleTotalAmount <small>(@Model.GetallCountDashbaord.TotalCashSaleAmountCount)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a href="/Sale/Manage/">
+                                    <div class="text-left">
+                                        <h6>Online Sale Amount</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"><small>Rs. </small>@Model.GetallCountDashbaord.TotalOnlineSaleTotalAmount <small>(@Model.GetallCountDashbaord.TotalOnlineSaleAmountCount)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a href="/Sale/Manage/">
+                                    <div class="text-left">
+                                        <h6>Card Payment</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"><small>Rs. </small>1000 <small>(60)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a href="/Sale/Manage/">
+                                    <div class="text-left">
+                                        <h6>UPI Direct Payment</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"><small>Rs. </small>2000 <small>(10)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a href="/Sale/Manage/">
+                                    <div class="text-left">
+                                        <h6>Overall Pending Payment</h6>
+                                        <h4 class="text-bold-600 text-danger mb-1 font-large-1"><small>Rs. </small>@Model.GetallCountDashbaord.TotalOverallPendingPaymenttotalAmount <small>(@Model.GetallCountDashbaord.TotalOverallPendingPaymentCount)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+    @*<div class="row">
+            <div class="col-md-12">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-left mb-4">
+                            <h5 class="text-muted text-bold-500">Purchase and Expensive</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <a href="/Financial/Manage/">
+                                    <div class="text-left">
+                                        <h6>Total Items Purchased</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"> @Model.GetallCountDashbaord.TotalItemPurchaseSum</h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/Purchase/ItemSummary/">
+                                    <div class="text-left">
+                                        <h6>Amount spent on Purchase</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"><small>Rs. </small>@Model.GetallCountDashbaord.TotalAmountPurchaseSpent</h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/Purchase/Manage/">
+                                    <div class="text-left">
+                                        <h6>Total Expense on Purchases</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"><small>Rs. </small>@Model.GetallCountDashbaord.TotalExpenseOnPurchaseSpent</h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/Financial/Manage/">
+                                    <div class="text-left">
+                                        <h6>Daily Operational Expenses</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"> <small>Rs. </small>@Model.GetallCountDashbaord.TotalDailyOperationExpensesAmount</h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+
+
+
+
+
+
+</div>
+<div class="m-content" id="CurrentMonthBasedData" style="display:none">
+    @*<div class="row">
+            <div class="col-md-12">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-left mb-4">
+                            <h5 class="text-muted text-bold-500">Order Summary</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <a href="/Sale/PendingOrders/">
+                                    <div class="text-left">
+                                        <h6>Total Orders Received</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1">@Model.GetallCountDashbaord.TotalOrderReceived <small>(Rs. @Model.GetallCountDashbaord.TotalOrderReceivedAmount)</small></h4>
+
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/Sale/PendingOrders/">
+                                    <div class="text-left">
+                                        <h6>Total Pending Orders</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1">@Model.GetallCountDashbaord.TotalPendingOrder <small>(Rs. @Model.GetallCountDashbaord.TotalpendingPaymentAmount)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/Sale/PendingOrders/">
+                                    <div class="text-left">
+                                        <h6>Total Delivered Orders</h6>
+                                        <h4 class="text-bold-600 text-success mb-1 font-large-1">@Model.GetallCountDashbaord.TotalOrderDelivered <small>(Rs. @Model.GetallCountDashbaord.TotalOrderDeliveredAmount)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/Sale/PendingOrders/">
+                                    <div class="text-left">
+                                        <h6>Total Cancelled Orders</h6>
+                                        <h4 class="text-bold-600 text-danger mb-1 font-large-1">@Model.GetallCountDashbaord.TotalOrderCancelled <small>(Rs. @Model.GetallCountDashbaord.TotalOrderCancelledAmount)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+    @*<div class="row">
+            <div class="col-md-12">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-left mb-4">
+                            <h5 class="text-muted text-bold-500">Sale Amounts Summary <small class="text-muted">(as per delivery date)</small></h5>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <a href="/Sale/Manage/">
+                                    <div class="text-left">
+                                        <h6>Cash Sale Amount</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"><small>Rs. </small>@Model.GetallCountDashbaord.TotalCashSaleTotalAmount <small>(@Model.GetallCountDashbaord.TotalCashSaleAmountCount)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a href="/Sale/Manage/">
+                                    <div class="text-left">
+                                        <h6>Online Sale Amount</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"><small>Rs. </small>@Model.GetallCountDashbaord.TotalOnlineSaleTotalAmount <small>(@Model.GetallCountDashbaord.TotalOnlineSaleAmountCount)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a href="/Sale/Manage/">
+                                    <div class="text-left">
+                                        <h6>Card Payment</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"><small>Rs. </small>1000 <small>(60)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a href="/Sale/Manage/">
+                                    <div class="text-left">
+                                        <h6>UPI Direct Payment</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"><small>Rs. </small>2000 <small>(10)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a href="/Sale/Manage/">
+                                    <div class="text-left">
+                                        <h6>Overall Pending Payment</h6>
+                                        <h4 class="text-bold-600 text-danger mb-1 font-large-1"><small>Rs. </small>@Model.GetallCountDashbaord.TotalOverallPendingPaymenttotalAmount <small>(@Model.GetallCountDashbaord.TotalOverallPendingPaymentCount)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+    @*<div class="row">
+            <div class="col-md-12">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-left mb-4">
+                            <h5 class="text-muted text-bold-500">Purchase and Expensive</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <a href="/Financial/Manage/">
+                                    <div class="text-left">
+                                        <h6>Total Items Purchased</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"> @Model.GetallCountDashbaord.TotalItemPurchaseSum</h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/Purchase/ItemSummary/">
+                                    <div class="text-left">
+                                        <h6>Amount spent on Purchase</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"><small>Rs. </small>@Model.GetallCountDashbaord.TotalAmountPurchaseSpent</h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/Purchase/Manage/">
+                                    <div class="text-left">
+                                        <h6>Total Expense on Purchases</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"><small>Rs. </small>@Model.GetallCountDashbaord.TotalExpenseOnPurchaseSpent</h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/Financial/Manage/">
+                                    <div class="text-left">
+                                        <h6>Daily Operational Expenses</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"> <small>Rs. </small>@Model.GetallCountDashbaord.TotalDailyOperationExpensesAmount</h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+
+
+
+
+
+
+
+</div>
+<div class="m-content" id="LastMonthBasedData" style="display:none">
+    @*<div class="row">
+            <div class="col-md-12">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-left mb-4">
+                            <h5 class="text-muted text-bold-500">Order Summary</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <a href="/Sale/PendingOrders/">
+                                    <div class="text-left">
+                                        <h6>Total Orders Received</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1">@Model.GetallCountDashbaord.TotalOrderReceived <small>(Rs. @Model.GetallCountDashbaord.TotalOrderReceivedAmount)</small></h4>
+
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/Sale/PendingOrders/">
+                                    <div class="text-left">
+                                        <h6>Total Pending Orders</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1">@Model.GetallCountDashbaord.TotalPendingOrder <small>(Rs. @Model.GetallCountDashbaord.TotalpendingPaymentAmount)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/Sale/PendingOrders/">
+                                    <div class="text-left">
+                                        <h6>Total Delivered Orders</h6>
+                                        <h4 class="text-bold-600 text-success mb-1 font-large-1">@Model.GetallCountDashbaord.TotalOrderDelivered <small>(Rs. @Model.GetallCountDashbaord.TotalOrderDeliveredAmount)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/Sale/PendingOrders/">
+                                    <div class="text-left">
+                                        <h6>Total Cancelled Orders</h6>
+                                        <h4 class="text-bold-600 text-danger mb-1 font-large-1">@Model.GetallCountDashbaord.TotalOrderCancelled <small>(Rs. @Model.GetallCountDashbaord.TotalOrderCancelledAmount)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-left mb-4">
+                            <h5 class="text-muted text-bold-500">Sale Amounts Summary <small class="text-muted">(as per delivery date)</small></h5>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <a href="/Sale/Manage/">
+                                    <div class="text-left">
+                                        <h6>Cash Sale Amount</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"><small>Rs. </small>@Model.GetallCountDashbaord.TotalCashSaleTotalAmount <small>(@Model.GetallCountDashbaord.TotalCashSaleAmountCount)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a href="/Sale/Manage/">
+                                    <div class="text-left">
+                                        <h6>Online Sale Amount</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"><small>Rs. </small>@Model.GetallCountDashbaord.TotalOnlineSaleTotalAmount <small>(@Model.GetallCountDashbaord.TotalOnlineSaleAmountCount)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a href="/Sale/Manage/">
+                                    <div class="text-left">
+                                        <h6>Card Payment</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"><small>Rs. </small>1000 <small>(60)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a href="/Sale/Manage/">
+                                    <div class="text-left">
+                                        <h6>UPI Direct Payment</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"><small>Rs. </small>2000 <small>(10)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a href="/Sale/Manage/">
+                                    <div class="text-left">
+                                        <h6>Overall Pending Payment</h6>
+                                        <h4 class="text-bold-600 text-danger mb-1 font-large-1"><small>Rs. </small>@Model.GetallCountDashbaord.TotalOverallPendingPaymenttotalAmount <small>(@Model.GetallCountDashbaord.TotalOverallPendingPaymentCount)</small></h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-left mb-4">
+                            <h5 class="text-muted text-bold-500">Purchase and Expensive</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <a href="/Financial/Manage/">
+                                    <div class="text-left">
+                                        <h6>Total Items Purchased</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"> @Model.GetallCountDashbaord.TotalItemPurchaseSum</h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/Purchase/ItemSummary/">
+                                    <div class="text-left">
+                                        <h6>Amount spent on Purchase</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"><small>Rs. </small>@Model.GetallCountDashbaord.TotalAmountPurchaseSpent</h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/Purchase/Manage/">
+                                    <div class="text-left">
+                                        <h6>Total Expense on Purchases</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"><small>Rs. </small>@Model.GetallCountDashbaord.TotalExpenseOnPurchaseSpent</h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/Financial/Manage/">
+                                    <div class="text-left">
+                                        <h6>Daily Operational Expenses</h6>
+                                        <h4 class="text-bold-600 mb-1 font-large-1"> <small>Rs. </small>@Model.GetallCountDashbaord.TotalDailyOperationExpensesAmount</h4>
+                                        <small>View Detail  --></small>
+                                    </div>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+@section Scripts{
+
+    <script src="~/assets/scripts/Dashboard/Financialdashboard.js"></script>
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<div class="row">
+        <div class="col-md-3">
+            <a href="/Sale/PendingOrders/">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>Total Orders</h6>
+                            <h4 class="text-bold-600">1209</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="/Sale/PendingOrders/">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>Total Pending</h6>
+                            <h4 class="text-bold-600">800</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="/Sale/PendingOrders/">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>Deliver</h6>
+                            <h4 class="text-bold-600 text-success">309</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="#">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>Cancel</h6>
+                            <h4 class="text-bold-600 text-danger">100</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>*@
+
+
+@*<div class="row mb-2">
+        <div class="col-md-12">
+            <div class="text-left">
+                <h4>Sale Amounts</h4>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <a href="/Sale/Manage/">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>Cash Sale Amount</h6>
+                            <h4 class="text-bold-600"><small>Rs. </small>1209</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="/Sale/Manage/">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>Online Sale Amount</h6>
+                            <h4 class="text-bold-600"><small>Rs. </small>800</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="/Sale/Manage/">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>Card Payment</h6>
+                            <h4 class="text-bold-600"><small>Rs. </small>309</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="/Sale/Manage/">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>UPI Payment</h6>
+                            <h4 class="text-bold-600"><small>Rs. </small>100</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="/Sale/Manage/">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>Overall Pending Payment</h6>
+                            <h4 class="text-bold-600 text-danger"><small>Rs. </small>100</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>*@
+
+
+@*<div class="row mb-2">
+        <div class="col-md-12">
+            <div class="text-left">
+                <h4>Purchase and Expensive</h4>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <a href="/Purchase/ItemSummary/">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>Total Purchase</h6>
+                            <h4 class="text-bold-600">1209</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="/Purchase/Manage/">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>Total Expensive on Purchase</h6>
+                            <h4 class="text-bold-600">800</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="/Financial/Manage/">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="text-center">
+                            <h6>operating expenses</h6>
+                            <h4 class="text-bold-600 text-success">309</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>*@
+

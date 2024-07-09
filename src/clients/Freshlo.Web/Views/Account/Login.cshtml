@@ -1,0 +1,91 @@
+﻿@using Freshlo.Web.Models.Account
+@model LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+<link href="~/assets/css/pages/account/account.css" rel="stylesheet" />
+<div class="account-flex">
+    <div class="account-flex-column">
+        <div class="account-form">
+
+            <form class="m-login__form m-form enterKeyfun form" id="loginForm" action="/Account/Login/" method="post" autocomplete="off">
+                <div class="form-header">
+                    <div class="logo">
+                        <img src="@Model.businessInfo.logo_url" alt="Logo" style="width:120px;">
+
+                    </div>
+                    <h3 class="pt-3 font-medium-3">Login to your account</h3>
+                </div>
+                <div class="form-group">
+                    <input class="form-control m-input enterKeyfun" type="text" placeholder="Enter Id" id="EmailId" name="EmailId" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <input class="form-control m-input m-login__form-input--last enterKeyfun" type="password" placeholder="Enter Password" id="Password" name="Password">
+                </div>
+                <div class="row m-login__form-sub mb-3">
+                    <div class="col m--align-left m-login__form-left">
+                        <label class="m-checkbox  m-checkbox--focus">
+                            <input type="checkbox" name="remember"> Remember me
+                            <span></span>
+                        </label>
+                    </div>
+                    <div class="col m--align-right m-login__form-right">
+                        <a href="#" id="m_login_forget_password" class="m-link">Forget Password ?</a>
+                    </div>
+                </div>
+                <div class="m-login__form-action">
+                    <button type="button" class="btn btn-dark btn-block" id="formSubmit">Sign In</button>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-12">
+                        <span class="form_error" id="invalid_email" style="display:none;">This email is not valid</span>
+                        <span class="text-bold-600 text-danger display-block">@Model.ErrorMessage</span>
+                        <span class="text-bold-600 text-success display-block">@Model.ViewMessage</span>
+                        <span class="text-bold-600 text-success display-none" id="AccesserrorId">@Model.acessError</span>
+                        <span class="text-bold-600 text-success display-none" id="AccesserrorIP">@Model.ip</span>
+                        <span class="text-bold-600 text-danger display-block" id="divPasswordValidationResult"></span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="account-flex-column second">
+        <div class="row">
+            <a href="https://www.clouddukaan.com" target="_blank" class="top">
+                <img class="top-logo" src="/assets/img/update/freshpos-white-logo.png" width="120px">
+            </a>
+            <div class="left-panel-content mt-4">
+
+                <p class="font-medium-3 text-white">Welcome to FreshPOS</p>
+                <div class="col-lg-10 col-md-12 col-sm-12">
+                    <p class="font-large-2 text-white " style="line-height: 45px">Modern and robust solution for smart &amp; growing restaurants. </p>
+                    <p class="font-medium-2 text-white" style="">Tansforming restaurants and retail businesses to go digital with the next-generation order management system.</p>
+                </div>
+               
+            </div>
+
+            <div class="left-bottom ml-5 pb-4">
+                <a href="https://automatebuddy.com" target="_blank">
+                    <span class="text-white">Product of</span>
+                    <img src="/assets/img/automatebuddy-logo-white.png" alt="Product of AutomateBuddy">
+                </a>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".enterKeyfun").keyup(function (event) {
+                if (event.which === 13) {
+                    $("#formSubmit").click();
+                }
+            });
+        });
+    </script>
+    <script src="~/assets/scripts/Account/Login.js"></script>
+}

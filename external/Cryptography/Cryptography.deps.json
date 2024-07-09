@@ -1,0 +1,59 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v2.1",
+    "signature": "7821d6adf54365635564837be4241cdcbed8eaa7"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v2.1": {
+      "Cryptography/1.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Cryptography.KeyDerivation": "2.1.1"
+        },
+        "runtime": {
+          "Cryptography.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Cryptography.Internal/2.1.1": {
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.Internal.dll": {
+            "assemblyVersion": "2.1.1.0",
+            "fileVersion": "2.1.1.18157"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Cryptography.KeyDerivation/2.1.1": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Cryptography.Internal": "2.1.1"
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {
+            "assemblyVersion": "2.1.1.0",
+            "fileVersion": "2.1.1.18157"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Cryptography/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.AspNetCore.Cryptography.Internal/2.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9X49e4ZTv6ipL/Yh1GvVxpgh+ghWMHi+PPE3tQI2HRgG6Jixvmt8LgT/KvAvfgYEDnjsSTRyt/arrHsekHwfMA==",
+      "path": "microsoft.aspnetcore.cryptography.internal/2.1.1",
+      "hashPath": "microsoft.aspnetcore.cryptography.internal.2.1.1.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Cryptography.KeyDerivation/2.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HqgqUlIbOUgCWcW51NyJuws2FcY4mCfhIFcw1+NnK+p3XwdYmJ/XI+Q/WM4GTshTh9Dgn1h7i/WsrzgQr/292g==",
+      "path": "microsoft.aspnetcore.cryptography.keyderivation/2.1.1",
+      "hashPath": "microsoft.aspnetcore.cryptography.keyderivation.2.1.1.nupkg.sha512"
+    }
+  }
+}

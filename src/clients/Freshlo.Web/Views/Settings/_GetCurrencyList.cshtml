@@ -1,0 +1,15 @@
+﻿@using Freshlo.DomainEntities;
+@model List<CurrencyMST>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            <a href="#">@item.CountryName</a>
+        </td>
+        <td>@item.ShortCode</td>
+        <td>@item.symbol</td>
+        <td><a href="#" class="text-link currencyDetailsCls" data-toggle="modal" data-id="@item.Id"> <i class="flaticon-edit"> </i> </a></td>
+        <td><a href="#" class="text-danger deletecurrencyId" data-id="@item.Id"> <i class="flaticon-delete deleteId"> </i></a></td>
+    </tr>
+}

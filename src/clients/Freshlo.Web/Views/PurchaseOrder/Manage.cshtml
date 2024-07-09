@@ -1,0 +1,202 @@
+﻿@using Freshlo.DomainEntities.DTO
+@model SummayData
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Purchase Management</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="javascripts:;" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/Sale/Index/" class="m-nav__link">
+                        <span class="m-nav__link-text">Home</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="javascripts:;" class="m-nav__link">
+                        <span class="m-nav__link-text">Purchase Manage</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <button type="button" class="btn btn-dark" onclick="window.location.href='/PurchaseOrder/Create/'"><i class="la la-plus"></i> Create New</button>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__body  m-portlet__body--no-padding">
+            <div class="m-widget29">
+                <div class="m-widget_content">
+                    <h3 class="m-widget_content-title">Purchase Summary</h3>
+                    <div class="m-widget_content-items ">
+                        <div class="m-widget_content-item ">
+                            <span class="font-medium-2">Today<span class=" font-medium-3 m--font-danger"> </span></span>
+                            <a class="font-medium-1">
+                                <span class="text-danger text-bold-600 font-medium-3">Rs.0 (~PO Amount)</span>
+                                <p class="p-0 m-0"></p>
+                                <span class="text-success font-medium-3 text-bold-600">Rs.0 (Other Expense)</span>
+                            </a>
+
+                        </div>
+                        <div class="m-widget_content-item">
+                            <span class="font-medium-2">This Week <span class=" font-medium-3 m--font-danger"> </span></span>
+                            <a class="font-medium-1">
+                                <span class="text-danger text-bold-600 font-medium-3">Rs. 0 (~PO Amount)</span>
+                                <p class="p-0 m-0"></p><span class="text-success font-medium-3 text-bold-600">Rs. 0 (Other Expense)</span>
+                            </a>
+                        </div>
+                        <div class="m-widget_content-item">
+                            <span class="font-medium-2">This Month<span class=" font-medium-3 m--font-danger"> </span></span>
+                            <a class="font-medium-1"><span class="text-danger text-bold-600 font-medium-3">Rs.5836 (~PO Amount)</span><p class="p-0 m-0"></p><span class="text-success font-medium-3 text-bold-600">Rs.-356 (Other Expense)</span></a>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <!--begin::Portlet-->
+                <div class="m-portlet m-portlet--tabs">
+                    <ul class="nav nav-tabs  m-tabs-line m-nav-tab-account-lookup" role="tablist">
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link active" data-toggle="tab" href="#poManage_1_1" role="tab">
+                                <i class="flaticon-info"></i> Pending
+                            </a>
+                        </li>
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link" data-toggle="tab" href="#poManage_1_2" role="tab">
+                                <i class="flaticon-list-3"></i> Close
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="m-portlet__body">
+
+                        <div class="tab-content">
+                            <!--Offer Info START-->
+                            <div class="tab-pane active" id="poManage_1_1" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive" id="purchaseDivId">
+                                            @*<table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>PO ID</th>
+                                                            <th>Total Item</th>
+                                                            <th>Approx PO Amount</th>
+                                                            <th>PO Status</th>
+                                                            <th>Procurement Type</th>
+                                                            <th>Updated On / By</th>
+                                                            <th>Created On</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (PurchaseDetail list in Model)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    <a href="#" class="text-link">@list.PurchaseId</a>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="m-badge m-badge--wide m-badge--rounded m-badge--info" data-container="body" data-toggle="m-popover" data-placement="top" data-content="@list.Products" data-original-title="" title="">@list.TotalQuantity</span>
+                                                                </td>
+                                                                <td>Rs. @list.Total_Price</td>
+                                                                <td>
+                                                                    <span class="m-badge m-badge--wide m-badge--rounded m-badge--danger">@list.Status</span>
+                                                                </td>
+                                                                <td>
+                                                                  @list.Procurement_Type
+                                                                </td>
+                                                                <td>
+                                                                    @list.UpdatedOn
+                                                                    <span class="display-block font-small-2">@list.UpdatedBy</span>
+                                                                </td>
+                                                                <td>@list.CreatedOn</td>
+
+
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>*@
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Offer Info END-->
+                            <!--Added START-->
+                            <div class="tab-pane" id="poManage_1_2" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>PO ID</th>
+                                                        <th>Total Item</th>
+                                                        <th>Approval Status</th>
+                                                        <th>Actual Amount</th>
+                                                        <th>Additional Expenses</th>
+                                                        <th>Total Amount</th>
+                                                        <th>Payment Status</th>
+                                                        <th>Updated On / By</th>
+                                                        <th>Created On</th>
+                                                    </tr>
+
+
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <a href="#" class="text-link">PURS001203</a>
+                                                        </td>
+                                                        <td>
+                                                            <span class="m-badge m-badge--wide m-badge--rounded m-badge--info" data-container="body" data-toggle="m-popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-original-title="" title="">15</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="m-badge m-badge--wide m-badge--rounded m-badge--danger">Pening</span>
+                                                        </td>
+                                                        <td>Rs. 200.00</td>
+                                                        <td>Rs. 200.00</td>
+                                                        <td>Rs. 400.00</td>
+
+                                                        <td>
+                                                            <span class="m-badge m-badge--wide m-badge--rounded m-badge--danger">Pening</span>
+                                                        </td>
+                                                        <td>
+                                                            20-02-2018 02:55 PM
+                                                            <span class="display-block font-small-2">Enayath Sayyed</span>
+                                                        </td>
+                                                        <td>20-02-2018 02:55 PM</td>
+
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Added END-->
+                        </div>
+                    </div>
+                </div>
+                <!--end::Portlet-->
+            </div>
+        </div>
+    </div>

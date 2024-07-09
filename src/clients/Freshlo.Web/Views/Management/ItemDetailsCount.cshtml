@@ -1,0 +1,186 @@
+﻿
+
+
+@{
+    ViewData["Title"] = "ItemDetailsCount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .item-details-unit {
+        margin-bottom: 1rem;
+        box-shadow: 0 10px 40px 0 rgb(62 57 107 / 7%), 0 2px 9px 0 rgb(62 57 107 / 6%);
+    }
+</style>
+
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+	<div class="col-md-12">
+		<div class="">
+			<h3 class="m-subheader__title m-subheader__title--separator">Items Detail</h3> </div>
+	</div>
+		<div class="row">
+			<div class="col-md-10">
+				<div class="form-group row mb-0">
+					<div class="col-md-4 col-sm-4 col-4">
+						<div class='input-group'>
+							<input type='text' class="form-control datetimerange" name="DeliveryDate" id="deliverydate" placeholder="Select Date Range" /> <span class="input-group-addon" id="DateTimeIcon" onclick="clearError();"><span class="icon-calendar"></span></span>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<button type="submit" class="btn btn-dark " onclick="filterData();" id="filterButton">Filter</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2 text-right">
+				<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#add_category_md"><i class="la la-plus"></i> Add Category</button>
+			</div>
+		</div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content" id="itemdetailsdd">
+	<div class="row mb-3">
+		<div class="col-md-3">
+			<div class="card item-details-unit">
+				<div class="card-content">
+					<div class="card-body">
+						<div class="media d-flex" id="vegcount">
+							<div class="align-self-center">
+								<h5>Chicken</h5>
+								<h3></h3>/h3> </div>
+							<div class="media-body text-right">
+								<h5>Price</h5>
+								<h3>0</h3> </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card item-details-unit">
+				<div class="card-content">
+					<div class="card-body">
+						<div class="media d-flex" id="nonvegcount">
+							<div class="align-self-center">
+								<h5>Mutton</h5>
+								<h3> Kg</h3> </div>
+							<div class="media-body text-right">
+								<h5>Price</h5>
+								<h3>0</h3> </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card item-details-unit">
+				<div class="card-content">
+					<div class="card-body">
+						<div class="media d-flex" id="nonvegcount1">
+							<div class="align-self-center">
+								<h5>Sea food</h5>
+								<h3> Kg</h3> </div>
+							<div class="media-body text-right">
+								<h5>Price</h5>
+								<h3>0</h3> </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card item-details-unit">
+				<div class="card-content">
+					<div class="card-body">
+						<div class="media d-flex">
+							<div class="align-self-center">
+								<h5>Fish</h5>
+								<h3>3.5 Kg</h3> </div>
+							<div class="media-body text-right">
+								<h5>Price</h5>
+								<h3>0</h3> </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="m-portlet">
+		<div class="m-portlet m-portlet--tabs">
+			<div class="m-portlet__body">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="table-responsive">
+							<table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table dataTable" id="itemname">
+								<thead>
+									<tr>
+										<th style="width:50%;">Item Name</th>
+										<th style="width:30%;">Qty</th>
+										<th>Items Use</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+									<td>gsjh</td>
+									<td>30.5</td>
+									<td>654465465</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- ADD CATEGORY MODAL -->
+<div class="modal fade" id="add_category_md" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add Category</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right">
+                           
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Add Category<span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="Category" name="Category" placeholder="Enter Category">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2"><i class="la la-upload"></i> Add</button>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+ 
+    <script>
+            $('.dataTable').DataTable();
+    </script>
+}

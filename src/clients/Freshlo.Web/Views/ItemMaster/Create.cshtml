@@ -1,0 +1,526 @@
+﻿@using Freshlo.Web.Models.ItemMaster;
+@model ItemMasterVM;
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var aliyunpath = Model.businessInfo.aliyunPath;
+}
+
+
+<style>
+html * {
+  box-sizing: border-box;
+}
+
+p {
+  margin: 0;
+}
+
+.upload {
+  &__box {
+    padding: 40px;
+  }
+  &__inputfile {
+    width: .1px;
+    height: .1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+  }
+
+  &__btn {
+    display: inline-block;
+    font-weight: 600;
+    color: #fff;
+    text-align: center;
+    min-width: 116px;
+    padding: 5px;
+    transition: all .3s ease;
+    cursor: pointer;
+    border: 2px solid;
+    background-color: #4045ba;
+    border-color: #4045ba;
+    border-radius: 10px;
+    line-height: 26px;
+    font-size: 14px;
+
+    &:hover {
+      background-color: unset;
+      color: #4045ba;
+      transition: all .3s ease;
+    }
+
+    &-box {
+      margin-bottom: 10px;
+    }
+  }
+
+  &__img {
+    &-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 -10px;
+    }
+
+    &-box {
+      width: 200px;
+      padding: 0 10px;
+      margin-bottom: 12px;
+    }
+
+    &-close {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background-color: rgba(0, 0, 0, 0.5);
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        text-align: center;
+        line-height: 24px;
+        z-index: 1;
+        cursor: pointer;
+
+        &:after {
+          content: '\2716';
+          font-size: 14px;
+          color: white;
+        }
+      }
+  }
+}
+
+    .upload__img-wrap .upload__img-box {
+        width: 200px;
+        height: 200px;
+        position: relative;
+    }
+
+
+        .upload__img-wrap .upload__img-box .img-bg {
+            background-size: contain;
+        }
+
+        .img-bg {
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            position: relative;
+            padding-bottom: 100%;
+        }
+
+
+        .cancelBlahImage {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 2;
+        }
+
+
+        .upload-img {
+            width: 100%;
+            height: 200px;
+        }
+        .upload-img figure {
+            width: 100%;
+            height: 100%;
+        }
+
+        .upload-img img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain;
+        }
+
+        .cancel_button {
+          border: none;
+          background: none;
+          padding: 10px;
+          cursor: pointer;
+        }
+
+        .upload__img-wrap {
+            margin-top: 20px
+        }
+
+        .upload__img-wrap .upload__img-box {
+            width: 100%;
+            height: auto;
+            position: relative;
+            margin-bottom: 10px;
+            background-color: #f2f3f7;
+        }
+
+        .upload__img-wrap .upload__img-box .cancelMultiImage {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0;
+            background-color: #fff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .upload__img-wrap .upload__img-box .cancelMultiImage i {
+            font-size: 12px;
+        }
+</style>
+
+<link href="~/assets/img_crop/css/img_crop.css" rel="stylesheet" />
+<link href="~/assets/img_crop/css/img_crop_main.css" rel="stylesheet" />
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Item Master</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item">
+                    <a href="/ItemMaster/Manage/" class="m-nav__link">
+                        <span class="m-nav__link-text">Item manage</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">
+                                Create New Item
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" action="/ItemMaster/Create/" id="itemMasterformid" method="post">
+                        <input type="text" id="Aliyunkey" name="Aliyunkey" value="@aliyunpath" hidden />
+                        <input type="hidden" asp-for="@Model.taxInfoDetails.taxType" id="taxType" />
+                        <input type="hidden" asp-for="@Model.taxInfoDetails.calcuationTaxtype" id="calcuationTaxtype" />
+                        @*<div class="form-group row">
+                            <label class="col-md-3 col-form-label">Food Type Indicator <span class="text-warning"></span></label>
+                            <div class="col-md-3">
+                                <select class="form-control m-input--solid clear-cls" name="FoodType" id="FoodType">
+                                    <option value="0" selected="selected">Select Food Type</option>
+                                    @foreach (var item in Model.foodTypeList)
+                                    {
+                                                <option value="@item.Value">@item.Text</option>
+                                    }
+                                </select>
+                                <span class="error font-small-3 error-empty-cls" id="SpnFoddType" style="display: none; color: red;"></span>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-control m-input--solid clear-cls" name="FoodSubType" id="FoodSubType" style="display:none;"></select>
+                                <span class="error font-small-3 error-empty-cls" id="SpnFoodSubType" style="display: none; color: red;"></span>
+                            </div>
+                            <div class="col-md-2 text-right">
+                                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#add_category_md" id="addcategory" style="display:none;"><i class="la la-plus"></i></button>
+                            </div>
+
+                        </div>*@
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Main Category <span class="text-warning">*</span></label>
+                            <div class="col-md-3">
+                                <select asp-items="Model.GetMainCategoryList" class="form-control m-input--solid clear-cls" name="MainCategory" id="MainCate">
+                                    <option value="0" selected="selected">Select Main Category</option>
+                                </select>
+                                <span class="error font-small-3 error-empty-cls" id="SpnMainCate" style="display: none; color: red;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Category</label>
+                            <div class="col-md-3">
+                                <select class="form-control m-input--solid clear-cls" name="Category" id="Category">
+                                    <option value="NA">Select Category</option>
+                                </select>
+                                <span class="error font-small-3 error-empty-cls" id="SpnCategory" style="display: none; color: red;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">SubCategory</label>
+                            <div class="col-md-3">
+                                <select class="form-control m-input--solid clear-cls" name="SubCategory" id="SubCategory">
+                                    <option value="NA">Select SubCategory</option>
+                                </select>
+                                <span class="error font-small-3 error-empty-cls" id="Spnsubcategory" style="display: none; color: red;">This field is required</span>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Item Name <span class="text-warning">*</span></label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control m-input m-input--solid clear-cls SpaceValidation" name="pluName" autocomplete="off" id="pluName" placeholder="Enter Product Name">
+                                <span class="error font-small-3 error-empty-cls" id="Spnpluname" style="display: none; color: red;">This field is required</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Short Description <span class="text-warning"></span></label>
+                            <div class="col-md-5">
+                                <textarea rows="2" class="form-control m-input m-input--solid SpaceValidation" name="Description" id="Description" style="resize:none;" placeholder="Enter Short Description"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Item Code / Barcode <span class="text-warning">*</span></label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control m-input m-input--solid clear-cls SpaceValidation" autocomplete="off" name="PluCode" id="PluCode" placeholder="Enter Product Code">
+                                <span class="error font-small-3 error-empty-cls" id="Spnplucode" style="display: none; color: red;">This field is required</span>
+                                <span class="error font-small-3" id="SpnUniqueplucode" style="display: none; color: red;">Plucode should be unique</span>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Item Visibility</label>
+                            <div class="col-md-3">
+                                <select class="form-control m-input--solid clear-cls" name="Visibility" id="Visibility">
+                                    <option value="0" selected="selected" disabled>Select Visibility</option>
+                                    <option value="1">Online </option>
+                                    <option value="2">Hub</option>
+                                    <option value="3" selected>Both</option>
+                                </select>
+                                <span class="error font-small-3 error-empty-cls" id="SpnVisibility" style="display: none; color: red;"></span>
+                            </div>
+                        </div>
+                        <hr />
+                        @if ((Model.taxInfoDetails.taxType == 1 && Model.taxInfoDetails.calcuationTaxtype == 1) || (Model.taxInfoDetails.taxType == 2 && Model.taxInfoDetails.calcuationTaxtype == 1))
+                        {
+                                    <div class="form-group row">
+                                        <label class="col-md-3 col-form-label">Is item tax free?<span class="text-warning"></span></label>
+                                        <div class="col-md-3">
+                                            <select class="form-control m-input--solid" name="Tax" id="taxId">
+                                                <option value="0" selected="selected" disabled>Select Option</option>
+                                                <option value="Yes" selected="selected">Yes</option>
+                                                <option value="No">No</option>
+                                            </select>
+                                            <span class="error font-small-3" id="SpnTax" style="display: none; color: red;"></span>
+                                        </div>
+                                    </div>
+                        }
+                        @if (Model.taxInfoDetails.taxType == 1 && Model.taxInfoDetails.calcuationTaxtype == 1)
+                        {
+                                    <div id="TaxDivId" style="display:none">
+                                        <div class="form-group row">
+                                            <label class="col-md-3 col-form-label">HSN Code<span class="text-warning">*</span></label>
+                                            <div class="col-md-2">
+                                                <input type="text" class="form-control m-input m-input--solid empty-cls clear-cls" name="HSN_Code" id="HSN_Code" autocomplete="off" placeholder="Enter HSN Code">
+                                                <span class="error font-small-3 error-empty-cls" id="SpnHSN_Code" style="display: none; color: red;">This field is required</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-3 col-form-label">IGST<span class="text-warning">*</span></label>
+                                            <div class="col-md-2">
+                                                <select class="form-control m-input--solid" name="gst_per" id="IGST">
+                                                    <option value="0" selected="selected">Select IGST</option>
+                                            @foreach (var list in Model.taxPercentageList)
+                                            {
+                                                                <option value="@list.IGST_Per" data-scst="@list.SGST_Per" data-cgst="@list.CGST_Per">@list.IGST_Per</option>
+                                            }
+                                                </select>
+                                                <span class="error font-small-3 error-empty-cls" id="SpnIGST" style="display: none; color: red;">This field is required</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-3 col-form-label">SGST<span class="text-warning">*</span></label>
+                                            <div class="col-md-2">
+                                                <input type="number" class="form-control m-input m-input--solid empty-cls clear-cls" name="sgst_per" autocomplete="off" id="SGST" placeholder="Enter SGST %">
+                                                <span class="error font-small-3 error-empty-cls" id="SpnSGST" style="display: none; color: red;">This field is required</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-3 col-form-label">CGST<span class="text-warning">*</span></label>
+                                            <div class="col-md-2">
+                                                <input type="number" class="form-control m-input m-input--solid empty-cls clear-cls" name="cgst_per" autocomplete="off" id="CGST" placeholder="Enter CGST %">
+                                                <span class="error font-small-3 error-empty-cls" id="SpnCGST" style="display: none; color: red;">This field is required</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                        }
+                        @if (Model.taxInfoDetails.taxType == 2 && Model.taxInfoDetails.calcuationTaxtype == 1)
+                        {
+                                    <div id="TaxDivId" style="display:none">
+                                        <div class="form-group row">
+                                            <label class="col-md-3 col-form-label">VAT %<span class="text-warning">*</span></label>
+                                            <div class="col-md-2">
+                                                <select class="form-control m-input--solid" name="vat_per" id="VAT">
+                                                    <option value="0" selected="selected">Select VAT</option>
+                                            @foreach (var list in Model.taxPercentageList)
+                                            {
+                                                                <option value="@list.VAT_Per">@list.VAT_Per</option>
+                                            }
+                                                </select>
+                                                <span class="error font-small-3 error-empty-cls" id="SpnVAT" style="display: none; color: red;">This field is required</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                        }
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Offered As? </label>
+                            <div class="col-md-3">
+                                <select asp-items="Model.offerType" class="form-control m-input--solid clear-cls" name="offer_type" id="Offertype">
+                                    @*<option value="0" disabled="disabled">Select Offer</option>
+                                    @foreach (var item in Model.offerType)
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                        if (item.Value == "1")
+                                        {
+                                                            <option value="@item.Value" selected="selected">@item.Text</option>
+                                        }
+                                        else
+                                        {
+                                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    }*@
+                                </select>
+                                <span class="error font-small-3 error-empty-cls" id="Spnoffertype" style="display: none; color: red;">This field is required</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Supplier Name<span class="text-warning">*</span></label>
+                            <div class="col-md-3">
+                                <select asp-items="Model.SupplierNameList" class="form-control m-input--solid clear-cls" name="Supplier" id="Supplier">
+                                    <option value="0" selected="selected" disabled="disabled">Select Supplier</option>
+                                </select>
+                                <span class="error font-small-3 error-empty-cls" id="Spnsupplier" style="display: none; color: red;">This field is required</span>
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Brand<span class="text-warning">*</span></label>
+                            <div class="col-md-3">
+                                <select asp-items="Model.BrandList" class="form-control m-input--solid clear-cls" name="Brand" id="BrandId">
+                                    <option value="0" selected="selected" disabled="disabled">Select Brand</option>
+                                </select>
+                                <span class="error font-small-3 error-empty-cls" id="SpnBrandId" style="display: none; color: red;"></span>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Upload Image Path: <span class="text-warning">*</span></label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control m-input m-input--solid clear-cls SpaceValidation" name="imagecdnpath" autocomplete="off" id="imagecdnpath" placeholder="upload Image Path" onkeyup="previewFile(this);" >
+                                <span class="error font-small-3 error-empty-cls" id="Spnpluname1" style="display: none; color: red;">This field is required</span>
+                            </div>
+                        </div>
+                        <input type="hidden" value="0" name="ProductCost" id="productCost" class="empty-cls" />
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Upload Image (Thumbnail Primary Image) <span class="text-warning">*</span></label>
+                            <div class="col-md-3">
+                                <label class="cabinet center-block upload-img">
+                                    <figure class="img-thumbnail">
+                                        <img src="" id="blah" class="gambar img-responsive" />
+                                        <figcaption><i class="fa fa-camera"></i></figcaption>
+                                    </figure>
+                                    <input type="file" class="item-img file center-block" name="ImagePath" id="UploadImage" onchange="readURL(this);" />
+                                </label>
+
+                                 <button type="button" class="cancelBlahImage cancel_button" id="cancel_blah__img">
+                                    <i class="fa fa-times" aria-hidden="true" ></i>
+                                </button>
+                            </div>
+                               
+                        </div>
+                        <div class="form-group row">
+                            <label  class="col-md-3 col-form-label upload__btn"> Select Multiple Image</label>
+                            <div class="col-md-9">
+                                <div class="upload__box">
+                                    <div class="upload__btn-box">
+                                    @*<i class="fa fa-cart-arrow-down font-large-1"></i>*@
+                                    <input type="file" name="files" id="ImagePaths" data-max_length="20" class="upload__inputfile multiple" multiple="multiple">
+                                    </div>
+                                <div class="row upload__img-wrap">
+                                </div>
+                            </div>
+                            </div>
+                           
+                        </div>
+                        <hr />
+                        <div class="form-group row">
+                            <div class="col-md-9 offset-md-3">
+                                <div class="float-left">
+                                    <button type="button" class="btn btn-success" id="btnSubmitItem">Submit</button>
+                                    <button type="button" class="btn btn-link clearItem" id="clearItem">Clear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form asp-controller="ItemMaster" asp-action="Index" method="post" enctype="multipart/form-data" style="display:none">
+                        <input type="file" name="postedFile" />
+                        <input type="submit" value="Import" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="add_category_md" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add Category</h5>
+                <button type="button" class="close catclose" id="catclose" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right">
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Add Category<span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="CategoryName" name="CategoryName" placeholder="Enter Category">
+                                    <span class="text-danger font-small-3 text-bold-600" id="spnCategoryName" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2" id="addnonvegcate"><i class="la la-upload"></i> Add</button>
+                                    <button type="button" class="btn btn-link catclose" id="catclose" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/assets/scripts/item/create.js"></script>
+    <script src="~/assets/img_crop/js/img_crop.js"></script>
+    <script src="~/assets/img_crop/js/img_crop_main.js"></script>
+    <script src="~/assets/app/js/datatable.js"></script>
+    <script src="https://rawgit.com/andrewng330/PreviewImage/master/preview.image.min.js"></script>
+    @*//<script src="~/assets/demo/demo6/custom/crud/forms/widgets/bootstrap-select.js" type="text/javascript"></script>*@
+    <script src="~/assets/demo/demo6/custom/crud/forms/widgets/bootstrap-select.js" type="text/javascript"></script>
+}
+
+
+
+
+
+
+
+
+
+
+

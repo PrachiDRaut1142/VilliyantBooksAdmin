@@ -1,0 +1,43 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Invoice</title>
+</head>
+<body>
+    <div id="content">
+        <h3>Hello, this is a H3 tag</h3>
+
+        <p>a pararaph</p>
+    </div>
+    <div id="editor"></div>
+    <button id="cmd">generate PDF</button>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="~/assets/scripts/print/invoice.js"></script>
+    <script type="text/javascript">
+        var doc = new jsPDF();
+        var specialElementHandlers = {
+            '#editor': function (element, renderer) {
+                return true;
+            }
+        };
+        $('#cmd').click(function () {
+            doc.fromHTML($('#content').html(), 15, 15, {
+                'width': 170,
+                'elementHandlers': specialElementHandlers
+            });
+            doc.save('sample-file.pdf');
+        });
+    </script>
+
+</body>
+</html>
+
+

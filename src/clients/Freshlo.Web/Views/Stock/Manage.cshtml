@@ -1,0 +1,418 @@
+﻿
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Stock Management</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="javascripts:;" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/Home/Index/" class="m-nav__link">
+                        <span class="m-nav__link-text">Home</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="javascripts:;" class="m-nav__link">
+                        <span class="m-nav__link-text">Stock Manage</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <button type="button" class="btn  btn-outline-info mr-2" onclick="window.location.href='/Wastage/Create/'"><i class="la la-plus"></i> Add Wastage</button>
+            <button type="button" class="btn btn-dark" onclick="window.location.href='/Stock/Create/'"><i class="la la-plus"></i> New Stock Request</button>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-3">
+            <a href="">
+                <div class="m-portlet">
+                    <!--begin::Total Profit-->
+                    <div class="m-widget24 pb-4 ">
+                        <div class="m-widget24__item">
+                            <h4 class="m-widget24__title mt-4">
+                                Total Stock
+                            </h4><br>
+                            <span class="m-widget24__desc">
+                                All Customs Value
+                            </span>
+                            <span class="m-widget24__stats m--font-metal">
+                                500kg
+                            </span>
+                        </div>
+                    </div>
+                    <!--end::Total Profit-->
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="">
+                <div class="m-portlet">
+                    <!--begin::Total Profit-->
+                    <div class="m-widget24 pb-4 ">
+                        <div class="m-widget24__item">
+                            <h4 class="m-widget24__title mt-4">
+                                Total Stock Value
+                            </h4><br>
+                            <span class="m-widget24__desc">
+                                All Customs Value
+                            </span>
+                            <span class="m-widget24__stats m--font-metal">
+                                Rs.65230.23
+                            </span>
+                        </div>
+                    </div>
+                    <!--end::Total Profit-->
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="">
+                <div class="m-portlet">
+                    <!--begin::Total Profit-->
+                    <div class="m-widget24 pb-4 ">
+                        <div class="m-widget24__item">
+                            <h4 class="m-widget24__title mt-4">
+                                Selling Price
+                            </h4><br>
+                            <span class="m-widget24__desc">
+                                All Customs Value
+                            </span>
+                            <span class="m-widget24__stats m--font-metal">
+                                Rs.75230.23
+                            </span>
+                        </div>
+                    </div>
+                    <!--end::Total Profit-->
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="">
+                <div class="m-portlet">
+                    <!--begin::Total Profit-->
+                    <div class="m-widget24 pb-4 ">
+                        <div class="m-widget24__item">
+                            <h4 class="m-widget24__title mt-4">
+                                Total Wastage %
+                            </h4><br>
+                            <span class="m-widget24__desc">
+                                All Customs Value
+                            </span>
+                            <span class="m-widget24__stats m--font-danger">
+                                10%
+                            </span>
+                        </div>
+                    </div>
+                    <!--end::Total Profit-->
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="m-portlet">
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control m-input m-input--solid" id="SearchItem" placeholder="Product Code / Name..." />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="_stocklist">
+                        @*<div class="col-md-2">
+                                <a href="#" class="text-center" data-toggle="modal" data-target="#stockdetail">
+                                    <div class="mb-3 item_list">
+                                        <img src="http://drawingzoro.com/wp-content/uploads/2018/03/fruit-and-veg-pencil-drawing-black-and-white-fruits-vegetables-clipart-basket-drawing-pencil-and-in-color.jpg" alt="Tomato Image" class="img-fluid mb-2" style="opacity:0.4" />
+                                        <h6 class="font-medium-1">Sugar - 100g</h6>
+                                        <h6 class="font-small-4"><span class="text-success text-bold-500">In Stock</span> - 150 kg</h6>
+                                        <h6 class="font-small-3">1 Kg X Rs.200.00</h6>
+
+                                    </div>
+                                </a>
+                                <div class="">
+                                    <input type="text" class="form-control" />
+                                </div>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="stockdetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <!--begin::Portlet-->
+                <div class="m-portlet m-portlet--tabs mb-0">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <h3 class="m-portlet__head-text text-success">
+                                    In Stock
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="m-portlet__head-tools">
+                            <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--right m-tabs-line-danger" role="tablist">
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link active" data-toggle="tab" href="#s_ricedetail" role="tab">
+                                        Price Detail
+                                    </a>
+                                </li>
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#s_hubOffer" role="tab">
+                                        Hub Offer
+                                    </a>
+                                </li>
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#s_wastage" role="tab">
+                                        Wastage %
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <div class="row">
+                            <div class="col-md-6 text-muted">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>Item Code</h6>
+                                        <h5 class="">ITM076</h5>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Item Name</h6>
+                                        <h5 class="">Sugar - 100g</h5>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>Weight</h6>
+                                        <h5 class="">1 kg</h5>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Unit Price</h6>
+                                        <h5 class="">Rs.200.00</h5>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>Total Stock</h6>
+                                        <h5 class="">230 kg</h5>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="tab-content" style="border-left: 2px solid #f4f5f8;padding-left: 10px;">
+                                    <div class="tab-pane active" id="s_ricedetail">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control form-control-lg m-input m-input--solid" placeholder="Weight / Qty">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control form-control-lg m-input m-input--solid" placeholder="Discount - 100%" title="Discount">
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control form-control-lg m-input m-input--solid" value="Rs.00.00">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="tab-pane" id="s_hubOffer">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control form-control-lg m-input m-input--solid" placeholder="Product Name">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control form-control-lg m-input m-input--solid" placeholder="Offer Weight / Qty">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control form-control-lg m-input m-input--solid" placeholder="Discount - 100%" title="Discount">
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control form-control-lg m-input m-input--solid" placeholder="Rs.00.00" readonly="readonly">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="s_wastage">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control form-control-lg m-input m-input--solid" placeholder="Wastage Weight / Qty">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <textarea rows="3" class="form-control form-control-lg m-input m-input--solid" placeholder="Notes"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="float-right">
+                                    <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Close</button>
+                                    <button type="button" id="btnCustomerAdd" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end::Portlet-->
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="table-responsive">
+        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table">
+            <thead>
+                <tr>
+                    <th>Item Name / Code</th>
+                    <th>Item Type</th>
+                    <th>Quantity</th>
+                    <th>Vendor</th>
+                    <th>Brand</th>
+                    <th>Wastage</th>
+                    <th>Status</th>
+                    <th>Last Purchase</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <a href="#" class="text-link" data-toggle="modal" data-target="#stockdetail">Sugar - 100g</a><span class="display-block font-small-2">U5002</span>
+                    </td>
+                    <td>
+                        Pocket
+                    </td>
+                    <td>
+                        50kg
+                    </td>
+                    <td>
+                        Freshlo
+                    </td>
+                    <td>Freshlo</td>
+                    <td>
+                        5kg
+                    </td>
+                    <td>
+                        <span class="m-badge m-badge--success m-badge--rounded m-badge--wide">In Stock</span>
+                    </td>
+                    <td>08-28-2018 10:08 AM</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="/User/Detail/" class="text-link">Sugar - 250g</a><span class="display-block font-small-2">U5002</span>
+                    </td>
+                    <td>
+                        Pocket
+                    </td>
+                    <td>
+                        50kg
+                    </td>
+                    <td>
+                        Freshlo
+                    </td>
+                    <td>Freshlo</td>
+                    <td>
+                        5kg
+                    </td>
+                    <td>
+                        <span class="m-badge m-badge--success m-badge--rounded m-badge--wide">In Stock</span>
+                    </td>
+                    <td>08-28-2018 10:08 AM</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="/User/Detail/" class="text-link">Sugar - 500g</a><span class="display-block font-small-2">U5002</span>
+                    </td>
+                    <td>
+                        Pocket
+                    </td>
+                    <td>
+                        00kg
+                    </td>
+                    <td>
+                        Freshlo
+                    </td>
+                    <td>Freshlo</td>
+                    <td>
+                        5kg
+                    </td>
+                    <td>
+                        <span class="m-badge m-badge--danger m-badge--rounded m-badge--wide">Out of Stock</span>
+                    </td>
+                    <td>08-28-2018 10:08 AM</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="/User/Detail/" class="text-link">Sugar - 1kg</a><span class="display-block font-small-2">U5002</span>
+                    </td>
+                    <td>
+                        Pocket
+                    </td>
+                    <td>
+                        50kg
+                    </td>
+                    <td>
+                        Freshlo
+                    </td>
+                    <td>Freshlo</td>
+                    <td>
+                        5kg
+                    </td>
+                    <td>
+                        <span class="m-badge m-badge--success m-badge--rounded m-badge--wide">In Stock</span>
+                    </td>
+                    <td>08-28-2018 10:08 AM</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>*@
+@section scripts {
+
+    <script src="~/assets/scripts/stock/manage.js"></script>
+    }

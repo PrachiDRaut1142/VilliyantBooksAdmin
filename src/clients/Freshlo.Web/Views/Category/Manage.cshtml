@@ -1,0 +1,339 @@
+﻿@using Freshlo.Web.Models.CategoriesVM;
+@model MainCatgoriesVM;
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var aliyunpath = Model.businessInfo.aliyunPath;
+}
+
+<style>
+    .product-variant figure {
+        width: 200px;
+        height: 200px;
+        position: relative;
+    }
+
+    .product-variant figure img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover;
+    }
+
+    .product-variant figure figcaption {
+        color: #fff;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #343a40;
+        text-align: center;
+        cursor: pointer;
+        display: none;
+    }
+
+    .product-variant figure:hover figcaption {
+        display: block;
+    }
+
+    .product-variant figure figcaption i {
+        line-height: 30px;
+    }
+</style>
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Category Management</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item">
+                    <span class="text-link">
+                        <span class="m-nav__link-text">Manage</span>
+                    </span>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#mainCategory">
+                <i class="la la-plus"></i>
+                Add Main Category
+            </button>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon m--hide">
+                        <i class="la la-gear"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                        Manage Main Category
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless CatManage" id="table-draggable2">
+                            <thead>
+                                <tr>
+                                    <th>Logo</th>
+                                    <th>Main Category Name</th>
+                                    <th>Category Count</th>
+                                    <th>Sequence</th>
+                                    <th>Visibility</th>
+                                    <th>Created On / By</th>
+                                    <th>Edit</th>
+                                    <th>Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody class="connectedSortable" id="tableid">
+                                @foreach (var item in Model.Maincatlist)
+                                {
+
+                                <tr>
+                                    <td>
+                                        <img alt="MainCategory Image" src="https://freshlo.oss-ap-south-1.aliyuncs.com/@aliyunpath/category-images/@(item.MainCategoryId).png" onerror="this.onerror = null;
+                                                          this.src = 'https://freshlo.oss-ap-south-1.aliyuncs.com/@aliyunpath/no-image.png';" style="width:60px;border-radius:5px;" />
+                                    </td>
+                                    <td><a href="/Category/Detail/?Id=@item.MainCategoryId" class="text-dark">@item.Name</a><span class="d-block font-small-2">@item.Description</span></td>
+                                    <td><span class="m-badge m-badge--rounded m-badge--danger m-badge--brand font-small-3">@item.CategoryCount</span></td>
+                                    <td><span class="m-badge m-badge--rounded m-badge--wide m-badge--brand font-small-3">@item.Sequence</span></td>
+                                    <td><span class="m-badge m-badge--rounded m-badge--wide m-badge--success font-small-3">@item.Visibility</span></td>
+                                    <td>@item.AddedOn <span class="font-small-3 display-block">@item.AddedBy</span></td>
+                                    <td><a href="/Category/Detail/?Id=@item.MainCategoryId" class="text-dark"> <i class="flaticon-edit"></i> </a></td>
+                                    <td>
+                                        <a href="#" class="text-danger deleteMainCatiD" data-id="@item.MainCategoryId"> <i class="flaticon-delete"> </i></a>
+
+                                        <a href="#" class="text-dark viewcategory ml-2" id="viewmaincategory" data-id="@item.MainCategoryId"><i class="fa fa-eye"> </i></a>
+
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MAIN CATEGORY MODAL -->
+<div class="modal fade" id="mainCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Main Category</h5>
+                <button type="button" class="close CatCreateClose" data-dismiss="modal" id="CatCreateClose" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" id="MainCategoryCreate" method="post" asp-action="AddedMainCategory" asp-controller="Category">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="product-variant">
+                                                <label class="cabinet center-block">
+                                                    <figure>
+                                                        <img src="~/img/no-image.png" class="gambar img-responsive img-thumbnail" id="item-img-output" />
+                                                        <figcaption><i class="fa fa-camera"></i></figcaption>
+                                                    </figure>
+                                                    <input type="file" class="item-img file center-block" name="imageFiles" id="imageFiles" style="display:none" onchange="readURL(this);" />
+                                                </label>
+
+                                            </div>
+
+
+
+
+                                            @*<input type="file" class="form-control m-input m-input--solid" name="ImagePath" id="UploadImage" placeholder="Enter Product Name">*@
+                                            
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label>Main Category Name</label>
+                                                <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="CatName" name="Name" value="" placeholder="Main Category Name" />
+                                                <span class="text-danger font-small-3 " style="display:none;" id="SpnCatName"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Description</label>
+                                                <textarea rows="4" class="form-control m-input m-input--solid SpaceValidation" placeholder="description" id="CatDescription" value="NA" name="Description"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Sequence</label>
+                                                <input type="number" class="form-control m-input m-input--solid" min="0" maxlength="3" placeholder="eg. 02" id="CatSequence" name="Sequence" />
+                                                <span class="text-danger font-small-3 " style="display:none;" id="SpnCatSequence"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Visibility</label>
+                                                <select class="form-control m-input m-input--solid" id="Visibility" name="Visibility">
+                                                    <option value="1">Yes</option>
+                                                    <option value="0">No</option>
+                                                </select>
+                                            </div>
+
+                                            @*<div class="form-group row">
+            <label class="col-md-3 col-form-label">Upload Image (Thumbnail Primary Image) <span class="text-warning">*</span></label>
+            <div class="col-md-3">
+                <input type="file" class="form-control m-input m-input--solid" name="imageFiles" id="imageFiles" placeholder="">
+            </div>
+        </div>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="text" id="Aliyunkey" name="Aliyunkey" value="@aliyunpath" hidden />
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link CatCreateClose" data-dismiss="modal" id="CatCreateClose">Close</button>
+                <button type="button" class="btn btn-danger" id="SubmitMancategory">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MAIN CATEGORY TRANSLATION MODAL -->
+<div class="modal fade" id="mainCategory_translation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Main Category Language Translation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0">
+                <div>
+                    <div class="text-right mb-3 mt-3">
+                        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#add_language_md">Add Language</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless" id="table-draggable2">
+                            <thead>
+                                <tr>
+                                    <th width="40%">Category Name</th>
+                                    <th width="50%">Description</th>
+                                    <th width="10%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="languageMainCateId"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ADD LANGUAGE MODAL -->
+<div class="modal fade" id="add_language_md" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add Language</h5>
+                <button type="button" class="close closemaincategorylanguage" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" id="MainCategoryUpdate" method="post" action="/Category/GetLanguageMainCategory/">
+                            <div class="row">
+                                <div class="col-md-12" style="display:block">
+                                    <div class="form-group row">
+                                        <label class="col-md-3 col-form-label">Select Language</label>
+                                        <div class="col-md-8">
+                                            <select class="form-control m-input--solid clear-cls" id="Addlanguagetext" name="LanguageName">
+                                                @foreach (var item in Model.getaddedlanguagelist)
+                                                {
+                                                        @if (@item.Languagecode == "English")
+                                                        {
+                                                            <option value="@item.Languagecode" selected>@item.LanguageName</option>
+                                                        }
+                                                        else if (ViewBag.language != "No Set")
+                                                        {
+                                                             <option value="@item.Languagecode">@item.LanguageName</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.Languagecode">@item.LanguageName</option>
+                                                        }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Main Category Name</label>
+                                        <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="maincategorylanguagename" name="MainCatNameLanguage" placeholder="Main Category Name" value="" />                                        
+                                        <span class="text-danger font-small-3 " style="display:none;" id="Spnmaincategorylanguagename"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea rows="4" class="form-control m-input m-input--solid SpaceValidation" placeholder="description" value="" id="maincategoryDescription" name="Descriptionlanguage"></textarea>                                        
+                                    </div>
+                                    <input type="text" id="MainCategoryId143" name="MainCategoryId" value="@ViewBag.maincatId" style="display:none" hidden />
+                                </div>                                
+                            </div>
+                            <input type="text" id="Aliyunkey" name="Aliyunkey" value="@aliyunpath" hidden />
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link closemaincategorylanguage" data-dismiss="modal">Close</button>
+
+                
+                    <button type="button" class="btn btn-dark" id="maincategorylanguage">Submit</button>
+                
+               
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#item-img-output').attr('src', e.target.result).width(150).height(200);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $(document).ready(function () {
+            $('.modal').on('hidden.bs.modal', function () {
+                $(this).find('form')[0].reset();
+                $(this).find('img')[0].reset();
+            });
+        });
+    </script>
+    <script src="~/assets/scripts/category/index.js"></script>
+    <script src="~/assets/img_crop/js/img_crop.js"></script>
+    <script src="~/assets/img_crop/js/img_crop_main.js"></script>
+    <script src="~/assets/scripts/settings/language.js"></script>
+}

@@ -1,0 +1,14 @@
+﻿@using Freshlo.DomainEntities;
+@model List<DeleiverySlot>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@item.Timing </td>
+        <td>@item.SlotTypeDesc</td>
+        <td><a href="#" data-toggle="modal" data-target="#Slots" class="text-dark slotDetailcls" data-id="@item.Id"> <i class="flaticon-edit"> </i> </a></td>
+        <td><a href="#" class="text-danger SlotDeleteCls" data-id="@item.Id"> <i class="flaticon-delete deleteSlotId"> </i> </a></td>
+
+    </tr>
+
+}

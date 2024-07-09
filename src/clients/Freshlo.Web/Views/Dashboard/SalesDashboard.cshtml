@@ -1,0 +1,310 @@
+﻿@{
+    ViewData["Title"] = "Sales Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Hub Dashboard</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="javascripts:;" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/Sale/Index/" class="m-nav__link">
+                        <span class="m-nav__link-text">Home</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="javascripts:;" class="m-nav__link">
+                        <span class="m-nav__link-text">Dashboard</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <button type="button" class="btn btn-success"><i class="la la-save"></i> Save Changes</button>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+
+
+<div class="m-content">
+   
+    <div class="m-portlet">
+        <div class="m-portlet__body  m-portlet__body--no-padding">
+            <div class="m-widget29">
+               
+                <div class="m-widget_content">
+                    <h3 class="m-widget_content-title">Todays Order Summary</h3>
+                    <div class="m-widget_content-items">
+                        <div class="m-widget_content-item">
+                            <span>Unconfirmed</span>
+                            <span class="m--font-danger">1</span>
+                        </div>
+                        <div class="m-widget_content-item">
+                            <span>Deliveries Pending</span>
+                            <span class="m--font-danger">15</span>
+                        </div>
+                        <div class="m-widget_content-item">
+                            <span>Deliveries Closed</span>
+                            <span class="">2</span>
+                        </div>
+                        <div class="m-widget_content-item">
+                            <span>Walkin Closed</span>
+                            <span class="">25</span>
+                        </div>
+
+                        <div class="m-widget_content-item">
+                            <span>Orders Canclled</span>
+                            <span class="m--font-danger">3</span>
+                        </div>
+                        <div class="m-widget_content-item">
+                            <span>Orders Created</span>
+                            <span class="m--font-info">55</span>
+                        </div>
+                        <div class="m-widget_content-item">
+                            <span>Payment Unsettled</span>
+                            <span class="m--font-danger">₹ 5320 <span class="m--font-danger font-medium-3">/ 6</span></span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row m-row--no-padding m-row--col-separator-xl">
+                    <div class="col-xl-4">
+
+                        <!--begin:: Widgets/Stats2-1 -->
+                        <div class="m-widget1">
+                            <div class="m-widget1__item">
+                                <div class="row m-row--no-padding align-items-center">
+                                    <div class="col">
+                                        <h3 class="m-widget1__title">Offline Revenue</h3>
+                                        <span class="m-widget1__desc">walkin and web</span>
+                                    </div>
+                                    <div class="col m--align-right">
+                                        <span class="m-widget1__number m--font-brand">₹ 17,800</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-widget1__item">
+                                <div class="row m-row--no-padding align-items-center">
+                                    <div class="col">
+                                        <h3 class="m-widget1__title">Online Revenue</h3>
+                                        <span class="m-widget1__desc">Through App orders</span>
+                                    </div>
+                                    <div class="col m--align-right">
+                                        <span class="m-widget1__number m--font-danger">₹ 20,800</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-widget1__item">
+                                <div class="row m-row--no-padding align-items-center">
+                                    <div class="col">
+                                        <h3 class="m-widget1__title">Total Revenue</h3>
+                                        <span class="m-widget1__desc">Todays overall revenue.</span>
+                                    </div>
+                                    <div class="col m--align-right">
+                                        <span class="m-widget1__number m--font-success">₹ 34,232</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--end:: Widgets/Stats2-1 -->
+                    </div>
+                    <div class="col-xl-4">
+
+                        <!--begin:: Widgets/Daily Sales-->
+                        <div class="m-widget14">
+                            <div class="m-widget14__header m--margin-bottom-30">
+                                <h3 class="m-widget14__title">
+                                    Daily Sales
+                                </h3>
+                                <span class="m-widget14__desc">
+                                    Check out each collumn for more details
+                                </span>
+                            </div>
+                            <div class="m-widget14__chart" style="height:120px;">
+                                <canvas id="m_chart_daily_sales"></canvas>
+                            </div>
+                        </div>
+
+                        <!--end:: Widgets/Daily Sales-->
+                    </div>
+                    <div class="col-xl-4">
+
+                        <!--begin:: Widgets/Profit Share-->
+                        <div class="m-widget14">
+                            <div class="m-widget14__header">
+                                <h3 class="m-widget14__title">
+                                    Profit Share
+                                </h3>
+                                <span class="m-widget14__desc">
+                                    Profit Share between customers
+                                </span>
+                            </div>
+                            <div class="row  align-items-center">
+                                <div class="col">
+                                    <div id="m_chart_profit_share" class="m-widget14__chart" style="height: 160px">
+                                        <div class="m-widget14__stat">45</div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="m-widget14__legends">
+                                        <div class="m-widget14__legend">
+                                            <span class="m-widget14__legend-bullet m--bg-accent"></span>
+                                            <span class="m-widget14__legend-text">37% Sport Tickets</span>
+                                        </div>
+                                        <div class="m-widget14__legend">
+                                            <span class="m-widget14__legend-bullet m--bg-warning"></span>
+                                            <span class="m-widget14__legend-text">47% Business Events</span>
+                                        </div>
+                                        <div class="m-widget14__legend">
+                                            <span class="m-widget14__legend-bullet m--bg-brand"></span>
+                                            <span class="m-widget14__legend-text">19% Others</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--end:: Widgets/Profit Share-->
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="m-portlet">
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer Name</th>
+                                    <th>Locality</th>
+                                    <th>Order Date</th>
+                                    <th>Delivery Date</th>
+                                    <th>Slot</th>
+                                    <th>Items</th>
+                                    <th>Bill Amount</th>
+                                    <th>Status</th>
+                                    <th>Print</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            <h6 class="mb-1 font-medium-1 text-bold-600 m--font-info">
+                                                SO012321
+                                            </h6>
+                                        </a>
+                                    </td>
+                                    <td><span class="text-bold-400"> Ganesh Kumar</span></td>
+                                    <td><span class="text-bold-400"> Panvel</span></td>
+                                    <td>
+                                        <span>Dec 14 2019 11:22 am</span>
+                                    </td>
+                                    <td>
+                                        <span>Dec 15 2019</span>
+                                    </td>
+                                    <td>
+                                        <span>11am -2pm</span>
+                                    </td>
+                                    <td>
+                                        <span>10</span>
+                                    </td>
+                                    <td>
+                                        <span class="font-medium-2 text-bold-600">Rs. 250</span>
+                                    </td>
+                                    <td><span class="badge badge-danger badge-pill font-small-3">Unconfirmed</span></td>
+                                    <td>
+                                        <a href="#"><i class="flaticon-technology"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            <h6 class="mb-1 font-medium-1 text-bold-600 m--font-info">
+                                                SO012004
+                                            </h6>
+                                        </a>
+                                    </td>
+                                    <td><span class="text-bold-400"> Abdul Salam</span></td>
+                                    <td><span class="text-bold-400"> Nerul</span></td>
+                                    <td>
+                                        <span>Dec 14 2019 12:54 pm</span>
+                                    </td>
+                                    <td>
+                                        <span>Dec 15 2019</span>
+                                    </td>
+                                    <td>
+                                        <span>11am -2pm</span>
+                                    </td>
+                                    <td>
+                                        <span>10</span>
+                                    </td>
+                                    <td>
+                                        <span class="font-medium-2 text-bold-600">Rs. 750</span>
+                                    </td>
+
+                                    <td><span class="badge badge-warning badge-pill font-small-3">Confirmed</span></td>
+                                    <td>
+                                        <a href="#"><i class="flaticon-technology"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            <h6 class="mb-1 font-medium-1 text-bold-600 m--font-info">
+                                                SO012004
+                                            </h6>
+                                        </a>
+                                    </td>
+                                    <td><span class="text-bold-400"> Dimple Mehta</span></td>
+                                    <td><span class="text-bold-400"> Seawoods</span></td>
+                                    <td>
+                                        <span>Dec 14 2019 02:54 pm</span>
+                                    </td>
+                                    <td>
+                                        <span>Dec 15 2019</span>
+                                    </td>
+                                    <td>
+                                        <span>11am -2pm</span>
+                                    </td>
+                                    <td>
+                                        <span>10</span>
+                                    </td>
+                                    <td>
+                                        <span class="font-medium-2 text-bold-600">Rs. 300</span>
+                                    </td>
+
+                                    <td><span class="badge badge-warning badge-pill font-small-3">Packed</span></td>
+                                    <td>
+                                        <a href="#"><i class="flaticon-technology"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

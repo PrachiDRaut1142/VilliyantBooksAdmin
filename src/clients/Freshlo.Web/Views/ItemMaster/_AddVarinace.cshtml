@@ -1,0 +1,24 @@
+﻿@using Freshlo.Web.Models.ItemMaster;
+@model ItemMasterVM;
+
+@foreach (var item in Model.getProductVarianceList)
+{
+    <tr>
+        <td>
+             <input type="number" class="form-control m-input m-input--solid clearitem SpaceValidation price" id="SizeandVaiace" name="Purchaseprice" value="@item.ProductVarainceShortCode" placeholder="Size" />
+        </td>
+        <td>
+            <input type="number" class="form-control m-input m-input--solid clearitem SpaceValidation price" id="Purchaseprice" name="Purchaseprice" placeholder="Purchase Price" />
+        </td>
+        <td>
+            <input type="number" class="form-control m-input m-input--solid clearitem SpaceValidation price" id="SellingPrice" name="SellingPrice" placeholder="Selling Price">
+        </td>
+        <td>
+            <input type="number" class="form-control m-input m-input--solid clearitem SpaceValidation price" id="MarketPrice" name="MarketPrice" placeholder="Market Price">
+        </td>
+        <td>
+            <input type="text" class="form-control m-input m-input--solid clearitem SpaceValidation" id="Barcodest" name="Barcode" placeholder="Barcode">
+        </td>
+
+    </tr>
+}

@@ -1,0 +1,210 @@
+﻿
+@{
+    ViewData["Title"] = "Test4";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Test 4</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="javascripts:;" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/Home/Index/" class="m-nav__link">
+                        <span class="m-nav__link-text">Home</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="javascripts:;" class="m-nav__link">
+                        <span class="m-nav__link-text">Customer</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <div class="d-flex align-items-center">
+                <button class="btn btn-success mr-2" type="button" id="" onclick="window.location.href='/ItemMaster/Create/'">
+                    Create New Item
+                </button>
+                <!--begin: Dropdown-->
+                <div class="m-dropdown m-dropdown--inline  m-dropdown--arrow m-dropdown--align-right" m-dropdown-toggle="click">
+                    <a href="#" class="m-dropdown__toggle btn btn-dark dropdown-toggle">
+                        Action
+                    </a>
+                    <div class="m-dropdown__wrapper">
+                        <span class="m-dropdown__arrow m-dropdown__arrow--right"></span>
+                        <div class="m-dropdown__inner">
+                            <div class="m-dropdown__body">
+                                <div class="m-dropdown__content">
+                                    <ul class="m-nav">
+                                        <li class="m-nav__section m-nav__section--first">
+                                            <span class="m-nav__section-text">Section</span>
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="" class="m-nav__link" data-toggle="m-tooltip" title="Tooltip title" data-placement="right" data-skin="dark" data-container="body">
+                                                <i class="m-nav__link-icon flaticon-info"></i>
+                                                <span class="m-nav__link-text">FAQ</span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="" class="m-nav__link">
+                                                <i class="m-nav__link-icon flaticon-lifebuoy"></i>
+                                                <span class="m-nav__link-text">Support</span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__section m-nav__section--first">
+                                            <span class="m-nav__section-text">Other</span>
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="" class="m-nav__link">
+                                                <i class="m-nav__link-icon flaticon-share"></i>
+                                                <span class="m-nav__link-text">Activity</span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="" class="m-nav__link">
+                                                <i class="m-nav__link-icon flaticon-chat-1"></i>
+                                                <span class="m-nav__link-text">Messages</span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__separator m-nav__separator--fit">
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">Logout</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon m--hide">
+                        <i class="la la-gear"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                        List of users
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle">
+                            <thead>
+                                <tr>
+                                    <th>User Name / ID</th>
+                                    <th>Email ID</th>
+                                    <th>Contact Number</th>
+                                    <th>Role</th>
+                                    <th>Created On / By</th>
+                                    <th>Status</th>
+                                    <th>Last Login</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td>
+                                        <a href="/User/Detail/" class="text-link">Enayath Sayyed</a><span class="display-block font-small-2">U5002</span>
+                                    </td>
+                                    <td>
+                                        enayath.sayyed@freshlo.com
+                                    </td>
+                                    <td>
+                                        +91 789 456 1230
+                                    </td>
+                                    <td>Store Keeper</td>
+                                    <td>
+                                        20-02-2018 02:55 PM
+                                        <span class="display-block font-small-2">Enayath Sayyed</span>
+                                    </td>
+                                    <td>
+                                        <span class="m-badge m-badge--success m-badge--rounded m-badge--wide">Active</span>
+                                    </td>
+                                    <td>08-28-2018 10:08 AM</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="/User/Detail/" class="text-link">Abdul Salam</a><span class="display-block font-small-2">U5003</span>
+                                    </td>
+                                    <td>
+                                        abdul.salam@freshlo.com
+                                    </td>
+                                    <td>
+                                        +91 759 864 3120
+                                    </td>
+                                    <td>Store Keeper</td>
+                                    <td>
+                                        20-02-2018 02:55 PM
+                                        <span class="display-block font-small-2">Abdul Salam</span>
+                                    </td>
+                                    <td>
+                                        <span class="m-badge m-badge--success m-badge--rounded m-badge--wide">Active</span>
+                                    </td>
+                                    <td>08-28-2018 10:08 AM</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="/User/Detail/" class="text-link">Abdul Munaf</a><span class="display-block font-small-2">U5004</span>
+                                    </td>
+                                    <td>
+                                        abdul.munaf@freshlo.com
+                                    </td>
+                                    <td>
+                                        +91 887 070 6921
+                                    </td>
+                                    <td>Store Keeper</td>
+                                    <td>
+                                        20-02-2018 02:55 PM
+                                        <span class="display-block font-small-2">Abdul Munaf</span>
+                                    </td>
+                                    <td>
+                                        <span class="m-badge m-badge--success m-badge--rounded m-badge--wide">Active</span>
+                                    </td>
+                                    <td>08-28-2018 10:08 AM</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="/User/Detail/" class="text-link">Shaikh Asif Ali</a><span class="display-block font-small-2">U5005</span>
+                                    </td>
+                                    <td>
+                                        shaikh.asif@freshlo.com
+                                    </td>
+                                    <td>
+                                        +91 987 654 4321
+                                    </td>
+                                    <td>Store Keeper</td>
+                                    <td>
+                                        20-02-2018 02:55 PM
+                                        <span class="display-block font-small-2">Shaikh Asif Ali</span>
+                                    </td>
+                                    <td>
+                                        <span class="m-badge m-badge--success m-badge--rounded m-badge--wide">Active</span>
+                                    </td>
+                                    <td>08-28-2018 10:08 AM</td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        
+
+</div>
+</div>

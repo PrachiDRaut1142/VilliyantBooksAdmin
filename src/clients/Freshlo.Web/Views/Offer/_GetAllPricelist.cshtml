@@ -1,0 +1,36 @@
+﻿@using Freshlo.DomainEntities.PriceList;
+@model List<PriceList>
+@{
+    ViewData["Title"] = "_GetAllPricelist";
+}
+
+@foreach (var list in Model)
+{
+<tr>
+    <td id="ItemId" value="@list.ItemId" name="ItemId">@list.ItemId</td>
+    <td id="pluName" value="@list.pluName" name="pluName">@list.pluName</td>
+    <td id="TotalPrice" value="@list.TotalPrice" name="TotalPrice">@list.TotalPrice</td>
+    <td id="SellingPrice" value="@list.SellingPrice" name="SellingPrice">@list.SellingPrice</td>
+    <td>
+        <div>
+            <button type="button" class="btn btn-sm btn-success addItem" data-id="@list.ItemId">Add</button>
+        </div>
+    </td>
+    <td>
+        <div class="kt-checkbox-list">
+            <label class="kt-checkbox">
+                <input class="messageCheckbox" id="@list.ItemId" value="" type="checkbox" name="Check">
+                <span></span>
+            </label>
+        </div>
+    </td>
+
+</tr>
+}
+<script>
+    $('#OffertblId').DataTable({
+            "pageLength": 10,
+            "ordering": false,
+            "sorting": true
+        });
+</script>

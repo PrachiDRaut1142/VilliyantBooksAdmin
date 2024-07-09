@@ -1,0 +1,32 @@
+﻿@using Freshlo.DomainEntities.Inventory;
+@model List<InventoryAsset>
+
+@foreach (var item in Model)
+{
+    <tr>
+        @*<td>@item.AssetsId </td>*@
+        <td><spam class="font-medium-3 ">@item.AssetName</spam></td>
+     @*   <td><span class="font-medium-3 font-weight-bold" >@item.Quantity</span></td>*@
+        
+     @*   <td><spam class="font-medium-1" id="unitprice">@item.AssetsUnitPrice</spam></td>*@
+        <td><span class="font-medium-1">@item.AssetsLifespan </span></td>
+        <td>
+            @if(@item.IsServicable == 1)
+            {
+                <span class="font-medium-1 font-weight-bold">Yes</span>
+
+            }
+            else
+            {
+             <span class="font-medium-1 font-weight-bold">No</span>
+            }
+        </td>
+        @*<td><span class="font-medium-1 font-weight-bold">@item.CreatedBy </span></td>*@
+      @*  <td>
+            <a href="#" data-toggle="modal" class="text-dark OpenDetailAss" data-id="@item.Id"> <i class="flaticon-edit"> </i> </a>
+            <a href="#" class="text-danger DeletedId" data-id="@item.Id" id="DeletedId"> <i class="flaticon-delete deleteId"> </i></a>
+            </td>*@
+        @*<td></td>*@
+    </tr>
+}
+

@@ -1,0 +1,57 @@
+﻿@using Freshlo.Web.Models
+@model SalesVM
+
+@foreach (var Item in Model.ItemList)
+{
+    var image = Item.ItemId + ".png";
+    <div class="col-md-2 col-sm-3 col-6 text animated zoomIn" id="divItem_@Item.ItemId" disabled="true">
+
+        <div class="text-center">
+            <div class="mb-3 item_list">
+                @*<div style="position: absolute;width: 50px;height: 50px;background-color: #f4526d;color: white;font-weight: 600;border-radius: 50px;text-align: -webkit-center;">
+                        <span style="line-height: 3.7;">20%</span>
+                    </div>*@
+                @if (Item.DiscountPerctg.ToString() != "")
+                {
+                    <div class="circle">
+                        <div class="circle__inner">
+                            <div class="circle__wrapper">
+                                <div class="circle__content">@Item.DiscountPerctg%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="float-right" style="cursor:pointer;" data-container="body" data-toggle="m-popover" data-placement="top" data-content="@Item.OfferDescription">
+                        <i class="la la-info" style="opacity:0.2;"></i>
+                    </div>
+                    <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/@image" onerror="this.onerror=null;this.src='http://drawingzoro.com/wp-content/uploads/2018/03/fruit-and-veg-pencil-drawing-black-and-white-fruits-vegetables-clipart-basket-drawing-pencil-and-in-color.jpg';" alt="Item Image" class="img-fluid mb-2" style="width:120px;height:120px;text-align:center;" />
+                    <div class="text-left">
+                        <h6 class="font-medium-1">@Item.PluName</h6>
+                        <h6 class="font-small-3">@Item.Weight @Item.Measurement </h6>
+                        <h6 class="font-medium-1"><span class="m-badge m-badge--info m-badge--rounded m-badge--wide font-medium-1 mr-2">Rs. @Item.DiscountedPrice</span> <del class="font-small-3">Rs. @Item.SellingPrice</del></h6>
+                        @*<h6 class="text-dark font-small-2 ">Offers End: @Item.OfferEndDate</h6>*@
+                    </div>
+                }
+                else
+                {
+                    <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/@image" onerror="this.onerror=null;this.src='http://drawingzoro.com/wp-content/uploads/2018/03/fruit-and-veg-pencil-drawing-black-and-white-fruits-vegetables-clipart-basket-drawing-pencil-and-in-color.jpg';" alt="Item Image" class="img-fluid mb-2" style="width:120px;height:120px;text-align:center;" />
+                    <h6 class="font-medium-1">@Item.PluName</h6>
+                    <h6 class="font-small-3">@Item.Weight @Item.Measurement </h6>
+                    <h6 class="font-medium-1"><span class="m-badge m-badge--info m-badge--rounded m-badge--wide font-medium-1 mr-2">Rs. @Item.SellingPrice</span>  <del class="font-small-3">Rs. @Item.MarketPrice</del></h6>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+
+
+@section Scripts {
+    <script src="~/assets/scripts/sales/index.js"></script>
+    <script src="~/assets/scripts/home/app.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var elems = document.querySelectorAll('.text');
+            $('.SearchItem').textHighlight(elems, true);
+        });
+    </script>
+}

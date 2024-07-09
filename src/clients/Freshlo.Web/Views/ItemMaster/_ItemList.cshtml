@@ -1,0 +1,58 @@
+﻿@using Freshlo.Web.Models.ItemMaster;
+@model ItemMasterVM;
+<div class="row">
+    <div class="col-12">
+        <div class="table-responsive">
+            <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table">
+                <thead>
+                    <tr>
+                        <th>
+                            <label class="m-checkbox m-checkbox--bold m-checkbox--state-success">
+                                <input type="checkbox"> Item Name
+                                <span></span>
+                            </label>
+                        </th>
+                        <th>Category</th>
+                        <th>Visibility</th>
+                        <th>Featured</th>
+                        <th>Coupon Disc.</th>
+                        <th>Availability</th>
+                        <th>Sold</th>
+                        <th>Max Allowed</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.getItemMasterList)
+                    {
+                        <tr>
+                            <td>
+                                <label class="m-checkbox m-checkbox--bold m-checkbox--state-success font-medium-1 text-bold-700 mt-0">
+                                    <input type="checkbox"> @item.PluName <small class="font-small-2 d-block">@item.ItemId</small>
+                                    <span></span>
+                                </label>
+                            </td>
+                            <td>
+                                <span class="m-widget11__title text-dark">@item.Category</span>
+                                <span class="display-block font-small-1">@item.SubCategory</span>
+                            </td>
+                            <td>
+                                <span class="m-widget11__title">@(item.Visibility == "1" ? "Online" : item.Visibility == "2" ? "Hub" : "Both")</span>
+                            </td>
+                            <td><span class="badge badge-danger badge-pill font-small-3">@(item.featured == "Y" ? "YES" : "NO")</span></td>
+                            <td><span class="badge badge-danger badge-pill font-small-3">@(item.OfferId == "N" ? "NO" : "YES")</span></td>
+                            <td><span class="badge badge-success badge-pill font-small-3">@(item.seasonSale == "Y" ? "LIVE" : "NO")</span></td>
+                            <td>
+                                <span class="m-widget11__title">Rs <span class="text-bold-500 font-medium-2">@item.SellingPrice</span> </span>
+                            </td>
+                            <td>
+                                <span class="m-widget11__title"><span class="text-bold-500 font-medium-2">@item.MaxQuantityAllowed</span>@item.Measurement </span>
+                            </td>
+                            <td><span class="badge badge-success badge-pill font-small-3">@item.Approval</span></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

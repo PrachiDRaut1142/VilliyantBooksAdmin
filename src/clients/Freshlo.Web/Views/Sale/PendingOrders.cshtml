@@ -1,0 +1,909 @@
+﻿@using Freshlo.Web.Models.Sale
+@using System.Globalization
+@using Freshlo.Web.Helpers
+
+@model SalesManageVM
+@{
+    ViewData["Title"] = "PendingOrders";
+    Model.Zipcode = Model.Zipcode.Where(x => x.Text != "0").ToList();
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Order Management</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                @*<li class="m-nav__item m-nav__item--home">
+                    <a href="javascripts:;" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/Home/Index/" class="m-nav__link">
+                        <span class="m-nav__link-text">Home</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="javascripts:;" class="m-nav__link">
+                        <span class="m-nav__link-text">Sale Manage</span>
+                    </a>
+                </li>*@
+            </ul>
+        </div>
+        <div>
+            <div class="d-flex align-items-center">
+                <button class="btn btn-primary" type="button" id="SalesExcelId">
+                    <i class="fa fa-file-excel"></i> Export Excel
+                </button>
+            </div>
+            <input hidden value="pending" id="activeTab" />
+        </div>
+        @*<div>
+                <button type="button" class="btn btn-dark" id="btnTotalSalePrint"><i class="la la-plus"></i>Sales Print</button>
+            </div>
+            <div>
+                <button type="button" class="btn btn-dark" style="margin-left:15px;" onclick="window.location.href='/Sale/Index/'"><i class="la la-plus"></i> Create New</button>
+            </div>*@
+        @*<button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                Action
+            </button>*@
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="/Sale/Index/" data-toggle="kt-tooltip" title="Tooltip title" data-placement="right" data-skin="dark" data-container="body">Create New</a>
+            <a class="dropdown-item" href="#" id="SalesPrintId" @*data-toggle="modal" data-target="#dateRangePic" *@ data-id="Print">Sales Print</a>
+            <a class="dropdown-item" href="#" @*data-toggle="modal" data-target="#dateRangePic" *@ data-placement="left">Export Excel</a>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+
+
+
+<div class="m-content">
+    @*<div class="m-portlet">
+
+            <div class="m-portlet__body  m-portlet__body--no-padding">
+                <div class="m-widget29">
+                    <div class="m-widget_content">
+                        <h3 class="m-widget_content-title">Todays Order Summary</h3>
+                        <div class="m-widget_content-items">
+                            <div class="m-widget_content-item">
+                                    <span class="font-medium-2">Confirmed : <span class="font-medium-3 m--font-danger">@Model.SalesCount.TotalConfirmed</span></span>
+                                </div>
+                                <div class="m-widget_content-item">
+                                    <span class="font-medium-2">Today's Pending Deliveries : <span class=" font-medium-3 m--font-danger"> @Model.SalesCount.TodaysPending </span></span>
+                                    <span class="font-medium-1 m-widget_content-item"> Amount - Rs. @Model.SalesCount.TodaysPendingAmount</span>
+                                </div>
+                                <div class="m-widget_content-item">
+                                    <span class="font-medium-2">Total pending Deliveries : <span class=" font-medium-3 m--font-danger"> @Model.SalesCount.TotalPending </span></span>
+                                    <span class="font-medium-1 m-widget_content-item"> Amount - Rs. @Model.SalesCount.TotalPendingAmount</span>
+                                </div>
+                            <div class="m-widget_content-item">
+                                <span>Total Pending</span>
+                                <span class="">@Model.SalesCount.TotalPending</span>
+                            </div>
+
+                            <div class="m-widget_content-item">
+                                <span>Pending Orders Value</span>
+                                <span class="m--font-danger">Rs. @Model.SalesCount.TotalPendingAmount</span>
+                            </div>
+                            <div class="m-widget_content-item">
+                                <span>Pending Confirmation</span>
+                                <span class="m--font-info"></span>
+                            </div>
+                            <div class="m-widget_content-item">
+                                <span>Confirmed</span>
+                                <span class="m--font-info">@Model.SalesCount.TotalConfirmed</span>
+                            </div>
+                            <div class="m-widget_content-item">
+                                <span>Packed</span>
+                                <span class="m--font-info"></span>
+                            </div>
+                            <div class="m-widget_content-item">
+                                <span>Dispatched</span>
+                                <span class="m--font-info"></span>
+                            </div>
+                            <div class="m-widget_content-item">
+                                <span>Delivered</span>
+                                <span class="m--font-info"></span>
+                            </div>
+                            <div class="m-widget_content-item">
+                                <span>Cancelled</span>
+                                <span class="m--font-info"></span>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>*@
+    <div class="m-portlet" id="m_portlet_loader_1" style="position: sticky !important;top: 80px;z-index: 3;">
+        <div id="m_portlet_loader_1_app"></div>
+
+        <ul class="nav nav-tabs  m-tabs-line bg-white MainUl mb-2" id="MainUl" role="tablist" style="position: sticky !important;top: 80px;z-index: 3;">
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link active" data-toggle="tab" name="pending" href="#pending" role="tab">Pending Order</a>
+            </li>
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link packed-cls" data-toggle="tab" name="packed" href="#packed" role="tab">Out for delivery</a>
+            </li>
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link dispatched-cls" data-toggle="tab" name="dispatched" href="#dispatched" role="tab">Dispatched</a>
+            </li>
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link delivered-cls" data-toggle="tab" name="delivered" href="#delivered" role="tab">Delivered</a>
+            </li>
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link cancelled-cls" data-toggle="tab" name="cancelled" href="#cancelled" role="tab">Cancelled</a>
+            </li>
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link payment-cls" data-toggle="tab" name="payment" href="#payment" role="tab">Pending Payment</a>
+            </li>
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link partial-cls" data-toggle="tab" name="partial" href="#partial" role="tab">Partail Payment</a>
+            </li>
+        </ul>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tab-content">
+                        <div class="tab-pane animated fadeIn" id="packed" role="tabpanel">
+                            <div class="row ">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="mt-2">
+                                            <p class="mb-1 mr-2"><i class="la la-filter"></i> Filter : </p>
+                                        </div>
+                                        <input hidden id="packed_Status" />
+                                        <div class="col-md-2">
+                                            <select asp-items="@Model.Zipcode" class="form-control m-input m-input--solid" id="packed_zipCode">
+                                                <option value="">Select Zipcode</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="float-left">
+                                                <button type="button" id="packed" class="btn btn-brand ml-2 px-4 filter">
+                                                    <i class="la la-question-circle"></i> Filter
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="float-left">
+                                                <button type="button" id="packed" class="btn btn-link clear">
+                                                    <i class="la la-question-circle"></i> Clear
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="" />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive" id="packed_divId">
+                                        @*<table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table" id="sales">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sales Order ID</th>
+                                                        <th>Customer Name</th>
+                                                        <th>Order Date</th>
+                                                        <th>Total Item</th>
+                                                        <th>Delivery Status / Source</th>
+                                                        <th>Payment Status</th>
+                                                        <th>Bill Amount</th>
+                                                        <th>Bill Print</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="saleslist">
+                                                    @foreach (var saleslist in Model.GetSalesList)
+                                                    {
+                                                        <tr>
+                                                            <td class="">
+                                                                <a href="/Sale/Detail/@saleslist.SalesOrderId" class="text-link">@saleslist.SalesOrderId</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#" class="text-link">@(saleslist.Name == null ? "N/A" : saleslist.Name)</a><span class="font-small-3 display-block text-dark">@saleslist.ContactNo</span>
+                                                            </td>
+                                                            <td class="text-dark">
+                                                                @saleslist.CreatedOn.ToString("yyyy-MM-dd hh:mm tt", CultureInfo.InvariantCulture)
+                                                            </td>
+
+                                                            <td>
+                                                                <span class="m-badge m-badge--warning m-badge--rounded m-badge--wide font-medium-1" data-container="body" data-toggle="m-popover" data-placement="top" data-content="@saleslist.ItemName" data-original-title="" title="">@saleslist.PluCount</span>
+                                                            </td>
+                                                            <td class="">
+                                                                @saleslist.OrderdStatus <span class="font-medium-1 display-block text-dark">@(saleslist.Source == null ? "N/A" : saleslist.Source)</span>
+                                                            </td>
+                                                            <td> <span class="m-badge m-badge--rounded m-badge--wide font-small-3 m-badge--@(SalesHelpers.PaymentStatusTag.ContainsKey(saleslist.PaymentStatus) ? SalesHelpers.PaymentStatusTag[saleslist.PaymentStatus]:"Not Known")">@(SalesHelpers.PaymentStatus.ContainsKey(saleslist.PaymentStatus) ? SalesHelpers.PaymentStatus[saleslist.PaymentStatus] : "Not Known")</span></td>
+                                                            <td>
+                                                                <span class="text-bold-700 text-dark">
+                                                                    @(SalesHelpers.Data) @(saleslist.TotalPrice - saleslist.CoupenCalculation + Convert.ToDouble(saleslist.DeliveryCharges))
+
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="@Url.Action("Index","Print",new { id1 = saleslist.SalesOrderId })">
+                                                                    <i class="flaticon-technology text-muted"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane animated fadeIn active" id="pending" role="tabpanel">
+                            <div class="row ">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="mt-2">
+                                            <p class="mb-1 mr-2"><i class="la la-filter"></i> Filter : </p>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <select asp-items="@SalesHelpers.StatusList" class="form-control m-input m-input--solid" id="pending_Status">
+                                                <option value="">Select Order Status</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <select asp-items="@Model.Zipcode" class="form-control m-input m-input--solid" id="pending_zipCode">
+                                                <option value="">Select Zipcode</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="float-left">
+                                                <button type="button" id="pending" class="btn btn-brand ml-2 px-4 filter">
+                                                    <i class="la la-question-circle"></i> Filter
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="float-left">
+                                                <button type="button" id="pending" class="btn btn-link clear">
+                                                    <i class="la la-question-circle"></i> Clear
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col" style="display:none">
+                                            <div class="float-right">
+                                                <button class="btn btn-danger " type="button" id="updateOrderId">
+                                                    Mark as Confirmed
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="" />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive" id="pending_divId">
+                                        @*<table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table" id="sales">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sales Order ID</th>
+                                                        <th>Customer Name</th>
+                                                        <th>Order Date</th>
+                                                        <th>Total Item</th>
+                                                        <th>Delivery Status / Source</th>
+                                                        <th>Payment Status</th>
+                                                        <th>Bill Amount</th>
+                                                        <th>Bill Print</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="saleslist">
+                                                    @foreach (var saleslist in Model.GetSalesList)
+                                                    {
+                                                        <tr>
+                                                            <td class="">
+                                                                <a href="/Sale/Detail/@saleslist.SalesOrderId" class="text-link">@saleslist.SalesOrderId</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#" class="text-link">@(saleslist.Name == null ? "N/A" : saleslist.Name)</a><span class="font-small-3 display-block text-dark">@saleslist.ContactNo</span>
+                                                            </td>
+                                                            <td class="text-dark">
+                                                                @saleslist.CreatedOn.ToString("yyyy-MM-dd hh:mm tt", CultureInfo.InvariantCulture)
+                                                            </td>
+
+                                                            <td>
+                                                                <span class="m-badge m-badge--warning m-badge--rounded m-badge--wide font-medium-1" data-container="body" data-toggle="m-popover" data-placement="top" data-content="@saleslist.ItemName" data-original-title="" title="">@saleslist.PluCount</span>
+                                                            </td>
+                                                            <td class="">
+                                                                @saleslist.OrderdStatus <span class="font-medium-1 display-block text-dark">@(saleslist.Source == null ? "N/A" : saleslist.Source)</span>
+                                                            </td>
+                                                            <td> <span class="m-badge m-badge--rounded m-badge--wide font-small-3 m-badge--@(SalesHelpers.PaymentStatusTag.ContainsKey(saleslist.PaymentStatus) ? SalesHelpers.PaymentStatusTag[saleslist.PaymentStatus]:"Not Known")">@(SalesHelpers.PaymentStatus.ContainsKey(saleslist.PaymentStatus) ? SalesHelpers.PaymentStatus[saleslist.PaymentStatus] : "Not Known")</span></td>
+                                                            <td>
+                                                                <span class="text-bold-700 text-dark">
+                                                                    @(SalesHelpers.Data) @(saleslist.TotalPrice - saleslist.CoupenCalculation + Convert.ToDouble(saleslist.DeliveryCharges))
+
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="@Url.Action("Index","Print",new { id1 = saleslist.SalesOrderId })">
+                                                                    <i class="flaticon-technology text-muted"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>*@
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane animated fadeIn" id="dispatched" role="tabpanel">
+                            <div class="row ">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="mt-2">
+                                            <p class="mb-1 mr-2"><i class="la la-filter"></i> Filter : </p>
+                                        </div>
+                                        <input hidden id="dispatched_Status" />
+                                        <div class="col-md-2">
+                                            <select asp-items="@Model.Zipcode" class="form-control m-input m-input--solid" id="dispatched_zipCode">
+                                                <option value="">Select Zipcode</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="float-left">
+                                                <button type="button" id="dispatched" class="btn btn-brand ml-2 px-4 filter">
+                                                    <i class="la la-question-circle"></i> Filter
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="float-left">
+                                                <button type="button" id="dispatched" class="btn btn-link clear">
+                                                    <i class="la la-question-circle"></i> Clear
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="" />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive" id="dispatched_divId">
+                                        @*<table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table" id="sales">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sales Order ID</th>
+                                                        <th>Customer Name</th>
+                                                        <th>Order Date</th>
+                                                        <th>Total Item</th>
+                                                        <th>Delivery Status / Source</th>
+                                                        <th>Payment Status</th>
+                                                        <th>Bill Amount</th>
+                                                        <th>Bill Print</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="saleslist">
+                                                    @foreach (var saleslist in Model.GetSalesList)
+                                                    {
+                                                        <tr>
+                                                            <td class="">
+                                                                <a href="/Sale/Detail/@saleslist.SalesOrderId" class="text-link">@saleslist.SalesOrderId</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#" class="text-link">@(saleslist.Name == null ? "N/A" : saleslist.Name)</a><span class="font-small-3 display-block text-dark">@saleslist.ContactNo</span>
+                                                            </td>
+                                                            <td class="text-dark">
+                                                                @saleslist.CreatedOn.ToString("yyyy-MM-dd hh:mm tt", CultureInfo.InvariantCulture)
+                                                            </td>
+
+                                                            <td>
+                                                                <span class="m-badge m-badge--warning m-badge--rounded m-badge--wide font-medium-1" data-container="body" data-toggle="m-popover" data-placement="top" data-content="@saleslist.ItemName" data-original-title="" title="">@saleslist.PluCount</span>
+                                                            </td>
+                                                            <td class="">
+                                                                @saleslist.OrderdStatus <span class="font-medium-1 display-block text-dark">@(saleslist.Source == null ? "N/A" : saleslist.Source)</span>
+                                                            </td>
+                                                            <td> <span class="m-badge m-badge--rounded m-badge--wide font-small-3 m-badge--@(SalesHelpers.PaymentStatusTag.ContainsKey(saleslist.PaymentStatus) ? SalesHelpers.PaymentStatusTag[saleslist.PaymentStatus]:"Not Known")">@(SalesHelpers.PaymentStatus.ContainsKey(saleslist.PaymentStatus) ? SalesHelpers.PaymentStatus[saleslist.PaymentStatus] : "Not Known")</span></td>
+                                                            <td>
+                                                                <span class="text-bold-700 text-dark">
+                                                                    @(SalesHelpers.Data) @(saleslist.TotalPrice - saleslist.CoupenCalculation + Convert.ToDouble(saleslist.DeliveryCharges))
+
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="@Url.Action("Index","Print",new { id1 = saleslist.SalesOrderId })">
+                                                                    <i class="flaticon-technology text-muted"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane animated fadeIn" id="delivered" role="tabpanel">
+                            <div class="row ">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="mt-2">
+                                            <p class="mb-1 mr-2"><i class="la la-filter"></i> Filter : </p>
+                                        </div>
+                                        <input hidden id="delivered_Status" />
+
+                                        <div class="col-md-2">
+                                            <select asp-items="@Model.Zipcode" class="form-control m-input m-input--solid" id="delivered_zipCode">
+                                                <option value="">Select Zipcode</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="float-left">
+                                                <button type="button" id="delivered" class="btn btn-brand ml-2 px-4 filter">
+                                                    <i class="la la-question-circle"></i> Filter
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="float-left">
+                                                <button type="button" id="delivered" class="btn btn-link clear">
+                                                    <i class="la la-question-circle"></i> Clear
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="" />
+                            <div class="m-portlet__body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive" id="delivered_divId">
+                                            @*<table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table" id="sales">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Sales Order ID</th>
+                                                            <th>Customer Name</th>
+                                                            <th>Order Date</th>
+                                                            <th>Total Item</th>
+                                                            <th>Delivery Status / Source</th>
+                                                            <th>Payment Status</th>
+                                                            <th>Bill Amount</th>
+                                                            <th>Bill Print</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="saleslist">
+                                                        @foreach (var saleslist in Model.GetSalesList)
+                                                        {
+                                                            <tr>
+                                                                <td class="">
+                                                                    <a href="/Sale/Detail/@saleslist.SalesOrderId" class="text-link">@saleslist.SalesOrderId</a>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="#" class="text-link">@(saleslist.Name == null ? "N/A" : saleslist.Name)</a><span class="font-small-3 display-block text-dark">@saleslist.ContactNo</span>
+                                                                </td>
+                                                                <td class="text-dark">
+                                                                    @saleslist.CreatedOn.ToString("yyyy-MM-dd hh:mm tt", CultureInfo.InvariantCulture)
+                                                                </td>
+
+                                                                <td>
+                                                                    <span class="m-badge m-badge--warning m-badge--rounded m-badge--wide font-medium-1" data-container="body" data-toggle="m-popover" data-placement="top" data-content="@saleslist.ItemName" data-original-title="" title="">@saleslist.PluCount</span>
+                                                                </td>
+                                                                <td class="">
+                                                                    @saleslist.OrderdStatus <span class="font-medium-1 display-block text-dark">@(saleslist.Source == null ? "N/A" : saleslist.Source)</span>
+                                                                </td>
+                                                                <td> <span class="m-badge m-badge--rounded m-badge--wide font-small-3 m-badge--@(SalesHelpers.PaymentStatusTag.ContainsKey(saleslist.PaymentStatus) ? SalesHelpers.PaymentStatusTag[saleslist.PaymentStatus]:"Not Known")">@(SalesHelpers.PaymentStatus.ContainsKey(saleslist.PaymentStatus) ? SalesHelpers.PaymentStatus[saleslist.PaymentStatus] : "Not Known")</span></td>
+                                                                <td>
+                                                                    <span class="text-bold-700 text-dark">
+                                                                        @(SalesHelpers.Data) @(saleslist.TotalPrice - saleslist.CoupenCalculation + Convert.ToDouble(saleslist.DeliveryCharges))
+
+                                                                    </span>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="@Url.Action("Index","Print",new { id1 = saleslist.SalesOrderId })">
+                                                                        <i class="flaticon-technology text-muted"></i>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane animated fadeIn" id="cancelled" role="tabpanel">
+
+                            <div class="row ">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="mt-2">
+                                            <p class="mb-1 mr-2"><i class="la la-filter"></i> Filter : </p>
+                                        </div>
+                                        <input hidden id="cancelled_Status" />
+
+                                        <div class="col-md-2">
+                                            <select asp-items="@Model.Zipcode" class="form-control m-input m-input--solid" id="cancelled_zipCode">
+                                                <option value="">Select Zipcode</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="float-left">
+                                                <button type="button" id="cancelled" class="btn btn-brand ml-2 px-4 filter">
+                                                    <i class="la la-question-circle"></i> Filter
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="float-left">
+                                                <button type="button" id="cancelled" class="btn btn-link clear">
+                                                    <i class="la la-question-circle"></i> Clear
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="" />
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive" id="cancelled_divId">
+                                        @*<table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table" id="sales">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sales Order ID</th>
+                                                        <th>Customer Name</th>
+                                                        <th>Order Date</th>
+                                                        <th>Total Item</th>
+                                                        <th>Delivery Status / Source</th>
+                                                        <th>Payment Status</th>
+                                                        <th>Bill Amount</th>
+                                                        <th>Bill Print</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="saleslist">
+                                                    @foreach (var saleslist in Model.GetSalesList)
+                                                    {
+                                                        <tr>
+                                                            <td class="">
+                                                                <a href="/Sale/Detail/@saleslist.SalesOrderId" class="text-link">@saleslist.SalesOrderId</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#" class="text-link">@(saleslist.Name == null ? "N/A" : saleslist.Name)</a><span class="font-small-3 display-block text-dark">@saleslist.ContactNo</span>
+                                                            </td>
+                                                            <td class="text-dark">
+                                                                @saleslist.CreatedOn.ToString("yyyy-MM-dd hh:mm tt", CultureInfo.InvariantCulture)
+                                                            </td>
+
+                                                            <td>
+                                                                <span class="m-badge m-badge--warning m-badge--rounded m-badge--wide font-medium-1" data-container="body" data-toggle="m-popover" data-placement="top" data-content="@saleslist.ItemName" data-original-title="" title="">@saleslist.PluCount</span>
+                                                            </td>
+                                                            <td class="">
+                                                                @saleslist.OrderdStatus <span class="font-medium-1 display-block text-dark">@(saleslist.Source == null ? "N/A" : saleslist.Source)</span>
+                                                            </td>
+                                                            <td> <span class="m-badge m-badge--rounded m-badge--wide font-small-3 m-badge--@(SalesHelpers.PaymentStatusTag.ContainsKey(saleslist.PaymentStatus) ? SalesHelpers.PaymentStatusTag[saleslist.PaymentStatus]:"Not Known")">@(SalesHelpers.PaymentStatus.ContainsKey(saleslist.PaymentStatus) ? SalesHelpers.PaymentStatus[saleslist.PaymentStatus] : "Not Known")</span></td>
+                                                            <td>
+                                                                <span class="text-bold-700 text-dark">
+                                                                    @(SalesHelpers.Data) @(saleslist.TotalPrice - saleslist.CoupenCalculation + Convert.ToDouble(saleslist.DeliveryCharges))
+
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="@Url.Action("Index","Print",new { id1 = saleslist.SalesOrderId })">
+                                                                    <i class="flaticon-technology text-muted"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane animated fadeIn" id="payment" role="tabpanel">
+
+                            <div class="row ">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="mt-2">
+                                            <p class="mb-1 mr-2"><i class="la la-filter"></i> Filter : </p>
+                                        </div>
+                                        <input hidden id="payment_Status" />
+
+                                        <div class="col-md-2">
+                                            <select asp-items="@Model.Zipcode" class="form-control m-input m-input--solid" id="payment_zipCode">
+                                                <option value="">Select Zipcode</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="float-left">
+                                                <button type="button" id="payment" class="btn btn-brand ml-2 px-4 filter">
+                                                    <i class="la la-question-circle"></i> Filter
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="float-left">
+                                                <button type="button" id="payment" class="btn btn-link clear">
+                                                    <i class="la la-question-circle"></i> Clear
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="" />
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive" id="payment_divId">
+                                        @*<table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table" id="sales">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sales Order ID</th>
+                                                        <th>Customer Name</th>
+                                                        <th>Order Date</th>
+                                                        <th>Total Item</th>
+                                                        <th>Delivery Status / Source</th>
+                                                        <th>Payment Status</th>
+                                                        <th>Bill Amount</th>
+                                                        <th>Bill Print</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="saleslist">
+                                                    @foreach (var saleslist in Model.GetSalesList)
+                                                    {
+                                                        <tr>
+                                                            <td class="">
+                                                                <a href="/Sale/Detail/@saleslist.SalesOrderId" class="text-link">@saleslist.SalesOrderId</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#" class="text-link">@(saleslist.Name == null ? "N/A" : saleslist.Name)</a><span class="font-small-3 display-block text-dark">@saleslist.ContactNo</span>
+                                                            </td>
+                                                            <td class="text-dark">
+                                                                @saleslist.CreatedOn.ToString("yyyy-MM-dd hh:mm tt", CultureInfo.InvariantCulture)
+                                                            </td>
+
+                                                            <td>
+                                                                <span class="m-badge m-badge--warning m-badge--rounded m-badge--wide font-medium-1" data-container="body" data-toggle="m-popover" data-placement="top" data-content="@saleslist.ItemName" data-original-title="" title="">@saleslist.PluCount</span>
+                                                            </td>
+                                                            <td class="">
+                                                                @saleslist.OrderdStatus <span class="font-medium-1 display-block text-dark">@(saleslist.Source == null ? "N/A" : saleslist.Source)</span>
+                                                            </td>
+                                                            <td> <span class="m-badge m-badge--rounded m-badge--wide font-small-3 m-badge--@(SalesHelpers.PaymentStatusTag.ContainsKey(saleslist.PaymentStatus) ? SalesHelpers.PaymentStatusTag[saleslist.PaymentStatus]:"Not Known")">@(SalesHelpers.PaymentStatus.ContainsKey(saleslist.PaymentStatus) ? SalesHelpers.PaymentStatus[saleslist.PaymentStatus] : "Not Known")</span></td>
+                                                            <td>
+                                                                <span class="text-bold-700 text-dark">
+                                                                    @(SalesHelpers.Data) @(saleslist.TotalPrice - saleslist.CoupenCalculation + Convert.ToDouble(saleslist.DeliveryCharges))
+
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="@Url.Action("Index","Print",new { id1 = saleslist.SalesOrderId })">
+                                                                    <i class="flaticon-technology text-muted"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane animated fadeIn" id="partial" role="tabpanel">
+
+                            <div class="row ">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="mt-2">
+                                            <p class="mb-1 mr-2"><i class="la la-filter"></i> Filter : </p>
+                                        </div>
+                                        <input hidden id="partial_Status" />
+
+                                        <div class="col-md-2">
+                                            <select asp-items="@Model.Zipcode" class="form-control m-input m-input--solid" id="partial_zipCode">
+                                                <option value="">Select Zipcode</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="float-left">
+                                                <button type="button" id="partial" class="btn btn-brand ml-2 px-4 filter">
+                                                    <i class="la la-question-circle"></i> Filter
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="float-left">
+                                                <button type="button" id="partial" class="btn btn-link clear">
+                                                    <i class="la la-question-circle"></i> Clear
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="" />
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive" id="partial_divId">
+                                        @*<table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table" id="sales">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sales Order ID</th>
+                                                        <th>Customer Name</th>
+                                                        <th>Order Date</th>
+                                                        <th>Total Item</th>
+                                                        <th>Delivery Status / Source</th>
+                                                        <th>Payment Status</th>
+                                                        <th>Bill Amount</th>
+                                                        <th>Bill Print</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="saleslist">
+                                                    @foreach (var saleslist in Model.GetSalesList)
+                                                    {
+                                                        <tr>
+                                                            <td class="">
+                                                                <a href="/Sale/Detail/@saleslist.SalesOrderId" class="text-link">@saleslist.SalesOrderId</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#" class="text-link">@(saleslist.Name == null ? "N/A" : saleslist.Name)</a><span class="font-small-3 display-block text-dark">@saleslist.ContactNo</span>
+                                                            </td>
+                                                            <td class="text-dark">
+                                                                @saleslist.CreatedOn.ToString("yyyy-MM-dd hh:mm tt", CultureInfo.InvariantCulture)
+                                                            </td>
+
+                                                            <td>
+                                                                <span class="m-badge m-badge--warning m-badge--rounded m-badge--wide font-medium-1" data-container="body" data-toggle="m-popover" data-placement="top" data-content="@saleslist.ItemName" data-original-title="" title="">@saleslist.PluCount</span>
+                                                            </td>
+                                                            <td class="">
+                                                                @saleslist.OrderdStatus <span class="font-medium-1 display-block text-dark">@(saleslist.Source == null ? "N/A" : saleslist.Source)</span>
+                                                            </td>
+                                                            <td> <span class="m-badge m-badge--rounded m-badge--wide font-small-3 m-badge--@(SalesHelpers.PaymentStatusTag.ContainsKey(saleslist.PaymentStatus) ? SalesHelpers.PaymentStatusTag[saleslist.PaymentStatus]:"Not Known")">@(SalesHelpers.PaymentStatus.ContainsKey(saleslist.PaymentStatus) ? SalesHelpers.PaymentStatus[saleslist.PaymentStatus] : "Not Known")</span></td>
+                                                            <td>
+                                                                <span class="text-bold-700 text-dark">
+                                                                    @(SalesHelpers.Data) @(saleslist.TotalPrice - saleslist.CoupenCalculation + Convert.ToDouble(saleslist.DeliveryCharges))
+
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="@Url.Action("Index","Print",new { id1 = saleslist.SalesOrderId })">
+                                                                    <i class="flaticon-technology text-muted"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="dateRangePic" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Select Date</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label class="col-form-label col-lg-2 col-sm-12">Today</label>
+                    <div class="">
+                        <label class="ab-switch mt-2">
+                            <input type="checkbox" id="customdatetoggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <label class="mt-2   col-lg-3 col-sm-12 text-left">Custom Days</label>
+                </div>
+                <div class="form-group row" id="divdate" style="display:block">
+                    <label class="col-form-label col-lg-2 col-sm-12"></label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="TodayDate" value="@ViewBag.TodayDatetime" disabled />
+                        <span class="error font-small-4" id="SalesdateError" style="display: none; color: red;"></span>
+                    </div>
+                </div>
+                <div class="row" id="divddaterange" style="display:none">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-2 col-sm-12"></label>
+                            <div class="col-lg-9 col-md-9 col-sm-12">
+                                <div class='input-group' id='m_daterangepicker_2'>
+                                    <input type='text' class="form-control m-input" id="salesdaterange" readonly placeholder="Select date range" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
+                                    </div>
+
+                                </div>
+                                <span class="error font-small-4" id="SalesdaterangError" style="display: none; color: red;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="SalestoPrint" style="display:none">Print</button>
+                <button type="button" class="btn btn-primary" id="SalestoExcel" style="display:none">Excel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="dateRangePic" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Select Date</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label class="col-form-label col-lg-2 col-sm-12">Today</label>
+                    <div class="">
+                        <label class="ab-switch mt-2">
+                            <input type="checkbox" id="customdatetoggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <label class="mt-2   col-lg-3 col-sm-12 text-left">Custom Days</label>
+                </div>
+                <div class="form-group row" id="divdate" style="display:block">
+                    <label class="col-form-label col-lg-2 col-sm-12"></label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="TodayDate" value="@ViewBag.TodayDatetime" disabled />
+                        <span class="error font-small-4" id="SalesdateError" style="display: none; color: red;"></span>
+                    </div>
+                </div>
+                <div class="row" id="divddaterange" style="display:none">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-2 col-sm-12"></label>
+                            <div class="col-lg-9 col-md-9 col-sm-12">
+                                <div class='input-group' id='m_daterangepicker_2'>
+                                    <input type='text' class="form-control m-input" id="salesdaterange" readonly placeholder="Select date range" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
+                                    </div>
+                                </div>
+                                <span class="error font-small-4" id="SalesdaterangError" style="display: none; color: red;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="SalestoPrint" style="display:none">Print</button>
+                <button type="button" class="btn btn-primary" id="SalestoExcel" style="display:none">Excel</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+
+    <script src="~/assets/scripts/sales/PendingOrder.js"></script>
+}
+

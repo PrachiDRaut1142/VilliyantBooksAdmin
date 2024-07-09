@@ -1,0 +1,18 @@
+﻿@using Freshlo.Web.Models.CategoriesVM;
+@model MainCatgoriesVM;
+@{
+    ViewData["Title"] = "_GetItemSubcategorieslist";
+
+}
+@foreach (var item in Model.GetitemSubCategoriesList)
+{
+
+<tr>
+    <td>@item.SubCategoryId</td>
+    <td><a href="#" class="text-link GetCategoriesDetails" data-id="@item.SubCategoryId">@item.SubCategoryName</a></td>
+    <td>@item.AddedDate <span class="font-small-3 display-block">@item.AddedBy</span></td>
+    <td><a href="#" class="text-danger deleteSubcategoryId" data-id="@item.SubCategoryId"> <i class="flaticon-delete deleteId"> </i></a></td>
+
+</tr>
+
+}

@@ -1,0 +1,32 @@
+﻿@using Freshlo.Web.Models.PurchaseVM;
+@model DetailVM
+@{
+    ViewData["Title"] = "_AppendPurchase";
+
+}
+
+@foreach (var data in Model.purchaselist)
+{
+<tr id="@data.ItemId">
+    <td id="pluName_@data.ItemId"><a href="#" class="text-link">@data.pluName</a></td>
+    <td id="categoryName_@data.ItemId">@data.categoryName </td>
+    <td><input type="text" class="form-control width-100 px-1 input-sm" id="purPrice_@data.ItemId" name="PurchasePrice" value="@data.PurchasePrice"></td>
+    <td> <input type="text" class="form-control width-100 px-1 input-sm" id="ttlQty_@data.ItemId" name="TotalQuantity" value="@data.TotalQuantity"> </td>
+    <td><input type="text" class="form-control width-100 px-1 input-sm" id="itemstock_@data.ItemId" name="currentsock" value="@data.currentsock"></td>
+    @*<td><a href="#" class="text-danger deleteId" data-id="@data.ItemId"><i class="flaticon-delete text-danger"> </i></a></td>*@
+    <td><a href="#" onclick=remove('@data.ItemId')><i class="flaticon-delete text-danger"></i></a> </td>
+    <td><input type="text" class="form-control width-100 px-1 input-sm" id="categoryName_@data.ItemId" name="categoryName" value="@data.categoryName" style="display:none"></td>
+    <td><input type="text" class="form-control width-100 px-1 input-sm" id="Category_@data.ItemId" name="categoryName" value="@data.Category" style="display:none"></td>
+
+</tr>
+}
+
+<script>
+    $('#ProductTblId').DataTable({
+        "pageLength": 100,
+        "ordering": false,
+        "sorting": false,
+        "paging": false,
+    });
+</script>
+

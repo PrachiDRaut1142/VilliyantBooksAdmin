@@ -1,0 +1,48 @@
+﻿@using Freshlo.DomainEntities;
+@model _HeaderModalVM
+
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" id="fileName">@Model.FileName</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-body">                        
+                        <div class="form-group row align-items-center">
+                            <label class="col-md-4 label-control text-right" for="ItemBarcode">Item Barcode</label>
+                            <div class="col-md-8">
+                                <select asp-items="@Model.HeaderList" class="form-control input-sm" id="ItemBarcode" name="HeaderValues" onchange="CommentHeaderList('#Barcode')">
+                                    <option value="0" selected>-- Skip --</option>
+                                </select>
+                            </div>
+                        </div>                        
+                        <div class="form-group row align-items-center">
+                            <label class="col-md-4 label-control text-right" for="StockCount">StockCount</label>
+                            <div class="col-md-8">
+                                <select asp-items="@Model.HeaderList" class="form-control input-sm" id="StockCount" name="HeaderValues" onchange="CommentHeaderList('#StockQty')">
+                                    <option value="0" selected>-- Skip --</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row align-items-center">
+                            <label class="col-md-4 label-control text-right" for="SellingPrice">SellingPrice</label>
+                            <div class="col-md-8">
+                                <select asp-items="@Model.HeaderList" class="form-control input-sm" id="SellingPrice" name="HeaderValues" onchange="CommentHeaderList('#SellingPrice')">
+                                    <option value="0" selected>-- Skip --</option>
+                                </select>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary pull-right submitExcel">Submit</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

@@ -1,0 +1,103 @@
+﻿@using Freshlo.DomainEntities;
+@using Freshlo.Web.Helpers
+
+
+<tr id="@Model.SalesListId">
+    <td>
+        <div class="m-widget4__img m-widget4__img--logo">
+            <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/The_MRestro/icon/@(Model.ItemId).png" alt="" style="width:60px;">
+        </div>
+    </td>
+    @if (Model.SalesListId.Size != "NOVAR")
+    {
+        <td>
+            <span hidden id="ItemSalesId_@Model.SalesListId">@Model.SalesListId</span>
+            <span hidden="" id="Totalitemstock_@Model.SalesListId">-12</span>
+            <a href="/ItemMaster/Detail/@Model.Item_Id" class="text-link">@Model.PluName - @Model.Size</a>
+            <span class="display-block font-small-3 text-bold-500 text-muted">@Model.CName</span>
+        </td>
+    }
+    @if (true)
+    {
+        <td>
+            <span hidden id="ItemSalesId_@Model.SalesListId">@Model.SalesListId</span>
+            <span hidden="" id="Totalitemstock_@Model.SalesListId">-12</span>
+            <a href="/ItemMaster/Detail/@Model.Item_Id" class="text-link">@Model.PluName</a>
+            <span class="display-block font-small-3 text-bold-500 text-muted">@Model.CName</span>
+        </td>
+    }
+    <td>
+        <span>@Model.ItemWeight @Model.Measurement X Rs. @Model.PricePerMeas</span>
+        <input type="text" id="TotalsalesListCount_@Model.SalesListId" class="form-control" name="TotalsalesListCount" value="0" style="width:100px;" />
+        <input type="hidden" id="editsalesListCount_@Model.SalesListId" class="form-control weight" name="editsalesListCount" style="width:100px;" />
+        <span hidden id="coupenDisc_@Model.SalesListId">@Model.Coupen_Disc</span>
+        <span hidden id="taxValue_@Model.SalesListId">@Model.Item_Cost</span>
+    </td>
+    <td>
+        @if (Model.ItemType == "Packed")
+        {
+            <input type="text" id="Netweight_@Model.SalesListId" class="form-control weight" readonly name="weightList" value="@Model.ItemWeight" style="width:100px;" />
+
+        }
+        else
+        {
+            <input type="text" class="form-control weight" id="Netweight_@Model.SalesListId" readonly name="weightList" value="@Model.ItemWeight" style="width:100px;" />
+
+        }
+        <input type="text" id="Itemstatus_@Model.SalesListId" class="form-control status" readonly name="statusList" value="@Model.ItemStatus" style="width:100px;" />
+        <span class="text-bold-400" id="spnNetweights_@Model.SalesListId" hidden>@Model.ItemWeight</span>
+        <span class="text-bold-400" id="spnItemstatus_@Model.SalesListId" hidden>@Model.status</span>
+    </td>
+    <td>
+        @if (Model.ItemType == "Loose")
+        {
+            <input type="text" class="form-control Quantity" id="quantity_@Model.SalesListId" name="QuantityValues" readonly="readonly" value="@Model.Quantity" style="width:100px;" />
+        }
+        else
+        {
+            <input type="text" class="form-control Quantity" id="quantity_@Model.SalesListId" name="QuantityValues" value="@Model.Quantity" style="width:100px;" readonly="readonly" />
+        }
+        <span class="text-bold-400" id="spanquantity_@Model.SalesListId" hidden>@Model.QuantityValue</span>
+    </td>
+    <td>
+        <span id="discounts_@Model.SalesListId">@Model.Discount</span>
+    </td>
+    <td>
+        <span class="currnecyData"></span>
+        <span class="text-bold-500 text-info" id="TotalPrice_@Model.SalesListId">@Model.TotalPrice</span>
+    </td>
+    <td>
+        <span class="display-block font-small-3 text-bold-500 text-muted" id="AddedDiscount_@Model.SalesListId">@Model.AddedDiscount</span>
+    </td>
+    <td>
+        @if (Model.status != "Accepted")
+        {
+            <a href="#" data-Id="@(Model.SalesListId)" class="badge text-danger d-inline-flex removeSaleList remove-items">
+                <i class="fas fa-trash"></i>
+            </a>
+        }
+        else
+        {
+
+            <a href="#" class="badge text-danger d-inline-flex remove-items">
+                <i class="fas fa-trash"></i>
+            </a>
+        }
+        <input type="text" id="SalesIds_@Model.SalesListId" value="@Model.SalesId" name="SalesId" />
+        <input type="text" id="CustomerIds_@Model.SalesListId" value="@Model.CustomerId" name="CustomerId" />
+        <input type="text" id="Category_@Model.SalesListId" name="Categorys" value="@Model.Category" />
+        <input type="text" id="ItemId_@Model.SalesListId" name="ItemIds" value="@Model.ItemId" />
+        <input type="text" id="Measurements_@Model.SalesListId" name="Measurements" value="@Model.Measurement" />
+        <input type="text" id="PercePerItemId_@Model.SalesListId" name="PricePerMeasList" value="@Model.SellingPrice" />
+        <input type="text" id="TotalPriceList_@Model.SalesListId" name="TotalPriceList" value="@Model.ActualCost" />
+        <input type="text" id="DiscountListId_@Model.SalesListId" name="DiscountList" value="@Model.Discount" />
+        <input type="text" id="ItemWeight_@Model.SalesListId" name="ItemWeight" value="@Model.Weight" />
+        <input type="text" id="ItemStatus_@Model.ItemId" name="ItemStatus" value="@Model.Status" />
+        <input type="text" id="ItemStatus_@Model.ItemId" name="ItemStatus" value="@Model.Status" />
+        <input type="text" id="Item_Id_@Model.SalesListId" name="Item_Id" value="@Model.Item_Id" />
+        <input type="text" id="PriceId_@Model.SalesListId" name="PriceIds" value="@Model.PriceId" />
+        <input type="text" id="Price_Id_@Model.SalesListId" name="Price_Id" value="@Model.Price_Id" />
+        <input type="text" id="OrderQty_@Model.SalesListId" name="OrderQty" value="@Model.OrderQty" />
+        <input type="text" id="ItmNetWeight_@Model.SalesListId" name="ItmNetWeight" value="@Model.ItmNetWeight" />
+    </td>
+</tr>

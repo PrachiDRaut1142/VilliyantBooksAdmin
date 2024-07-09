@@ -1,0 +1,14 @@
+﻿@using Freshlo.DomainEntities;
+@model List<Recipe>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@item.RecipeId </td>
+        <td><span class="font-medium-1">@item.Item_name</span></td>
+        <td><span class="font-medium-1">@item.Item_type</span></td>
+        <td><a href="#" data-toggle="modal" class="text-dark RecipeDetailcls" data-id="@item.R_Id"> <i class="flaticon-edit"> </i> </a></td>
+        <td><a href="#" class="text-danger RecipeDeleteCls" data-id="@item.R_Id"> <i class="flaticon-delete deleteId"> </i></a></td>
+    </tr>
+}
+

@@ -1,0 +1,40 @@
+﻿@using Freshlo.Web.Helpers
+
+@model SalesVM
+
+@foreach (var Item in Model.ItemList)
+{
+    int count = 0;
+    foreach (var item in Model.ItemVarainceList)
+    {
+        if (Item.ItemId == item.ItemId)
+        {
+            if (count == 0)
+            {
+                var image = Item.ItemId + ".png";
+                <div class="col-md-4 col-6" id="divItem_@Item.ItemId" disabled="true">
+                    <a href="javascript:GetItemDetails('@Item.ItemId')" class="text-center">
+                        <div class="mb-3 item_list">
+                            @*<img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/@image" onerror="this.onerror=null;this.src='http://drawingzoro.com/wp-content/uploads/2018/03/fruit-and-veg-pencil-drawing-black-and-white-fruits-vegetables-clipart-basket-drawing-pencil-and-in-color.jpg';" alt="Item Image" class="img-fluid mb-2" style="width:100px;height:100px;"/>*@
+                            <img alt="MainCategory Image" src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/@(Item.ItemId).png" onerror="this.onerror = null;
+                                                          this.src = 'https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/no-image.png';" style="width:60px;border-radius:5px; padding-bottom: 15px" />
+                            <h3 class="mb-0 font-medium-3 text-bold-700">@Item.PluName</h3>
+                            <span hidden>@Item.TotalStock</span>
+                            @if (Item.DiscountPerctg != null)
+                            {
+                                <h6 class="font-small-3">@Item.Weight @Item.Measurement X @(SalesHelpers.Data) @item.SellingPrice</h6>
+                            }
+                            else
+                            {
+                                <h6 class="font-small-3">@Item.Weight @Item.Measurement X @(SalesHelpers.Data) @item.SellingPrice</h6>
+                            }
+                        </div>
+                    </a>
+                </div>
+            }
+            count++;
+        }
+    }
+
+}
+

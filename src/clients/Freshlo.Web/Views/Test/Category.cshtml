@@ -1,0 +1,254 @@
+﻿
+@{
+    ViewData["Title"] = "Category";
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader" style="text-align:right">
+    @*<div class="d-flex align-items-center">
+        @*<div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Payment Settlement</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="javascripts:;" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/Sale/PaymentSettlementSummary" class="m-nav__link">
+                        <span class="m-nav__link-text">Payment Settlement Summary</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>*@
+    @*<div>*@
+
+    @*<button type="button" class="btn btn-success"><i class="la la-save"></i> Save Changes</button>*@
+    @*</div>*@
+    <button class="btn btn-danger mr-2" type="button" id="" style="text-align:right" data-toggle="modal" data-target="#addMainSubCategory">
+        Add Main Category
+    </button>
+</div>
+
+<!-- END: Subheader -->
+
+
+
+<div class="m-content">
+
+    <div class="m-portlet">
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <div class="table-responsive">
+                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table">
+                            <thead>
+                                <tr>
+                                    <th>Category Name</th>
+                                    <th>Category Count</th>
+                                    <th>Visibility</th>
+                                    <th>Sequence</th>
+                                    <th>Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-sm-2" style="text-align:center;padding:10px;">
+                                                <i class="fa fa-align-justify fa-3x" aria-hidden="true" style="color:gray"></i>
+                                            </div>
+                                            <div class="col-sm-4" style="text-align:center">
+
+                                                <img src="~/assets/app/media/img/products/Tomato.png" style="height:60px;width:60px;" />
+                                            </div>
+                                            <div class="col-sm-6" style="text-align:left">
+                                                <h5><b>Fresh Fruits & Vegetables</b></h5>
+                                                <p>
+                                                    <b>
+                                                        Khet se ghar tak - Buy fresh fruits and vegetables
+                                                    </b>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="badge-dark badge-pill">15</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge-success badge-pill">Yes</span>
+                                    </td>
+                                    <td>
+                                        <b>1</b>
+                                    </td>
+                                    <td>
+
+
+                                        <a>
+                                            <i class="fa fa-pen-square fa-3x" aria-hidden="true" style="color:cornflowerblue"></i>
+                                        </a>
+
+
+
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="addMainSubCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="nav nav-tabs  m-tabs-line m-nav-tab-account-lookup" role="tablist">
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link active pt-0" data-toggle="tab" href="#category" role="tab">
+                                    <i class="flaticon-info"></i> Category Info
+                                </a>
+                            </li>
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link pt-0" data-toggle="tab" href="#subcategory" role="tab">
+                                    <i class="flaticon-list-3"></i> Sub Category Info
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <!-- Category Info -->
+                            <div class="tab-pane active" id="category" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Main Category Name</label>
+                                            <input type="text" class="form-control m-input m-input--solid" id="" name="" value="Main Category Name" placeholder="Main Category Name" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Category Name</label>
+                                            <input type="text" class="form-control m-input m-input--solid" id="" name="" placeholder="Category Name" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <textarea rows="5" class="form-control m-input m-input--solid" placeholder="Enter Description"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Image Upload</label>
+                                            <input type="file" class="form-control m-input m-input--solid" id="" name="" placeholder="Category Name" />
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/ITM0140.png" alt="" class="img-fluid" style="width:50px;height:50px;" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- / Category Info -->
+                            <!-- Sub Category Info -->
+                            <div class="tab-pane" id="subcategory" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Category Name</label>
+                                                <input type="text" class="form-control m-input m-input--solid" id="" name="" placeholder="Category Name" readonly />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Sub Category Name</label>
+                                                <input type="text" class="form-control m-input m-input--solid" id="" name="" placeholder="Enter Sub Category Name" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Image Upload</label>
+                                                <input type="file" class="form-control m-input m-input--solid" id="" name="" placeholder="Category Name" />
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/ITM0140.png" alt="" class="img-fluid" style="width:50px;height:50px;" />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <button type="button" class="btn btn-secondary pull-right">Add</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7" style="border-left: 1px solid #f4f5f8;">
+                                        <h6>Sub Category List</h6>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/ITM0140.png" alt="" class="img-fluid" style="width:50px;height:50px;">
+                                                    <span>Mango <a href="#" class="text-danger text-bold-600">X</a></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/ITM05.png" alt="" class="img-fluid" style="width:50px;height:50px;">
+                                                    <span>Mango <a href="#" class="text-danger text-bold-600">X</a></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/ITM039.png" alt="" class="img-fluid" style="width:50px;height:50px;">
+                                                    <span>Mango <a href="#" class="text-danger text-bold-600">X</a></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/ITM0147.png" alt="" class="img-fluid" style="width:50px;height:50px;">
+                                                    <span>Mango <a href="#" class="text-danger text-bold-600">X</a></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/ITM0114.png" alt="" class="img-fluid" style="width:50px;height:50px;">
+                                                    <span>Mango <a href="#" class="text-danger text-bold-600">X</a></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/ITM048.png" alt="" class="img-fluid" style="width:50px;height:50px;">
+                                                    <span>Mango <a href="#" class="text-danger text-bold-600">X</a></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- / Sub Category Info -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+

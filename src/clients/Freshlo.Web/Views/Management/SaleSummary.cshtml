@@ -1,0 +1,251 @@
+﻿@using Freshlo.Web.Models.DashboardVM;
+@using Freshlo.Web.Helpers;
+@using System.Globalization
+@model FinancialDashboardVM;
+
+@{
+    ViewData["Title"] = "SaleSummary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+     var currencySymbol = Model.getCurrencysybmollist.FirstOrDefault(x => x.status == 1).symbol;
+}
+
+
+<style>
+
+input#deliverydate3 {
+    width: 350px;
+}
+
+input#deliverydate1 {
+        width: 350px;
+
+}
+
+input#deliverydate2 {
+        width: 350px;
+
+}
+
+.chart_wrapper {
+    width: 100%;
+    padding: 1rem;
+    height: 60vh;
+}
+
+.chart_wrapper canvas {
+    width: 100%;
+    height: 100%;
+}
+.header {
+  position: relative;
+}
+
+.icon {
+  width: 3rem;
+  height: 3rem;
+}
+
+.icon i {
+  font-size: 2.25rem;
+}
+
+.icon-shape {
+  display: inline-flex;
+  padding: 12px;
+  text-align: center;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-shape i {
+  font-size: 1.25rem;
+}
+
+/*.calendar-table .prev.available,
+.calendar-table .next.available,
+.daterangepicker .ranges ul li[data-range-key="Custom"] {
+    display: none;
+}
+*/
+
+
+
+
+/*[data-range-key='Custom Range'] {
+    DISPLAY: NONE!IMPORTANT;
+}*/
+
+/*.calendar.left
+{   
+    display: none!important;
+}
+.calendar.right 
+{    
+    display: none!important;
+}*/
+
+/*.range_inputs{
+    display:none;
+}*/
+
+
+
+</style>
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Sales Report</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                @*<li class="m-nav__item m-nav__item--home">
+                    <a href="javascripts:;" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/Sale/Index/" class="m-nav__link">
+                        <span class="m-nav__link-text">Home</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="javascripts:;" class="m-nav__link">
+                        <span class="m-nav__link-text">Sales Report</span>
+                    </a>
+                </li>*@
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="m-content">
+
+<div class="row">
+    <!-- BEGIN: Last 30 Day sale Summary -->
+    <div class="col-md-12">
+    <div class="m-portlet">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption justify-content-between align-items-center w-100">
+            <div class="m-portlet__head-title d-block">
+                <span class="m-portlet__head-icon m--hide">
+                    <i class="la la-gear"></i>
+                </span>
+                <h3 class="m-portlet__head-text">
+                    Last 30 Days
+                </h3>
+            </div>
+                <div class="d-flex pt-3" style="height: fit-content;">
+                <div class="input-group mr-3">
+                    <input type="text" class="form-control datetimerange1" name="DeliveryDate" id="deliverydate1" placeholder="Select Date Range" />
+                    <span class="input-group-addon" id="DateTimeIcon1" onclick="clearErro();"><span class="icon-calendar"></span></span>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-dark " onclick="filterData();" id="filterButton1">Filter</button>
+                </div>
+            </div>
+
+        </div>  
+    </div>
+
+   <div class="m-content" id="FinancialCount1">
+   
+  
+    <!-- Page content -->
+            
+
+   </div>
+   <div class="m-portlet__body">
+                <div class="chart_wrapper" id="chartContainer">
+                    <canvas id="sale_chart"></canvas>
+                </div>
+            </div>
+
+   </div>
+   
+     
+
+    <!-- BEGIN: Last 12 Month sale Summary -->
+     <div class="col-md-12">
+         <div class="m-portlet">
+          <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon m--hide">
+                        <i class="la la-gear"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                        Last 12 Months
+                    </h3>
+                </div>
+            </div>
+             <div class="d-flex pt-3" style="height: fit-content;">
+                <div class="input-group mr-3">
+                    <input type="text" class="form-control datetimerange3" name="DeliveryDate" id="deliverydate3" placeholder="Select Date Range" />
+                    <span class="input-group-addon" id="DateTimeIcon3" onclick="clearErro1();"><span class="icon-calendar"></span></span>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-dark " onclick="filterMoths();" id="filterMoths">Filter</button>
+                </div>
+            </div>
+        </div>
+        <div id="FinancialCount2">
+
+        </div>
+        
+       <div class="portlet__body">
+            <div class="chart_wrapper" id="chartContainer2">
+                  <canvas id="sale_chart-2"></canvas><br>
+                   </div>
+            </div>
+        </div>
+    </div>
+       
+
+    </div>
+
+
+    <div class="col-md-12">
+           <div class="m-portlet">
+          <div class="m-portlet__head">
+
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon m--hide">
+                        <i class="la la-gear"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                        Discount This Month
+                    </h3>
+                </div>
+                
+            </div>
+             <div class="d-flex pt-3" style="height: fit-content;">
+                <div class="input-group mr-3">
+                    <input type="text" class="form-control datetimerange2" name="DeliveryDate" id="deliverydate2" placeholder="Select Date Range" />
+                    <span class="input-group-addon" id="DateTimeIcon2" onclick="clearErro1();"><span class="icon-calendar"></span></span>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-dark " onclick="filterdiscount();" id="filterdiscount">Filter</button>
+                </div>
+            </div>
+        </div>
+        <div id="FinancialCount3">
+         </div>
+         <div class="m-portlet__body">
+            <div class="chart_wrapper" id="chartContainer3">
+                  <canvas id="dishcount_chart"></canvas>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+@section Scripts{
+    
+    <script type="text/javascript" src="~/assets/scripts/management/script.js"></script>
+    <script type="text/javascript" src="https://www.jsdelivr.com/package/npm/chart.js"></script>
+}
+

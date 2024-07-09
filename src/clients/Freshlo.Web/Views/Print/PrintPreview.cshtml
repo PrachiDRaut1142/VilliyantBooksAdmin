@@ -1,0 +1,73 @@
+﻿@using Freshlo.Web.Models
+
+@model SalesVM
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Freshlo</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <link href="~/assets/print/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/print/print.css" rel="stylesheet" />
+    <link href="~/assets/main/main.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container-fluid" id="outprint">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row">
+                    @foreach (var Item in Model.ItemList)
+                    {
+                        <div class="col-md-6" style="border-top: 1px solid #ccc;border-right: 1px solid #ccc;border-left: 1px solid #ccc; padding: 20px;text-align:center;">
+                            <div class="form-group">
+                                <h1 style="font-size:50px;">@Item.PluName</h1>
+                                <h1 style="font-size:50px;">@Item.Weight @Item.Measurement X Rs.@Item.SellingPrice</h1>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                @*<div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                @foreach (var Item in Model.ItemList)
+                                {
+                                    <tr>
+                                        <td style="padding:20px 40px;">
+
+                                        </td>
+                                        <td style="padding:20px 40px;">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <h1>@Item.PluName</h1>
+                                                        <h1>@Item.Weight @Item.Measurement X Rs.@Item.SellingPrice</h1>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            window.print();
+            window.location.href = '/Print/Manage/';
+            window.close();
+        };
+    </script>
+</body>
+</html>
+

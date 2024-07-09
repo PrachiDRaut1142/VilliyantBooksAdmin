@@ -1,0 +1,65 @@
+﻿/*@media print {
+    @page {
+        margin: 0 auto;
+        sheet-size: 57mm automm;
+    }
+
+    html {
+        direction: ltr;
+    }
+
+    html, body {
+        margin: 0;
+        padding: 0
+    }
+
+    .printContainer {
+        width: 100%;
+        margin: 0 auto;
+        text-align: justify;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+}*/
+
+#invoice-POS h6 {
+    font-size: 6px;
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+}
+
+#invoice-POS table {
+    font-size: 6px;
+}
+
+.table th, .table td {
+    padding: 0.1rem;
+}
+
+#invoice-POS {
+    box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
+    padding: 2mm;
+    margin: 0 auto;
+    width: 58mm;
+    background: #FFF;
+}
+
+    #invoice-POS ::selection {
+        background: #f31544;
+        color: #FFF;
+    }
+
+    #invoice-POS::-moz-selection {
+        background: #f31544;
+        color: #FFF;
+    }
+
+hr {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 0;
+    border-top: 1px dashed rgba(0,0,0,0.1);
+}
+    

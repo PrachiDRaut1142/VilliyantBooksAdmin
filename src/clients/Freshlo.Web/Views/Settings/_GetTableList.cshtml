@@ -1,0 +1,21 @@
+﻿@using Freshlo.DomainEntities;
+@model List<TableInfo>
+
+
+@foreach (var item in Model)
+{
+<tr>
+    <td>
+        <a href="#">@item.tableId</a>
+    </td>
+    <td>@item.TableCode</td>
+    <td>@item.tableName</td>
+    <td>@item.branch</td>
+    <td>@item.created_on <span class="font-small-3 display-block">@item.created_by</span></td>
+    <td><a href="#" class="text-link tableDetailsCls" data-toggle="modal" data-id="@item.id"> <i class="flaticon-edit"> </i> </a></td>
+    <td>
+        <a href="#" class="text-danger deletetableId" data-id="@item.id"> <i class="flaticon-delete deleteId"> </i></a>
+        <a href="#" class="text-link QrDetailsCls" data-toggle="modal" data-id="@item.TableCode">  <i class="fa fa-eye" aria-hidden="true"></i> </a>
+    </td>
+</tr>
+}

@@ -1,0 +1,35 @@
+﻿@using Freshlo.Web.Models.DashboardVM;
+@model GSTDashbaordVM;
+@{
+    ViewData["Title"] = "_TaxPayGSTCount";
+}
+
+<div class="" id="TodayBasedData">
+    <div class="row">
+        <div class="col-md-2">
+            <a href="">
+                <div class="text-left">
+                    <h6>Total CGST Tax</h6>
+                    <h4 class="text-bold-600 mb-1 font-large-1"> @Model.Gstdashcount.TotalCgstAmount</h4>
+
+                </div>
+            </a>
+        </div>
+        <div class="col-md-2">
+            <a href="">
+                <div class="text-left">
+                    <h6>Total SGST Tax </h6>
+                    <h4 class="text-bold-600 mb-1 font-large-1"> @Model.Gstdashcount.TotalSgstAmount</h4>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-2">
+            <a href="">
+                <div class="text-left">
+                    <h6>Total Tax Value </h6>
+                    <h4 class="text-bold-600 mb-1 font-large-1"> @Model.Gstdashcount.TotaltaxAmount</h4>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

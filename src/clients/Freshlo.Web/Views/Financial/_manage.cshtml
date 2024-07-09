@@ -1,0 +1,55 @@
+﻿@using Freshlo.DomainEntities
+@using Freshlo.Web.Helpers
+@model List<Finance>;
+@using System.Globalization
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middl" id="financial_tblId">
+    <thead>
+        <tr>
+            <th>Entry ID</th>
+            <th>Entry Type</th>
+            <th>Payment Person</th>
+            <th>Total Amount</th>
+            <th>Partial Amount</th>
+            <th>Payment</th>
+            <th>Payment Date</th>
+            <th>Remark</th>
+            <th>Created On</th>
+        </tr>
+    </thead>
+    <tbody id="">
+
+
+        @foreach (Finance list in Model)
+        {
+
+            <tr>
+                <td><a href="/Financial/Detail?Id=@list.Id &opt=@list.Entry_Type" class="text-link"><span>F</span>@list.Id</a></td>
+                <td>@list.Entry_Type_Desc</td>
+                <td>@(list.Entry_Type == 1 ? list.Received_From : list.Paid_To)</td>
+
+                <td>Rs. @list.Total_Amount</td>
+                <td>Rs. @list.Partail_Amount</td>
+                <td>
+                    <span class="m-badge m-badge--wide m-badge--rounded m-badge--@(FinanceHelper.StatusColor.ContainsKey(list.Payment_Status) ? FinanceHelper.StatusColor[list.Payment_Status] : "danger")">@list.Payment_Status_Desc</span>
+                </td>
+                <td>
+                    @list.Paid_On.ToString("dd MMMM yyyy", CultureInfo.InvariantCulture)
+                </td>
+                <td>
+                    @list.Remark
+                </td>
+                <td>
+                    @list.Created_On.ToString("dd-MM-yyyy hh:mm", CultureInfo.InvariantCulture)
+                </td>
+            </tr>
+
+        }
+
+    </tbody>
+</table>
+
+

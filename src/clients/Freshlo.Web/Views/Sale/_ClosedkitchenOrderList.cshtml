@@ -1,0 +1,33 @@
+﻿@using Freshlo.Web.Models.Sale;
+@model SalesManageVM;
+@{
+    ViewData["Title"] = "_ClosedkitchenOrderList";
+}
+
+<div class="" id="">
+    <div class="tab-content">
+        <div class="tab-pane animated fadeIn active" id="aaceptItem" role="tabpanel">
+            @foreach (var item in Model.GetKitcheOrderList)
+            {
+
+                <div class="accept-ready-itrem-list close-item">
+                    <div class="card ready-card close-card">
+                        <div class="media">
+                            <div class="media-left mr-3">@item.tableName</div>
+                            <div class="media-body">
+                                <h3 class="mt-0 text-white">@item.PluName</h3>
+                                <button type="button" class="btn btn-danger accept-btn text-uppercase" data-id="@item.SalesId" data-approval="@item.ItemId">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+
+
+        </div>
+        <!-- READY ITEM TAB -->
+
+    </div>
+</div>

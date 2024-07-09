@@ -1,0 +1,14 @@
+﻿
+
+@{
+    ViewData["Title"] = "CreateBarcode";
+}
+
+@model Items
+
+<h1>@Model.Name</h1>
+<img src="@Model.BarcodeImage " alt="Barcode">
+<h2>@Model.Barcode</h2>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

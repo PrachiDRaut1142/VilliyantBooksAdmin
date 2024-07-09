@@ -1,0 +1,325 @@
+﻿
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Customer</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+               
+               
+                <li class="m-nav__item">
+                    <a href="/Customer/Manage/" class="m-nav__link">
+                        <span class="m-nav__link-text">Customer Manage</span>
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+        <div>
+            <div class="d-flex align-items-center">
+                <button class="btn btn-success mr-2" type="button" id="" onclick="window.location.href='/ItemMaster/Create/'">
+                    Create New Item
+                </button>
+                <!--begin: Dropdown-->
+                <div class="m-dropdown m-dropdown--inline  m-dropdown--arrow m-dropdown--align-right" m-dropdown-toggle="click">
+                    <a href="#" class="m-dropdown__toggle btn btn-dark dropdown-toggle">
+                        Action
+                    </a>
+                    <div class="m-dropdown__wrapper">
+                        <span class="m-dropdown__arrow m-dropdown__arrow--right"></span>
+                        <div class="m-dropdown__inner">
+                            <div class="m-dropdown__body">
+                                <div class="m-dropdown__content">
+                                    <ul class="m-nav">
+                                        <li class="m-nav__section m-nav__section--first">
+                                            <span class="m-nav__section-text">Section</span>
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="" class="m-nav__link" data-toggle="m-tooltip" title="Tooltip title" data-placement="right" data-skin="dark" data-container="body">
+                                                <i class="m-nav__link-icon flaticon-info"></i>
+                                                <span class="m-nav__link-text">FAQ</span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="" class="m-nav__link">
+                                                <i class="m-nav__link-icon flaticon-lifebuoy"></i>
+                                                <span class="m-nav__link-text">Support</span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__section m-nav__section--first">
+                                            <span class="m-nav__section-text">Other</span>
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="" class="m-nav__link">
+                                                <i class="m-nav__link-icon flaticon-share"></i>
+                                                <span class="m-nav__link-text">Activity</span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="" class="m-nav__link">
+                                                <i class="m-nav__link-icon flaticon-chat-1"></i>
+                                                <span class="m-nav__link-text">Messages</span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__separator m-nav__separator--fit">
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">Logout</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="m-content">
+    <div class="portlet">
+
+        <div class="row">
+            <div class="col-md-3" hidden>
+                <div class="m-portlet" style="position: sticky !important;top: 80px;z-index: 1;">
+                    <div class="m-portlet__body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="m-card-profile">
+                                    <div class="m-card-profile__pic">
+                                        <div class="m-card-profile__pic-wrapper mb-2" style="border:none;">
+                                            <img src="/assets/app/media/img/users/noprofile_lg.gif" alt="" width="120" height="120">
+                                        </div>
+                                        <div class="text-center">
+                                            <h2 class="mb-0">Imthiyas</h2>
+                                            <span class="font-small-3 white-space-nowrap" title="">Imthiyasimran@gmail.com</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-4">
+                                <form class="m-form m-form--fit">
+                                    <div class="form-group row mb-0 mt-0">
+                                        <label class="col-md-4 col-sm-12 col-12">Status</label>
+                                        <div class="col-md-8 col-sm-3 col-6 ">
+                                            <label">:&nbsp; <span class="m-badge m-badge--success m-badge--wide m-badge--rounded">Active</span></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row mb-0" hidden>
+                                        <label class="col-md-4 col-sm-12 col-12">Customer Role</label>
+                                        <div class="col-md-8 col-sm-3 col-6 ">
+                                            <label"> :&nbsp; System Admin</label>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="form-group row mb-0 mt-0">
+                                        <label class="col-md-4 col-sm-12 col-12">Last Login</label>
+                                        <div class="col-md-8 col-sm-3 col-6 ">
+                                            <label> :&nbsp; 16-12-2019 13:07:18</label>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </form>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <!--begin::Portlet-->
+                <div class="m-portlet m-portlet--tabs">
+                    <div class="m-portlet__body">
+                        <ul class="nav nav-tabs  m-tabs-line m-nav-tab-account-lookup" role="tablist">
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link active show" data-toggle="tab" href="#userinfo" role="tab" aria-selected="true">
+                                    <i class="flaticon-info"></i> Customer Info
+                                </a>
+                            </li>
+
+                        </ul>
+                        <div class="tab-content">
+                            <!--User Info START-->
+                            <div class="tab-pane active show" id="userinfo" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <form class="m-form m-form--fit m-form--label-align-right" action="/Customer/Create" id="CreateUser" method="post">
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Status<span class="text-warning">*</span></label>
+                                                <div class="col-md-4 col-sm-3 col-6">
+                                                    <select class="form-control m-input m-input--solid" id="Status" name="Status">
+                                                        <option value="Active" selected="selected">Active</option>
+                                                        <option value="Inactive">Inactive</option>
+                                                    </select>
+                                                    <input type="hidden" class="form-control m-input m-input--solid" id="id" name="id" placeholder="Enter Full Name" data-val="true" data-val-required="The id field is required." value="1">
+                                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Source<span class="text-warning">*</span></label>
+                                                <div class="col-md-4 col-sm-3 col-6">
+                                                    <select class="form-control m-input m-input--solid" id="Source" name="Source">
+                                                        <option selected="selected">Hub</option>
+                                                        <option value="Web">Web</option>
+                                                        <option value="Mobile">Mobile</option>
+                                                        <option value="Both">Both</option>
+                                                    </select>
+                                                    <input type="hidden" class="form-control m-input m-input--solid" id="id" name="id" placeholder="Enter Full Name" data-val="true" data-val-required="The id field is required." value="1">
+                                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row" hidden>
+                                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Registration/Enrollment Number <span class="text-warning">*</span></label>
+                                                <div class="col-md-4 col-sm-3 col-6">
+                                                    <input type="text" class="form-control m-input m-input--solid" id="ContactNo1" name="ContactNo1" placeholder="Enter Contact Number" value="">
+                                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                                </div>
+                                            </div>
+
+                                            <hr>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Customer Name <span class="text-warning">*</span></label>
+
+                                                @*<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+
+
+                <div class="dropdown-menu">
+                    <option class="dropdown-item" selected="selected">Mr</option>
+                    <option class="dropdown-item">Mrs</option>
+                    <option class="dropdown-item">Miss</option>
+
+                </div>
+            </button>*@
+                                                <div class="col-md-4 col-sm-3 col-6">
+                                                    <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="FullName" name="Name" placeholder="Enter Full Name" value="" autocomplete="off">
+                                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Email ID <span class="text-warning">*</span></label>
+                                                <div class="col-md-4 col-sm-3 col-6">
+                                                    <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="EmailId" name="EmailId" placeholder="Enter Email ID" value="" autocomplete="off">
+                                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Contact Number <span class="text-warning">*</span></label>
+                                                <div class="col-md-4 col-sm-3 col-6">
+                                                    <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="ContactNo" name="ContactNo" placeholder="Enter Contact Number" value="" autocomplete="off">
+                                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Address Type<span class="text-warning">*</span></label>
+                                                <div class="col-md-4 col-sm-3 col-6">
+                                                    <select class="form-control m-input m-input--solid" id="Address1" name="Address1">
+                                                        <option selected>Select your address</option>
+                                                        <option value="Home">Home</option>
+                                                        <option value="Office">Office</option>
+                                                    </select>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="form-group row" hidden>
+                                                    <label class="col-md-3 col-sm-12 col-12 col-form-label">Customer Role <span class="text-warning">*</span></label>
+                                                    <div class="col-md-4 col-sm-3 col-6">
+                                                        <select class="form-control m-input m-input--solid" id="CustomerRole" name="CustomerRole">
+                                                            <option value="0" selected="" disabled="">Select Customer Role</option>
+                                                            <option value="System Admin" selected="selected">System Admin</option>
+                                                        </select>
+                                                        <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-sm-12 col-12 col-form-label">Address <span class="text-warning">*</span></label>
+                                                    <div class="col-md-4 col-sm-3 col-6">
+                                                        <textarea rows="3" class="form-control m-input m-input--solid SpaceValidation" id="Address1" name="Address1" placeholder="Enter Address" style="resize:none;" autocomplete="off"></textarea>
+                                                        <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-sm-12 col-12 col-form-label">Area<span class="text-warning">*</span></label>
+                                                    <div class="col-md-4 col-sm-3 col-6">
+                                                        <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="Locality" name="Locality" placeholder="Enter Area" value="" autocomplete="off">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" hidden>
+                                                    <label class="col-md-3 col-sm-12 col-12 col-form-label">Building Name<span class="text-warning">*</span></label>
+                                                    <div class="col-md-4 col-sm-3 col-6">
+                                                        <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="BuildingName" name="BuildingName" placeholder="Enter building name" value="" autocomplete="off">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" hidden>
+                                                    <label class="col-md-3 col-sm-12 col-12 col-form-label">Room Number<span class="text-warning">*</span></label>
+                                                    <div class="col-md-4 col-sm-3 col-6">
+                                                        <input type="text" class="form-control m-input m-input--solid" id="room" name="room" placeholder="Enter Room no." value="" autocomplete="off">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-sm-12 col-12 col-form-label">Sector<span class="text-warning">*</span></label>
+                                                    <div class="col-md-4 col-sm-3 col-6">
+                                                        <input type="number" class="form-control m-input m-input--solid SpaceValidation" id="sector" name="sector" placeholder="Sector 23" value="" autocomplete="off">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-sm-12 col-12 col-form-label">Landmark<span class="text-warning">*</span></label>
+                                                    <div class="col-md-4 col-sm-3 col-6">
+                                                        <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="Landmark" name="Landmark" placeholder="Near by" value="" autocomplete="off">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-sm-12 col-12 col-form-label">City<span class="text-warning">*</span></label>
+                                                    <div class="col-md-4 col-sm-3 col-6">
+                                                        <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="City" name="City" placeholder="Enter City" value="" autocomplete="off">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-sm-12 col-12 col-form-label">State<span class="text-warning">*</span></label>
+                                                    <div class="col-md-4 col-sm-3 col-6">
+                                                        <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="state" name="state" placeholder="Enter State" value="" autocomplete="off">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-sm-12 col-12 col-form-label">Country<span class="text-warning">*</span></label>
+                                                    <div class="col-md-4 col-sm-3 col-6">
+                                                        <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="country" name="country" placeholder="Enter Country" value="" autocomplete="off">
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="form-group row">
+                                                    <label class="col-md-4 col-form-label"></label>
+                                                    <div class="col-md-3 col-sm-9 col-6">
+
+
+                                                        <button type="submit" class="btn btn-success">Submit</button>
+                                                        <button type="reset" class="btn btn-link">Clear</button>
+                                                    </div>
+                                                </div>
+                                           </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--User Info END-->
+                           
+                        </div>
+                    </div>
+                </div>
+                <!--end::Portlet-->
+            </div>
+        </div>
+
+    </div>
+</div>
+@section Scripts{
+    <script src="~/assets/scripts/customer/create.js"></script>
+}

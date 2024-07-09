@@ -1,0 +1,548 @@
+﻿@using Freshlo.Web.Models.LiveOfferVM;
+@model LiveOfferVM
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var aliyunpath = Model.businessInfo.aliyunPath;
+}
+
+<link href="~/assets/css/pages/offer/create-offer.css" rel="stylesheet" />
+
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Offer Management</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">             
+                <li class="m-nav__item">
+                    <a href="/Offer/Manage/" class="m-nav__link">
+                        <span class="m-nav__link-text">Offer Manage</span>
+                    </a>
+                </li>               
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon m--hide">
+                        <i class="la la-gear"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                        Create New Offer
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" asp-controller="Offer" asp-action="Create" id="OfferFrm" method="post">
+                        <!-- OFFER TYPE FIELD -->
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Offer Type</label>
+                            <div class="col-md-3 col-sm-12 col-12">
+                                <select class="form-control m-input m-input--solid" name="chooseOffer" id="choose_offer">
+                                    <option disabled>Select Offer</option>
+                                    @foreach (var offer in Model.GetOfferTypeList)
+                                    {
+                                        <option value="@offer.Value">@offer.Text</option>
+                                    }
+                                    @*<option value="Flash Deal" selected>Flash Deal</option>
+                                    <option value="Bundle Offer">Bundle Offer</option>
+                                    <option value="Free Item">Free Item on Bill Amount</option>
+                                    <option value="Free Item on Specific Product">Free Item on Specific Product</option>
+                                    <option value="Bulk Offer">Bulk Offer</option>
+                                    <option value="Buy Any Get Any">Buy Any Get Any</option>
+                                    <option value="Bogo Offer">BOGO Offer</option>*@
+
+                                </select>
+                                <span class="text-danger font-small-3" id="SpnOfferoffer" style="display:none;"></span>
+                            </div>
+                        </div>
+
+                        <!-- FOR BRANCH FIELD -->
+                       @*  <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">For Branch</label>
+                            <div class="col-md-3 col-sm-12 col-12">
+                                <select class="form-control m-input m-input--solid m-select2 select_branch" multiple style="width:100%">
+                                    <option value="HID01">Saudi Arabia</option>
+                                    <option value="HID02">Jordon</option>
+                                    <option value="HID04">UAE</option>
+                                    <option value="HID011">Saudi Arabia</option>
+                                </select>
+                            </div>
+                        </div> *@
+                        <hr />
+                        <!-- STAUS / OFFER TITLE / OFFER DESCRIPTION COMMON FIELDS -->
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Status</label>
+                            <div class="col-md-3 col-sm-12 col-12">
+                                <select class="form-control m-input m-input--solid" name="Status" id="StatusId">
+                                    <option selected disabled>Select Status</option>
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Offer Title  <span class="text-warning">*</span></label>
+                            <div class="col-md-3 col-sm-12 col-12">
+                                <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="OfferHeading" name="OfferHeading" placeholder="Enter Offer Title" />
+                                <span class="text-danger font-small-3" id="SpnOfferHeading" style="display:none;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Offer Description</label>
+                            <div class="col-md-3 col-sm-12 col-12">
+                                <textarea rows="3" class="form-control m-input m-input--solid SpaceValidation float-number" id="OfferDescription" name="OfferDescription" placeholder="Enter Offer Title"></textarea>
+                                <span class="text-danger font-small-3" style="display:none;"></span>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group row">
+                                 <label class="col-md-3 col-sm-12 col-12 col-form-label" id="chooseItem">Choose Qualifing Items</label>
+                                 <div class="col-md-1 col-sm-12 col-12">
+                                     <button type="button" class="btn btn-dark" data-toggle="modal"  id ="AddItem">Add Item</button>
+                                 </div>
+                                 <div class="col-md-2 col-sm-12 col-12 selectedItems" style="display: none">
+                                     <button type="button" class="btn btn-link" data-toggle="modal"  Id="selectedItems"></button>
+                                 </div>                                 
+                             </div>
+                                    <textarea class="form-control m-input m-input--solid " Id="items" name="items" multiple="multiple" style="width:100%" hidden></textarea>
+
+                        
+
+                        <!-- FLASH / BUNDLE / BULK  DEAL VIEW -->
+                        <div id="flash_deal_view" style="display: block">      
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label flashdisc" style="display: block" >% of discount</label>
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label bundledisc" style="display: none">% of discount if purchased together</label>
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label bulkdisc" style="display: none">% of Flat Discount</label>
+                                <div class="col-md-3 col-sm-12 col-12">
+                                    <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="DiscountPerctg" name="DiscountPerctg" placeholder="Enter % of discount" />
+                                    <span class="text-danger font-small-3" id="SpnflashPerDis" style="display:none;"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*<!-- BUNDLE OFFER VIEW -->
+                        <div id="bundle_offer_view" style="display: none">        
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">% of discount if purchased together</label>
+                                <div class="col-md-3 col-sm-12 col-12">
+                                    <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="bundlePerDis" name="DiscountPerctg" placeholder="Enter % of discount if purchased together" />
+                                    <span class="text-danger font-small-3" id="SpnOfferHeading" style="display:none;"></span>
+                                </div>
+                            </div>
+                        </div>*@
+
+                        <!-- FREE ITEM VIEW -->
+                        <div id="free_item_view" style="display: none">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Minimum Order Value</label>
+                                <div class="col-md-3 col-sm-12 col-12">
+                                    <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="freeItemMinVal" name="MinOrderValue" placeholder="Enter Minimum Order Value" />
+                                    <span class="text-danger font-small-3" id="SpnOfferHeading" style="display:none;"></span>
+                                </div>
+                            </div>
+                            @*<div class="form-group row">
+                                 <label class="col-md-3 col-sm-12 col-12 col-form-label">Choose Free Items</label>
+                                 <div class="col-md-1 col-sm-12 col-12">
+                                     <button type="button" class="btn btn-dark" data-toggle="modal"  id ="AddItem">Add Free Item</button>
+                                 </div>
+                                 <div class="col-md-2 col-sm-12 col-12 selectedItems" style="display: none">
+                                     <button type="button" class="btn btn-link" data-toggle="modal"  Id="selectedItems"></button>
+                                 </div>                                 
+                             </div>*@
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Free Type</label>
+                                <div class="col-md-3 col-sm-12 col-12">
+                                    <select class="form-control m-input m-input--solid" name="FreeType" id="freeItemFreeType">
+                                        <option selected disabled>Select Status</option>
+                                        <option value="anyone">Any One Free</option>
+                                        <option value="all">All Items Free</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BULK OFFER VIEW -->
+                        <div id="bulk_offer_view" style="display: none">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Minimum quantity to qualify</label>
+                                <div class="col-md-3 col-sm-12 col-12">
+                                    <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="bulkMinQyt" name="MinQuantityValue" placeholder="Enter Minimum quantity to qualify" />
+                                    <span class="text-danger font-small-3" id="SpnOfferHeading" style="display:none;"></span>
+                                </div>
+                            </div>
+
+                            @*<div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">% of Flat Discount</label>
+                                <div class="col-md-3 col-sm-12 col-12">
+                                    <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="bulkPerDis" name="DiscountPerctg" placeholder="Enter % of Flat Discount" />
+                                    <span class="text-danger font-small-3" id="SpnOfferHeading" style="display:none;"></span>
+                                </div>
+                            </div>*@
+                        </div>
+
+                        <!-- BUY ANY GET ANY VIEW -->
+                        <div id="buy_get_any_view" style="display: none">
+                             <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Buy Quantity</label>
+                                <div class="col-md-3 col-sm-12 col-12">
+                                    <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="BuyQuantity" name="BuyQuantity" placeholder="Enter Buy Quantity" />
+                                    <span class="text-danger font-small-3" id="SpnOfferHeading" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Get Quantity</label>
+                                <div class="col-md-3 col-sm-12 col-12">
+                                    <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="GetQuantity" name="GetQuantity" placeholder="Enter Get Quantity" />
+                                    <span class="text-danger font-small-3" id="SpnOfferHeading" style="display:none;"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BOGO OFFER VIEW -->
+                        <div id="bogo_offer_view" style="display: none">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Free Type</label>
+                                <div class="col-md-3 col-sm-12 col-12">
+                                    <select class="form-control m-input m-input--solid" name="FreeType" id="bogoFreeType">
+                                        <option selected disabled>Select Status</option>
+                                        <option value="B 1 G 1">Buy 1 Get 1</option>
+                                        <option value="B 2 G 1">Buy 2 Get 1</option>
+                                        <option value="B 2 G 2">Buy 2 Get 2</option>
+                                        <option value="B 3 G 1">Buy 3 Get 1</option>
+                                        <option value="B 3 G 3">Buy 3 Get 3</option>
+                                        <option value="B 4 G 1">Buy 4 Get 1</option>
+                                        <option value="B 4 G 2">Buy 4 Get 2</option>
+                                        <option value="B 4 G 3">Buy 4 Get 3</option>
+                                        <option value="B 4 G 4">Buy 4 Get 4</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div> 
+                        
+                        <!-- Free Item On Specific Product -->
+                        <div id="free_Specified_Product_view" style="display: none">
+                            
+                             <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Offer Applicable method</label>
+                                <div class="col-md-3 col-sm-12 col-12">
+                                    <select class="form-control m-input m-input--solid" name="FreeType" id="OfferAppType">
+                                        <option selected disabled>Select Status</option>
+                                        <option value="anyone">Buy Any One selected </option>
+                                        <option value="all">Only When Bought together</option>
+                                    </select>
+                                </div>
+                            </div>
+                           @* <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Get Quantity</label>
+                                <div class="col-md-3 col-sm-12 col-12">
+                                    <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="GetQuantity" name="GetQuantity" placeholder="Enter Get Quantity" />
+                                    <span class="text-danger font-small-3" id="SpnOfferHeading" style="display:none;"></span>
+                                </div>
+                            </div>*@
+                           <div class="form-group row">
+                                 <label class="col-md-3 col-sm-12 col-12 col-form-label">Choose Free Items</label>
+                                 <div class="col-md-1 col-sm-12 col-12">
+                                     <button type="button" class="btn btn-dark" data-toggle="modal"  id ="GetItem">Add Item</button>
+                                 </div>
+                                 <div class="col-md-2 col-sm-12 col-12 getselectedItems" style="display: none">
+                                     <button type="button" class="btn btn-link" data-toggle="modal"  Id="getselectedItems"></button>
+                                 </div>                                 
+                             </div>
+                                    <input class="form-control m-input m-input--solid " Id="GetItemId" name="GetItemId" multiple="multiple" style="width:100%" hidden/>
+                        </div>
+
+                        <hr />
+                        <!-- OFFER STARTS ON / OFFER ENDS BY BEGIN -->
+                        <div class="form-group row align-items-center">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Limited Time Offer?</label>
+                            <div class="col-md-3 col-sm-12 col-12">
+                                <div class="offer-toggle">
+                                    <label class="toggleSwitch">
+                                        <input type="checkbox" id="offer_limit" checked />
+                                        <span>
+                                            <span>NO</span>
+                                            <span>YES</span>
+                                        </span>
+                                        <a></a>
+                                    </label>
+                                    <input Id="toggleValue" name="IsLimitedOffer"  hidden/>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="yesLimitedOffer" style="display: block">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label"> Offer Starts On<span class="text-warning">*</span></label>
+                            <div class="col-md-3 col-sm-12 col-12">
+                                <div class="input-group date">
+                                    <input type="text" class="form-control m-input m-input--solid dateTimepicker SpaceValidation" name="OffStartdate" autocomplete="off" placeholder="Select date and time" id="OffStartdate" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="la la-calendar glyphicon-th"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <span class="errormsg text-danger" id="EventStartTimeErr" style="display:none"></span>
+                                <span class="errormsg" id="EventStartTimeErr1"></span>
+                            </div>                             
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label"> Offer Ends By<span class="text-warning"></span></label>
+                            <div class="col-md-3 col-sm-12 col-12">
+                                <div class="input-group date">
+                                    <input type="text" class="form-control m-input m-input--solid dateTimepicker SpaceValidation" name="OffEndtdate" autocomplete="off" placeholder="Select date and time" id="OffEndtdate" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="la la-calendar-check-o glyphicon-th"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <span class="errormsg text-danger" id="EventEndTimeErr" style="display:none"></span>
+                                <span class="errormsg" id="EventEndTimeErr1"></span>
+                            </div>
+                        </div>
+                        </div>
+                        <!-- OFFER STARTS ON / OFFER ENDS BY ENDED -->
+
+                        @*<div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">start date</label>
+                                <div class="col-md-3 col-sm-12 col-12">
+                                    <div class="input-group date" id="datetimepicker1">
+                                        <input type="text" class="form-control m-input m-input--solid dateTimepicker" placeholder="Start Date & Time" id="OffStartdate" name="OffStartdate" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><i class="la la-calendar-check-o glyphicon-th"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">End date</label>
+                                <div class="col-md-3 col-sm-12 col-12">
+                                    <div class="input-group date" id="datetimepicker24">
+                                        <input type="text" class="form-control m-input m-input--solid dateTimepicker" placeholder="End Date & Time" id="OffEndtdate" name="OffEndtdate" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><i class="la la-calendar-check-o glyphicon-th"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>*@
+                            <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Upload Image (Thumbnail Primary Image) <span class="text-warning">*</span></label>
+                            <div class="col-md-3">
+                                <input type="file" class="form-control m-input m-input--solid" name="imageFiles" id="imageFiles" placeholder="">
+                                <span class="error font-small-3" id="SpnimageFiles" style="display: none; color: red;"></span>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label"></label>
+                            <div class="col-md-9 col-sm-12 col-12">
+                                <button type="button" class="btn btn-success mr-2" id="submitOffer"><i class="la la-upload"></i> Submit </button>
+                                <button type="button" class="btn btn-link" id="clearBtn"><i class="la la-times"></i> Clear</button>
+                            </div>
+                        </div>
+                        <input type="text" id="Aliyunkey" name="Aliyunkey" value="@aliyunpath" hidden />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Add ITEM MODAL -->
+<div class="modal fade" id="add_item_md" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+         <h5 class="modal-title" id="exampleModalLongTitle">Add Item</h5>
+                <button type="button" class="close addclose" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+      </div>
+      <div class="modal-body">
+          <!-- Category FILER BEGIN -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="ml-2 mr-2">
+                            <div class="form-group" style="margin-top: 5px;">
+                                <i class="la la-filter"></i> Filter :
+                            </div>
+                        </div>
+                        <div class="ml-2 filter" style="width:75%">
+                            <div class="form-group">
+                                <select class="form-control m-input m-input--solid MainCategoryId" id="MainCategoryId">
+                                    <option value="0" selected="" disabled="">Category</option>
+                                    @foreach (var maincat in Model.GetMainCategoryList1)
+                                    {
+                                        <option value="@maincat.Value">@maincat.Text</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <select class="form-control m-input m-input--solid" id="CategoryId">
+                            <option value="0" selected="" disabled="">Sub Category</option>                           
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" id="Filter-Id" disabled>Find</button>
+                        <button type="button" class="btn btn-default" id="Clear-Id" disabled>Clear</button>
+                    </div>
+                </div>
+            </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive">
+                      <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table ab-table-head-bg-warning-light Ziptbl" id="item_add_table">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <div class="kt-checkbox-list">
+                                        <label class="kt-checkbox">
+                                            <input type="checkbox" id="AllSelect">
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </th>
+                                <th>Name</th>
+                                <th>Main Category</th>
+                                <th>Category</th>
+                                <th>SubCategory</th>
+                                <th>Barcode</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody id="AddItemtoOffer">
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer text-right" style="display:block">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="addItemId">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Get ITEM MODAL -->
+<div class="modal fade" id="get_item_md" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+         <h5 class="modal-title" id="getexampleModalLongTitle">Add Item</h5>
+                <button type="button" class="close getclose" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+      </div>
+      <div class="modal-body">
+          <!-- Category FILER BEGIN -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="ml-2 mr-2">
+                            <div class="form-group" style="margin-top: 5px;">
+                                <i class="la la-filter"></i> Filter :
+                            </div>
+                        </div>
+                        <div class="ml-2 filter" style="width:75%">
+                            <div class="form-group">
+                                <select class="form-control m-input m-input--solid getMainCategoryId" id="getMainCategoryId">
+                                    <option value="0" selected="" disabled="">Category</option>
+                                    @foreach (var maincat in Model.GetMainCategoryList1)
+                                    {
+                                        <option value="@maincat.Value">@maincat.Text</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <select class="form-control m-input m-input--solid" id="getCategoryId">
+                            <option value="0" selected="" disabled="">Sub Category</option>                           
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" id="GetFilter-Id" disabled>Find</button>
+                        <button type="button" class="btn btn-default" id="GetClear-Id" disabled>Clear</button>
+                    </div>
+                </div>
+            </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive">
+                      <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table ab-table-head-bg-warning-light Ziptbl" id="item_get_table">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <div class="kt-checkbox-list">
+                                        <label class="kt-checkbox">
+                                            <input type="checkbox" id="GetAllSelect">
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </th>
+                                <th>Name</th>
+                                <th>Main Category</th>
+                                <th>Category</th>
+                                <th>SubCategory</th>
+                                <th>Barcode</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody id="GetItemtoOffer">
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer text-right" style="display:block">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="getItems">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<input type="hidden" id="viewMessage1" value="@(Model.ViewMessage ??"")" />
+<input type="hidden" id="errorMessage1" value="@(Model.ErrorMessage ?? "")" />
+@section scripts {
+    <script src="~/assets/scripts/offer/create.js"></script>
+    <script>
+           $('#item_add_table').DataTable({
+        "pageLength": 100,
+        "ordering": true,
+        "sorting": true
+    });
+    $('#item_get_table').DataTable({
+        "pageLength": 100,
+        "ordering": true,
+        "sorting": true
+    });
+    </script>
+}
+

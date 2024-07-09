@@ -1,0 +1,210 @@
+﻿
+@{
+    ViewData["Title"] = "Test2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Revenue Dashboard</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="javascripts:;" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/Home/Index/" class="m-nav__link">
+                        <span class="m-nav__link-text">Home</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="javascripts:;" class="m-nav__link">
+                        <span class="m-nav__link-text">Item Master</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <button type="button" class="btn btn-success"><i class="la la-save"></i> Save Changes</button>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__body  m-portlet__body--no-padding">
+            <div class="row m-row--no-padding m-row--col-separator-xl">
+                <div class="col-xl-4">
+
+                    <!--begin:: Widgets/Stats2-1 -->
+                    <div class="m-widget1">
+                        <div class="m-widget1__item">
+                            <div class="row m-row--no-padding align-items-center">
+                                <div class="col">
+                                    <h3 class="m-widget1__title">Todays Revenue</h3>
+                                    <span class="m-widget1__desc">Total turnover</span>
+                                </div>
+                                <div class="col m--align-right">
+                                    <span class="m-widget1__number m--font-danger">₹ 17,800 <span class="font-small-3">/ 25</span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-widget1__item">
+                            <div class="row m-row--no-padding align-items-center">
+                                <div class="col">
+                                    <h3 class="m-widget1__title">Online Revenue</h3>
+                                    <span class="m-widget1__desc">Through App orders</span>
+                                </div>
+                                <div class="col m--align-right">
+                                    <span class="m-widget1__number m--font-brand">₹ 10,800 <span class="font-small-3">/ 15</spanclass="font-small-3"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-widget1__item">
+                            <div class="row m-row--no-padding align-items-center">
+                                <div class="col">
+                                    <h3 class="m-widget1__title">Walkin Revenue</h3>
+                                    <span class="m-widget1__desc">Todays overall revenue.</span>
+                                </div>
+                                <div class="col m--align-right">
+                                    <span class="m-widget1__number m--font-success">₹ 7,000 <span class="font-small-3">/ 10</span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-widget1__item">
+                            <div class="row m-row--no-padding align-items-center">
+                                <div class="col">
+                                    <h3 class="m-widget1__title">Revenue Lost</h3>
+                                    <span class="m-widget1__desc">Canclled orders.</span>
+                                </div>
+                                <div class="col m--align-right">
+                                    <span class="m-widget1__number m--font-danger">₹ 3,000 <span class="font-small-3">/ 1</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--end:: Widgets/Stats2-1 -->
+                </div>
+                @*<div class="col-xl-4">
+
+                    <!--begin:: Widgets/Stats2-1 -->
+                    <div class="m-widget1">
+                        <div class="m-widget1__item">
+                            <div class="row m-row--no-padding align-items-center">
+                                <div class="col">
+                                    <h3 class="m-widget1__title">This Month</h3>
+                                    <span class="m-widget1__desc">Total turnover</span>
+                                </div>
+                                <div class="col m--align-right">
+                                    <span class="m-widget1__number m--font-danger">₹ 17,800 <span class="font-small-3">/ 25</span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-widget1__item">
+                            <div class="row m-row--no-padding align-items-center">
+                                <div class="col">
+                                    <h3 class="m-widget1__title">Online Revenue</h3>
+                                    <span class="m-widget1__desc">Through App orders</span>
+                                </div>
+                                <div class="col m--align-right">
+                                    <span class="m-widget1__number m--font-brand">₹ 10,800 <span class="font-small-3">/ 15</spanclass="font-small-3"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-widget1__item">
+                            <div class="row m-row--no-padding align-items-center">
+                                <div class="col">
+                                    <h3 class="m-widget1__title">Walkin Revenue</h3>
+                                    <span class="m-widget1__desc">Todays overall revenue.</span>
+                                </div>
+                                <div class="col m--align-right">
+                                    <span class="m-widget1__number m--font-success">₹ 7,000 <span class="font-small-3">/ 10</span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-widget1__item">
+                            <div class="row m-row--no-padding align-items-center">
+                                <div class="col">
+                                    <h3 class="m-widget1__title">Revenue Lost</h3>
+                                    <span class="m-widget1__desc">Canclled orders.</span>
+                                </div>
+                                <div class="col m--align-right">
+                                    <span class="m-widget1__number m--font-danger">₹ 5,000 <span class="font-small-3">/ 10</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--end:: Widgets/Stats2-1 -->
+                </div>*@
+
+                <div class="col-xl-4">
+
+                    <!--begin:: Widgets/Profit Share-->
+                    <div class="m-widget14">
+                        <div class="m-widget14__header">
+                            <h3 class="m-widget14__title">
+                                Revenue Summary
+                            </h3>
+                            <span class="m-widget14__desc">
+                                Overall revenue statistics
+                            </span>
+                        </div>
+                        <div class="row  align-items-center">
+                            <div class="col">
+                                <div id="m_chart_profit_share" class="m-widget14__chart" style="height: 160px">
+                                    <div class="m-widget14__stat text-dark font-large-1"><span class="font-small-3 d-flex">₹</span><span>15000</span> </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="m-widget14__legends">
+                                    <div class="m-widget14__legend">
+                                        <span class="m-widget14__legend-bullet m--bg-accent"></span>
+                                        <span class="m-widget14__legend-text">37% Online Orders</span>
+                                    </div>
+                                    <div class="m-widget14__legend">
+                                        <span class="m-widget14__legend-bullet m--bg-warning"></span>
+                                        <span class="m-widget14__legend-text">47% Walkin Orders</span>
+                                    </div>
+                                    <div class="m-widget14__legend">
+                                        <span class="m-widget14__legend-bullet m--bg-brand"></span>
+                                        <span class="m-widget14__legend-text">19% Canclled Orders</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--end:: Widgets/Profit Share-->
+                </div>
+                <div class="col-xl-4">
+
+                    <!--begin:: Widgets/Daily Sales-->
+                    <div class="m-widget14">
+                        <div class="m-widget14__header m--margin-bottom-30">
+                            <h3 class="m-widget14__title">
+                                Daily Order Summary
+                            </h3>
+                            <span class="m-widget14__desc">
+                                Check out each collumn for more details
+                            </span>
+                        </div>
+                        <div class="m-widget14__chart" style="height:120px;">
+                            <canvas id="m_chart_daily_sales"></canvas>
+                        </div>
+                    </div>
+
+                    <!--end:: Widgets/Daily Sales-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

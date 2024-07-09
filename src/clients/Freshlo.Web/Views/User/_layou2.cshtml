@@ -1,0 +1,861 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@if (Convert.ToString(User.FindFirst("userRole").Value) == "9")
+{
+    <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
+        <li class="m-menu__item " aria-haspopup="true">
+            <a href="/Sale/PendingOrders/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-list"></i>
+                <span class="m-menu__link-title">
+                    <span class="m-menu__link-wrap">
+                        <span class="m-menu__link-text">Pending Orders</span>
+                        @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger">2</span></span>*@
+                    </span>
+                </span>
+            </a>
+        </li>
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-list-3"></i><span class="m-menu__link-text">Sales Management</span><i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Sale/Manage/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Sales Orders</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Sale/HubIndex/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Create New Sale</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Sale/PaymentSettlementSummary/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Settlements</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Sale/DeliveryOrderManage/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Delivery Pending</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <!----Hub Management--->
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-layers"></i><span class="m-menu__link-text">Hub Management</span><i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/ItemMaster/ManagePrice/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Item Master</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Price/List/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Price List</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </li>
+        <!--------------------->
+    </ul>
+
+}
+@if (Convert.ToString(User.FindFirst("userRole").Value) == "10")
+{
+    <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
+        <li class="m-menu__item " aria-haspopup="true">
+            <a href="/Sale/PendingOrders/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-list"></i>
+                <span class="m-menu__link-title">
+                    <span class="m-menu__link-wrap">
+                        <span class="m-menu__link-text">Pending Orders</span>
+                        @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger">2</span></span>*@
+                    </span>
+                </span>
+            </a>
+        </li>
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-list-3"></i><span class="m-menu__link-text">Sales Management</span><i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Sale/Manage/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Sales Orders</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Sale/HubIndex/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Create New Sale</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Sale/PaymentSettlementSummary/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Settlements</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Sale/DeliveryOrderManage/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Delivery Pending</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <!----Hub Management--->
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-layers"></i><span class="m-menu__link-text">Hub Management</span><i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/ItemMaster/ManagePrice/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Item Master</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Price/List/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Price List</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </li>
+        <!--------------------->
+    </ul>
+
+}
+@if (Convert.ToString(User.FindFirst("userRole").Value) == "Management")
+{
+    <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
+        <li class="m-menu__item " aria-haspopup="true">
+            <a href="/Sale/PendingOrders/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-list"></i>
+                <span class="m-menu__link-title">
+                    <span class="m-menu__link-wrap">
+                        <span class="m-menu__link-text">Pending Orders</span>
+                        @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger">2</span></span>*@
+                    </span>
+                </span>
+            </a>
+        </li>
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-list-3"></i><span class="m-menu__link-text">Sales Management</span><i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Sale/Manage/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Sales Orders</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Sale/HubIndex/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Create New Sale</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Sale/PaymentSettlementSummary/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Settlements</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Sale/DeliveryOrderManage/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Delivery Pending</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <!----Hub Management--->
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-layers"></i><span class="m-menu__link-text">Hub Management</span><i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/ItemMaster/ManagePrice/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Item Master</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Price/List/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Price List</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </li>
+        <!--------------------->
+    </ul>
+
+}
+
+   
+@if (Convert.ToString(User.FindFirst("userRole").Value) == "System Admin")
+{
+    <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
+        @*<li class="m-menu__item " aria-haspopup="true">
+            <a href="/Dashboard/Index/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-line-graph"></i>
+                <span class="m-menu__link-title">
+                    <span class="m-menu__link-wrap">
+                        <span class="m-menu__link-text"> Sales Dashboard</span>
+                        <span class="m-menu__link-badge"><span class="m-badge m-badge--danger">2</span></span>
+                    </span>
+                </span>
+            </a>
+        </li>*@
+        @*<li class="m-menu__item " aria-haspopup="true">
+            <a href="/Dashboard/Financial/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-line-graph"></i>
+                <span class="m-menu__link-title">
+                    <span class="m-menu__link-wrap">
+                        <span class="m-menu__link-text">Finance Dashboard</span>
+                        <span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>
+                    </span>
+                </span>
+            </a>
+        </li>*@
+      
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-line-graph"></i><span class="m-menu__link-text">Dashboards</span><i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Dashboard/Financial/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Finance Dashboard</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Dashboard/Customer/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Customer Dashboard</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true" hidden>
+                        <a href="/Dashboard/TaxPay/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">GST Dashboard</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true" hidden>
+                        <a href="/Purchase/ItemSummary/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Item Summary</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Dashboard/Sales/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">AOV Dashboard</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="m-menu__item " aria-haspopup="true">
+            <a href="/Sale/Index/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-plus"></i>
+                <span class="m-menu__link-title">
+                    <span class="m-menu__link-wrap">
+                        <span class="m-menu__link-text">New Order</span>
+                        @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger">2</span></span>*@
+                    </span>
+                </span>
+            </a>
+        </li>
+        <li class="m-menu__item " aria-haspopup="true">
+            <a href="/Sale/PendingOrders/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-list"></i>
+                <span class="m-menu__link-title">
+                    <span class="m-menu__link-wrap">
+                        <span class="m-menu__link-text">Pending Orders</span>
+                        @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger">2</span></span>*@
+                    </span>
+                </span>
+            </a>
+        </li>
+
+        <li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/Sale/kitchenOrderList/" class="m-menu__link ">
+                <i class="m-menu__link-icon la la-list"></i>
+                <span class="m-menu__link-text">Kitchen  Order List</span>
+            </a>
+        </li>
+        <li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/Sale/readyOrderList/" class="m-menu__link ">
+                <i class="m-menu__link-icon la la-list"></i>
+                <span class="m-menu__link-text">Ready Order List</span>
+            </a>
+        </li>
+        <li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/Sale/PaymentSettlementSummary/" class="m-menu__link ">
+                <i class="m-menu__link-icon la la-money"></i>
+                <span class="m-menu__link-text">Payment Settlement</span>
+            </a>
+        </li>
+        @*<li class="m-menu__item " aria-haspopup="true">
+            <a href="/Price/Index/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-price-tag"></i>
+                <span class="m-menu__link-title">
+                    <span class="m-menu__link-wrap">
+                        <span class="m-menu__link-text">Price List</span>
+                    </span>
+                </span>
+            </a>
+        </li>*@
+        @*<li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/Delivery/Track/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-map-location"></i>
+                <span class="m-menu__link-text">Delivery Tracker</span>
+            </a>
+        </li>
+        <li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/Customer/History/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-layers"></i>
+                <span class="m-menu__link-text">History</span>
+            </a>
+        </li>*@
+
+        <li class="m-menu__section ">
+            <h4 class="m-menu__section-text">Manage</h4>
+            <i class="m-menu__section-icon flaticon-more-v2"></i>
+        </li>
+        @*<li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/Sale/Manage/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-list"></i>
+                <span class="m-menu__link-text">Sale Orders</span>
+            </a>
+        </li>*@
+        <!----Hub Management--->
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-layers"></i><span class="m-menu__link-text">Hub Management</span><i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/ItemMaster/ManagePrice/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Item Master</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Price/List/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Price List</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </li>
+        <!--------------------->
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-list-3"></i><span class="m-menu__link-text">Sales Management</span><i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Sale/Manage/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Sales Orders</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Sale/Index/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Create New Sale</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Sale/PaymentSettlementSummary/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Settlements</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Sale/DeliveryOrderManage/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Delivery Pending</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-layers"></i><span class="m-menu__link-text">Item Management</span><i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/ItemMaster/Create/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Create New Item</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/ItemMaster/Manage/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Item Master</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Price/Index/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Price List</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-list-1"></i><span class="m-menu__link-text">Purchase Mgmt.</span><i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Purchase/Manage/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Purchase Orders</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Purchase/Create/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">New Purchase Entry</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/PurchaseOrder/Create/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">New Purchase Order</span>
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    @*<li class="m-menu__item" aria-haspopup="true">
+                        <a href="/PurchaseOrder/Manage/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Purchase Order</span>
+                                </span>
+                            </span>
+                        </a>
+                    </li>*@
+                </ul>
+            </div>
+        </li>
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-list-2"></i><span class="m-menu__link-text">Income & Expenses</span><i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Financial/Manage" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Financial Logs</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Financial/Create/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Create New Entry</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </li>
+
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-user">
+                </i><span class="m-menu__link-text">Customer</span><i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Customer/Manage/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Registered</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item" aria-haspopup="true">
+                        <a href="/Customer/UnregisteredCustomer/" class="m-menu__link ">
+                            <i class="m-menu__link-icon "></i>
+                            <span class="m-menu__link-title">
+                                <span class="m-menu__link-wrap">
+                                    <span class="m-menu__link-text">Unregistered</span>
+                                    @*<span class="m-menu__link-badge"><span class="m-badge m-badge--danger"></span></span>*@
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </li>
+        @*<li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/ItemMaster/Manage/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-layers"></i>
+                <span class="m-menu__link-text">Item Master</span>
+            </a>
+        </li>*@
+
+
+        @*<li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/Customer/Manage/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-user"></i>
+                <span class="m-menu__link-text">Customer</span>
+            </a>
+        </li>*@
+        <li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/Vendor/Manage/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-user"></i>
+                <span class="m-menu__link-text">Vendors</span>
+            </a>
+        </li>
+        <li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/Banner/Manage/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-list-2"></i>
+                <span class="m-menu__link-text">Banner</span>
+            </a>
+        </li>
+        <li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/Coupen/Manage/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-list-2"></i>
+                <span class="m-menu__link-text">Coupen</span>
+            </a>
+        </li>
+        <li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/Stock/Manage/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-layers"></i>
+                <span class="m-menu__link-text">Stock</span>
+            </a>
+        </li>
+        @*<li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/Financial/Manage" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-suitcase"></i>
+                <span class="m-menu__link-text">Finance</span>
+            </a>
+        </li>
+        <li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/Purchase/Manage/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-list-1"></i>
+                <span class="m-menu__link-text">Purchase</span>
+            </a>
+        </li>*@
+        <li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/Wastage/Create/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-cogwheel-2"></i>
+                <span class="m-menu__link-text">Wastage</span>
+            </a>
+        </li>
+        @*<li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/Purchase/Manage/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-cart"></i>
+                <span class="m-menu__link-text">Stock Request</span>
+            </a>
+        </li>*@
+        <li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/Offer/Manage/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-list-3"></i>
+                <span class="m-menu__link-text">Offers</span>
+            </a>
+        </li>
+        @*<li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/Vendor/Manage/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-list-3"></i>
+                <span class="m-menu__link-text">Vendors</span>
+            </a>
+        </li>*@
+        <li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/Notification/Create/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-alert"></i>
+                <span class="m-menu__link-text">Notification</span>
+            </a>
+        </li>
+
+        <li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/User/Manage/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-user"></i>
+                <span class="m-menu__link-text">User</span>
+            </a>
+        </li>
+        @*..category option*@
+        @*<li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/User/Accesscontrol/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-user"></i>
+                <span class="m-menu__link-text">Access Control</span>
+            </a>
+        </li>*@
+        <li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/Category/Manage/" class="m-menu__link ">
+                <i class="m-menu__link-icon fa fa-list-ul"></i>
+                <span class="m-menu__link-text">Category</span>
+            </a>
+        </li>
+
+        <li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/Hub/Manage/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-cogwheel-2"></i>
+                <span class="m-menu__link-text">Branch</span>
+            </a>
+        </li>
+
+        <li class="m-menu__item" aria-haspopup="true" m-menu-link-redirect="1">
+            <a href="/Settings/Info/" class="m-menu__link ">
+                <i class="m-menu__link-icon flaticon-cogwheel-2"></i>
+                <span class="m-menu__link-text">Setting</span>
+            </a>
+        </li>
+
+    </ul>
+
+}
+
+

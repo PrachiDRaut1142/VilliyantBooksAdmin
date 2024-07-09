@@ -1,0 +1,122 @@
+﻿@using Freshlo.Web.Models.CoupenVM;
+@model CoupenVM;
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/assets/img_crop/css/img_crop.css" rel="stylesheet" />
+<link href="~/assets/img_crop/css/img_crop_main.css" rel="stylesheet" />
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Coupen Master</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item">
+                    <a href="/Coupen/Manage/" class="m-nav__link">
+                        <span class="m-nav__link-text">Coupen Manage</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">
+                                Create New Coupen
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" action="/Coupen/Create/" id="coupenIdcreratFrm" method="post">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Status</label>
+                            <div class="col-md-3">
+                                <select class="form-control m-input m-input--solid" id="Status" name="Status">
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Title <span class="text-warning">*</span></label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control m-input m-input--solid clear-cls SpaceValidation" name="Title" autocomplete="off" id="CTitle" placeholder="Enter Coupen Name">
+                                <span class="error font-small-3 error-empty-cls" id="SpnCTitle" style="display: none; color: red;"> </span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Coupen Code <span class="text-warning">*</span></label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control m-input m-input--solid clear-cls SpaceValidation" name="CoupenCode" autocomplete="off" id="CoupenCode" placeholder="Enter Coupen Code">
+                                <span class="error font-small-3 error-empty-cls" id="SpnCoupenCode" style="display: none; color: red;"> </span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Short Description <span class="text-warning">*</span></label>
+                            <div class="col-md-4">
+                                <textarea rows="4" class="form-control m-input m-input--solid SpaceValidation" placeholder="description" id="ShortDescription" name="ShortDescription"></textarea>
+                                <span class="error font-small-3 error-empty-cls" id="SpnShortD" style="display: none; color: red;"> </span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Minimum Order Value <span class="text-warning">*</span></label>
+                            <div class="col-md-4">
+                                <input type="number" class="form-control m-input m-input--solid clear-cls SpaceValidation" name="MinOrderValue" autocomplete="off" id="MinOrderValue">
+                                <span class="error font-small-3 error-empty-cls" id="SpnMOV" style="display: none; color: red;"> </span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Max Discount <span class="text-warning">*</span></label>
+                            <div class="col-md-4">
+                                <input type="number" class="form-control m-input m-input--solid clear-cls SpaceValidation" name="MaxDiscount" autocomplete="off" id="MaxDiscount">
+                                <span class="error font-small-3 error-empty-cls" id="SpMaxD" style="display: none; color: red;"> </span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Discount Percentage <span class="text-warning">*</span></label>
+                            <div class="col-md-4">
+                                <input type="number" class="form-control m-input m-input--solid clear-cls SpaceValidation" name="DiscountPercnt" id="DiscountPercnt">
+                                <span class="error font-small-3 error-empty-cls" id="SpnDisPer" style="display: none; color: red;"> </span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Usage Allow Per User <span class="text-warning">*</span></label>
+                            <div class="col-md-4">
+                                <input type="number" class="form-control m-input m-input--solid clear-cls SpaceValidation" name="UsageAllowedperUser" autocomplete="off" id="UsageAllowedperUser">
+                                <span class="error font-small-3 error-empty-cls" id="SpnUsagePerAllow" style="display: none; color: red;"> </span>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group row">
+                            <div class="col-md-9 offset-md-3">
+                                <div class="float-left">
+                                    <button type="button" class="btn btn-success" id="submitCuopen">Submit</button>
+                                    <button type="button" class="btn btn-link" id="CouponClear">Clear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="viewMessage1" value="@(Model.ViewMessage ??"")" />
+<input type="hidden" id="errorMessage1" value="@(Model.ErrorMessage ?? "")" />
+@section Scripts{
+    <script src="~/assets/scripts/Coupen/Create.js"></script>
+}

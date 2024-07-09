@@ -1,0 +1,40 @@
+﻿@using Freshlo.Web.Models.Sale;
+@model SalesManageVM;
+@{
+    ViewData["Title"] = "_AcceptedkitchenOrderList";
+}
+
+
+<div class="" id="">
+    <div class="tab-content">
+        <div class="tab-pane animated fadeIn active" id="aaceptItem" role="tabpanel">
+            @foreach (var item in Model.GetKitcheOrderList)
+            {
+
+                <div class="accept-ready-itrem-list">
+                    <div class="card ready-card">
+                        <div class="media">
+                            <div class="media-left mr-3">@item.tableName</div>
+                            <div class="media-body">
+                                <h5 class="mt-0">@item.PluName</h5>
+                                <div class="card-cutom-footer">
+                                    <h6 class="mins">10 mins</h6>
+                                    <button type="button" class="btn btn-danger ready-btn text-uppercase btn-ready" data-id="@item.SalesId">Accept</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            }
+ 
+
+
+
+
+        </div>
+        <!-- READY ITEM TAB -->
+
+    </div>
+</div>

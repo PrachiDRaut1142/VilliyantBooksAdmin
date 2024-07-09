@@ -1,0 +1,34 @@
+﻿@using Freshlo.DomainEntities.PriceList;
+@model List<PriceList>
+@{
+    ViewData["Title"] = "_GetOfferMapPricelist";
+}
+
+@foreach (var list in Model)
+{
+    <tr id="MappedItem_@list.ItemId">
+        <td>@list.ItemId</td>
+        <td>@list.pluName</td>
+        <td>@list.DiscountPrice</td>
+        <td>@list.SellingPrice</td>
+        <td>@list.DiscountedValue</td>
+        <td>
+            <button type="button" class="btn btn-sm btn-dark removeOfferItem" data-id="@list.Id">Remove</button>
+        </td>
+        <td>
+            <div class="kt-checkbox-list">
+                <label class="kt-checkbox">
+                    <input class="messageCheckbox" id="@list.Id" value="" type="checkbox" name="Check">
+                    <span></span>
+                </label>
+            </div>
+        </td>
+    </tr>
+}
+@*<script>
+    $('#MappedOfferItem').DataTable({
+            "pageLength": 10,
+            "ordering": false,
+            "sorting": true
+        });
+</script>*@

@@ -1,0 +1,38 @@
+﻿@using Freshlo.Web.Models.DashboardVM;
+@using Freshlo.Web.Helpers;
+@using System.Globalization
+@model FinancialDashboardVM;
+
+@{
+    ViewData["Title"] = "_discount";
+     var currencySymbol = Model.getCurrencysybmollist.FirstOrDefault(x => x.status == 1).symbol;
+}
+
+
+<div class="header bg-gradient-primary pb-8 pt-1 pt-md-8">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row mt-3">  
+            <div class="col-xl-3 col-lg-6">
+              <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col" id="DiscountAmt1">
+                      <h5 class="card-title text-uppercase text-muted mb-1">Total Discount</h5>
+                      <span class="h2 font-weight-bold text-danger"><small><span class="CurrencyData">@currencySymbol</span> </small>@Model.GetallCountDashbaord.TotalDiscountAmount.ToString("#,##0.00") <small>(@Model.GetallCountDashbaord.TotalDiscountAmountCount.ToString("#,##0"))</small></span>
+                    </div>
+                    <div class="col-auto">
+                      <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                        <img src="~/assets/img/payment-status/pending.png" alt="payment" />
+                      </div>
+                    </div>
+                  </div>
+                  <p class="mt-3 mb-0 text-muted text-sm">
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

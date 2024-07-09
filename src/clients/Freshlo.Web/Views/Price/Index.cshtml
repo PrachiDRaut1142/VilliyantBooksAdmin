@@ -1,0 +1,253 @@
+﻿@using Freshlo.DomainEntities;
+@using Freshlo.Web.Models.PricelistVM
+@using System.Globalization
+@using Freshlo.Web.Helpers
+@model PricelistVM
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<style>
+    .collapse-table table tbody tr {
+        display: none;
+        border: 1px solid #ccc;
+    }
+
+        .collapse-table table tbody tr.collapse-row {
+            display: table-row;
+            background: #f9f9f9;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+</style>
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Price Management</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="javascripts:;" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/Sale/Index/" class="m-nav__link">
+                        <span class="m-nav__link-text">Home</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="javascripts:;" class="m-nav__link">
+                        <span class="m-nav__link-text">Price Manage</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <button type="button" class="btn btn-dark toptouchdiv" id="AddPricelist"> Save Changes</button>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__body pb-0">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="ml-2 mr-2">
+                            <div class="form-group" style="margin-top: 5px;">
+                                <i class="la la-filter"></i> Filter :
+                            </div>
+                        </div>
+                        <div class="ml-2" style="width:75%">
+                            <div class="form-group">
+                                <select class="form-control m-input m-input--solid" id="MainCategoryId">
+                                    <option value="0" selected disabled>MainCategory</option>
+                                    @foreach (var getManCategList in Model.GetMainCategoryList)
+                                    {
+                                        <Option value="@getManCategList.MainCatId">@getManCategList.ManCatName</Option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <select class="form-control m-input m-input--solid" id="CategoryId">
+                            <option value="0" selected disabled>Category</option>
+                            @foreach (var getCategList in Model.getCattegorylist)
+                            {
+                                <option value="@getCategList.CategoryId">@getCategList.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <select asp-items="@Model.GetitemType" class="form-control m-input m-input--solid" id="ItemType">
+                            <option value="0" selected disabled>Item Type</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <select class="form-control m-input m-input--solid" id="ApproavalType">
+                            <option value="0" selected disabled>Availability</option>
+                            <option value="Y">Yes</option>
+                            <option value="N">No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" id="Filter-Id">Find</button>
+                        <button type="button" class="btn btn-link" id="Clear-Id">Clear</button>
+                    </div>
+                </div>
+                <div class="col-md-2 showdiv" style="display:none;">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-dark pull-right"><i class="la la-save"></i> Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="m-portlet">
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- EXPAND TABLE BEGIN -->
+                    <div class="collapse-table">
+                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless">
+                            <thead>
+                                <tr style="border: 1px solid #ccc;">
+                                    <th>Item Name</th>
+                                    <th>Quantity</th>
+                                    <th>Wasatage %</th>
+                                    <th>Purchase Price</th>
+                                    <th>Profit Margin (%)</th>
+                                    <th>Actual Cost </th>
+                                    <th>Profit Margin</th>
+                                    <th>Market Price</th>
+                                    <th>Selling Price</th>
+                                    <th>Sale</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="collapse-row expand">
+                                    <td colspan="10">Cold Drink - Big</td>
+                                </tr>
+                                <tr>
+                                    <td class="pb-0 pt-4">
+                                        <a href="/ItemMaster/Detail/5021" class="font-medium-1" id="pluName" data-id="5021" name="pluNames">Cold Drink - Big</a>
+                                        <input hidden="" value="5021" name="Ids">
+                                    </td>
+                                    <td class="pb-0 pt-4">
+                                        <div class="display-inline-flex">
+                                            <h6 class="font-medium-3" id="OrderQty">1 <small class="font-small-3">Ut</small> </h6>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input style="width:100px;" type="text" class="form-control m-input m-input--solid WasteagePerc-Cls font-medium-2 font-weight-bold WasteagePerc" id="WasteagePerc" name="WasteagePercs" value="0" data-id="ITM0125" data-val="true" data-val-number="The field WasteagePerc must be a number." data-val-required="The WasteagePerc field is required.">
+                                    </td>
+                                    <td>
+                                        <input style="width:100px;" type="text" name="PurchasePrices" class=" form-control m-input m-input--solid font-medium-2 font-weight-bold PurchasePrice" id="PurchasePrice" value="100" data-id="ITM0125" data-val="true" data-val-number="The field PurchasePrice must be a number." data-val-required="The PurchasePrice field is required.">
+                                    </td>
+                                    <td>
+                                        <input style="width:100px;" type="text" name="SellingProfitPers" class="form-control m-input m-input--solid font-medium-2 font-weight-bold SellingProfitPer" id="SellingProfitPer" value="0" data-id="ITM0125" data-val="true" data-val-number="The field SellingProfitPer must be a number." data-val-required="The SellingProfitPer field is required.">
+                                    </td>
+                                    <td>
+                                        <span class="width-50 font-medium-2 font-weight-bold" id="TotalPrice" name="TotalPrices" value="100">100</span>
+                                        <input style="width:100px;" type="text" name="TotalPrices" class="form-control m-input m-input--solid font-medium-2 font-weight-bold" id="TotalPricetxt" value="100" data-id="ITM0125" hidden="" data-val="true" data-val-number="The field TotalPrice must be a number." data-val-required="The TotalPrice field is required.">
+                                        <input style="width:100px;" type="text" name="seasonSales" class="form-control m-input m-input--solid font-medium-2 font-weight-bold seasonSale" id="seasonSalechange" value="N" data-id="ITM0125" hidden="">
+                                    </td>
+                                    <td>
+                                        <input style="width:100px;" type="text" class="form-control m-input m-input--solid font-medium-2 font-weight-bold ProfitMargin" id="ProfitMargin" name="ProfitMargins" value="0" data-id="ITM0125" data-val="true" data-val-number="The field ProfitMargin must be a number." data-val-required="The ProfitMargin field is required.">
+                                    </td>
+                                    <td>
+                                        <input style="width:100px;" type="text" class="form-control m-input m-input--solid font-medium-2 font-weight-bold MarketPrice" name="MarketPrices" id="MarketPrice" value="120" data-id="ITM0125">
+                                    </td>
+                                    <td>
+                                        <input style="width:100px;" type="text" class="form-control m-input m-input--solid font-medium-2 font-weight-bold SellingPrice" name="SellingPrices" id="SellingPrice" value="100" data-id="ITM0125" data-val="true" data-val-number="The field SellingPrice must be a number." data-val-required="The SellingPrice field is required.">
+                                    </td>
+                                    <td class="pb-0 pt-4">
+                                        <label class="ab-switch">
+                                            <input type="checkbox" value="N" class="seasonSale" id="seasonSales" checked="">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr class="collapse-row expand">
+                                    <td colspan="10">Cold Drink - Big</td>
+                                </tr>
+                                <tr>
+                                    <td class="pb-0 pt-4">
+                                        <a href="/ItemMaster/Detail/5021" class="font-medium-1" id="pluName" data-id="5021" name="pluNames">Cold Drink - Big</a>
+                                        <input hidden="" value="5021" name="Ids">
+                                    </td>
+                                    <td class="pb-0 pt-4">
+                                        <div class="display-inline-flex">
+                                            <h6 class="font-medium-3" id="OrderQty">1 <small class="font-small-3">Ut</small> </h6>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input style="width:100px;" type="text" class="form-control m-input m-input--solid WasteagePerc-Cls font-medium-2 font-weight-bold WasteagePerc" id="WasteagePerc" name="WasteagePercs" value="0" data-id="ITM0125" data-val="true" data-val-number="The field WasteagePerc must be a number." data-val-required="The WasteagePerc field is required.">
+                                    </td>
+                                    <td>
+                                        <input style="width:100px;" type="text" name="PurchasePrices" class=" form-control m-input m-input--solid font-medium-2 font-weight-bold PurchasePrice" id="PurchasePrice" value="100" data-id="ITM0125" data-val="true" data-val-number="The field PurchasePrice must be a number." data-val-required="The PurchasePrice field is required.">
+                                    </td>
+                                    <td>
+                                        <input style="width:100px;" type="text" name="SellingProfitPers" class="form-control m-input m-input--solid font-medium-2 font-weight-bold SellingProfitPer" id="SellingProfitPer" value="0" data-id="ITM0125" data-val="true" data-val-number="The field SellingProfitPer must be a number." data-val-required="The SellingProfitPer field is required.">
+                                    </td>
+                                    <td>
+                                        <span class="width-50 font-medium-2 font-weight-bold" id="TotalPrice" name="TotalPrices" value="100">100</span>
+                                        <input style="width:100px;" type="text" name="TotalPrices" class="form-control m-input m-input--solid font-medium-2 font-weight-bold" id="TotalPricetxt" value="100" data-id="ITM0125" hidden="" data-val="true" data-val-number="The field TotalPrice must be a number." data-val-required="The TotalPrice field is required.">
+                                        <input style="width:100px;" type="text" name="seasonSales" class="form-control m-input m-input--solid font-medium-2 font-weight-bold seasonSale" id="seasonSalechange" value="N" data-id="ITM0125" hidden="">
+                                    </td>
+                                    <td>
+                                        <input style="width:100px;" type="text" class="form-control m-input m-input--solid font-medium-2 font-weight-bold ProfitMargin" id="ProfitMargin" name="ProfitMargins" value="0" data-id="ITM0125" data-val="true" data-val-number="The field ProfitMargin must be a number." data-val-required="The ProfitMargin field is required.">
+                                    </td>
+                                    <td>
+                                        <input style="width:100px;" type="text" class="form-control m-input m-input--solid font-medium-2 font-weight-bold MarketPrice" name="MarketPrices" id="MarketPrice" value="120" data-id="ITM0125">
+                                    </td>
+                                    <td>
+                                        <input style="width:100px;" type="text" class="form-control m-input m-input--solid font-medium-2 font-weight-bold SellingPrice" name="SellingPrices" id="SellingPrice" value="100" data-id="ITM0125" data-val="true" data-val-number="The field SellingPrice must be a number." data-val-required="The SellingPrice field is required.">
+                                    </td>
+                                    <td class="pb-0 pt-4">
+                                        <label class="ab-switch">
+                                            <input type="checkbox" value="N" class="seasonSale" id="seasonSales" checked="">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+@section scripts {
+    <script src="~/assets/scripts/price/Index2.js"></script>
+
+}
+    <script>
+        $('#tblPricelistId').DataTable({
+            "pageLength": 100,
+            "ordering": false,
+            "sorting": true
+        });
+    </script>

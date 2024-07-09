@@ -1,0 +1,204 @@
+﻿@using Freshlo.Web.Models
+
+@model SalesVM
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Freshlo</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <link href="~/assets/print/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/print/print.css" rel="stylesheet" />
+    <link href="~/assets/main/main.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container-fluid" id="outprint">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center">
+                    <img src="~/assets/app/media/img/logos/logo-bw.png" alt="Freshlo Logo" class="img-fluid mt-1" style="width:250px;" />
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center">
+                    Freshlo <br>
+                    Shop No - 9, Sector - 6, Nerul (W)<br>
+                    Navi Mumbai - 400706.
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-12">
+                @if (Model.GetSalesList != null)
+                {
+                    <div class="text-left">
+
+                        Bill No : @Model.GetSalesOrderdetail.SalesOrderId <br>
+                        Bill Dt : @Model.GetSalesOrderdetail.LastUpdatedOn.ToString("dd-MM-yyyy hh:mm tt") <br>
+                        Cashier ID : @Model.GetSalesOrderdetail.CreatedBy  - @Model.GetSalesOrderdetail.EmpName
+                    </div>
+                }
+
+            </div>
+        </div>
+        <hr />
+        @*<div class="row">
+            <div class="col-xs-12">
+                <div class="text-left">
+                    C Name : ***** ***** <br>
+                    C No : +91 **** *** ***
+                </div>
+            </div>
+        </div>
+        <hr />*@
+        <div class="row">
+            <div class="col-md-12">
+                <p class="mb-0 text-center">
+                    CASH MEMO
+                </p>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-condensed mb-0" style="">
+                    <thead>
+                        <tr>
+                            <td><strong>Item</strong></td>
+                            @*<td class="text-center">N.W</td>*@
+                            <td class="text-center"><strong>Qty</strong></td>
+                            <td class="text-right"><strong>Totals</strong></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.GetSalesList != null)
+                        {
+                            @foreach (var item in Model.GetSalesList)
+                            {
+                                <tr>
+                                    <td>@item.PluName<span class="display-block font-medium-1">@item.Weight @item.Measurement X Rs.@item.PricePerMeas </span></td>
+                                    @*<td class="text-center"></td>*@
+                                    <td class="text-center">@(item.ItemType == "Loose" ? item.Weight : item.QuantityValue) </td>
+                                    <td class="text-right">@item.TotalPrice</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-3">
+                <div class="text-left"><strong>Item : @Model.GetSalesOrderdetail.PluCount</strong>,</div>
+            </div>
+            <div class="col-xs-3">
+                <div class="text-center"><strong></strong></div>
+            </div>
+            <div class="col-xs-6">
+                <div class="text-right"><strong>Amt : @Model.GetSalesOrderdetail.TotalPrice</strong></div>
+            </div>
+        </div>
+
+        <hr />
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center">
+                    Amount Details
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="text-right">
+                    Delivery Charges:
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div id="DeliveryCharge" class="text-right">
+                    @Model.GetSalesOrderdetail.DeliveryCharges
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="text-right">
+                    Sub Total:
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div id="TotalPrice" class="text-right">
+                    @Model.GetSalesOrderdetail.TotalPrice
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="text-right">
+                     Total:
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div id="CashReceived" class="text-right">
+                    @Model.GetSalesOrderdetail.TotalAmount
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center">
+                    <strong>♥ ♥ Saved Rs.@Model.Saved/- On MRP ♥ ♥</strong>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-left" style="font-size:12px;">
+                    No Cash Refunds. <br />
+                    Terms & Condition Apply <br />
+                    Customer Care number : +91 8879 080 108 <br />
+                    Customer Care email : support@freshlo.co.in
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center">
+                    Thank You for Shopping With Us
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-left" style="font-size:10px;">
+                    This is computer generated invaoice
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            window.print();
+            window.location.href = '/Sale/PendingOrders/';
+            window.close();
+        };
+    </script>
+</body>
+</html>

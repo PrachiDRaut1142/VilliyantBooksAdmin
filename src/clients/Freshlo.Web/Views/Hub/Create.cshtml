@@ -1,0 +1,187 @@
+﻿
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Settings</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item">
+                    <a href="/Hub/Manage/" class="m-nav__link">
+                        <span class="m-nav__link-text">Hub Manage</span>
+                    </a>
+                </li>
+            </ul>
+           
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">Create New Branch</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" method="post" asp-action="Create" asp-controller="Hub" id="HubCreate">
+                        <input type="text" class="form-control m-input m-input--solid id" id="id" name="id" hidden>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Branch Name <span class="text-warning">*</span></label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid HubName SpaceValidation" id="HubName" name="HubName" placeholder="Enter Branch Name">
+                                <span class="text-danger font-small-3 " style="display:none;" id="SpnHubName"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Branch Contact No <span class="text-warning">*</span></label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid ContactNo SpaceValidation" id="ContactNo" name="ContactNo" placeholder="Enter Branch Contact No">
+                                <span class="text-danger font-small-3 " style="display:none;" id="SpnContactNo"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Branch Email </label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid BrnachEmail SpaceValidation" id="BrnachEmail" name="BrnachEmail" placeholder="Enter Branch Contact No">
+                                <span class="text-danger font-small-3 " style="display:none;" id="SpnBrnachEmail"></span>
+                            </div>
+                        </div>
+                         
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Branch Notify Email </label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid BranchNotifyEmail SpaceValidation" id="BranchNotifyEmail" name="BranchNotifyEmail" placeholder="Enter Branch Contact No">
+                                <span class="text-danger font-small-3 " style="display:none;" id="SpnBranchNotifyEmail"></span>
+                            </div>
+
+                        </div>
+                       <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Currency</label>
+                        <div class="col-md-3">
+                            <select class="form-control m-input--solid clear-cls" name="currency" id="currency">
+                                <option value="0" selected disabled>Select Currency</option>
+                                @foreach (var item in Model.getCurrencyList)
+                                {
+                                    <option value="@item.ShortCode" data-value="@item.symbol">@item.ShortCode</option>
+
+                                }
+                            </select>
+                            <span class="error font-small-3 error-empty-cls" id="Currency" style="display: none; color: red;"></span>
+                        </div>
+                    </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Area</label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid Area SpaceValidation" id="Area" name="Area" placeholder="Enter Area Here">
+                                <span class="text-danger font-small-3 " style="display:none;"></span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Buliding Name</label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid BuildingName SpaceValidation" id="BuildingName" name="BuildingName" placeholder="Enter Block No">
+                                <span class="text-danger font-small-3 " style="display:none;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Shop Number </label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid RoomNo SpaceValidation" id="RoomNo" name="RoomNo" placeholder="Enter Shop Number">
+                                <span class="text-danger font-small-3 " style="display:none;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Street Name / Sector Number </label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid Sector SpaceValidation" id="Sector" name="Sector" placeholder="Enter Street Name / Sector Number *">
+                                <span class="text-danger font-small-3 " style="display:none;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">LandMark </label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid Landmark SpaceValidation" id="Landmark" name="Landmark" placeholder="Enter LandMark">
+                                <span class="text-danger font-small-3 " style="display:none;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">ZipCode</span></label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid MapCode SpaceValidation" id="MapCode" name="MapCode" placeholder="Enter Zipcode">
+                                <span class="text-danger font-small-3 " style="display:none;"></span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">City </label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid City SpaceValidation" id="City" name="City" placeholder="Enter City">
+                                <span class="text-danger font-small-3 " style="display:none;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">State</label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid State SpaceValidation" id="State" name="State" placeholder="Enter State">
+                                <span class="text-danger font-small-3 " style="display:none;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Country</label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid Country SpaceValidation" id="Country" name="Country" placeholder="Enter Country">
+                                <span class="text-danger font-small-3 " style="display:none;"></span>
+                            </div>
+                        </div>
+                        <hr/>
+                        @*<div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Locations</label>
+                            <div class="col-md-7">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3770.865730701846!2d72.90718475020417!3d19.069640157065127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c7a7b51c59b7%3A0x9c0bd2aac3bb51de!2sArabian%20Dastar!5e0!3m2!1sen!2sin!4v1638361018559!5m2!1sen!2sin" height="300" style="border:0; width:100%" allowfullscreen="" loading="lazy"></iframe>
+                            </div>
+                        </div>*@
+                       
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label"></label>
+                            <div class="col-md-3 col-sm-9 col-6">
+                                <button type="button" class="btn btn-success" id="submitHub">Submit</button>
+                                <button type="button" class="btn btn-link HubCreateClear" id="HubCreateClear">Clear</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<input type="hidden" id="viewMessage1" value="@(Model.ViewMessage ??"")" />
+<input type="hidden" id="errorMessage1" value="@(Model.ErrorMessage ?? "")" />
+@section Scripts{
+    <script src="~/assets/scripts/hub/create.js"></script>
+     <script src="~/assets/scripts/shared/layout.js"></script>
+    <script>
+     $("#currency").on('change', function () {           
+             Cookies.set('currency', this.value);   
+           });
+          if (Cookies.set('currency')) {
+            $('#currency').val(Cookies.get('currency'));
+        }     
+    </script>
+}

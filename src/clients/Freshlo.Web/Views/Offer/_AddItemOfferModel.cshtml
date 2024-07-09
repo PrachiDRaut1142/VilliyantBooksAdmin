@@ -1,0 +1,75 @@
+﻿@using Freshlo.Web.Models.LiveOfferVM;
+@model LiveOfferVM
+
+
+@foreach (var info in Model.getoffer)
+{
+    int iChecked = 0;
+    @if (Model.selectedItem == 1)
+    {
+        @foreach (var item in Model.items)
+        {
+            var itemList = item.Split(" / ").ToList();
+            var items = itemList[0];
+            @if (info.PriceId == items)
+            {
+                 iChecked++;
+            }
+        }
+        @if (iChecked > 0)
+        {
+           <tr>
+                <td>
+                    <div class="kt-checkbox-list">
+                        <label class="kt-checkbox">
+                            <input class="messageCheckbox" id="@info.PriceId" value="@info.PriceId" type="checkbox" name="Check" checked>                        
+                        </label>
+                    </div>
+                </td>
+                <td>@info.pluName</td>
+                <td>@info.MainCatName</td>
+                <td>@info.CatName</td>
+                <td>@info.SubCatName</td>
+                <td>@info.Barcode</td>
+                <td>@info.SellingPrice</td> 
+           </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td>
+                <div class="kt-checkbox-list">
+                    <label class="kt-checkbox">
+
+                        @foreach (var item in Model.items)
+                        {
+                             var itemList = item.Split(" / ").ToList();
+                             var items = itemList[0];
+                             @if (info.PriceId == items)
+                             {
+                                  iChecked++;
+                             }
+                        }
+                        @if (iChecked > 0)
+                        {
+                            <input class="messageCheckbox" id="@info.ItemId" value="@info.PriceId" type="checkbox" name="Check" checked>
+                        }
+                        else
+                        {
+                            <input class="messageCheckbox" id="@info.ItemId" value="@info.PriceId" type="checkbox" name="Check">
+                        }
+                        @*<input class="messageCheckbox" id="@info.ItemId" value="@info.ItemId" type="checkbox" name="Check" @(info.items[0] == info.ItemId ? "checked" : "")>*@
+                        
+                    </label>
+                </div>
+            </td>
+            <td>@info.pluName</td>
+            <td>@info.MainCatName</td>
+            <td>@info.CatName</td>
+            <td>@info.SubCatName</td>
+            <td>@info.Barcode</td>
+            <td>@info.SellingPrice</td> 
+        </tr>
+    }
+}

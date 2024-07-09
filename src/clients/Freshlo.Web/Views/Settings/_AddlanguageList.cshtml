@@ -1,0 +1,11 @@
+﻿@using Freshlo.Web.Models.Setting;
+@using Freshlo.Web.Helpers;
+@model SettingVM;
+
+
+
+
+@foreach (var item in Model.getaddedlanguagelist)
+{
+    <div class="chips mr-1" id="selectoption11" data-id="@item.Id"><span>@item.LanguageName</span> <a href="#"><i class="flaticon-cancel"></i></a></div>
+}

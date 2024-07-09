@@ -1,0 +1,436 @@
+﻿@using Freshlo.Web.Models
+@using Freshlo.Web.Helpers
+@model SalesVM
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Freshlo</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <link href="~/assets/print/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/print/print.css" rel="stylesheet" />
+    <!------ Include the above in your HEAD tag ---------->
+
+
+    <style>
+        .table-middle td {
+            vertical-align: middle !important
+        }
+
+        .table-borderless th, .table-borderless td, .table-borderless thead th, .table-borderless tbody + tbody {
+            border: 0 !important
+        }
+    </style>
+</head>
+<!-- end::Head -->
+<!-- begin::Body -->
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center">
+                    <img src="~/assets/app/media/img/logos/logo-bw.png" alt="Freshlo Logo" class="img-fluid mt-1" style="width:250px;" />
+                    <h5>Freshlo Supermart Pvt. Ltd.</h5>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center">
+                    Freshlo <br>
+                    Shop #1, Habitat CHS,
+                    Sector 23, Seawoods<br>
+                    Navi Mumbai - 400706.
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-left">
+                    Bill No : @Model.GetSalesOrderdetail.SalesOrderId <br>
+                    Bill Dt : @Model.GetSalesOrderdetail.LastUpdatedOn.ToString("dd-MM-yyyy hh:mm tt") <br>
+                    Cashier ID : @Model.GetSalesOrderdetail.CreatedBy  - @Model.GetSalesOrderdetail.EmpName<br />
+                    Customer Name : @Model.GetSalesOrderdetail.Name <br>
+                    Contact Number : @Model.GetSalesOrderdetail.ContactNo <br>
+                    Address : <br>
+                    <span style="">@Model.GetSalesOrderdetail.BuildingName,@Model.GetSalesOrderdetail.RoomNo,@Model.GetSalesOrderdetail.Sector, @Model.GetSalesOrderdetail.Locality,@Model.GetSalesOrderdetail.City- @Model.GetSalesOrderdetail.ZipCode </span>
+
+                </div>
+            </div>
+        </div>
+        @*<hr />
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="text-left">
+                        C Name : Enayath Sayyed <br>
+                        C No : +91 ********6921
+                    </div>
+                </div>
+            </div>*@
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <p class="mb-0 text-center">
+                    CASH MEMO
+                </p>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-condensed table-borderless table-middle mb-0" style="">
+                    <thead>
+                        <tr>
+                            <th>HSN</th>
+                            <th>Item</th>
+                            <th>Discount</th>
+                            <th class="text-right">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var tax in Model.GetGSTCount)
+                        {
+                            <tr>
+                                <td colspan="5">
+                                    @tax.Id CGST @tax.CGST_Per# SGST @tax.SGST_Per%
+                                </td>
+                            </tr>
+                            @foreach (var list in Model.GetSalesPrintList)
+                            {
+                                @if (list.IGST_Per == Convert.ToString(tax.IGST_Per))
+                                {
+                                    <tr>
+                                        <td>@list.HSNCode</td>
+                                        <td>@list.PluName<span class="display-block d-block font-medium-1" style="display:block;">@(list.ItemType == "Loose" ? list.Weight : list.QuantityValue) @list.Measurement X @(SalesHelpers.Data) @list.PricePerMeas </span></td>
+                                        <td>@list.Discount</td>
+                                        <td class="text-right">@list.TotalPrice</td>
+                                    </tr>
+                                }
+
+                            }
+                        }
+                        @*<tr>
+                                <td colspan="5">
+                                    1 CGST 0.00# SGST 0.00%
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>01234</td>
+                                <td>Onion - 1Kg</td>
+                                <td>1</td>
+                                <td>500.99</td>
+                                <td class="text-right">500.99</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    2 CGST 2.50# SGST 2.50%
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>01234</td>
+                                <td>Onion - 1Kg</td>
+                                <td>1</td>
+                                <td>500.99</td>
+                                <td class="text-right">500.99</td>
+                            </tr>
+                            <tr>
+                                <td>01234</td>
+                                <td>Onion - 1Kg</td>
+                                <td>1</td>
+                                <td>500.99</td>
+                                <td class="text-right">500.99</td>
+                            </tr>
+                            <tr>
+                                <td>01234</td>
+                                <td>Onion - 1Kg</td>
+                                <td>1</td>
+                                <td>500.99</td>
+                                <td class="text-right">500.99</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    3 CGST 6.00# SGST 6.00%
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>01234</td>
+                                <td>Onion - 1Kg</td>
+                                <td>1</td>
+                                <td>500.99</td>
+                                <td class="text-right">500.99</td>
+                            </tr>
+                            <tr>
+                                <td>01234</td>
+                                <td>Onion - 1Kg</td>
+                                <td>1</td>
+                                <td>500.99</td>
+                                <td class="text-right">500.99</td>
+                            </tr>
+                            <tr>
+                                <td>01234</td>
+                                <td>Onion - 1Kg</td>
+                                <td>1</td>
+                                <td>500.99</td>
+                                <td class="text-right">500.99</td>
+                            </tr>
+                            <tr>
+                                <td>01234</td>
+                                <td>Onion - 1Kg</td>
+                                <td>1</td>
+                                <td>500.99</td>
+                                <td class="text-right">500.99</td>
+                            </tr>*@
+                    </tbody>
+                    <tfoot style=" border-top: 1px dashed #cecece; ">
+                        <tr>
+                            <th>Items: @Model.GetSalesOrderdetail.PluCount</th>
+                            <th></th>
+                            <th></th>
+                            <th>Total Amount: </th>
+                            <th class="text-right">@Model.SummaryDetail.TotalAmt</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <hr style=" border-top: 1px dashed #cecece; " />
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center">
+                    GST Breakup Summary (INR)
+                </div>
+            </div>
+        </div>
+        <hr style=" border-top: 1px dashed #cecece; " />
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-condensed table-borderless table-middle mb-0" style="">
+                    <thead>
+                        <tr>
+                            <th>GST IND</th>
+                            <th>Taxable Amt</th>
+                            <th>CGST</th>
+                            <th>SGST</th>
+                            <th class="text-right">Total Amt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var tax in Model.GetGSTCount)
+                        {
+                            @if (tax.IGST_Per == 0)
+                            {
+                                <tr>
+                                    <td>@tax.Id</td>
+                                    <td>@tax.TaxableAmount</td>
+                                    <td>----</td>
+                                    <td>----</td>
+                                    <td class="text-right">@tax.TotalAmount</td>
+                                </tr>
+
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>@tax.Id</td>
+                                    <td>@tax.TaxableAmount</td>
+                                    <td>@tax.CGSTValue</td>
+                                    <td>@tax.SGSTValue</td>
+                                    <td class="text-right">@tax.TotalAmount</td>
+                                </tr>
+                            }
+
+                        }
+
+                        @*<tr>
+                                <td>2</td>
+                                <td>500.99</td>
+                                <td>1.65</td>
+                                <td>1.65</td>
+                                <td class="text-right">500.99</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>500.99</td>
+                                <td>4.65</td>
+                                <td>4.65</td>
+                                <td class="text-right">500.99</td>
+                            </tr>*@
+
+                    </tbody>
+                    <tfoot style=" border-top: 1px dashed #cecece; ">
+                        <tr>
+                            <th></th>
+                            <th>@Model.TotalGST.TaxableAmount</th>
+                            <th>@Model.TotalGST.CGSTValue</th>
+                            <th>@Model.TotalGST.SGSTValue</th>
+                            <th class="text-right">@Model.TotalGST.TotalAmount</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <hr />
+        @*<div class="row">
+                <div class="col-xs-3">
+                    <div class="text-left"><strong>Item : 3</strong>,</div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="text-center"><strong>Qty : 5</strong>,</div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="text-right"><strong>Amt : 60070.99</strong></div>
+                </div>
+            </div>
+            <hr />*@
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center">
+                    Amount Details
+                </div>
+            </div>
+        </div>
+        <hr />
+
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="text-right">
+                    Total Order Value :
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="text-right">
+                    ₹ @Convert.ToDouble(Model.SummaryDetail.TotalSaleAmount) /-
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="text-right">
+                    Delivery Charge :
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="text-right">
+                    + ₹ @Model.SummaryDetail.DeliveryCharges /-
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="text-right">
+                    Discount Applied :
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="text-right">
+                    - ₹ @Model.SummaryDetail.Discount /-
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="text-right">
+                    Wallet Used :
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="text-right">
+                    - ₹ @Model.SummaryDetail.Wallet /-
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="text-right">
+                    <strong>
+                        Total Payable :
+                    </strong>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div id="CashReceived" class="text-right">
+                    <div class="text-right"><strong>₹. @(Model.SummaryDetail.TotalPrice + Convert.ToDouble(Model.SummaryDetail.DeliveryCharges) - Model.SummaryDetail.Wallet) /-</strong></div>
+
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="text-right">
+                    Payment Mode :
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="text-right">
+                    @Model.SummaryDetail.PaymentMode
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="text-right">
+                    Payment Status :
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="text-right">
+                    @Model.SummaryDetail.PaymentStatus
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center">
+                    <strong>♥ ♥ Saved @(SalesHelpers.Data) @(Model.Saved == null ? "00.00" : Model.Saved)/- On MRP ♥ ♥</strong>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-left" style="font-size:12px;">
+                    No Cash Refunds <br />
+                    Terms & Condition Apply <br />
+                    Customer Care Number : +91 8879 080 108 <br />
+                    Customer Care Email : support@freshlo.co.in
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center">
+                    Thank You for Shopping With Us
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-left" style="font-size:10px;">
+                    This is computer generated invaoice
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script type="text/javascript">
+        window.onload = function () {
+            window.print();
+        };
+        window.onafterprint = function () {
+            window.location.href = '/Sale/PendingOrders/';
+        }
+</script>

@@ -1,0 +1,1068 @@
+﻿
+@{
+    ViewData["Title"] = "Test";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .qwere {
+        padding: .5rem 2rem;
+        background: #f4f5f8;
+        border-color: #f4f5f8;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+    
+</style>
+
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="m-portlet">
+                <div class="m-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5 class="mb-4">Main Category</h5>
+                            <a href="#" class="btn btn-primary">
+                                Fresh Produce
+                            </a>
+                            <a href="#" class="btn btn-primary">
+                                Meat
+                            </a>
+                            <a href="#" class="btn btn-primary">
+                                Dairy
+                            </a>
+                            <a href="#" class="btn btn-primary">
+                                Frozen Foods
+                            </a>
+                            <a href="#" class="btn btn-primary">
+                                Bread, Cereal, Rice and Pasta
+                            </a>
+                            <a href="#" class="btn btn-primary">
+                                <i class="fa fa-plus"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="m-portlet">
+                <div class="m-portlet__body">
+                </div>
+            </div>
+        </div>
+    </div>
+            
+
+
+
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="m-subheader-search mb-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h2 class="m-subheader-search__title mb-2">
+                                    <span class="m-subheader-search__desc">Customer Mobile Number:</span>
+                                </h2>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Customer Id or Number" list="cNumber" />
+                                            <datalist id="cNumber">
+                                                <option>(001) +91 8870706921 - Abdul Munaf</option>
+                                                <option>(002) +91 8870706921 - Abdul Salam Shaikh</option>
+                                                <option>(003) +91 8870706921 - Harun</option>
+                                                <option>(004) +91 8870706921 - Abdul Basit</option>
+                                                <option>(005) +91 8870706921 - Rakesh Naidu</option>
+                                                <option>(006) +91 8870706921 - Poonam Bhursan</option>
+                                                <option>(007) +91 8870706921 - Hemant Bagwe</option>
+                                                <option>(008) +91 8870706921 - Divya</option>
+                                            </datalist>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-secondary"><i class="la la-search la-rotate-270"></i> </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="text-white" style="border-left: 2px solid aliceblue;padding-left: 10px;">
+                                    <h6>Customer ID: <span class="text-bold-600"> 002</span></h6>
+                                    <h6>Customer Name: <span class="text-bold-600"> Abdul Munaf.A</span></h6>
+                                    <h6>Contact Number: <span class="text-bold-600"> +91 8870706921</span></h6>
+                                    <h6>Location:<a class="" href="#" data-toggle="modal" data-target="#m_modal_6"> <span class="text-bold-600"> Nerul <small>Jama Masjid</small></span></a></h6>
+                                </div>
+                            </div>
+                            @*<div class="col-md-2">
+                            <div class="text-white" style="border-left: 2px solid aliceblue;padding-left: 10px;">
+                               <button type="button" class="btn btn-outline-secondary">Home Delivery</button>
+                            </div>
+                        </div>*@
+                        </div>
+                    </div>
+                    <div class="" style="position: sticky !important;top: 80px;z-index: 3;">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="text-center">
+                                    <div class="form-group">
+                                        <h1 class="text-muted"><i class="fas fa-weight font-large-1"></i> 2501.23</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Begin::Section-->
+                        <div class="m-portlet">
+                            <div class="m-portlet__body" style="background-color:#5867dd;border-radius:5px;">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group mb-0">
+                                            <input type="text" class="form-control m-input" placeholder="Product Code / Name" list="pNumber" />
+                                            <datalist id="pNumber">
+                                                <option>01002 - Onion</option>
+                                                <option>02001 - Apple</option>
+                                                <option>03031 - Fish</option>
+                                                <option>03031 - Bread</option>
+                                                <option>03031 - Fresh Cream</option>
+                                                <option>03031 - Meat</option>
+                                                <option>03031 - Dairy Milk</option>
+                                                <option>03031 - Mango</option>
+                                            </datalist>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group mb-0">
+                                            <input type="text" class="form-control m-input" placeholder="Total Unit" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="form-group mb-0">
+                                            <input type="text" class="form-control m-input" placeholder="Qty" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="form-group mb-0">
+                                            <input type="text" class="form-control m-input" placeholder="000%" title="Discount" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group mb-0">
+                                            <input type="text" class="form-control m-input bg-white" value="Rs.00.00" readonly />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="form-group mb-0">
+                                            <button type="button" class="btn btn-second"><i class="la la-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body pt-3">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>Product Name</th>
+                                                        <th>Unit</th>
+                                                        <th>Qty</th>
+                                                        <th>Discount</th>
+                                                        <th>Total Price</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="m-widget4__img m-widget4__img--logo">
+                                                                <img src="~/assets/app/media/img/client-logos/logo5.png" alt="">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <h6 class="mb-1">
+                                                                Trump Themes
+                                                            </h6>
+                                                            <span class="display-block font-small-3 text-bold-500 text-muted">Milk Product</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>1kg X Rs.2530.23</span>
+                                                        </td>
+                                                        <td><span class="text-bold-400"> 1 </span></td>
+                                                        <td>
+                                                            <span>30%</span>
+                                                        </td>
+                                                        <td><span class="text-bold-500 text-info"> Rs.250.50</span></td>
+                                                        <td>
+                                                            <a href="#" class="text-danger font-medium-1 text-bold-600">X</a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="m-widget4__img m-widget4__img--logo">
+                                                                <img src="~/assets/app/media/img/client-logos/logo5.png" alt="">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <h6 class="mb-1">
+                                                                Trump Themes
+                                                            </h6>
+                                                            <span class="display-block font-small-3 text-bold-500 text-muted">Milk Product</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>1kg X Rs.2530.23</span>
+                                                        </td>
+                                                        <td><span class="text-bold-400"> 100 </span></td>
+                                                        <td>
+                                                            <span>30%</span>
+                                                        </td>
+                                                        <td><span class="text-bold-500 text-info"> Rs.250.50</span></td>
+                                                        <td>
+                                                            <a href="#" class="text-danger font-medium-1 text-bold-600">X</a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <!--begin:: Widgets/Audit Log-->
+                    <div class="" style="position: sticky !important;top: 80px;z-index: 3;display:ruby-text">
+                        <div class="m-portlet">
+                            <div class="m-portlet__body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="text-center">
+                                            <h6>Total Items</h6>
+                                            <h5>50</h5>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="text-center">
+                                            <h6>Total Qty</h6>
+                                            <h5>50</h5>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <label class="col-md-12">Apply coupon code</label>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control m-input m-input--solid" placeholder="Enter Coupen Code" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-sm btn-primary pull-right"><i class="la la-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="">
+                                            <div class="float-right">
+                                                <h6 class="text-right">Sub Total : <span class="">Rs.1520.33</span></h6>
+                                                <h6 class="text-right font-small-2">Tax : <span class="">14%</span></h6>
+                                                <h6 class="text-right font-small-2">Gst Tax : <span class="">28%</span></h6>
+                                                <h6 class="text-right font-small-2">Coupon Discount : <span class="">- 1520.33</span></h6>
+                                                <h6 class="text-right">Grand Total : <span class="text-danger font-medium-5">Rs.1520.33</span></h6>
+                                                <h6 class="text-right font-small-2">Your Saving : <span class="">Rs.257.33</span></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row mb-4">
+                                    <div class="col-md-12">
+                                        <div class="m-checkbox-list float-right">
+                                            <label class="m-checkbox">
+                                                <input type="checkbox" class="transaction_value"> ATM Trastraction
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="transaction_Show" style="display:block;">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control m-input m-input--solid" id="amount1" placeholder="Enter Amount" value="1520.33" readonly />
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control m-input m-input--solid amount2" id="amount2" placeholder="Recieved Amount" />
+                                            </div>
+                                        </div>
+                                        <div class="transaction" style="display:none;">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control m-input m-input--solid" id="" placeholder="Reciept ID" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group text-right">
+                                        <h4 class="text-danger" id="total"></h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="">
+                                            <button type="button" class="btn btn-primary btn-block" id="mymoney">Pay Now</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end:: Widgets/Audit Log-->
+                </div>
+            </div>
+            <!--End::Section-->
+        </div>
+
+<!-- Modal -->
+<div class="modal animated fadeIn" id="m_modal_6" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Address Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Customer Name <span class="text-warning">*</span></label>
+                            <input type="text" class="form-control m-input m-input--solid" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Contact Number <span class="text-warning">*</span></label>
+                            <input type="text" class="form-control m-input m-input--solid" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Address 1 <span class="text-warning">*</span></label>
+                            <input type="text" class="form-control m-input m-input--solid" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Address 2 <small class="text-muted">(Option)</small></label>
+                            <input type="text" class="form-control m-input m-input--solid" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Zip Code <span class="text-warning">*</span></label>
+                            <input type="text" class="form-control m-input m-input--solid" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>City</label>
+                            <input type="text" class="form-control m-input m-input--solid" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>State</label>
+                            <input type="text" class="form-control m-input m-input--solid" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Location <span class="text-warning">*</span></label>
+                            <input type="text" class="form-control m-input m-input--solid" />
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row mt-2">
+                    <div class="col-md-12">
+                        <h6>List of Address's</h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-borderless">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="" style="width:250px;">
+                                                <div class="mb-2" style="border: 2px solid antiquewhite;padding: 15px;">
+                                                    <h6>445 Mount Eden Road</h6>
+                                                    <h6>Mount Eden</h6>
+                                                    <h6>Auckland</h6>
+                                                    <h6>Loc : Jama Masjid</h6>
+                                                    <h6>Nerul - 400706</h6>
+                                                    <h6>Navi Mumbai</h6>
+                                                    <div class="row mt-4">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                    <input type="checkbox" value="1" checked="checked"> Default
+                                                                    <span></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="" style="width:250px;">
+                                                <div class="mb-2" style="border: 2px solid antiquewhite;padding: 15px;">
+                                                    <h6>445 Mount Eden Road</h6>
+                                                    <h6>Mount Eden</h6>
+                                                    <h6>Auckland</h6>
+                                                    <h6>Loc : Jama Masjid</h6>
+                                                    <h6>Nerul - 400706</h6>
+                                                    <h6>Navi Mumbai</h6>
+                                                    <div class="row mt-4">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                    <input type="checkbox" value="45"> Select
+                                                                    <span></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="" style="width:250px;">
+                                                <div class="mb-2" style="border: 2px solid antiquewhite;padding: 15px;">
+                                                    <h6>445 Mount Eden Road</h6>
+                                                    <h6>Mount Eden</h6>
+                                                    <h6>Auckland</h6>
+                                                    <h6>Loc : Jama Masjid</h6>
+                                                    <h6>Nerul - 400706</h6>
+                                                    <h6>Navi Mumbai</h6>
+                                                    <div class="row mt-4">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                    <input type="checkbox" value="45"> Select
+                                                                    <span></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="" style="width:250px;">
+                                                <div class="mb-2" style="border: 2px solid antiquewhite;padding: 15px;">
+                                                    <h6>445 Mount Eden Road</h6>
+                                                    <h6>Mount Eden</h6>
+                                                    <h6>Auckland</h6>
+                                                    <h6>Loc : Jama Masjid</h6>
+                                                    <h6>Nerul - 400706</h6>
+                                                    <h6>Navi Mumbai</h6>
+                                                    <div class="row mt-4">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                    <input type="checkbox" value="45"> Select
+                                                                    <span></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="" style="width:250px;">
+                                                <div class="mb-2" style="border: 2px solid antiquewhite;padding: 15px;">
+                                                    <h6>445 Mount Eden Road</h6>
+                                                    <h6>Mount Eden</h6>
+                                                    <h6>Auckland</h6>
+                                                    <h6>Loc : Jama Masjid</h6>
+                                                    <h6>Nerul - 400706</h6>
+                                                    <h6>Navi Mumbai</h6>
+                                                    <div class="row mt-4">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                    <input type="checkbox" value="45"> Select
+                                                                    <span></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="" style="width:250px;">
+                                                <div class="mb-2" style="border: 2px solid antiquewhite;padding: 15px;">
+                                                    <h6>445 Mount Eden Road</h6>
+                                                    <h6>Mount Eden</h6>
+                                                    <h6>Auckland</h6>
+                                                    <h6>Loc : Jama Masjid</h6>
+                                                    <h6>Nerul - 400706</h6>
+                                                    <h6>Navi Mumbai</h6>
+                                                    <div class="row mt-4">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                    <input type="checkbox" value="45"> Select
+                                                                    <span></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="" style="width:250px;">
+                                                <div class="mb-2" style="border: 2px solid antiquewhite;padding: 15px;">
+                                                    <h6>445 Mount Eden Road</h6>
+                                                    <h6>Mount Eden</h6>
+                                                    <h6>Auckland</h6>
+                                                    <h6>Loc : Jama Masjid</h6>
+                                                    <h6>Nerul - 400706</h6>
+                                                    <h6>Navi Mumbai</h6>
+                                                    <div class="row mt-4">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                    <input type="checkbox" value="45"> Select
+                                                                    <span></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="m--hide">
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <div class="mb-2" style="border: 2px solid antiquewhite;padding: 15px;">
+                                <h6>445 Mount Eden Road</h6>
+                                <h6>Mount Eden</h6>
+                                <h6>Auckland</h6>
+                                <h6>Loc : Jama Masjid</h6>
+                                <h6>Nerul - 400706</h6>
+                                <h6>Navi Mumbai</h6>
+                                <div class="row mt-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                <input type="checkbox" value="45" checked="checked"> Default
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-2" style="border: 2px solid antiquewhite;padding: 15px;">
+                                <h6>445 Mount Eden Road</h6>
+                                <h6>Mount Eden</h6>
+                                <h6>Auckland</h6>
+                                <h6>Loc : Jama Masjid</h6>
+                                <h6>Nerul - 400706</h6>
+                                <h6>Navi Mumbai</h6>
+                                <div class="row mt-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                <input type="checkbox" value="45"> Select
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-2" style="border: 2px solid antiquewhite;padding: 15px;">
+                                <h6>445 Mount Eden Road</h6>
+                                <h6>Mount Eden</h6>
+                                <h6>Auckland</h6>
+                                <h6>Loc : Jama Masjid</h6>
+                                <h6>Nerul - 400706</h6>
+                                <h6>Navi Mumbai</h6>
+                                <div class="row mt-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                <input type="checkbox" value="45"> Select
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-2" style="border: 2px solid antiquewhite;padding: 15px;">
+                                <h6>445 Mount Eden Road</h6>
+                                <h6>Mount Eden</h6>
+                                <h6>Auckland</h6>
+                                <h6>Loc : Jama Masjid</h6>
+                                <h6>Nerul - 400706</h6>
+                                <h6>Navi Mumbai</h6>
+                                <div class="row mt-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                <input type="checkbox" value="45"> Select
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Sumbit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script src="~/assets/scripts/Test/Indexjs.js"></script>
+}
+
+<div class="modal animated fadeIn" id="m_modal_6" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Address Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Customer Name <span class="text-warning">*</span></label>
+                            <input type="text" class="form-control m-input m-input--solid" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Contact Number <span class="text-warning">*</span></label>
+                            <input type="text" class="form-control m-input m-input--solid" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Address 1 <span class="text-warning">*</span></label>
+                            <input type="text" class="form-control m-input m-input--solid" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Address 2 <small class="text-muted">(Option)</small></label>
+                            <input type="text" class="form-control m-input m-input--solid" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Zip Code <span class="text-warning">*</span></label>
+                            <input type="text" class="form-control m-input m-input--solid" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>City</label>
+                            <input type="text" class="form-control m-input m-input--solid" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>State</label>
+                            <input type="text" class="form-control m-input m-input--solid" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Location <span class="text-warning">*</span></label>
+                            <input type="text" class="form-control m-input m-input--solid" />
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row mt-2">
+                    <div class="col-md-12">
+                        <h6>List of Address's</h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-borderless">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="" style="width:250px;">
+                                                <div class="mb-2" style="border: 2px solid antiquewhite;padding: 15px;">
+                                                    <h6>445 Mount Eden Road</h6>
+                                                    <h6>Mount Eden</h6>
+                                                    <h6>Auckland</h6>
+                                                    <h6>Loc : Jama Masjid</h6>
+                                                    <h6>Nerul - 400706</h6>
+                                                    <h6>Navi Mumbai</h6>
+                                                    <div class="row mt-4">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                    <input type="checkbox" value="1" checked="checked"> Default
+                                                                    <span></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="" style="width:250px;">
+                                                <div class="mb-2" style="border: 2px solid antiquewhite;padding: 15px;">
+                                                    <h6>445 Mount Eden Road</h6>
+                                                    <h6>Mount Eden</h6>
+                                                    <h6>Auckland</h6>
+                                                    <h6>Loc : Jama Masjid</h6>
+                                                    <h6>Nerul - 400706</h6>
+                                                    <h6>Navi Mumbai</h6>
+                                                    <div class="row mt-4">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                    <input type="checkbox" value="45"> Select
+                                                                    <span></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="" style="width:250px;">
+                                                <div class="mb-2" style="border: 2px solid antiquewhite;padding: 15px;">
+                                                    <h6>445 Mount Eden Road</h6>
+                                                    <h6>Mount Eden</h6>
+                                                    <h6>Auckland</h6>
+                                                    <h6>Loc : Jama Masjid</h6>
+                                                    <h6>Nerul - 400706</h6>
+                                                    <h6>Navi Mumbai</h6>
+                                                    <div class="row mt-4">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                    <input type="checkbox" value="45"> Select
+                                                                    <span></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="" style="width:250px;">
+                                                <div class="mb-2" style="border: 2px solid antiquewhite;padding: 15px;">
+                                                    <h6>445 Mount Eden Road</h6>
+                                                    <h6>Mount Eden</h6>
+                                                    <h6>Auckland</h6>
+                                                    <h6>Loc : Jama Masjid</h6>
+                                                    <h6>Nerul - 400706</h6>
+                                                    <h6>Navi Mumbai</h6>
+                                                    <div class="row mt-4">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                    <input type="checkbox" value="45"> Select
+                                                                    <span></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="" style="width:250px;">
+                                                <div class="mb-2" style="border: 2px solid antiquewhite;padding: 15px;">
+                                                    <h6>445 Mount Eden Road</h6>
+                                                    <h6>Mount Eden</h6>
+                                                    <h6>Auckland</h6>
+                                                    <h6>Loc : Jama Masjid</h6>
+                                                    <h6>Nerul - 400706</h6>
+                                                    <h6>Navi Mumbai</h6>
+                                                    <div class="row mt-4">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                    <input type="checkbox" value="45"> Select
+                                                                    <span></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="" style="width:250px;">
+                                                <div class="mb-2" style="border: 2px solid antiquewhite;padding: 15px;">
+                                                    <h6>445 Mount Eden Road</h6>
+                                                    <h6>Mount Eden</h6>
+                                                    <h6>Auckland</h6>
+                                                    <h6>Loc : Jama Masjid</h6>
+                                                    <h6>Nerul - 400706</h6>
+                                                    <h6>Navi Mumbai</h6>
+                                                    <div class="row mt-4">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                    <input type="checkbox" value="45"> Select
+                                                                    <span></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="" style="width:250px;">
+                                                <div class="mb-2" style="border: 2px solid antiquewhite;padding: 15px;">
+                                                    <h6>445 Mount Eden Road</h6>
+                                                    <h6>Mount Eden</h6>
+                                                    <h6>Auckland</h6>
+                                                    <h6>Loc : Jama Masjid</h6>
+                                                    <h6>Nerul - 400706</h6>
+                                                    <h6>Navi Mumbai</h6>
+                                                    <div class="row mt-4">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                    <input type="checkbox" value="45"> Select
+                                                                    <span></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="m--hide">
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <div class="mb-2" style="border: 2px solid antiquewhite;padding: 15px;">
+                                <h6>445 Mount Eden Road</h6>
+                                <h6>Mount Eden</h6>
+                                <h6>Auckland</h6>
+                                <h6>Loc : Jama Masjid</h6>
+                                <h6>Nerul - 400706</h6>
+                                <h6>Navi Mumbai</h6>
+                                <div class="row mt-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                <input type="checkbox" value="45" checked="checked"> Default
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-2" style="border: 2px solid antiquewhite;padding: 15px;">
+                                <h6>445 Mount Eden Road</h6>
+                                <h6>Mount Eden</h6>
+                                <h6>Auckland</h6>
+                                <h6>Loc : Jama Masjid</h6>
+                                <h6>Nerul - 400706</h6>
+                                <h6>Navi Mumbai</h6>
+                                <div class="row mt-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                <input type="checkbox" value="45"> Select
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-2" style="border: 2px solid antiquewhite;padding: 15px;">
+                                <h6>445 Mount Eden Road</h6>
+                                <h6>Mount Eden</h6>
+                                <h6>Auckland</h6>
+                                <h6>Loc : Jama Masjid</h6>
+                                <h6>Nerul - 400706</h6>
+                                <h6>Navi Mumbai</h6>
+                                <div class="row mt-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                <input type="checkbox" value="45"> Select
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-2" style="border: 2px solid antiquewhite;padding: 15px;">
+                                <h6>445 Mount Eden Road</h6>
+                                <h6>Mount Eden</h6>
+                                <h6>Auckland</h6>
+                                <h6>Loc : Jama Masjid</h6>
+                                <h6>Nerul - 400706</h6>
+                                <h6>Navi Mumbai</h6>
+                                <div class="row mt-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                <input type="checkbox" value="45"> Select
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Sumbit</button>
+            </div>
+        </div>
+    </div>
+</div>

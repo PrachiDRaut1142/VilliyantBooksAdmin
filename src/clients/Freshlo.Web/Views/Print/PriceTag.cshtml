@@ -1,0 +1,103 @@
+﻿@{
+    ViewData["Title"] = "Manage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Item Management</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="javascripts:;" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/Home/Index/" class="m-nav__link">
+                        <span class="m-nav__link-text">Home</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="javascripts:;" class="m-nav__link">
+                        <span class="m-nav__link-text">Item Manage</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <button type="button" class="btn btn-dark" id="print-btn"><i class="la la-plus"></i> Print Now</button>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon m--hide">
+                        <i class="la la-gear"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                        List of Items
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle" id="item-list">
+                            <thead>
+                                <tr>
+                                    <th>Item Name / ID</th>
+                                    <th>Quantity</th>
+                                    <th>Amount</th>
+                                    <th>
+                                        <div class="m-checkbox-list">
+                                            <label class="m-checkbox">
+                                                <input type="checkbox" id="select-all"> Select All
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            @*<tbody>
+                                <tr>
+                                    <td>
+                                        <a href="#" class="text-link">Mango</a><span class="font-small-3 display-block">035465</span>
+                                    </td>
+                                    <td>
+                                        1 Kg
+                                    </td>
+                                    <td>
+                                        Rs. 251.15
+                                    </td>
+                                    <td>
+                                        <div class="m-checkbox-list">
+                                            <label class="m-checkbox">
+                                                <input type="checkbox">
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>*@
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/assets/scripts/print/PriceTag.js"></script>
+}

@@ -1,0 +1,257 @@
+﻿@using Freshlo.Web.Models.InventoryVM
+@model InventoryVM;
+@{
+    ViewData["Title"] = "manage";
+}
+<!-- BEGIN: Subheader --> 
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Inventory Management</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="javascripts:;" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/Sale/Index/" class="m-nav__link">
+                        <span class="m-nav__link-text">Home</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="javascripts:;" class="m-nav__link">
+                        <span class="m-nav__link-text">Inventory Manage</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <div class="d-flex align-items-center">
+                <button class="btn btn-primary" type="button" id="AddHoc">
+                    <i class="la la-plus "></i> Add Hoc Inventory
+                </button>
+            </div>
+            <input hidden value="pending" id="activeTab" />
+        </div>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="/Sale/Index/" data-toggle="kt-tooltip" title="Tooltip title" data-placement="right" data-skin="dark" data-container="body">Create New</a>
+        </div>
+    </div>
+</div>
+
+<div class="m-content">
+    <div class="m-portlet" id="m_portlet_loader_1" style="position: sticky !important;top: 80px;z-index: 3;">
+        <div id="m_portlet_loader_1_app"></div>
+
+        <ul class="nav nav-tabs  m-tabs-line bg-white MainUl mb-2" id="MainUl" role="tablist" style="position: sticky !important;top: 80px;z-index: 3;">
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link active" data-toggle="tab" name="inventoryLog" href="#inventoryLog" role="tab">Inventory Logs</a>
+            </li>
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link audit-cls" data-toggle="tab" name="auditLog" href="#_auditLog" role="tab">Audit Logs</a>
+            </li>           
+        </ul>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tab-content">
+                        <div class="tab-pane animated fadeIn" id="inventoryLog" role="tabpanel">
+                            <hr class="" />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive" id="packed_divId">
+                                 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane animated fadeIn" id="_auditLog" role="tabpanel">
+           
+                            <hr class="" />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive" id="pending_divId">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade "  id="AdhocCreateid" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" ata-target="#inventoryAssetCreateid" data-toggle="modal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Update Inventory</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m -form--fit m-form--label-align-right" enctype="multipart/form-data"   id="Assetcreate" method="post">
+                            <input type="hidden" id="assetId" />
+                      
+                            <input type="hidden" id="lastQuantiity" />
+                            <input type="hidden" id="unitPrice" />
+                            
+                            <input type="hidden" class="form-control m-input m-input--solid" id="assetsId" name="id">                            
+                            <hr>
+                             <div class="form-group row">
+                             <label class="col-md-3 col-sm-12 col-12 col-form-label">Entry Type</label>
+                                <div class="col-md-7 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid Entry" id="EntryId" name="Entry"> 
+                                        <option value="0" selected disabled>-- Choose Type --</option>
+                                        <option value="1">Add to Inventory</option>
+                                        <option value="2">Remove from Inventory</option>
+                                    </select>
+                                    <span id="EntryIdErr" class="text-danger error-msg AssetLifeErr font-small-3" style="display:none;">Please Select Entry type!</span>
+
+                                </div>
+                                </div>
+                             <div class="form-group row">
+                             <label class="col-md-3 col-sm-12 col-12 col-form-label">Choose Item</label>
+                                <div class="col-md-7 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid Inventory"  id="Inventory" name="Inventory">
+                                        <option selected disabled>-- Choose Item -- </option>
+                                        @foreach (var item in Model.Adhoc_Inventory)
+                                       {
+                                           <option value="@item.AssetsId" data-price="@item.AssetsUnitPrice" data-Quantity="@item.Quantity">@item.AssetName</option>
+                                       }
+                                    </select>   
+                                    <span id="InventoryError" class="text-danger error-msg AssetLifeErr font-small-3" style="display:none;">Please Select Inventory!</span>
+                                    
+                                        <span class="font-medium-1 ">Current Qty: <span class="font-medium-4 text-danger text-bold-700" id="lastQuantiity1"></span> </span> 
+                                       
+                                </div>
+                                </div>
+                                
+                               
+                                 <div class="form-group row">
+                                 <label class="col-md-3 col-sm-12 col-12 col-form-label">Quantity (add/remove)</label>
+                                <div class="col-md-7 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="QuantityAd" name="Quantity" placeholder="Quantity" autocomplete="off">
+                                    <span id="QuantityAdErr" class="text-danger error-msg AssetLifeErr font-small-3" style="display:none;">Please Enter Quantity!</span>
+
+                                </div>
+                            </div>
+                             <hr >
+                            <div class="form-group row">
+                                 <label class="col-md-3 col-sm-12 col-12 col-form-label"> Unit Price</label>
+                                <div class="col-md-7 col-sm-3 col-6">  
+                                     <input type="text" class="form-control m-input m-input--solid"  id="AssetUnitPrice" name="UnitPrice" placeholder="Enter Unit Price" autocomplete="off">
+                                    <span id="AssetUnitPriceErr" class="text-danger error-msg AssetLifeErr font-small-3" style="display:none;">Please Enter Unit Price!</span>
+
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                 <label class="col-md-3 col-sm-12 col-12 col-form-label"> Total Asset Value</label>
+                                <div class="col-md-7 col-sm-3 col-6">  
+                                     <input type="text" class="form-control m-input m-input--solid" disabled id="AssetUnitAd" name="AssetsUnitPrice" placeholder="Enter Unit Price">
+
+                                </div>
+                            </div>
+                           <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Remarks (if any)</label>
+                                <div class="col-md-7 col-sm-3 col-6">
+                                    <textarea  class="form-control m-input m-input--solid" id="RemarksId" name="Remarks" placeholder="Addd Any Remarks" rows="5" autocomplete="off"></textarea>
+                                </div>
+                            </div>
+                           <hr>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label"></label>
+                                <div class="col-md-7 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                                    <button type="button" class="btn btn-success mr-2" id="SubmitAdhoc"><i class="la la-upload"></i> Save </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@*AuditlogList*@
+<div class="modal fade"  id="AuditLogsid" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" ata-target="#inventoryAssetCreateid" data-toggle="modal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Audit Log Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m -form--fit m-form--label-align-right" enctype="multipart/form-data"   id="Assetcreate" method="post">                             
+                            <hr>
+                             <div class="form-group row">
+                             <label class="col-md-3 col-sm-12 col-12 col-form-label">Item Name</label>
+                                <div class="col-md-7 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid AuditId" id="AuditItemName" value="" name="AuditId"  disabled>
+                                </div>
+                                </div>
+                             <div class="form-group row">
+                             <label class="col-md-3 col-sm-12 col-12 col-form-label">Quantity</label>
+                                <div class="col-md-7 col-sm-3 col-6">
+                                   <input type="text" class="form-control m-input m-input--solid Quantity" id="Quantity" value="" name="Quantity" disabled>
+                                </div>
+                                   <span class="font-medium-1 ">Differance: <span class="font-medium-4 text-danger text-bold-700" id="lastQuantiity123"></span> </span> 
+                                </div>
+                                 <div class="form-group row">
+                                 <label class="col-md-3 col-sm-12 col-12 col-form-label">Audit Quantity</label>
+                                <div class="col-md-7 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid Quantity" id="AuditQuantity" value="" name="Quantity" disabled>
+                                </div>
+                            </div>
+                             <hr >
+                            <div class="form-group row">
+                                 <label class="col-md-3 col-sm-12 col-12 col-form-label">Audit Date</label>
+                                <div class="col-md-7 col-sm-3 col-6">  
+                                     <input type="text" class="form-control m-input m-input--solid Auditdate"  id="Auditdate" value="" name="Auditdate"  disabled>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                 <label class="col-md-3 col-sm-12 col-12 col-form-label">Audit By</label>
+                                <div class="col-md-7 col-sm-3 col-6">  
+                                     <input type="text" class="form-control m-input m-input--solid Auditby"  id="Auditby" value="" name="Auditby"  disabled>
+                                </div>
+                            </div>
+                           <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Remarks</label>
+                                <div class="col-md-7 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid Remarks" id="Remarks" value="" name="RemarksId" disabled>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts{
+   <script src="~/assets/app/js/datatable.js"></script>
+   <script src="~/assets/scripts/settings/index.js"></script>
+   <script src="~/assets/scripts/Inventory/Inventory.js"></script>
+}

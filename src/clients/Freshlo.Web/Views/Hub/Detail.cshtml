@@ -1,0 +1,420 @@
+﻿@using Freshlo.Web.Models.HubVM;
+@model HubVM;
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Manage Branch</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                @*<li class="m-nav__item m-nav__item--home">
+                    <a href="javascripts:;" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/Settings/Index/" class="m-nav__link">
+                        <span class="m-nav__link-text">Home</span>
+                    </a>
+                </li>*@
+                <li class="m-nav__item">
+                    <a href="/Hub/Manage/" class="m-nav__link">
+                        <span class="m-nav__link-text">Hub Manage</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="row">
+
+        <div class="col-md-3">
+            <!--begin:: Widgets/Blog-->
+            <div class="m-portlet m-portlet--bordered-semi m-portlet--rounded-force">
+                <div class="m-portlet__body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Branch Name</label>
+                            <h6 class="font-medium-1 text-bold-600">@Model.getHubdetails.HubName</h6>
+                        </div>
+                        <div class="col-md-6" style="display:none">
+                            <label>Branch Contact No</label>
+                            <h6 class="font-medium-1 text-bold-600">000 000 000 00</h6>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label>Area</label>
+                            <h6 class="font-medium-1 text-bold-600">@Model.getHubdetails.Area</h6>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Shop Number</label>
+                            <h6 class="font-medium-1 text-bold-600">@Model.getHubdetails.RoomNo</h6>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>LandMark</label>
+                            <h6 class="font-medium-1 text-bold-600">@Model.getHubdetails.Landmark</h6>
+                        </div>
+                        <div class="col-md-6">
+                            <label>City </label>
+                            <h6 class="font-medium-1 text-bold-600">@Model.getHubdetails.City</h6>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Governate</label>
+                            <h6 class="font-medium-1 text-bold-600">@Model.getHubdetails.State</h6>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Country</label>
+                            <h6 class="font-medium-1 text-bold-600">@Model.getHubdetails.Country</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--end:: Widgets/Blog-->
+
+        </div>
+
+        <div class="col-md-9">
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">Branch Details</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" method="post" asp-action="Detail" asp-controller="Hub" id="UpdateHub">
+                        <input type="text" class="form-control m-input m-input--solid id" asp-for="@Model.getHubdetails.Id" id="id" name="id" hidden>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Branch Name <span class="text-warning">*</span></label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid SpaceValidation HubName" asp-for="@Model.getHubdetails.HubName" id="HubName" name="HubName" placeholder="Enter Branch Name" />
+                                <span class="text-danger font-small-3 " style="display:none;" id="SpnHubName"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Branch Contact No <span class="text-warning">*</span></label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid SpaceValidation ContactNo" id="ContactNo" asp-for="@Model.getHubdetails.ContactNo" name="ContactNo" placeholder="Enter Branch Contact No">
+                                <span class="text-danger font-small-3 text-bold-600" style="display:none;" id="SpnContactNo"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Branch Email </label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid SpaceValidation BrnachEmail" id="BrnachEmail" asp-for="@Model.getHubdetails.BrnachEmail" name="BrnachEmail" placeholder="Enter Branch Contact No">
+                                <span class="text-danger font-small-3" style="display:none;" id="SpnBrnachEmail"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Branch Notify Email </label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid SpaceValidation BranchNotifyEmail" asp-for="@Model.getHubdetails.BranchNotifyEmail" id="BranchNotifyEmail" name="BranchNotifyEmail" placeholder="Enter Branch Contact No">
+                                <span class="text-danger font-small-3 " style="display:none;" id="SpnBranchNotifyEmail"></span>
+                            </div>
+                        </div>
+                         <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Currency</label>
+                        <div class="col-md-3">
+                            <select class="form-control m-input--solid clear-cls" asp-for="@Model.getHubdetails.currency"  name="currency"  id="currency">
+                                <option value="0" selected disabled>Select Currency</option>
+                                @foreach (var item in Model.getCurrencyList)
+                                {
+                                    <option value="@item.ShortCode" data-value="@item.symbol">@item.ShortCode</option>
+
+                                }
+                            </select>
+                            <span class="error font-small-3 error-empty-cls" id="Currency" style="display: none; color: red;"></span>
+                        </div>
+                    </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Area </label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid Area SpaceValidation" asp-for="@Model.getHubdetails.Area" id="Area" name="Area" placeholder="Enter Area Here" />
+                                <span class="text-danger font-small-3" style="display:none;"></span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Bulding Name</label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid BuildingName SpaceValidation" asp-for="@Model.getHubdetails.BuildingName" id="BuildingName" name="BuildingName" placeholder="Enter Block No" />
+                                <span class="text-danger font-small-3 " style="display:none;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row" style="display:none">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Shop Number</label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid RoomNo SpaceValidation" asp-for="@Model.getHubdetails.RoomNo" id="RoomNo" name="RoomNo" placeholder="Enter Shop Number" />
+                                <span class="text-danger font-small-3" style="display:none;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Street Name / Sector Number </label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid Sector SpaceValidation" asp-for="@Model.getHubdetails.Sector" id="Sector" name="Sector" placeholder="Enter Street Name / Sector Number *">
+                                <span class="text-danger font-small-3" style="display:none;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">LandMark </label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid Landmark SpaceValidation" asp-for="@Model.getHubdetails.Landmark" id="Landmark" name="Landmark" placeholder="Enter LandMark" />
+                                <span class="text-danger font-small-3" style="display:none;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">MapCode</label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid MapCode SpaceValidation" asp-for="@Model.getHubdetails.MapCode" id="MapCode" name="MapCode" placeholder="Enter Branch Contact No">
+                                <span class="text-danger font-small-3" style="display:none;"></span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">City </label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid City SpaceValidation" asp-for="@Model.getHubdetails.City" id="City" name="City" placeholder="Enter City" />
+                                <span class="text-danger font-small-3 " style="display:none;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Governate</label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid State SpaceValidation" asp-for="getHubdetails.State" id="State" name="State" placeholder="Enter Governate">
+                                <span class="text-danger font-small-3 " style="display:none;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Country </label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <input type="text" class="form-control m-input m-input--solid Country SpaceValidation" asp-for="@Model.getHubdetails.Country" id="Country" name="Country" placeholder="Enter Country" />
+                                <span class="text-danger font-small-3" style="display:none;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-3 col-form-label">IsEnable Facebook</label>
+                            <div class="col-9">
+                                <div class="row">
+                                    <div class="col-1">
+                                        <fieldset class="col-form-label float-left">
+                                            <label class="ab-switch mb-0">
+                                                <input type="checkbox" value="true" name="IsFacebookEnable" id="IsFacebookEnable" checked="@(Model.getHubdetails.IsFacebookEnable?"checked":null)">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-8 facebookLink" style="display:none">
+                                        <input type="text" class="form-control m-input m-input--solid FacebookLink SpaceValidation" asp-for="@Model.getHubdetails.FacebookLink" id="FacebookLink" name="FacebookLink" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-3 col-form-label">IsEnable Instagram</label>
+                            <div class="col-9">
+                                <div class="row">
+                                    <div class="col-1">
+                                        <fieldset class="col-form-label float-left">
+                                            <label class="ab-switch mb-0">
+                                                <input type="checkbox" name="IsInstaEnable" id="IsInstaEnable" value="true" checked="@(Model.getHubdetails.IsInstaEnable?"checked":null)">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-8 instaLink" style="display:none">
+                                        <input type="text" class="form-control m-input m-input--solid InstaLink SpaceValidation" asp-for="@Model.getHubdetails.InstaLink" id="InstaLink" name="InstaLink" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-3 col-form-label">IsEnable Twitter</label>
+                            <div class="col-9">
+                                <div class="row">
+                                    <div class="col-1">
+                                        <fieldset class="col-form-label float-left">
+                                            <label class="ab-switch mb-0">
+                                                <input type="checkbox" value="true" name="IsTwitterEnable" id="IsTwitterEnable" checked="@(Model.getHubdetails.IsTwitterEnable?"checked":null)">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-8 twitterLink" style="display:none">
+                                        <input type="text" class="form-control m-input m-input--solid TwitterLink SpaceValidation" asp-for="@Model.getHubdetails.TwitterLink" id="TwitterLink" name="TwitterLink" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-3 col-form-label">IsEnable SnapChat</label>
+                            <div class="col-9">
+                                <div class="row">
+                                    <div class="col-1">
+                                        <fieldset class="col-form-label float-left">
+                                            <label class="ab-switch mb-0">
+                                                <input type="checkbox" value="true" name="IsSnapchatEnable" id="IsSnapchatEnable" checked="@(Model.getHubdetails.IsSnapchatEnable?"checked":null)">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-8 snapChatLink" style="display:none">
+                                        <input type="text" class="form-control m-input m-input--solid SnapChatLink SpaceValidation" asp-for="@Model.getHubdetails.SnapChatLink" id="SnapChatLink" name="SnapChatLink" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-3 col-form-label">IsEnable LinkedIn</label>
+                            <div class="col-9">
+                                <div class="row">
+                                    <div class="col-1">
+                                        <fieldset class="col-form-label float-left">
+                                            <label class="ab-switch mb-0">
+                                                <input type="checkbox" value="true" name="IsLinkedInEnable" id="IsLinkedInEnable" checked="@(Model.getHubdetails.IsLinkedInEnable?"checked":null)">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-8 linkedInLink" style="display:none">
+                                        <input type="text" class="form-control m-input m-input--solid LinkedInLink SpaceValidation" asp-for="@Model.getHubdetails.FacebookLink" id="LinkedInLink" name="LinkedInLink" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-3 col-form-label">IsEnable GoogleMap</label>
+                            <div class="col-9">
+                                <div class="row">
+                                    <div class="col-1">
+                                        <fieldset class="col-form-label float-left">
+                                            <label class="ab-switch mb-0">
+                                                <input type="checkbox" value="true" name="IsGoogleMapEnable" id="IsGoogleMapEnable" checked="@(Model.getHubdetails.IsGoogleMapEnable?"checked":null)">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-8 googleMapLink" style="display:none">
+                                        <input type="text" class="form-control m-input m-input--solid GoogleMapLink SpaceValidation" asp-for="@Model.getHubdetails.GoogleMapLink" id="GoogleMapLink" name="GoogleMapLink" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-3 col-form-label">IsEnable Printerest</label>
+                            <div class="col-9">
+                                <div class="row">
+                                    <div class="col-1">
+                                        <fieldset class="col-form-label float-left">
+                                            <label class="ab-switch mb-0">
+                                                <input type="checkbox" value="true" name="IsPrinterestEnable" id="IsPrinterestEnable" checked="@(Model.getHubdetails.IsPrinterestEnable?"checked":null)">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-8 printeresterLink" style="display:none">
+                                        <input type="text" class="form-control m-input m-input--solid PrinterestLink SpaceValidation" asp-for="@Model.getHubdetails.PrinterestLink" id="PrinterestLink" name="PrinterestLink" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-3 col-form-label">IsEnable WhatsApp</label>
+                            <div class="col-9">
+                                <div class="row">
+                                    <div class="col-1">
+                                        <fieldset class="col-form-label float-left">
+                                            <label class="ab-switch mb-0">
+                                                <input type="checkbox" value="true" name="IsWhatsAppEnable" id="IsWhatsAppEnable" checked="@(Model.getHubdetails.IsWhatsAppEnable?"checked":null)">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-8 WhatsAppLink" style="display:none">
+                                        <input type="text" class="form-control m-input m-input--solid WhatsAppLink SpaceValidation" asp-for="@Model.getHubdetails.WhatsAppLink" id="WhatsAppLink" name="WhatsAppLink" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-3 col-form-label">IsEnable Youtube</label>
+                            <div class="col-9">
+                                <div class="row">
+                                    <div class="col-1">
+                                        <fieldset class="col-form-label float-left">
+                                            <label class="ab-switch mb-0">
+                                                <input type="checkbox" value="true" name="IsYoutubeEnable" id="IsYoutubeEnable" checked="@(Model.getHubdetails.IsYoutubeEnable?"checked":null)">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-8 IsyouTubeLink" style="display:none">
+                                        <input type="text" class="form-control m-input m-input--solid YoutubeLink SpaceValidation" asp-for="@Model.getHubdetails.YoutubeLink" id="YoutubeLink" name="YoutubeLink" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-3 col-form-label">IsEnable GoogleReview</label>
+                            <div class="col-9">
+                                <div class="row">
+                                    <div class="col-1">
+                                        <fieldset class="col-form-label float-left">
+                                            <label class="ab-switch mb-0">
+                                                <input type="checkbox" value="true" name="IsGoogleReviewEnable" id="IsGoogleReviewEnable" checked="@(Model.getHubdetails.IsGoogleReviewEnable?"checked":null)">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-8 GoogleReviewLink" style="display:none">
+                                        <input type="text" class="form-control m-input m-input--solid IsGoogleReviewLink SpaceValidation" asp-for="@Model.getHubdetails.IsGoogleReviewLink" id="IsGoogleReviewLink" name="IsGoogleReviewLink" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<hr />*@
+                        <div class="form-group row" style="display:none">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Locations</label>
+                            <div class="col-md-8">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3770.865730701846!2d72.90718475020417!3d19.069640157065127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c7a7b51c59b7%3A0x9c0bd2aac3bb51de!2sArabian%20Dastar!5e0!3m2!1sen!2sin!4v1638361018559!5m2!1sen!2sin" height="300" style="border:0; width:100%" allowfullscreen="" loading="lazy"></iframe>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label"></label>
+                            <div class="col-md-3 col-sm-9 col-6">
+                                <button type="button" class="btn btn-success" id="submitHub">Submit</button>
+                                @*<button type="button" class="btn btn-link">Clear</button>*@
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="viewMessage1" value="@(Model.ViewMessage ??"")" />
+<input type="hidden" id="errorMessage1" value="@(Model.ErrorMessage ?? "")" />
+@section Scripts{
+    <script src="~/assets/scripts/hub/detail.js"></script>
+}
+

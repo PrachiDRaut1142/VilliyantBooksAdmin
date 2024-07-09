@@ -1,0 +1,168 @@
+﻿@using Freshlo.Web.Models.Notification
+@model CreateViewModel;
+@{
+    ViewData["Title"] = "Create";
+    var aliyunpath = Model.businessInfo.aliyunPath;
+
+}
+
+
+<link href="~/duallistbox/css/duallistbox.css" rel="stylesheet" />
+
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Notification </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                @*<li class="m-nav__item m-nav__item--home">
+                        <a href="javascripts:;" class="m-nav__link m-nav__link--icon">
+                            <i class="m-nav__link-icon la la-home"></i>
+                        </a>
+                    </li>*@
+                @*<li class="m-nav__separator">-</li>*@
+                @*<li class="m-nav__item">
+                        <a href="/Home/Index/" class="m-nav__link">
+                            <span class="m-nav__link-text">Home</span>
+                        </a>
+                    </li>
+                    <li class="m-nav__separator">-</li>
+                    <li class="m-nav__item">
+                        <a href="/User/Manage/" class="m-nav__link">
+                            <span class="m-nav__link-text">Notification Manage</span>
+                        </a>
+                    </li>*@
+                @*<li class="m-nav__separator">-</li>*@
+                <li class="m-nav__item">
+                    <a href="javascripts:;" class="m-nav__link">
+                        <span class="m-nav__link-text">New Notification</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon m--hide">
+                        <i class="la la-gear"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                        Send Notification
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="m-form m-form--fit m-form--label-align-right" action="/Notification/Create" enctype="multipart/form-data" id="notification-FormId" method="post">
+                        <input type="text" id="Aliyunkey" name="Aliyunkey" value="@aliyunpath" hidden />
+                        <div class="form-group row">
+                            <label for="" class="col-3 col-form-label">Notification Type <span class="text-warning">*</span></label>
+                            <div class="col-3">
+                                <select class="form-control kt-input--solid " id="NotifyType" name="NotificationType">
+                                    <option value="0" selected>Push Notification</option>
+                                    <option value="1">SMS</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="divtitle">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Title <span class="text-warning">*</span></label>
+                                <div class="col-md-3 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="title-Id" name="Title" placeholder="Enter Title" />
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="divsender" style="display:none">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Sender Id <span class="text-warning">*</span></label>
+                                <div class="col-md-3 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="sender-Id" name="senderId" placeholder="Enter Title" value="Dastar" />
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="errorMessage1" value="@Model.ErrorMsg" />
+                        <div class="form-group row">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Message Content <span class="text-warning">*</span></label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <textarea rows="3" class="form-control m-input m-input--solid" id="description-Id" name="Description" placeholder="Enter Address" style="resize:none;"></textarea>
+                                <span class="text-muted font-small-2">167 Charecter</span>
+                                <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-3 col-form-label">Whom do you want to send? <span class="text-warning">*</span></label>
+                            <div class="col-3">
+                                <select class="form-control kt-input--solid " id="NotifyTypeOpt" name="NotificationType">
+                                    <option value="-1" selected>-- Select Option --</option>
+                                    <option value="1">All Customers</option>
+                                    <option value="2">All Registered Customers</option>
+                                    <option value="3">All Unregistered Customers</option>
+                                    <option value="4">Todays Customers</option>
+                                    <option value="5">This Week Customers</option>
+                                    <option value="6">This Month Customers</option>
+                                    <option value="7">Never Ordered</option>
+                                    <option value="8">First order over 10 days ago</option>
+                                    <option value="9">Last order over 30 days ago</option>
+                                    <option value="10">Last order over 60 days ago</option>
+                                    <option value="11">Pending Delievery Today</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row" id="Customerlistrgrp">
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <select multiple="multiple" name="Customer" title="Customer" id="Customernamelist" class="Customernamelist"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row" id="CustomerCntlistgroup">
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <select multiple="multiple" name="CustomerContact" title="Customer" id="CustomerContactlist" class="CustomerContactlist"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="divUploadImg">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Upload Image <span class="text-warning">*</span></label>
+                                <div class="col-md-3 col-sm-3 col-6">
+                                    <input type="file" name="UploadImage">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label"></label>
+                            <div class="col-md-9 col-sm-9 col-6">
+                                <button type="button" class="btn btn-success mr-2" id="submit-Id" value="1"><i class="la la-upload"></i> Submit </button>
+                                <button type="reset" class="btn btn-link" id="clearBtn"><i class="la la-times"></i> Clear</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/duallistbox/js/jquery.bootstrap-duallistbox.js"></script>
+
+@section scripts {
+    <script src="~/assets/scripts/Notification/Notification.js"></script>
+}
+

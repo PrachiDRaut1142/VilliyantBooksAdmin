@@ -1,0 +1,184 @@
+﻿@using Freshlo.Web.Models.CustomerVM;
+@model CustomerManageVM;
+@{
+    ViewData["Title"] = "UnregisteredCustomer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Customer Management</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="javascripts:;" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/Home/Index/" class="m-nav__link">
+                        <span class="m-nav__link-text">Home</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="javascripts:;" class="m-nav__link">
+                        <span class="m-nav__link-text">Customer</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div style="display:none">
+            <div class="d-flex align-items-center">
+                <button class="btn btn-success mr-2" type="button" id="" onclick="window.location.href='/ItemMaster/Create/'">
+                    Create New Item
+                </button>
+                <!--begin: Dropdown-->
+                <div class="m-dropdown m-dropdown--inline  m-dropdown--arrow m-dropdown--align-right" m-dropdown-toggle="click">
+                    <a href="#" class="m-dropdown__toggle btn btn-dark dropdown-toggle">
+                        Action
+                    </a>
+                    <div class="m-dropdown__wrapper">
+                        <span class="m-dropdown__arrow m-dropdown__arrow--right"></span>
+                        <div class="m-dropdown__inner">
+                            <div class="m-dropdown__body">
+                                <div class="m-dropdown__content">
+                                    <ul class="m-nav">
+                                        <li class="m-nav__section m-nav__section--first">
+                                            <span class="m-nav__section-text">Section</span>
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="" class="m-nav__link" data-toggle="m-tooltip" title="Tooltip title" data-placement="right" data-skin="dark" data-container="body">
+                                                <i class="m-nav__link-icon flaticon-info"></i>
+                                                <span class="m-nav__link-text">FAQ</span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="" class="m-nav__link">
+                                                <i class="m-nav__link-icon flaticon-lifebuoy"></i>
+                                                <span class="m-nav__link-text">Support</span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__section m-nav__section--first">
+                                            <span class="m-nav__section-text">Other</span>
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="" class="m-nav__link">
+                                                <i class="m-nav__link-icon flaticon-share"></i>
+                                                <span class="m-nav__link-text">Activity</span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="" class="m-nav__link">
+                                                <i class="m-nav__link-icon flaticon-chat-1"></i>
+                                                <span class="m-nav__link-text">Messages</span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__separator m-nav__separator--fit">
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">Logout</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="m-portlet">
+                @*id="m_portlet_loader_1"*@
+                <div id="m_portlet_loader_1_app"></div>
+                @*<div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                    <i class="la la-gear"></i>
+                                </span>
+                                <h3 class="m-portlet__head-text">
+                                    List of Customer
+                                </h3>
+                            </div>
+                        </div>
+                    </div>*@
+
+
+                <div class="m-portlet__body">
+                    <div class="table-responsive" id="divTblId">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="walletCash" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add wallet Cash</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" action="" id="">
+                            <div class="form-group row">
+                                <input hidden id="CustomerId" />
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Amount <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="AmountId" name="" placeholder="Enter Amount">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Description<span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <textarea rows="4" class="form-control m-input m-input--solid" name="Description" id="DescriptionId" style="resize:none;" placeholder="Enter Description"></textarea>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2" id="SubmitBtn" name="nextBtn" value="1"><i class="la la-upload"></i> Submit </button>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="text" value="@Model.a" id="date" hidden />
+<input type="text" value="@Model.b" id="status" hidden />
+
+<script>
+    $('.m-data-table').DataTable({
+        "pageLength": 10,
+        "ordering": false,
+        "sorting": true
+    });
+</script>
+
+@section scripts {
+    <script src="~/assets/scripts/customer/Customerlistjs.js"></script>
+}
+
+
+
+
+

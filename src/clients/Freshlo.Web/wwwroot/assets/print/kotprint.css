@@ -1,0 +1,52 @@
+﻿@media print {
+    @page {
+        margin-left: 0cm !important;
+        margin-top: 1cm !important;
+        margin-right: 2cm !important;
+        size: 3.0in auto;
+        /*size: auto;
+        height: auto;*/
+        zoom: 65% !important;
+    }
+
+
+    html {
+        direction: ltr;
+    }
+
+    html, body {
+        margin: 0;
+        padding: 0
+    }
+
+    .pagebreak {
+        clear: both;
+        
+        page-break-after: always;
+    }
+    #sizer {
+        height: auto !important;
+    }
+    
+}
+
+
+.table > tbody > tr > .no-line {
+    border-top: none;
+}
+
+.table > thead > tr > .no-line {
+    border-bottom: none;
+}
+
+.table > tbody > tr > .thick-line {
+    border-top: 2px solid;
+}
+
+.mt-1 {
+    margin-top: 10px;
+}
+
+.mb-0 {
+    margin-bottom: 0px;
+}

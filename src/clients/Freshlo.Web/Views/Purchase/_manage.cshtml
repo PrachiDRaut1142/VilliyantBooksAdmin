@@ -1,0 +1,64 @@
+﻿@using Freshlo.DomainEntities.DTO
+@using System.Globalization
+@using Freshlo.Web.Helpers
+@model List<PurchaseDetail>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<table id="tblPurchaseId" class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle ">
+    <thead>
+        <tr>
+            <th>PO ID</th>
+            <th>Total Item</th>
+            <th>Approx PO Amount</th>
+            <th>PO Status</th>
+            <th>Procurement Type</th>
+            <th>Total Expense</th>
+            <th>Updated On / By</th>
+            <th>Created On</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (PurchaseDetail list in Model)
+        {
+            <tr>
+                <td>
+                    <a href="/Purchase/Detail/@list.PurchaseId" class="text-link">@list.PurchaseId</a>
+                </td>
+                @*<td>
+                        <span class="m-badge m-badge--wide m-badge--rounded m-badge--info" data-container="body" data-toggle="m-popover" data-placement="top" data-content="@list.Products" data-original-title="" title="">@list.TotalQuantity</span>
+                    </td>*@
+                @*<td>
+                        <span class="m-badge m-badge--wide m-badge--rounded m-badge--info" data-container="body" data-toggle="m-popover" data-placement="top" data-content="@list.Products" data-original-title="" title="">@list.TotalQuantity</span>
+                    </td>*@
+
+                <td>
+                    <span class="m-badge m-badge--wide m-badge--rounded m-badge--info" data-container="body" data-toggle="m-popover" data-placement="top" data-content="@list.Products" data-original-title="" title="">
+                        @list.TotalQuantity
+                    </span>
+                </td>
+                <td>Rs. @list.Total_Price</td>
+                <td>
+                    <span class="m-badge m-badge--wide m-badge--rounded m-badge--@(PurchaseHelper.OrderStatusTag.ContainsKey(list.Status) ? PurchaseHelper.OrderStatusTag[list.Status] : "info")">@list.Status</span>
+                </td>
+                <td>
+                    @list.Procurement_Type
+                </td>
+                <td>Rs. @(Convert.ToDouble(list.Transportation_Charge) + Convert.ToDouble(list.OtherExpension) + Convert.ToDouble(list.Agent_commission) )</td>
+                <td>
+                    @list.UpdatedOn.ToString("MM-dd-yyyy hh:mm", CultureInfo.InvariantCulture)
+                    <span class="display-block font-small-2">@list.UpdatedBy</span>
+                </td>
+                <td>@list.CreatedOn.ToString("MM-dd-yyyy hh:mm", CultureInfo.InvariantCulture)</td>
+
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@section scripts {
+    <script src="~/assets/scripts/purchase/manage.js"></script>
+}

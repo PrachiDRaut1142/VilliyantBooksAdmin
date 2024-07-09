@@ -1,0 +1,1464 @@
+﻿@using Freshlo.Web.Models.Setting;
+@using Freshlo.Web.Helpers;
+@model SettingVM;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var hublist = Model.GetHubList;
+    var suplist = Model.GetSupplier;
+    var brandetail = Model.getbrandetails;
+    var brandId = brandetail.BrandId;
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Setting & Configuration</h3>>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item">
+                    <span class="m-nav__link-text">Setting & Configuration</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-2">
+            <ul class="nav f-nav f-nav-pills nav-pills" role="tablist">
+                <li class="nav-item f-nav-item active">
+                    <a class="nav-link f-nav-link active" data-toggle="tab" href="#zips">Zip Code & Charges</a>
+                </li>
+                <li class="nav-item f-nav-item">
+                    <a class="nav-link f-nav-link " data-toggle="tab" href="#slots">Delivery Slots</a>
+                </li>
+                <li class="nav-item f-nav-item">
+                    <a class="nav-link f-nav-link" data-toggle="tab" href="#brand">Brand</a>
+                </li>
+                <li class="nav-item f-nav-item">
+                    <a class="nav-link f-nav-link" data-toggle="tab" href="#table">Table</a>
+                </li>
+                <li class="nav-item f-nav-item">
+                    <a class="nav-link f-nav-link " data-toggle="tab" href="#hub">Hub</a>
+                </li>
+                <li class="nav-item f-nav-item">
+                    <a class="nav-link f-nav-link " data-toggle="tab" href="#_PasswordSecurity">Password Policy</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-10">
+            <div class="tab-content">
+                <div class="tab-pane active" id="zips" role="tabpanel">
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide">
+                                        <i class="la la-gear"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text">
+                                        Manage Serviceable Zip Codes
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="m-portlet__head-tools">
+                                <button type="button" class="btn btn-dark pull-right zipcreate" data-toggle="modal" data-target="#zipcodesCreate"><i class="la la-plus"></i> New Zips</button>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table ab-table-head-bg-warning-light Ziptbl" id="zipcodelist">
+                                            <thead>
+                                                <tr>
+                                                    <th>Hub Name</th>
+                                                    <th>ZipCode</th>
+                                                    <th>Standard Charges</th>
+                                                    <th>Express Charges</th>
+                                                    <th>Minimum Order Value</th>
+                                                    <th>Discription</th>
+                                                    <th>Edit</th>
+                                                    <th>Remove</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.GetZipCodelist)
+                                                {
+                                                    <tr>
+                                                        <td>@item.HubName </td>
+                                                        <td><spam class="font-medium-1">@item.ZipCode</spam></td>
+                                                        <td><spam class="font-medium-1">@item.StandradDeleiveryCharges</spam></td>
+                                                        <td><span class="font-medium-1">@item.ExpressDeleiveryCharges </span></td>
+                                                        <td><span class="font-medium-1 font-weight-bold">@item.MinOrderValue </span></td>
+                                                        <td><span class="font-medium-1 font-weight-bold">@item.Discription </span></td>
+                                                        <td><a href="#" data-toggle="modal" class="text-dark EditItem" data-id="@item.id"> <i class="flaticon-edit"> </i> </a></td>
+                                                        <td><a href="#" class="text-danger deleteId" data-id="@item.id"> <i class="flaticon-delete deleteId"> </i></a></td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="slots" role="tabpanel">
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide">
+                                        <i class="la la-gear"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text">
+                                        Manage Delivery Slots
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" asp-action="Index" asp-controller="Settings" id="SlotCreate" method="post">
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <select class="form-control m-input m-input--solid SlotType" id="SlotType" name="SlotType">
+                                                        <option value="-1">Select Slot</option>
+                                                        <option value="0">Standrad</option>
+                                                        <option value="1">Express</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control m-input m-input--solid" placeholder="Enter Timing" id="Timing" name="Timing">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-success" id="CreateSlot"><i class="la la-plus"></i> ADD NEW</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle">
+                                            <thead>
+                                                <tr>
+                                                    <th>Timing</th>
+                                                    <th>SlotTypeDesc</th>
+                                                    <th>Edit</th>
+                                                    <th>Remove</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                @foreach (var item in Model.GetSlotlist)
+                                                {
+                                                    <tr>
+                                                        <td>@item.Timing </td>
+                                                        <td>@item.SlotTypeDesc</td>
+                                                        <td><a href="#" data-toggle="modal" data-target="#Slots" class="text-dark EditSlot" data-id="@item.Id"> <i class="flaticon-edit"> </i> </a></td>
+                                                        <td><a href="#" class="text-danger deleteSlotId" data-id="@item.Id"> <i class="flaticon-delete deleteSlotId"> </i> </a></td>
+
+                                                    </tr>
+
+                                                }
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="brand" role="tabpanel">
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide">
+                                        <i class="la la-gear"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text">
+                                        Manage Brands
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="m-portlet__head-tools">
+                                <button type="button" class="btn btn-dark pull-right newbrand" data-toggle="modal" data-target="#NewBrand"><i class="la la-plus"></i> New Brand</button>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle">
+                                            <thead>
+                                                <tr>
+                                                    <th>Brand Name</th>
+                                                    <th>Brand Logo</th>
+                                                    <th>Total Item</th>
+                                                    <th>Created On / By</th>
+                                                    <th>Edit</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.Getbrandlist)
+                                                {
+
+                                                <tr>
+                                                    <td>
+                                                        <a href="#" class="text-link">@item.BrandName</a>
+                                                    </td>
+                                                    <td>
+                                                        <img alt="Brand Image" src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/brand/@(item.BrandId).png" onerror="this.onerror = null;
+                                                          this.src = 'https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/no-image.png';" style="width:60px;border-radius:5px;" />
+                                                    </td>
+                                                    <td>@item.ItemCount</td>
+                                                    <td>@item.CreatedOn <span class="font-small-3 display-block">@item.CreatedBy</span></td>
+                                                    <td><a href="#"  class="text-dark BrandDetails" data-toggle="modal" data-target="#NewBrand2" data-id="@item.Id"> <i class="flaticon-edit"> </i> </a></td>
+                                                    <td><a href="#" class="text-danger deletebrandId" data-id="@item.Id"> <i class="flaticon-delete deleteId"> </i></a></td>
+                                                </tr>
+
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="table" role="tabpanel">
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide">
+                                        <i class="la la-gear"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text">
+                                        Manage Table
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="m-portlet__head-tools">
+                                <button type="button" class="btn btn-dark pull-right newTable" data-toggle="modal" data-target="#NewTable"><i class="la la-plus"></i> New Table</button>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle">
+                                            <thead>
+                                                <tr>
+                                                    <th>Table Id</th>
+                                                    <th>Table Name</th>
+                                                    <th>Branch</th>
+                                                    <th>Created On / By</th>
+                                                    <th>Edit</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.Gettablelist)
+                                                {
+
+                                                <tr>
+                                                    <td>
+                                                        <a href="#">@item.tableId</a>
+                                                    </td>
+                                                    <td>@item.tableName</td>
+                                                    <td>@item.branch</td>
+                                                    <td>@item.created_on <span class="font-small-3 display-block">@item.created_by</span></td>
+                                                    <td><a href="#" class="text-link TableDetails" data-toggle="modal" data-target="#NewTable2" data-id="@item.id"> <i class="flaticon-edit"> </i> </a></td>
+                                                    <td><a href="#" class="text-danger deletetableId" data-id="@item.id"> <i class="flaticon-delete deleteId"> </i></a></td>
+
+                                                </tr>
+
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="hub" role="tabpanel">
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide">
+                                        <i class="la la-gear"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text">
+                                        Manage Hubs
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="m-portlet__head-tools">
+                                <button type="button" class="btn btn-dark pull-right" data-toggle="modal" data-target="#NewHubCreate"><i class="la la-plus"></i> New Hub</button>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="row" style="display:none">
+                                <div class="col-md-7">
+                                    <div class="row">
+                                        <div class="ml-2 mr-2">
+                                            <div class="form-group" style="margin-top: 5px;">
+                                                <i class="la la-filter"></i> Filter :
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <select class="form-control m-input m-input--solid">
+                                                    <option selected="" disabled="">Select Location</option>
+                                                    <option>Nerul</option>
+                                                    <option>Seawood</option>
+                                                    <option>Chembure</option>
+                                                    <option>Belapure CBD</option>
+                                                    <option>Vashi</option>
+                                                    <option>Sanpada</option>
+                                                    <option>Jui Nagar</option>
+                                                    <option>Shivaji Nagar</option>
+                                                    <option>Thilak Nagar</option>
+                                                    <option>Kurla</option>
+                                                    <option>Panvel</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-secondary">Find</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle hubtbl">
+                                            <thead>
+                                                <tr>
+                                                    <th>Hub Id</th>
+                                                    <th>Hub Name</th>
+                                                    <th>Location</th>
+                                                    <th>Created By</th>
+                                                    <th>Last Updated On</th>
+                                                    <th>Edit</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.GetOrgHubList)
+                                                {
+
+                                                <tr>
+                                                    <td>
+                                                        <a href="/Settings/Index/?Id=@item.Id" class="text-link HubDetails" data-toggle="modal" data-target="" data-id="@item.Id">@item.HubId</a>
+                                                    </td>
+                                                    <td>@item.HubName</td>
+                                                    <td>@item.Area</td>
+                                                    <td>@item.CreatedBy</td>
+                                                    <td>@item.LastUpdatedOn</td>
+                                                    <td><a href="#" class="text-link HubDetails" data-toggle="modal" data-target="#NewHubUpdate" data-id="@item.Id"> <i class="flaticon-edit"> </i> </a></td>
+                                                    <td><a href="#" class="text-danger deleteHubId" data-id="@item.Id"> <i class="flaticon-delete deleteHubId"> </i></a></td>
+                                                </tr>
+
+                                                }
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="_PasswordSecurity" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="m-portlet">
+                                <div class="m-portlet__head">
+                                    <div class="m-portlet__head-caption">
+                                        <div class="m-portlet__head-title">
+                                            <span class="m-portlet__head-icon m--hide">
+                                                <i class="la la-gear"></i>
+                                            </span>
+                                            <h3 class="m-portlet__head-text">
+                                                Password Policy
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-portlet__body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <form class="m-form m-form--label-right" method="post" action="/Settings/_passwordSecurityPost/" id="_SecurityForm">
+                                                <div class="form-group row">
+                                                    <label for="" class="col-3 col-form-label">Minimum Password Length <span class="text-danger">*</span></label>
+                                                    <div class="col-2">
+                                                        <input type="number" min="6" max="20" class="form-control m-input--solid" placeholder="30" asp-for="GetpasswordSecurityDetail.Password_Length" name="Password_Length" id="Password_Length" data-val="true" data-val-required="The Password_Length field is required." value="8">
+                                                    </div>
+                                                    <label for="" class="col-3 col-form-label text-left">(Cannot be less than 8 characters)</label>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-3 col-form-label">Restrict Same Password <span class="text-danger">*</span></label>
+                                                    <div class="col-2">
+                                                        <input type="number" min="1" max="12" asp-for="GetpasswordSecurityDetail.Unique_Password_Count" name="Unique_Password_Count" id="Unique_Password_Count" class="form-control m-input--solid" placeholder="30" data-val="true" data-val-required="The Unique_Password_Count field is required." value="6">
+                                                    </div>
+                                                    <label for="" class="col-3 col-form-label text-left">(Maximum number is 12 )</label>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-3 col-form-label">Session Idle Time<span class="text-danger">*</span></label>
+                                                    <div class="col-2">
+                                                        <input type="number" min="1" max="1440" asp-for="GetpasswordSecurityDetail.Session_Expiry_Hours" name="Session_Expiry_Hours" id="Session_Expiry_Hours" class="form-control m-input--solid" placeholder="30" data-val="true" data-val-required="The Session_Expiry_Hours field is required." value="1">
+                                                    </div>
+                                                    <label for="" class="col-3 col-form-label text-left">(Maximum 1440 minutes)</label>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-3 col-form-label">Password expires every <span class="text-danger">*</span></label>
+                                                    <div class="col-2">
+                                                        <select class="form-control m-input--solid" asp-for="GetpasswordSecurityDetail.Password_Expiry_Day" name="Password_Expiry_Day" id="Password_Expiry_Day" data-val="true" asp-items="@GenericHelper.PasswordDays" data-val-required="The Password_Expiry_Day field is required.">
+                                                            @*<option value="7">7 days</option>
+                                                                <option value="30">30 days</option>
+                                                                <option value="60">60 days</option>
+                                                                <option selected="selected" value="90">90 days</option>
+                                                                <option value="180">180 days</option>
+                                                                <option value="365">365 days</option>*@
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-3 col-form-label">Remember password</label>
+                                                    <div class="col-9">
+                                                        <div class="row">
+                                                            <div class="col-1">
+                                                                <fieldset class="col-form-label float-left">
+                                                                    <label class="ab-switch mb-0">
+                                                                        <input type="checkbox" name="Remember_Password" id="Remember_Password" value="true" checked="@(Model.GetpasswordSecurityDetail.Remember_Password?"checked":null)">
+                                                                        <span class="slider round"></span>
+                                                                    </label>
+                                                                </fieldset>
+                                                            </div>
+                                                            <label for="" class="col-7 col-form-label text-left">YES</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="m-separator m-separator--border-dashed"></div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-3 col-form-label">Max Login Attempts <span class="text-danger">*</span></label>
+                                                    <div class="col-2">
+                                                        <input type="number" min="0" max="10" class="form-control m-input--solid" asp-for="GetpasswordSecurityDetail.Login_Attempt" name="Login_Attempt" id="Login_Attempt" placeholder="30" data-val="true" data-val-required="The Login_Attempt field is required." value="5">
+                                                    </div>
+                                                </div>
+                                                <div class="m-separator m-separator--border-dashed"></div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-3 col-form-label"></label>
+                                                    <div class="col-9">
+                                                        <h6>Password Strength</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-3 col-form-label">Must contain atleast one special character (e.g. #$%+!)</label>
+                                                    <div class="col-9">
+                                                        <div class="row">
+                                                            <div class="col-1">
+                                                                <fieldset class="col-form-label float-left">
+                                                                    <label class="ab-switch mb-0">
+                                                                        <input type="checkbox" name="Allow_Special_Character" id="Allow_Special_Character" value="true" checked="@(Model.GetpasswordSecurityDetail.Allow_Special_Character?"checked":null)">
+                                                                        <span class="slider round"></span>
+                                                                    </label>
+                                                                </fieldset>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-3 col-form-label">Must contain atleast upper and lower case character</label>
+                                                    <div class="col-9">
+                                                        <div class="row">
+                                                            <div class="col-1">
+                                                                <fieldset class="col-form-label float-left">
+                                                                    <label class="ab-switch mb-0">
+                                                                        <input type="checkbox" name="Check_Capital" id="Check_Capital" value="true" checked="@(Model.GetpasswordSecurityDetail.Check_Capital?"checked":null)">
+                                                                        <span class="slider round"></span>
+                                                                    </label>
+                                                                </fieldset>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-3 col-form-label">Must contain atleast one numeric character</label>
+                                                    <div class="col-9">
+                                                        <div class="row">
+                                                            <div class="col-1">
+                                                                <fieldset class="col-form-label float-left">
+                                                                    <label class="ab-switch mb-0">
+                                                                        <input type="checkbox" name="Alpha_Numeric" id="Alpha_Numeric" value="true" checked="@(Model.GetpasswordSecurityDetail.Alpha_Numeric?"checked":null)">
+                                                                        <span class="slider round"></span>
+                                                                    </label>
+                                                                </fieldset>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="m-portlet__foot">
+                                                    <div class="m-form__actions">
+                                                        <div class="row">
+                                                            <div class="col-3">
+                                                            </div>
+                                                            <div class="col-9">
+                                                                <button type="button" id="BtnPassSecurity" class="btn btn-brand">Submit</button>
+                                                                <button type="reset" class="btn btn-link">Clear</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="m-portlet" style="display:none;">
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="tab-content">
+
+                        <!-- Start Hub -->
+                        <div class="tab-pane " id="hub" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card-body">
+                                        <div class="card-block">
+                                            <div class="row">
+                                                <div class="col-md-12 mb-3">
+                                                    <div class="form-group">
+                                                        <h5>Manage Hubs</h5>
+                                                    </div>
+                                                    <hr />
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-7">
+                                                            <div class="row">
+                                                                <div class="ml-2 mr-2">
+                                                                    <div class="form-group" style="margin-top: 5px;">
+                                                                        <i class="la la-filter"></i> Filter :
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <select class="form-control m-input m-input--solid">
+                                                                            <option selected="" disabled="">Select Location</option>
+                                                                            <option>Nerul</option>
+                                                                            <option>Seawood</option>
+                                                                            <option>Chembure</option>
+                                                                            <option>Belapure CBD</option>
+                                                                            <option>Vashi</option>
+                                                                            <option>Sanpada</option>
+                                                                            <option>Jui Nagar</option>
+                                                                            <option>Shivaji Nagar</option>
+                                                                            <option>Thilak Nagar</option>
+                                                                            <option>Kurla</option>
+                                                                            <option>Panvel</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <div class="form-group">
+                                                                        <button type="button" class="btn btn-secondary">Find</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <button type="button" class="btn btn-dark pull-right" data-toggle="modal" data-target="#NewHub"><i class="la la-plus"></i> New Hub</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr class="mt-0" />
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-borderless table-middle">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Hub Name</th>
+                                                                    <th>Contact Person</th>
+                                                                    <th>Email / Number</th>
+                                                                    <th>Location</th>
+                                                                    <th>Status</th>
+                                                                    <th>Created On / By</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td><a href="#" class="text-link" data-toggle="modal" data-target="#NewHub">Freshlo - Ulwe(W) </a> <span class="font-small-3 display-block">+91 8870706921</span></td>
+                                                                    <td>Mohammed Arif</td>
+                                                                    <td>mohd.arif@freshlo.co.in <span class="font-small-3 display-block">+91 8870706921</span></td>
+                                                                    <td>Ulwe </td>
+                                                                    <td><span class="m-badge m-badge--success m-badge--wide m-badge--rounded">Active</span></td>
+                                                                    <td>20/02/2019 <span class="font-small-3 display-block">Munaf Hanas</span></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><a href="#" class="text-link" data-toggle="modal" data-target="#NewHub">Freshlo - Nerul(W) </a> <span class="font-small-3 display-block">+91 8870706921</span></td>
+                                                                    <td>Enayath Sayyed</td>
+                                                                    <td>enayath.sayyed@freshlo.co.in <span class="font-small-3 display-block">+91 8870706921</span></td>
+                                                                    <td>Nerul</td>
+                                                                    <td><span class="m-badge m-badge--success m-badge--wide m-badge--rounded">Active</span></td>
+                                                                    <td>20/02/2019 <span class="font-small-3 display-block">Munaf Hanas</span></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><a href="#" class="text-link" data-toggle="modal" data-target="#NewHub">Freshlo - Nerul(E) </a> <span class="font-small-3 display-block">+91 8870706921</span></td>
+                                                                    <td>Pooja Ghuge</td>
+                                                                    <td>pooja.ghuge@freshlo.co.in <span class="font-small-3 display-block">+91 8870706921</span></td>
+                                                                    <td>Nerul</td>
+                                                                    <td><span class="m-badge m-badge--success m-badge--wide m-badge--rounded">Active</span></td>
+                                                                    <td>20/02/2019 <span class="font-small-3 display-block">Munaf Hanas</span></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Hub -->
+                        <!-- Start Location -->
+                        <div class="tab-pane" id="tobedefined" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card-body">
+                                        <div class="card-block">
+                                            <div class="row">
+                                                <div class="col-md-12 mb-3">
+                                                    <div class="form-group">
+                                                        <h5>Manage Hubs</h5>
+                                                    </div>
+                                                    <hr />
+                                                </div>
+                                                <div class="col-md-12">
+
+                                                </div>
+                                            </div>
+                                            <hr class="mt-0" />
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-borderless table-middle">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Country</th>
+                                                                    <th>State</th>
+                                                                    <th>Location</th>
+                                                                    <th>Zip</th>
+                                                                    <th>Status</th>
+                                                                    <th>Created On / By</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td><a href="#" class="text-link" data-toggle="modal" data-target="#NewLocation">India</a></td>
+                                                                    <td>Maharastra</td>
+                                                                    <td>Nerul (E)</td>
+                                                                    <td>400706</td>
+                                                                    <td><span class="m-badge m-badge--success m-badge--wide m-badge--rounded">Active</span></td>
+                                                                    <td>20/02/2019 <span class="font-small-3 display-block">Munaf Hanas</span></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><a href="#" class="text-link" data-toggle="modal" data-target="#NewLocation">India</a></td>
+                                                                    <td>Maharastra</td>
+                                                                    <td>Nerul (W)</td>
+                                                                    <td>400706</td>
+                                                                    <td><span class="m-badge m-badge--success m-badge--wide m-badge--rounded">Active</span></td>
+                                                                    <td>20/02/2019 <span class="font-small-3 display-block">Munaf Hanas</span></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><a href="#" class="text-link" data-toggle="modal" data-target="#NewLocation">India</a></td>
+                                                                    <td>Maharastra</td>
+                                                                    <td>Ulwe</td>
+                                                                    <td>400706</td>
+                                                                    <td><span class="m-badge m-badge--success m-badge--wide m-badge--rounded">Active</span></td>
+                                                                    <td>20/02/2019 <span class="font-small-3 display-block">Munaf Hanas</span></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Location -->
+                        <!-- Start Brand -->
+                        <div class="tab-pane" id="brand" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card-body">
+                                        <div class="card-block">
+                                            <div class="row">
+                                                <div class="col-md-12 mb-3">
+                                                    <div class="form-group">
+                                                        <h5>Manage Brands</h5>
+                                                    </div>
+                                                    <hr />
+                                                </div>
+                                                <div class="col-md-12">
+
+                                                </div>
+                                            </div>
+                                            <hr class="mt-0" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Brand -->
+                        <!-- Start Supplier -->
+                        <div class="tab-pane " id="supplier" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card-body">
+                                        <div class="card-block">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <h5> </h5>
+                                                    </div>
+                                                    <hr />
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <button type="button" class="btn btn-dark pull-right" data-toggle="modal" data-target="#newsupplier"><i class="la la-plus"></i> New Supplier</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr class="" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Supplier -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="zipcodesCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Hub Information</h5>
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>*@
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" asp-action="AddZipCode" asp-controller="Settings" id="ZipCreate" method="post">
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Hub Name</label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid" asp-items="@Model.GetHubList" id="Hub" name="Hub">
+                                        <option value="0" selected="" disabled="">Select Hub</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">ZipCode<span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="ZipCode" name="ZipCode" placeholder="Enter ZipCode">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Minimum Order Value <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" placeholder="Minimum Order Value" id="MinOrderValue" name="MinOrderValue">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Standard Delivery Chargeds <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" placeholder="Standard Charges" id="StandradDeleiveryCharges" name="StandradDeleiveryCharges">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Express Delivery Charges <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" placeholder="Express Charges" id="ExpressDeleiveryCharges" name="ExpressDeleiveryCharges">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Discription <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid Desc" id="Discription" name="Discription" placeholder="Enter Description">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">COD available</label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid CODAVAL" id="CODAVAL" name="CODAVAL">
+                                        <option value="0" disabled selected>Select Status</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Express Delievry available</label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid ExpressDaval" id="ExpressDaval" name="ExpressDaval">
+                                        <option value="0" disabled selected>Select Status</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2" id="CreateZip"><i class="la la-upload"></i> Save </button>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="zipcodes" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Zip Information</h5>
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>*@
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" action="" id="ZipUpdateForm" method="post">
+                            <input type="hidden" class="form-control m-input m-input--solid" id="id" name="id">
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Hub Name</label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <select class="form-control  m-input m-input--solid Hublist" id="Hublist" name="Hub">
+                                        <option value="0">Select Hub</option>
+                                        @foreach (var hubs in hublist)
+                                        {
+                                            <option value="@hubs.Value" selected>@hubs.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Minimum Order Value <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="MinValue" name="MinValue" placeholder="Enter Hub Name">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Standard Delivery Chargeds <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="StandCharges" name="StandCharges" placeholder="Enter Contact Number">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Express Delivery Charges <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="ExpDelCharges" name="ExpDelCharges" placeholder="Enter Contact Number">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Discription <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid Discriptions" id="Discription" name="Discription" placeholder="Enter Description">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">COD available</label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid CODAVALs" id="CODAVAL" name="CODAVAL">
+                                        <option value="0">Select Status</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Express Delievry available</label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid ExpressDavals" id="ExpressDaval" name="ExpressDaval">
+                                        <option value="0">Select Status</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2 ZipSubmitBtn"><i class="la la-upload ZipSubmitBtn"></i> Save </button>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="Slots" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Slot Information</h5>
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>*@
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" action="" id="SlotUpdateForm" method="post">
+                            <input type="text" class="form-control m-input m-input--solid" id="Id" name="Id" hidden>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Slot Type</label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid SlotTypes" id="SlotType" name="SlotType">
+                                        <option value="-1">Select Slot</option>
+                                        <option value="0">Standrad</option>
+                                        <option value="1">Express</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Timing <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid Timings" id="Timing" name="Timing" placeholder="Enter Timing">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2 SlotSubmitBtn"><i class="la la-upload SlotSubmitBtn"></i> Save </button>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="NewHubCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Hub Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" method="post" asp-action="CreateHub" asp-controller="Settings" id="HubFrmCreate">
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Hub Name <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="HubName" name="HubName" placeholder="Enter Hub Name">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Town / Area / Locality <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="Area" name="Area" placeholder="Enter Town/Area/Locality Here">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Building / Chawl Name <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="BuildingName" name="BuildingName" placeholder="Enter Building / Chawl Name">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Room Number <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="RoomNo" name="RoomNo" placeholder="Enter Room Number">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Street Name / Sector Number * <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="Sector" name="Sector" placeholder="Enter Street Name / Sector Number *">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">LandMark <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="Landmark" name="Landmark" placeholder="Enter LandMark">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">City <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="City" name="City" placeholder="Enter City">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">State <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="State" name="State" placeholder="Enter State">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Country <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="Country" name="Country" placeholder="Enter Country">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2" id="HubCreate" name="nextBtn" value="1"><i class="la la-upload"></i> Submit </button>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="NewHubUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Hub Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" method="post" asp-action="EditHub" asp-controller="Settings" id="HubFrmUpdate">
+                            <input type="text" class="form-control m-input m-input--solid id" id="id" name="id" hidden>
+                            <input type="text" class="form-control m-input m-input--solid" id="HubId" name="HubId" hidden>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Hub Name <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid HubName" id="HubName" name="HubName" placeholder="Enter Hub Name">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Town / Area / Locality <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid Area" id="Area" name="Area" placeholder="Enter Town/Area/Locality Here">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Building / Chawl Name <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid BuildingName" id="BuildingName" name="BuildingName" placeholder="Enter Building / Chawl Name">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Room Number <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid RoomNo" id="RoomNo" name="RoomNo" placeholder="Enter Room Number">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Street Name / Sector Number * <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid Sector" id="Sector" name="Sector" placeholder="Enter Street Name / Sector Number *">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">LandMark <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid Landmark" id="Landmark" name="Landmark" placeholder="Enter LandMark">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">City <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid City" id="City" name="City" placeholder="Enter City">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">State <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid State" id="State" name="State" placeholder="Enter State">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Country <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid Country" id="Country" name="Country" placeholder="Enter Country">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2" id="HubUpdate" name="nextBtn" value="1"><i class="la la-upload"></i> Submit </button>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="NewBrand" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Brand Informartion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" id="BrandCreate" method="post" asp-action="AddBrand" asp-controller="Settings">
+                            <input type="text" class="form-control m-input m-input--solid Ids" id="Id" name="Id" hidden>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Brand Name <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="BrandName" name="BrandName" placeholder="Enter Brand Name">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Brand Logo <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="file" class="form-control m-input m-input--solid" id="ImageLogo" name="ImageLogo" placeholder="Choose File" />
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Select Suppliers <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">                                 
+                                    <select class="form-control m-bootstrap-select m_selectpicker m-input m-input--solid" id="Supplierlist" data-live-search="true" multiple="multiple" name="Supplierlist" asp-items="@Model.GetSupplier"></select>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2" id="SubmitBrand"><i class="la la-upload"></i> Submit </button>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="NewBrand2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Brand Informartion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" id="BrandUpdate" method="post" asp-action="EditBrand" asp-controller="Settings">
+                            <input type="text" class="form-control m-input m-input--solid Ids" id="Id" name="Id" hidden>
+                            <input type="text" class="form-control m-input m-input--solid BrandIds" id="BrandId" name="BrandId" hidden>
+
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Brand Name <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid Brandnames" id="BrandName" name="BrandName" placeholder="Enter Brand Name">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Brand Logo <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="file" class="form-control m-input m-input--solid logse" id="ImageLogo" name="ImageLogo" placeholder="Choose File" />
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <img id="BrandImg" src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/brand/@(brandetail.BrandId).png" onerror="this.onerror = null;
+                                    this.src = 'https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/no-image.png';" alt="" class="img-fluid" style="height:60px;width:60px;" />
+
+
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Select Suppliers <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <select class="form-control m-bootstrap-select m_selectpicker m-input m-input--solid" id="Supplierlist" data-live-search="true" multiple="multiple" name="Supplierlist" asp-items="@Model.GetSupplier"></select>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2" id="UpdateBrand"><i class="la la-upload"></i> Submit </button>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="NewTable" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Table Informartion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" id="TableCreate" method="post" asp-action="AddTable" asp-controller="Settings">
+                            <input type="text" class="form-control m-input m-input--solid Ids" id="id" name="id" hidden>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Table Name <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="tableName" name="tableName" placeholder="Enter Table Name">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Select Branch</label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <select class="form-control  m-input m-input--solid Hublist" id="branch" name="branch">
+                                        <option value="0" selected="selected">Select Hub</option>
+                                        @foreach (var hubs in hublist)
+                                        {
+                                            <option value="@hubs.Value">@hubs.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2" id="SubmitTable"><i class="la la-upload"></i> Submit </button>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="NewTable2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Table Informartion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" id="TableUpdate" method="post" asp-action="EditTable" asp-controller="Settings">
+                            <input type="text" class="form-control m-input m-input--solid Ids" id="id" name="id" hidden>
+                            <input type="text" class="form-control m-input m-input--solid tableIds" id="tableId" name="tableId" hidden>
+                            <input type="text" class="form-control m-input m-input--solid tableCode" id="TableCode" name="TableCode">
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Table Name <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid tableNames" id="tableName" name="tableName" placeholder="Enter Brand Name">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Branch</label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <select class="form-control  m-input m-input--solid branchlist" id="branch" name="branch">
+                                        <option value="0">Select Hub</option>
+                                        @foreach (var hubs in hublist)
+                                        {
+                                            <option value="@hubs.Value" selected>@hubs.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2" id="UpdateTable"><i class="la la-upload"></i> Submit </button>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Priview" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Brand Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/brand/@(brandetail.BrandId).png" id="imageLogo" onerror="this.onerror=null;this.src='https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/no-image.png';" alt="" class="img-fluid" style="height:60px;width:60px;" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script src="~/assets/scripts/Setting.js"></script>
+
+}
+<script src="~/assets/app/js/datatable.js"></script>
+<script src="~/assets/demo/demo6/custom/crud/forms/widgets/bootstrap-select.js" type="text/javascript"></script>
+<script>
+    $('#zipcodelist').DataTable({
+        "pageLength": 100,
+        "ordering": true,
+        "sorting": true
+    });
+</script>
+
+
+

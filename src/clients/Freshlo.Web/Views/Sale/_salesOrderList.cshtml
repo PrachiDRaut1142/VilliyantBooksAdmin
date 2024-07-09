@@ -1,0 +1,167 @@
+﻿@using Freshlo.Web.Models.Sale
+@using System.Globalization
+@using Freshlo.Web.Helpers
+
+@model SalesManageVM
+
+@if (Model.GetSalesList != null)
+{
+    @foreach (var saleslist in Model.GetSalesList)
+    {
+<tr>
+    <td>
+        <a href="/Sale/Detail/@saleslist.SalesOrderId" class="text-link">@saleslist.SalesOrderId</a>
+
+        @if (@saleslist.Name == "Guest")
+        {
+        <td>
+            <a href="/Customer/Detail/@saleslist.DecodeId1" class="text-link">@(saleslist.fullname == null ? "N/A" : saleslist.fullname)</a><span class="font-small-3 display-block text-dark">@saleslist.phonenumber</span>
+        </td>
+    }
+    else
+    {
+        <td>
+            <a href="/Customer/Detail/@saleslist.DecodeId1" class="text-link">@(saleslist.Name == null ? "N/A" : saleslist.Name)</a><span class="font-small-3 display-block text-dark">@saleslist.ContactNo</span>
+        </td>
+    }
+
+
+        <td>
+            @saleslist.CreatedOn.ToString("dd-MMM-yyyy ", CultureInfo.InvariantCulture)
+        </td>
+        <td>
+            @saleslist.DeliveryDate1.ToString("dd-MMM-yyyy", CultureInfo.InvariantCulture)
+        </td>
+        <td>
+            <span class="m-badge m-badge--info m-badge--rounded m-badge--wide" data-container="body" data-toggle="m-popover" data-placement="top" data-content="@saleslist.ItemName" data-original-title="" title="">@saleslist.PluCount</span>
+        </td>
+        <td>
+            <span class="m-badge m-badge--rounded m-badge--wide font-small-3 m-badge--@(SalesHelpers.OrderStatusTag.ContainsKey(saleslist.OrderdStatus) ? SalesHelpers.OrderStatusTag[saleslist.OrderdStatus]:"info")">@saleslist.OrderdStatus</span>
+
+
+        </td>
+        <td> <span class="m-badge m-badge--rounded m-badge--wide  m-badge--@(SalesHelpers.PaymentStatusTag.ContainsKey(saleslist.PaymentStatus) ? SalesHelpers.PaymentStatusTag[saleslist.PaymentStatus]:"warning")">@(SalesHelpers.PaymentStatus.ContainsKey(saleslist.PaymentStatus) ? SalesHelpers.PaymentStatus[saleslist.PaymentStatus] : "Not Known")</span></td>
+        <td class="">
+            @saleslist.PaymentMode
+        </td>
+        <td>
+
+            @if (saleslist.taxType == 1 && saleslist.taxbillType == 1 && saleslist.gstTax == 0)
+            {
+                <span class="text-bold-700"> @saleslist.currencytype. @(Convert.ToDouble(saleslist.TotalPrice) - (saleslist.Wallet) )</span>
+            }
+            else if (saleslist.taxType == 1 && saleslist.taxbillType == 2 && saleslist.gstTax == 0)
+            {
+                <span class="text-bold-700"> @saleslist.currencytype.@(Convert.ToDouble(saleslist.TaxableAmount))</span>
+            }
+            else if (saleslist.taxType == 1 && saleslist.taxbillType == 1 && saleslist.gstTax != 0)
+            {
+                <span class="text-bold-700"> @saleslist.currencytype. @(Convert.ToDouble(saleslist.TotalPrice) - (saleslist.Wallet) )</span>
+            }
+            else if (saleslist.taxType == 1 && saleslist.taxbillType == 2 && saleslist.gstTax != 0)
+            {
+                <span class="text-bold-700"> @saleslist.currencytype. @(Convert.ToDouble(saleslist.TaxableAmount))</span>
+            }
+            else if (saleslist.taxType == 2 && saleslist.taxbillType == 1)
+            {
+                <span class="text-bold-700"> @saleslist.currencytype. @(Convert.ToDouble(saleslist.TotalPrice) - (saleslist.Wallet) )</span>
+            }
+            else if (saleslist.taxType == 2 && saleslist.taxbillType == 2)
+            {
+                <span class="text-bold-700"> @saleslist.currencytype. @(Convert.ToDouble(saleslist.TaxableAmount))</span>
+            }
+            else
+            {
+                <span class="text-bold-700">@saleslist.currencytype. @(Convert.ToDouble(saleslist.TotalPrice) - (saleslist.Wallet) )</span>
+            }
+
+        </td>
+        <td>
+            <span class="text-bold-700">
+                @saleslist.currencytype. @(saleslist.Discount)
+            </span>
+        </td>
+        <td>
+            <a href="@Url.Action("Index","Print",new { id1 = saleslist.SalesOrderId })">
+                <i class="flaticon-technology text-muted"></i>
+            </a>
+        </td>
+    </tr>
+    }
+
+}
+else
+{
+    @foreach (var saleslist in Model.GetFinacialSalesList)
+    {
+<tr>
+    <td>
+        <a href="/Sale/Detail/@saleslist.SalesOrderId" class="text-link">@saleslist.SalesOrderId</a>
+    </td>
+   
+        <td>
+            <a href="/Customer/Detail/@saleslist.DecodeId1" class="text-link">@(saleslist.Name == null ? "N/A" : saleslist.Name)</a><span class="font-small-3 display-block text-dark">@saleslist.ContactNo</span>
+        </td>
+    
+    <td>
+        @saleslist.CreatedOn.ToString("dd-MMM-yyyy ", CultureInfo.InvariantCulture)
+    </td>
+    <td>
+        @saleslist.DeliveryDate1.ToString("dd-MMM-yyyy", CultureInfo.InvariantCulture)
+    </td>
+    <td>
+        <span class="m-badge m-badge--info m-badge--rounded m-badge--wide" data-container="body" data-toggle="m-popover" data-placement="top" data-content="" data-original-title="" title="">@saleslist.PluCount</span>
+    </td>
+    <td>
+        <span class="m-badge m-badge--rounded m-badge--wide font-small-3 m-badge--@(SalesHelpers.OrderStatusTag.ContainsKey(saleslist.OrderdStatus) ? SalesHelpers.OrderStatusTag[saleslist.OrderdStatus] : "info")">@saleslist.OrderdStatus</span>
+
+
+    </td>
+    <td> <span class="m-badge m-badge--rounded m-badge--wide  m-badge--@(SalesHelpers.PaymentStatusTag.ContainsKey(saleslist.PaymentStatus) ? SalesHelpers.PaymentStatusTag[saleslist.PaymentStatus] : "warning")">@(SalesHelpers.PaymentStatus.ContainsKey(saleslist.PaymentStatus) ? SalesHelpers.PaymentStatus[saleslist.PaymentStatus] : "Not Known")</span></td>
+    <td class="">
+        @saleslist.PaymentMode
+    </td>
+    <td>
+        @if (saleslist.taxType == 1 && saleslist.taxbillType == 1 && saleslist.gstTax == 0)
+        {
+            <span class="text-bold-700"> @saleslist.currencytype. @(Convert.ToDouble(saleslist.TotalPrice) - (saleslist.Wallet) )</span>
+        }
+        else if (saleslist.taxType == 1 && saleslist.taxbillType == 2 && saleslist.gstTax == 0)
+        {
+            <span class="text-bold-700"> @saleslist.currencytype. @(Convert.ToDouble(saleslist.TaxableAmount))</span>
+        }
+        else if (saleslist.taxType == 1 && saleslist.taxbillType == 1 && saleslist.gstTax != 0)
+        {
+            <span class="text-bold-700"> @saleslist.currencytype. @(Convert.ToDouble(saleslist.TotalPrice) - (saleslist.Wallet) )</span>
+        }
+        else if (saleslist.taxType == 1 && saleslist.taxbillType == 2 && saleslist.gstTax != 0)
+        {
+            <span class="text-bold-700"> @saleslist.currencytype. @(Convert.ToDouble(saleslist.TaxableAmount))</span>
+        }
+        else if (saleslist.taxType == 2 && saleslist.taxbillType == 1)
+        {
+            <span class="text-bold-700"> @saleslist.currencytype. @(Convert.ToDouble(saleslist.TotalPrice) - (saleslist.Wallet) )</span>
+        }
+        else if (saleslist.taxType == 2 && saleslist.taxbillType == 2)
+        {
+            <span class="text-bold-700"> @saleslist.currencytype. @(Convert.ToDouble(saleslist.TaxableAmount))</span>
+        }
+        else
+        {
+            <span class="text-bold-700"> @saleslist.currencytype. @(Convert.ToDouble(saleslist.TotalPrice) - (saleslist.Wallet) )</span>
+        }
+    </td>
+    <td>
+        <span class="text-bold-700">
+            @saleslist.currencytype. @(saleslist.Discount)
+        </span>
+    </td>
+    <td>
+        <a href="@Url.Action("Index", "Print", new { id1 = saleslist.SalesOrderId })">
+            <i class="flaticon-technology text-muted"></i>
+        </a>
+    </td>
+</tr>
+    }
+}
+

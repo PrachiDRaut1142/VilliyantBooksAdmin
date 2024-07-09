@@ -1,0 +1,1478 @@
+﻿@using Freshlo.Web.Models.ItemMaster;
+@using System.Globalization;
+@model ItemMasterVM;
+@{
+    var a = 1;
+    ViewData["Title"] = "HubPriceDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var offer = Model.offerType.Where(q => q.Value == Model.ItemMastersDetail.offer_type).Select(q => q.Text).FirstOrDefault();
+    var aliyunpath = Model.businessInfo.aliyunPath;
+}
+
+
+<style>
+    .heading-style {
+        font-size: 1.2rem;
+        color: #464457;
+    }
+
+    .redborder {
+        border-color: #ff5454;
+    }
+
+    .recommended-header {
+        margin: 0 0 1rem 0;
+        padding: 0.8rem 0.5rem;
+        background-color: #fbf6e5;
+    }
+</style>
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Item Management</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="/Sale/tablestate/" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/Sale/tablestate/" class="m-nav__link">
+                        <span class="m-nav__link-text">Home</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/ItemMaster/Manage/" class="m-nav__link">
+                        <span class="m-nav__link-text">Item Manage</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="javascripts:;" class="m-nav__link">
+                        <span class="m-nav__link-text">Item Detail</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <div class="d-inline-flex">
+                <select asp-for="ItemMastersDetail.Approval" class="form-control mr-2" id="ApprovalId" name="ApprovalId">
+                    <option value="Pending">Pending</option>
+                    <option value="Approved">Approved</option>
+                </select>
+                <button type="button" id="btnUpdateItem" class="btn btn-danger mr-2" hidden><i class="fa fa-save"> </i> Update Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" action="/ItemMaster/Detail/" id="itemMasterformid" method="post">
+        <input type="text" id="Aliyunkey" name="Aliyunkey" value="@aliyunpath" hidden />
+        <div class="row">
+            <div class="col-md-3">
+                <!--begin:: Widgets/Blog-->
+                <div class="m-portlet m-portlet--bordered-semi m-portlet--rounded-force">
+                    <div class="m-portlet__head m-portlet__head--fit" style="background-color: #f2f3f863;">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-action float-right">
+                                <button type="button" id="DefaultImages" class="btn btn-sm m-btn--pill btn-primary" hidden>Set default</button>
+                                <div>
+                                    <button type="button" id="RemoveImg" class="btn btn-sm m-btn--pill btn-danger" style="display:none" hidden>Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="m-widget19">
+                                    <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides">
+                                        <img id="myImage" src="https://freshlo.oss-ap-south-1.aliyuncs.com/@aliyunpath/icon/@(Model.ItemMastersDetail.ItemId).png" alt="" style="height:300px;">
+                                        <h3 class="m-widget19__title m--font-light">
+                                            @Model.ItemMastersDetail.PluName
+                                        </h3>
+                                        <div class="m-widget19__shadow"></div>
+                                    </div>
+                                    <div class="m-widget19__content">
+                                        <div class="m-widget19__header">
+                                            <div id="appImage" class="">
+                                                <a href="#" class="PictureImg" data-id="1">
+                                                    <img id="galleryid_1" src="https://freshlo.oss-ap-south-1.aliyuncs.com/@aliyunpath/icon/@(Model.ItemMastersDetail.ItemId).png" class="img-thumb-df" style="width: 50px; height: 50px;" />
+                                                    <span hidden id="SpnId_1">https://freshlo.oss-ap-south-1.aliyuncs.com/@aliyunpath/icon/@(Model.ItemMastersDetail.ItemId).png</span>
+                                                </a>
+                                                <input type="hidden" id="DefaultImg_1" value="@(Model.ItemMastersDetail.ItemId)" />
+                                                @foreach (var img in Model.GetGalleryImage)
+                                                {
+                                                    a++;
+                                                    <a href="#" class="PictureImg" data-id="@a">
+                                                        <img id="galleryid_@a" src="https://freshlo.oss-ap-south-1.aliyuncs.com/@img" class="img-thumb-df gallaryimg" style="width: 50px; height: 50px;" />
+                                                        <span hidden id="SpnId_@a">https://freshlo.oss-ap-south-1.aliyuncs.com/@img</span>
+                                                    </a>
+                                                    <input type="hidden" id="DefaultImg_@a" value="@(img)" />
+
+                                                }
+                                            </div>
+                                            <span id="ImagesCount" hidden>@a</span>
+                                            <a href="#" title="Upload Image">
+                                                <span style="opacity:0.4" onclick="$('#Useravatar').click();"><i class="fa fa-cart-arrow-down font-large-1"></i></span>
+                                                <input id="Useravatar" type="file" name="files" multiple="" style="visibility: hidden" onchange="PreviewImage();">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Featured</label>
+                                    <div>
+                                        <label class="ab-switch mt-2">
+                                            <input type="checkbox" id="FeaturedCheckbox">
+                                            <span class="slider round"></span>
+                                        </label>
+                                        <input type="hidden" id="featuretest" name="feature" asp-for="ItemMastersDetail.featured" />
+                                        <input type="hidden" id="Approval" name="Approval" value="@Model.ItemMastersDetail.Approval" />
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Coupon Allowed</label>
+                                    <div>
+                                        <label class="ab-switch mt-2">
+                                            <input type="checkbox" id="CoupenCheckbox">
+                                            <span class="slider round"></span>
+                                        </label>
+                                        <input type="hidden" id="Coupentest" name="Coupen" asp-for="ItemMastersDetail.Coupen" />
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <label>Availability</label>
+                                    <div>
+                                        <label class="ab-switch mt-2">
+                                            <input type="checkbox" id="AvailabilityCheckbox">
+                                            <span class="slider round"></span>
+                                        </label>
+                                        <input type="hidden" id="avaliblitytest" name="seasonSale" asp-for="ItemMastersDetail.seasonSale" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Chef's Special</label>
+                                    <div>
+                                        <label class="ab-switch mt-2">
+                                            <input type="checkbox" id="ChckSpecialCheckbox">
+                                            <span class="slider round"></span>
+                                        </label>
+                                        <input type="hidden" id="checksptest" name="Check_Speical" asp-for="ItemMastersDetail.Check_Speical" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Product Code</label>
+                                <h6 class="font-medium-1 text-bold-600">@Model.ItemMastersDetail.PluCode</h6>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Item Type</label>
+                                <h6 class="font-medium-1 text-bold-600">@Model.ItemMastersDetail.ItemType</h6>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Offered As?</label>
+                                <h6 class="font-medium-1 text-bold-600">@(offer)</h6>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Item Tag</label>
+                                <h6 class="font-medium-1 text-bold-600">@Model.ItemMastersDetail.Tag</h6>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row" style="display:none">
+                            <div class="col-md-6">
+                                <label>Purchase Price</label>
+                                <h6 class="font-medium-1 text-bold-600">@Model.ItemMastersDetail.Purchaseprice</h6>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Wastage %</label>
+                                <h6 class="font-medium-1 text-bold-600">@Model.ItemMastersDetail.Wastage %</h6>
+                            </div>
+                        </div>
+                        <div class="row" style="display:none">
+                            <div class="col-md-6">
+                                <label>Selling Price</label>
+                                <h6 class="font-medium-1 text-bold-600">@Model.ItemMastersDetail.SellingPrice</h6>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Market Price</label>
+                                <h6 class="font-medium-1 text-bold-600">@Model.ItemMastersDetail.MarketPrice</h6>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row" style="display:none">
+                            <div class="col-md-12">
+                                <label>Updated On</label>
+                                <h6 class="font-medium-1 text-bold-600">@(Model.ItemMastersDetail.LastUpdatedOn.ToString(" dd-MMM-yyyy hh:mm tt", CultureInfo.InvariantCulture))</h6>
+                            </div>
+                            <div class="col-md-12">
+                                <label>Updated By</label>
+                                <h6 class="font-medium-1 text-bold-600">@(Model.ItemMastersDetail.CreatedName)</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end:: Widgets/Blog-->
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!--begin::Portlet-->
+                        <div class="m-portlet m-portlet--tabs">
+                            <ul class="nav nav-tabs  m-tabs-line m-nav-tab-account-lookup" role="tablist">
+                                <li class="nav-item m-tabs__item" style="display:none">
+                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#itemInfo" role="tab">
+                                        <i class="flaticon-info"></i> Item Info
+                                    </a>
+                                </li>
+                                <li class="nav-item m-tabs__item" style="display:none">
+                                    <a class="nav-link m-tabs__link" id="recentlyAccessed" data-toggle="tab" href="#RecentlyAccesed" role="tab">
+                                        <i class="flaticon-list-3"></i> Recently Accesed Account
+                                    </a>
+                                </li>
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link active" id="sizeColor" data-toggle="tab" href="#SizeColor" role="tab">
+                                        <i class="flaticon-list-3"></i> Size & Color
+                                    </a>
+                                </li>
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link" id="ColorMapping" data-toggle="tab" href="#_ColorMapping" role="tab">
+                                        <i class="flaticon-list-3"></i> Color Mapping with Size
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="m-portlet__body">
+                                <div class="tab-content">
+                                    <!--User Info START-->
+                                    <div class="tab-pane" id="itemInfo" role="tabpanel">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group row">
+                                                    <input type="text" asp-for="@Model.ItemMastersDetail.Id" id="Id" />
+                                                    <input type="hidden" asp-for="@Model.taxInfoDetails.taxType" id="taxType" />
+                                                    <input type="hidden" asp-for="@Model.taxInfoDetails.calcuationTaxtype" id="calcuationTaxtype" />
+                                                    <label class="col-md-3 col-form-label">Is it a special day item ?<span class="text-warning">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <select class="form-control m-input--solid clear-cls" asp-for="ItemMastersDetail.IsSpecialDay" name="IsSpecialDay" id="IsSpecialDay">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                        <span class="error font-small-3 error-empty-cls" id="spnIsspcialday" style="display: none; color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" id="DaysCounter" style="display:none">
+                                                    <label class="col-md-3 col-form-label">Choose the days available<span class="text-warning">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <select class="form-control m-bootstrap-select m_selectpicker m-input--solid clear-cls" asp-for="@Model.GetDayList" name="AvailableDayS" id="AvailableDayS">
+                                                            <option value="0">Sunday</option>
+                                                            <option value="1">Monday</option>
+                                                            <option value="2">Tuesday</option>
+                                                            <option value="3">Wednesday</option>
+                                                            <option value="4">Thursday</option>
+                                                            <option value="5">Friday</option>
+                                                            <option value="6">Saturday</option>
+                                                            <option value="7">Everyday</option>
+                                                        </select>
+                                                        <span class="error font-small-3 error-empty-cls" id="spnAvailableday" style="display: none; color: red;"></span>
+                                                    </div>
+                                                    <input type="hidden" id="avaldayno" asp-for="ItemMastersDetail.AvailableDay" />
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">Available during specific hours ?<span class="text-warning">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <select class="form-control m-input--solid clear-cls" asp-for="ItemMastersDetail.MealTimeType" name="MealTimeType" id="MealTimeType">
+                                                            <option value="Y">Yes</option>
+                                                            <option value="N">No</option>
+                                                        </select>
+                                                        <input type="hidden" id="Mealtimetype" asp-for="ItemMastersDetail.MealTimeType" />
+                                                        <span class="error font-small-3 error-empty-cls" id="spnMealtimetype" style="display: none; color: red;"></span>
+                                                    </div>
+                                                    <div class="Mealtimezone" style="display:none">
+                                                        <div class="col-md-3">
+                                                            <input type="text" class="form-control m-input m-input--solid clear-cls" name="StartTime" asp-for="ItemMastersDetail.StartTime" autocomplete="off" id="StartTime" placeholder="Start Time">
+                                                            <span class="error font-small-3 error-empty-cls" id="spnStartTime" style="display: none; color: red;">This field is required</span>
+                                                            <input type="text" asp-for="ItemMastersDetail.StartTime" id="StartTimeDb" hidden>
+
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <input type="text" class="form-control m-input m-input--solid clear-cls" asp-for="ItemMastersDetail.EndTime" name="EndTime" autocomplete="off" id="EndTime" placeholder="End Time">
+                                                            <span class="error font-small-3 error-empty-cls" id="spnEndTime" style="display: none; color: red;">This field is required</span>
+                                                            <input type="text" asp-for="ItemMastersDetail.EndTime" id="EndTimeDb" hidden>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">Printing this item in KOT slip? <span class="text-warning">*</span></label>
+                                                    <div class="col-md-4">
+                                                        <select asp-for="ItemMastersDetail.KOT_Print" class="form-control m-input--solid clear-cls" name="KOT_Print" id="KOT_Print">
+                                                            <option value="0" selected="selected" disabled>Select KOT Print</option>
+                                                            <option value="1">Yes</option>
+                                                            <option value="2">No</option>
+                                                        </select>
+                                                        <span class="error font-small-3" id="SpnkotPrint" style="display: none; color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">Item MainCategory <span class="text-warning">*</span></label>
+                                                    <div class="col-md-4">
+                                                        <select asp-for="ItemMastersDetail.MainCategory" asp-items="Model.GetMainCategoryList" class="form-control m-input--solid clear-cls" name="MainCategory" id="MainCate"></select>
+                                                        <span class="error font-small-3" id="SpnMainCate" style="display: none; color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">Item Category <span class="text-warning">*</span></label>
+                                                    <div class="col-md-4">
+                                                        <select asp-for="ItemMastersDetail.Category" class="form-control m-input--solid clear-cls" name="Category" id="Category">
+                                                            <option value="NA">Select Category</option>
+                                                        </select>
+                                                        <span class="error font-small-3" id="SpnCategory" style="display: none; color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">Item SubCategory <span class="text-warning">*</span></label>
+                                                    <div class="col-md-4">
+                                                        <select asp-for="ItemMastersDetail.SubCategory" class="form-control m-input--solid clear-cls" name="SubCategory" id="SubCategory">
+                                                            <option value="NA">Select SubCategory</option>
+                                                        </select>
+                                                        <span class="error font-small-3" id="Spnsubcategory" style="display: none; color: red;">This field is required</span>
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">Item Name<span class="text-warning">*</span></label>
+                                                    <div class="col-md-4">
+                                                        <input asp-for="ItemMastersDetail.ItemId" type="hidden" class="form-control m-input m-input--solid" id="ItemId" name="ItemId" placeholder="Enter Product Name">
+                                                        <input asp-for="ItemMastersDetail.PluName" type="text" class="form-control m-input m-input--solid clear-cls" id="pluName" name="pluName" placeholder="Enter Product Name">
+                                                        <span class="error font-small-3" id="Spnpluname" style="display: none; color: red;">This field is required</span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">Short Description <span class="text-warning"></span></label>
+                                                    <div class="col-md-5">
+                                                        <textarea asp-for="ItemMastersDetail.Description" rows="2" name="Description" id="Description" class="form-control m-input m-input--solid" style="resize:none;"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">Ingrendiant Used ? <span class="text-warning"></span></label>
+                                                    <div class="col-md-5">
+                                                        <textarea asp-for="ItemMastersDetail.LongDescription" rows="4" name="LongDescription" id="LongDescription" class="form-control m-input m-input--solid" style="resize:none;"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">Item Code / Barcode <span class="text-warning">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <input asp-for="ItemMastersDetail.PluCode" type="text" class="form-control m-input m-input--solid clear-cls" id="PluCode" name="PluCode" placeholder="Enter Product Code">
+                                                        <input asp-for="ItemMastersDetail.Category" type="hidden" class="form-control m-input m-input--solid" id="Cate" name="Cate" placeholder="Enter Product Code">
+                                                        <input asp-for="ItemMastersDetail.SubCategory" type="hidden" class="form-control m-input m-input--solid" id="SubCate" name="SubCate" placeholder="Enter Product Code">
+                                                        <input asp-for="ItemMastersDetail.PluCode" type="hidden" class="form-control m-input m-input--solid" id="PluCodehidden" name="PluCodehidden" placeholder="Enter Product Code">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">Choose Variance Type: <span class="text-warning">*</span></label>
+                                                    <div class="col-md-4">
+                                                        <select asp-for="ItemMastersDetail.Measurement" asp-items="Model.GetMeasurementList" class="form-control m-input--solid clear-cls" name="Measurement" id="Measurement">
+                                                            <option value="0" selected="selected" disabled>Select Measurement</option>
+                                                        </select>
+                                                        <span class="error font-small-3" id="Spnmeasurement" style="display: none; color: red;">This field is required</span>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">Gross Weight (in kg.) <span class="text-warning">*</span></label>
+                                                    <div class="col-md-4">
+                                                        <input asp-for="ItemMastersDetail.NetWeight" type="text" class="form-control m-input m-input--solid clear-cls" name="NetWeight" id="NetWeight" placeholder="eg. 0.5kg">
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">Food Type Indicator <span class="text-warning">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <select class="form-control m-input--solid clear-cls" asp-for="ItemMastersDetail.FoodType" name="FoodType" id="FoodType" asp-items="Model.foodTypeList">
+                                                            <option value="0" selected="selected">Select Food Type</option>
+                                                        </select>
+                                                        <span class="error font-small-3 error-empty-cls" id="SpnFoddType" style="display: none; color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label"> Spicy Level ?<span class="text-warning">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <select class="form-control m-input--solid clear-cls" asp-for="ItemMastersDetail.Spicy_Level" name="Spicy_Level" id="Spicy_Level">
+                                                            <option value="0" selected="selected">Select Spicy Level</option>
+                                                            <option value="1">Low</option>
+                                                            <option value="2">Meduim</option>
+                                                            <option value="3">Hot & Spicy</option>
+                                                        </select>
+                                                        <span class="error font-small-3 error-empty-cls" id="SpnSpicy_Level" style="display: none; color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">Preparation Time ?<span class="text-warning">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <select class="form-control m-input--solid clear-cls" asp-for="ItemMastersDetail.PreparationTime" name="PreparationTime" id="PreparationTime">
+                                                            <option value="0" selected="selected">Select Preparation Time</option>
+                                                            <option value="1-5 mins">1-5 mins</option>
+                                                            <option value="5-10 mins">5-10 mins</option>
+                                                            <option value="10-15 mins">10-15 mins</option>
+                                                            <option value="15-20 mins">15-20 mins</option>
+                                                            <option value="20-30 mins">20-30 mins</option>
+                                                            <option value="30-40 mins">30-40 mins</option>
+                                                            <option value="40-1 hours">40-1 hours</option>
+                                                            <option value="2 hours">2 hours</option>
+                                                            <option value="3 hours">3 hours</option>
+                                                            <option value="4 hous">4 hours</option>
+                                                            <option value="5 hours">5 hours</option>
+                                                            <option value="6 hours">6 hours</option>
+                                                            <option value="7 hours">7 hours</option>
+                                                            <option value="8 hours">8 hours</option>
+                                                        </select>
+                                                        <span class="error font-small-3 error-empty-cls" id="spnPreparationtime" style="display: none; color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div id="MaxQntOrder">
+                                                    <div class="form-group row">
+                                                        <label class="col-md-3 col-form-label">No. of people served? <span class="text-warning">*</span></label>
+                                                        <div class="col-md-4">
+                                                            <input asp-for="ItemMastersDetail.MaxQuantityAllowed" type="number" class="form-control m-input m-input--solid clear-cls" name="MaxQuantityAllowed" id="MQOId" placeholder="Enter MaxQuantity">
+                                                            <span class="error font-small-3" id="SpnMQOId" style="display: none; color: red;"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">Item Visibility <span class="text-warning">*</span></label>
+                                                    <div class="col-md-4">
+                                                        <select asp-for="ItemMastersDetail.Visibility" class="form-control m-input--solid clear-cls" name="Visibility" id="Visibility">
+                                                            <option value="0" selected="selected" disabled>Select Visibility</option>
+                                                            <option value="1">Online </option>
+                                                            <option value="2">Hub</option>
+                                                            <option value="3">Both</option>
+                                                        </select>
+                                                        <span class="error font-small-3" id="SpnVisibility" style="display: none; color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">Is item tax free?<span class="text-warning"></span></label>
+                                                    <div class="col-md-3">
+                                                        <select class="form-control m-input--solid" name="Tax" id="taxId" asp-for="ItemMastersDetail.Tax">
+                                                            <option value="0" selected="selected" disabled>Select Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                        <span class="error font-small-3" id="SpnTax" style="display: none; color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                @if (Model.ItemMastersDetail.gst_per != "NA")
+                                                {
+                                                    <div style="display:none" id="TaxDivId">
+                                                        <div class="form-group row">
+                                                            <label class="col-md-3 col-form-label">HSN Code<span class="text-warning">*</span></label>
+                                                            <div class="col-md-2">
+                                                                <input type="text" class="form-control m-input m-input--solid empty-cls clear-cls" asp-for="ItemMastersDetail.HSN_Code" name="HSN_Code" id="HSN_Code" placeholder="Enter HSN Code">
+                                                                <input type="hidden" asp-for="ItemMastersDetail.HSN_Code" id="dbhsn_code" />
+                                                                <span class="error font-small-3" id="" style="display: none; color: red;">This field is required</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-md-3 col-form-label">IGST<span class="text-warning">*</span></label>
+                                                            <div class="col-md-2">
+                                                                <select class="form-control m-input--solid" name="gst_per" id="IGST" asp-for="ItemMastersDetail.gst_per">
+                                                                    <option value="0" selected="selected" disabled>Select IGST</option>
+                                                                    @foreach (var list in Model.taxPercentageList)
+                                                                    {
+                                                                        <option value="@list.IGST_Per" data-scst="@list.SGST_Per" data-cgst="@list.CGST_Per">@list.IGST_Per</option>
+                                                                    }
+                                                                </select>
+                                                                <input type="hidden" asp-for="ItemMastersDetail.gst_per" id="gst_perdb" />
+                                                                <span class="error font-small-3" id="SpnIGST" style="display: none; color: red;">This field is required</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-md-3 col-form-label">SGST<span class="text-warning">*</span></label>
+                                                            <div class="col-md-2">
+                                                                <input type="number" class="form-control m-input m-input--solid empty-cls clear-cls" name="sgst_per" id="SGST" asp-for="ItemMastersDetail.sgst_per" placeholder="Enter SGST %">
+                                                                <input type="hidden" asp-for="ItemMastersDetail.sgst_per" id="sgst_perdb" />
+                                                                <span class="error font-small-3" id="SpnSGST" style="display: none; color: red;">This field is required</span>
+                                                            </div>
+                                                        </div>  <div class="form-group row">
+                                                            <label class="col-md-3 col-form-label">CGST<span class="text-warning">*</span></label>
+                                                            <div class="col-md-2">
+                                                                <input type="number" class="form-control m-input m-input--solid empty-cls clear-cls" name="cgst_per" id="CGST" asp-for="ItemMastersDetail.cgst_per" placeholder="Enter CGST %">
+                                                                <input type="hidden" asp-for="ItemMastersDetail.cgst_per" id="cgst_perdb" />
+                                                                <span class="error font-small-3" id="SpnCGST" style="display: none; color: red;">This field is required</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                }
+                                                else
+                                                {
+                                                    <div id="vatTaxDivId" style="display:none">
+                                                        <div class="form-group row">
+                                                            <label class="col-md-3 col-form-label">VAT %<span class="text-warning">*</span></label>
+                                                            <div class="col-md-2">
+                                                                <select class="form-control m-input--solid" name="vat_per" id="VAT" asp-for="ItemMastersDetail.vat_per">
+                                                                    <option value="0" selected="selected">Select VAT</option>
+                                                                    @foreach (var list in Model.taxPercentageList)
+                                                                    {
+                                                                        <option value="@list.VAT_Per">@list.VAT_Per</option>
+                                                                    }
+                                                                </select>
+                                                                <span class="error font-small-3 error-empty-cls" id="SpnVAT" style="display: none; color: red;">This field is required</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">Offered As? <span class="text-warning">*</span></label>
+                                                    <div class="col-md-4">
+                                                        <select asp-for="ItemMastersDetail.offer_type" asp-items="Model.offerType" class="form-control m-input--solid clear-cls" name="offer_type" id="Offertype"></select>
+                                                        <span class="error font-small-3" id="Spnoffertype" style="display: none; color: red;">This field is required</span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">Supplier Name <span class="text-warning">*</span></label>
+                                                    <div class="col-md-4">
+                                                        <select asp-for="ItemMastersDetail.Supplier" asp-items="Model.SupplierNameList" class="form-control m-input--solid clear-cls" name="Supplier" id="Supplier"></select>
+                                                        <span class="error font-small-3" id="Spnsupplier" style="display: none; color: red;">This field is required</span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">Brand <span class="text-warning">*</span></label>
+                                                    <div class="col-md-4">
+                                                        <select asp-for="ItemMastersDetail.Brand" asp-items="Model.BrandList" class="form-control m-input--solid clear-cls" name="Brand" id="BrandId">
+                                                            <option value="0" selected="selected" disabled="disabled">Select Brand</option>
+                                                        </select>
+                                                        <span class="error font-small-3" id="SpnBrandId" style="display: none; color: red;"></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row" style="display:none">
+                                                    <label class="col-md-3 col-form-label">Sold As <span class="text-warning">*</span></label>
+                                                    <div class="col-md-4">
+                                                        <select asp-for="ItemMastersDetail.ItemSellingType" class="form-control m-input--solid clear-cls" name="ItemSellingType" id="ItemSellingType">
+                                                            <option value="0" selected="selected" disabled>Select sold as</option>
+                                                            <option value="1">Unique Item</option>
+                                                            <option value="2">Non-Unique Item</option>
+                                                        </select>
+                                                        <span class="error font-small-3" id="Spnsoldid" style="display: none; color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" style="display:none">
+                                                    <label class="col-md-3 col-form-label">Item Type <span class="text-warning">*</span></label>
+                                                    <div class="col-md-4">
+                                                        <select asp-for="ItemMastersDetail.ItemType" class="form-control m-input--solid clear-cls" name="ItemType" id="ItemType">
+                                                            <option value="0" selected="" disabled>Select Item Type</option>
+                                                            <option value="Loose">Loose</option>
+                                                            <option value="Packed">Packed</option>
+                                                        </select>
+                                                        <span class="error font-small-3" id="SpnItemType" style="display: none; color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" style="display:none">
+                                                    <label class="col-md-3 col-form-label">Item Segment / Tag <span class="text-warning">*</span></label>
+                                                    <div class="col-md-4">
+                                                        <select asp-for="ItemMastersDetail.foodSegment" asp-items="Model.GetSegmentList" class="form-control m-input--solid clear-cls" name="foodSegment" id="segment">
+                                                            <option value="0" selected="selected" disabled>Select Item Segment</option>
+                                                        </select>
+                                                        <span class="error font-small-3" id="Spnsegment" style="display: none; color: red;">This field is required</span>
+
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <input asp-for="ItemMastersDetail.Tag" type="text" class="form-control m-input m-input--solid clear-cls" name="Tag" id="TagId" placeholder="Enter Item Tag">
+                                                        <span class="error font-small-3" id="SpnTagId" style="display: none; color: red;">This field is required</span>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" style="display:none">
+                                                    <label class="col-md-3 col-form-label">Item Weight / Quantity <span class="text-warning">*</span></label>
+                                                    <div class="col-md-4">
+                                                        <input asp-for="ItemMastersDetail.Weight" type="number" class="form-control m-input m-input--solid clear-cls" name="Weight" id="Weight" min="0" max="10" placeholder="Enter Product Name">
+                                                        <span class="error font-small-3" id="SpnWeight" style="display: none; color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" style="display:none">
+                                                    <label class="col-md-3 col-form-label">Define Relation<span class="text-warning">*</span></label>
+                                                    <div class="col-md-4">
+                                                        <select class="form-control m-input--solid" name="Relationship" id="Relatiopship" asp-for="ItemMastersDetail.Relationship">
+                                                            <option value="1" selected>Parent</option>
+                                                            <option value="2">Child</option>
+                                                        </select>
+                                                        <span class="error font-small-3" id="SpnCategory" style="display: none; color: red;"></span>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <select class="form-control m-input--solid" name="ParentId" id="ParentItemId" asp-for="ItemMastersDetail.ParentId">
+
+                                                            @if (Model.ItemMastersDetail.Relationship == 2)
+                                                            {
+                                                                <option selected disabled>Select Parent ItemId</option>
+                                                                @foreach (var list in Model.ItemList)
+                                                                {
+                                                                    <option value="@list.ItemId">@list.PluName</option>
+                                                                }
+                                                            }
+                                                        </select>
+                                                        <span class="error font-small-3" id="Spnsubcategory" style="display: none; color: red;">This field is required</span>
+                                                    </div>
+                                                </div>
+                                                <hr />
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--Recently Accessed START-->
+                                    <div class="tab-pane" id="RecentlyAccesed" role="tabpanel" style="display:none">
+                                        No Logs
+                                    </div>
+
+                                    <!---Measurement & Color Start-->
+                                    <div class="tab-pane active" id="SizeColor" role="tabpanel">
+                                        <div class="kt-portlet">
+                                            <div class="col-md-12">
+                                                <div class="form-group row">
+                                                    <div class="col-md-3 col-sm-3 col-6">
+                                                        <label class="col-form-label pb-0">Choose Varriance Type?</label>
+                                                        <select class="form-control m-input m-input--solid MeasuredIn" id="MeasuredIn" name="MeasuredIn" asp-for="ItemMastersDetail.MeasuredIn">
+                                                            <option selected >Select option</option>
+                                                            <option value="S">Size Variant</option>
+                                                            <option value="W">Weight / Quantity</option>
+                                                            <option value="NOVAR">No variant / Single Price</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="kt-portlet">
+                                                    <div class="m-portlet m-portlet--tabs">
+                                                        <div class="m-portlet__body">
+                                                            <div class="entryTypeshow 1">
+                                                                <div class="kt-portlet__head d-flex justify-content-between">
+                                                                    @if (Model.HubItemSizeInfo.Count < 1)
+                                                                    {
+                                                                        if (Model.ItemSizeInfo.Count > 0)
+                                                                        {
+                                                                            if (Model.UnMappedItemSizeInfo.Count < 1)
+                                                                            {
+                                                                                <div class="kt-portlet__head-label">
+                                                                                    <h3 class="kt-portlet__head-title heading-style text-bold-700 font-small-4">
+                                                                                        Recommended Variance
+                                                                                    </h3>
+                                                                                    <h5 class="font-small-2">Please review and add to your branch</h5>
+                                                                                </div>
+                                                                                <div class="form-group text-right">
+                                                                                    <button type="button" id="MoveToBranch" class="btn btn-dark ">Accept & Add </button>
+                                                                                </div>
+                                                                            }
+                                                                            else if (Model.ItemSizeInfo.Count != Model.UnMappedItemSizeInfo.Count)
+                                                                            {
+                                                                                <div class="kt-portlet__head-label">
+                                                                                    <h3 class="kt-portlet__head-title heading-style text-bold-700 font-small-4">
+                                                                                        Recommended Variance
+                                                                                    </h3>
+                                                                                    <h5 class="font-small-2">Please review and add to your branch</h5>
+                                                                                </div>
+                                                                                <div class="form-group text-right">
+                                                                                    <button type="button" id="MoveToBranch" class="btn btn-dark ">Accept & Add </button>
+                                                                                </div>
+                                                                            }
+                                                                            else if (Model.ItemSizeInfo.Count == Model.UnMappedItemSizeInfo.Count)
+                                                                            {
+
+                                                                            }
+                                                                            else
+                                                                            {
+
+                                                                            }
+
+                                                                        }
+
+                                                                    }
+                                                                </div>
+                                                                @if (Model.HubItemSizeInfo.Count < 1)
+                                                                {
+                                                                    @if (Model.ItemSizeInfo.Count > 0)
+                                                                    {
+                                                                        @if (Model.UnMappedItemSizeInfo.Count < 1)
+                                                                        {
+                                                                            <div class="row recommended-header">
+                                                                                <div class="col">Size</div>
+                                                                                @if (Model.ItemMastersDetail.MeasuredIn == "W")
+                                                                                {
+                                                                                    <div class="col">Measurment</div>
+                                                                                }
+                                                                                <div class="col">Purchase Price</div>
+                                                                                <div class="col">Selling Price</div>
+                                                                                <div class="col">Market Price</div>
+                                                                                <div class="col-1">Action</div>
+                                                                            </div>
+
+                                                                            @foreach (var item in Model.ItemSizeInfo)
+                                                                            {
+                                                                                @if (Model.ItemMastersDetail.MeasuredIn == "NOVAR" || Model.ItemMastersDetail.MeasuredIn == "W" || Model.ItemMastersDetail.MeasuredIn == "S" && Model.ItemMastersDetail.MeasuredIn != null && Model.ItemMastersDetail.MeasuredIn != "NA")
+                                                                                {
+                                                                                    <div class="row mainpriceList">
+                                                                                        @if (Model.ItemMastersDetail.MeasuredIn == "S" || Model.ItemMastersDetail.MeasuredIn == "W" || Model.ItemMastersDetail.MeasuredIn == "NOVAR")
+                                                                                        {
+                                                                                            <div class="col mb-3">
+                                                                                                <input type="text" class="form-control redborder Sizep" id="Size" name="Size" asp-for="@item.Size" />
+                                                                                            </div>
+                                                                                            @if (Model.ItemMastersDetail.MeasuredIn == "W" && Model.ItemMastersDetail.MeasuredIn != "S" && Model.ItemMastersDetail.MeasuredIn != "NOVAR")
+                                                                                            {
+                                                                                                <div class="col mb-3">
+                                                                                                    <select asp-items="Model.GetMeasurementList" class="redborder form-control m-input--solid clear-cls ItmMeasuremntp" name="ItmMeasurement" id="ItmMeasurement">
+                                                                                                        <option value="0">Select Measurement</option>
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            }
+                                                                                        }
+                                                                                        <div class="col mb-3">
+                                                                                            <input type="text" class="form-control Purchasep redborder" onchange="EditPurchasePrice('@item.PriceId')" ; id="Purchaseprice_@item.PriceId" name="Purchaseprice" asp-for="@item.Purchaseprice" />
+                                                                                        </div>
+                                                                                        <div class="col mb-3">
+                                                                                            <input type="text" class="form-control Sellingp redborder" onchange="EditSellingPrice('@item.PriceId')" ; id="SellingPrice_@item.PriceId" name="SellingPrice" asp-for="@item.SellingPrice" />
+                                                                                        </div>
+                                                                                        <div class="col mb-3">
+                                                                                            <input type="text" class="form-control Marketp redborder Marketp" onchange="EditMarketPrice('@item.PriceId')" id="MarketPrice_@item.PriceId" name="MarketPrice" asp-for="@item.MarketPrice" />
+                                                                                            <input type="text" class="form-control Marketp redborder Promarginp" id="ProfitPercentage_@item.PriceId" name="ProfitPercentage" asp-for="@item.ProfitMargin" hidden />
+                                                                                            <input type="text" class="form-control Marketp redborder Profitpricep" id="ProfitPrice_@item.PriceId" name="ProfitPrice" asp-for="@item.SellingProfitPer" hidden />
+                                                                                            <input type="text" class="form-control Marketp redborder ActualCostp" id="ActualCost_@item.PriceId" name="ActualCost" asp-for="@item.TotalPrice" hidden />
+                                                                                            <input type="text" class="form-control" asp-for="ItemMastersDetail.ItemId" name="ItemId" id="ItemId" hidden />
+                                                                                            <input type="text" class="form-control" asp-for="ItemMastersDetail.PluName" name="PluName" id="PluName" hidden />
+                                                                                            <input type="text" class="form-control m-input m-input--solid clearitem ItmNetWeightp" id="ItmNetWeight" name="ItmNetWeight" asp-for="@item.ItmNetWeight" placeholder="Qty" hidden />
+                                                                                            <input type="text" class="form-control m-input m-input--solid clear-cls" name="Wastage" id="Wastage" asp-for="@item.Wastage" placeholder="Enter Wastage %" hidden>
+                                                                                        </div>
+                                                                                        <div class="col-1">
+                                                                                            <a href="#" class="text-danger" onclick="RemovalFromHub('@item.PriceId')" ; id="deletehubItemId" title="Remove">
+                                                                                                <i class="flaticon-delete"> </i>
+                                                                                            </a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        else if (Model.UnMappedItemSizeInfo.Count != Model.ItemSizeInfo.Count)
+                                                                        {
+                                                                            <div class="row recommended-header">
+                                                                                <div class="col">Size</div>
+                                                                                @if (Model.ItemMastersDetail.MeasuredIn == "W")
+                                                                                {
+                                                                                    <div class="col">Measurment</div>
+                                                                                }
+                                                                                <div class="col">Purchase Price</div>
+                                                                                <div class="col">Selling Price</div>
+                                                                                <div class="col">Market Price</div>
+                                                                                <div class="col-1">Action</div>
+                                                                            </div>
+
+                                                                            @foreach (var item in Model.UnMappedItemSizeInfo)
+                                                                            {
+                                                                                @if (Model.ItemMastersDetail.MeasuredIn == "NOVAR" || Model.ItemMastersDetail.MeasuredIn == "W" || Model.ItemMastersDetail.MeasuredIn == "S" && Model.ItemMastersDetail.MeasuredIn != null && Model.ItemMastersDetail.MeasuredIn != "NA")
+                                                                                {
+                                                                                    <div class="row mainpriceList">
+                                                                                        @if (Model.ItemMastersDetail.MeasuredIn == "S" || Model.ItemMastersDetail.MeasuredIn == "W" || Model.ItemMastersDetail.MeasuredIn == "NOVAR")
+                                                                                        {
+                                                                                            <div class="col mb-3">
+                                                                                                <input type="text" class="form-control redborder Sizep" id="Size" name="Size" asp-for="@item.Size" />
+                                                                                            </div>
+                                                                                            @if (Model.ItemMastersDetail.MeasuredIn == "W" && Model.ItemMastersDetail.MeasuredIn != "S" && Model.ItemMastersDetail.MeasuredIn != "NOVAR")
+                                                                                            {
+                                                                                                <div class="col mb-3">
+                                                                                                    <select asp-items="Model.GetMeasurementList" class="redborder form-control m-input--solid clear-cls ItmMeasuremntp" name="ItmMeasurement" id="ItmMeasurement">
+                                                                                                        <option value="0">Select Measurement</option>
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            }
+                                                                                        }
+                                                                                        <div class="col mb-3">
+                                                                                            <input type="text" class="form-control Purchasep redborder" onchange="EditPurchasePrice('@item.PriceId')" ; id="Purchaseprice_@item.PriceId" name="Purchaseprice" asp-for="@item.Purchaseprice" />
+                                                                                        </div>
+                                                                                        <div class="col mb-3">
+                                                                                            <input type="text" class="form-control Sellingp redborder" onchange="EditSellingPrice('@item.PriceId')" ; id="SellingPrice_@item.PriceId" name="SellingPrice" asp-for="@item.SellingPrice" />
+                                                                                        </div>
+                                                                                        <div class="col mb-3">
+                                                                                            <input type="text" class="form-control Marketp redborder Marketp" onchange="EditMarketPrice('@item.PriceId')" id="MarketPrice_@item.PriceId" name="MarketPrice" asp-for="@item.MarketPrice" />
+                                                                                            <input type="text" class="form-control Marketp redborder Promarginp" id="ProfitPercentage_@item.PriceId" name="ProfitPercentage" asp-for="@item.ProfitMargin" hidden />
+                                                                                            <input type="text" class="form-control Marketp redborder Profitpricep" id="ProfitPrice_@item.PriceId" name="ProfitPrice" asp-for="@item.SellingProfitPer" hidden />
+                                                                                            <input type="text" class="form-control Marketp redborder ActualCostp" id="ActualCost_@item.PriceId" name="ActualCost" asp-for="@item.TotalPrice" hidden />
+                                                                                            <input type="text" class="form-control" asp-for="ItemMastersDetail.ItemId" name="ItemId" id="ItemId" hidden />
+                                                                                            <input type="text" class="form-control" asp-for="ItemMastersDetail.PluName" name="PluName" id="PluName" hidden />
+                                                                                            <input type="text" class="form-control m-input m-input--solid clearitem ItmNetWeightp" id="ItmNetWeight" name="ItmNetWeight" asp-for="@item.ItmNetWeight" placeholder="Qty" hidden />
+                                                                                            <input type="text" class="form-control m-input m-input--solid clear-cls" name="Wastage" id="Wastage" asp-for="@item.Wastage" placeholder="Enter Wastage %" hidden>
+                                                                                        </div>
+                                                                                        <div class="col-1">
+                                                                                            <a href="#" class="text-danger" onclick="RemovalFromHub('@item.PriceId')" ; id="deletehubItemId" title="Remove">
+                                                                                                <i class="flaticon-delete"> </i>
+                                                                                            </a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        else if (Model.UnMappedItemSizeInfo.Count == Model.ItemSizeInfo.Count)
+                                                                        {
+                                                                            <div class="row addNewPricelsit">
+                                                                                <div class="col hasNovaraint">
+                                                                                    <div class="form-group">
+                                                                                        <div class="sizedetails" style="display:none">
+                                                                                            <label for="">
+                                                                                                Size
+                                                                                                <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                            </label>
+                                                                                        </div>
+                                                                                        <div class="wegihtate" style="display:none">
+                                                                                            <label for="">
+                                                                                                Weight
+                                                                                                <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                            </label>
+                                                                                        </div>
+                                                                                        <div class="form-group">
+                                                                                            <input type="text" class="form-control m-input m-input--solid clearitem" id="Size" name="Size" placeholder="Size/Weight" />
+                                                                                            <span class="error font-small-3 error-empty-cls" id="spnSize" style="display: none; color: red;">This field is required</span>
+                                                                                            <input type="text" value="1" name="Weight" id="Weight" hidden />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="wegihtate" style="display:none">
+                                                                                    <div class="col">
+                                                                                        <div class="form-group">
+                                                                                            <label for="">Measured</label>
+                                                                                            <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                            <select asp-items="Model.GetMeasurementList" class="form-control m-input--solid clear-cls" name="ItmMeasurement" id="ItmMeasurement">
+                                                                                                <option value="0">Select Measurement</option>
+                                                                                            </select>
+                                                                                            <input type="text" class="form-control m-input m-input--solid clearitem" id="ItmNetWeight" name="ItmNetWeight" placeholder="Qty" hidden />
+                                                                                            <span class="error font-small-3 error-empty-cls" id="SpnItmMeasurement" style="display: none; color: red;">This field is required</span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col" style="display:none">
+                                                                                    <div class="form-group">
+                                                                                        <label for="">
+                                                                                            Wastage %
+                                                                                            <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                        </label>
+                                                                                        <input type="text" class="form-control m-input m-input--solid clear-cls" name="Wastage" id="Wastage" placeholder="Enter Wastage %">
+                                                                                        <span class="error font-small-3" id="SpnWastage" style="display: none; color: red;">This field is required</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col">
+                                                                                    <div class="form-group">
+                                                                                        <label for="">
+                                                                                            Purchase Price
+                                                                                            <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                        </label>
+                                                                                        <input type="text" class="form-control m-input m-input--solid clearitem" id="Purchaseprice" name="Purchaseprice" placeholder="Purchase Price" />
+                                                                                        <span class="error font-small-3 error-empty-cls" id="spnPurchaseprice" style="display: none; color: red;">This field is required</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col">
+                                                                                    <div class="form-group">
+                                                                                        <label for="">
+                                                                                            Selling Price
+                                                                                            <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                        </label>
+                                                                                        <input type="text" class="form-control m-input m-input--solid clearitem" id="SellingPrice" name="SellingPrice" placeholder="Selling Price" />
+                                                                                        <span class="error font-small-3 error-empty-cls" id="spnSellingPrice" style="display: none; color: red;">This field is required</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col">
+                                                                                    <div class="form-group">
+                                                                                        <label for="">
+                                                                                            Market Price
+                                                                                            <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                        </label>
+                                                                                        <input type="text" class="form-control m-input m-input--solid clearitem" id="MarketPrice" name="MarketPrice" placeholder="Market Price" />
+                                                                                        <span class="error font-small-3 error-empty-cls" id="spnMarketPrice" style="display: none; color: red;">This field is required</span>
+                                                                                        <input type="text" class="form-control m-input m-input--solid" name="ProfitMargin" id="ProfitPercentage" placeholder="Enter Profit Margin Price" hidden>
+                                                                                        <input type="text" class="form-control m-input m-input--solid" name="ProfitPrice" id="ProfitPrice" placeholder="Enter Profit Price" hidden>
+                                                                                        <input type="text" class="form-control m-input m-input--solid" name="ActualCost" id="ActualCost" placeholder="Enter Actual Price" hidden>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col" id="nonvegconsumption" style="display: block">
+                                                                                    <div class="form-group">
+                                                                                        <div class="weightdetails">
+                                                                                            <label for="">
+                                                                                                Weight Consumption (gm)
+                                                                                            </label>
+                                                                                        </div>
+                                                                                        <div class="form-group">
+                                                                                            <input type="text" class="form-control m-input m-input--solid clearitem" id="weightportion" name="size" placeholder=" nonveg portion in grams" />
+                                                                                            <span class="error font-small-3 error-empty-cls" id="spnweightportion" style="display: none; color: red;">this field is required</span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col">
+                                                                                    <div class="form-group">
+                                                                                        <label for="" style="visibility:hidden;">Button</label>
+                                                                                        <button id="AddSize" type="button" class="btn btn-dark btn-block">
+                                                                                            <i class="fa fa-plus"></i> Add
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        }
+                                                                        else
+                                                                        {
+
+                                                                        }
+
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="row addNewPricelsit">
+                                                                            <div class="col hasNovaraint">
+                                                                                <div class="form-group">
+                                                                                    <div class="sizedetails" style="display:none">
+                                                                                        <label for="">
+                                                                                            Size
+                                                                                            <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                    <div class="wegihtate" style="display:none">
+                                                                                        <label for="">
+                                                                                            Weight
+                                                                                            <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <input type="text" class="form-control m-input m-input--solid clearitem" id="Size" name="Size" placeholder="Size/Weight" />
+                                                                                        <span class="error font-small-3 error-empty-cls" id="spnSize" style="display: none; color: red;">This field is required</span>
+                                                                                        <input type="text" value="1" name="Weight" id="Weight" hidden />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="wegihtate" style="display:none">
+                                                                                <div class="col">
+                                                                                    <div class="form-group">
+                                                                                        <label for="">Measured</label>
+                                                                                        <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                        <select asp-items="Model.GetMeasurementList" class="form-control m-input--solid clear-cls" name="ItmMeasurement" id="ItmMeasurement">
+                                                                                            <option value="0">Select Measurement</option>
+                                                                                        </select>
+                                                                                        <input type="text" class="form-control m-input m-input--solid clearitem" id="ItmNetWeight" name="ItmNetWeight" placeholder="Qty" hidden />
+                                                                                        <span class="error font-small-3 error-empty-cls" id="SpnItmMeasurement" style="display: none; color: red;">This field is required</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col" style="display:none">
+                                                                                <div class="form-group">
+                                                                                    <label for="">
+                                                                                        Wastage %
+                                                                                        <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                    </label>
+                                                                                    <input type="text" class="form-control m-input m-input--solid clear-cls" name="Wastage" id="Wastage" placeholder="Enter Wastage %">
+                                                                                    <span class="error font-small-3" id="SpnWastage" style="display: none; color: red;">This field is required</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <div class="form-group">
+                                                                                    <label for="">
+                                                                                        Purchase Price
+                                                                                        <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                    </label>
+                                                                                    <input type="text" class="form-control m-input m-input--solid clearitem" id="Purchaseprice" name="Purchaseprice" placeholder="Purchase Price" />
+                                                                                    <span class="error font-small-3 error-empty-cls" id="spnPurchaseprice" style="display: none; color: red;">This field is required</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <div class="form-group">
+                                                                                    <label for="">
+                                                                                        Selling Price
+                                                                                        <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                    </label>
+                                                                                    <input type="text" class="form-control m-input m-input--solid clearitem" id="SellingPrice" name="SellingPrice" placeholder="Selling Price" />
+                                                                                    <span class="error font-small-3 error-empty-cls" id="spnSellingPrice" style="display: none; color: red;">This field is required</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <div class="form-group">
+                                                                                    <label for="">
+                                                                                        Market Price
+                                                                                        <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                    </label>
+                                                                                    <input type="text" class="form-control m-input m-input--solid clearitem" id="MarketPrice" name="MarketPrice" placeholder="Market Price" />
+                                                                                    <span class="error font-small-3 error-empty-cls" id="spnMarketPrice" style="display: none; color: red;">This field is required</span>
+                                                                                    <input type="text" class="form-control m-input m-input--solid" name="ProfitMargin" id="ProfitPercentage" placeholder="Enter Profit Margin Price" hidden>
+                                                                                    <input type="text" class="form-control m-input m-input--solid" name="ProfitPrice" id="ProfitPrice" placeholder="Enter Profit Price" hidden>
+                                                                                    <input type="text" class="form-control m-input m-input--solid" name="ActualCost" id="ActualCost" placeholder="Enter Actual Price" hidden>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col" id="nonvegconsumption" style="display: block">
+                                                                                <div class="form-group">
+                                                                                    <div class="weightdetails">
+                                                                                        <label for="">
+                                                                                            Weight Consumption (gm)
+                                                                                        </label>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <input type="text" class="form-control m-input m-input--solid clearitem" id="weightportion" name="size" placeholder=" nonveg portion in grams" />
+                                                                                        <span class="error font-small-3 error-empty-cls" id="spnweightportion" style="display: none; color: red;">this field is required</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <div class="form-group">
+                                                                                    <label for="" style="visibility:hidden;">Button</label>
+                                                                                    <button id="AddSize" type="button" class="btn btn-dark btn-block">
+                                                                                        <i class="fa fa-plus"></i> Add
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div class="row addNewPricelsit">
+                                                                        <div class="col hasNovaraint">
+                                                                            <div class="form-group">
+                                                                                <div class="sizedetails" style="display:none">
+                                                                                    <label for="">
+                                                                                        Size
+                                                                                        <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                    </label>
+                                                                                </div>
+                                                                                <div class="wegihtate" style="display:none">
+                                                                                    <label for="">
+                                                                                        Weight
+                                                                                        <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                    </label>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <input type="text" class="form-control m-input m-input--solid clearitem" id="Size" name="Size" placeholder="Size/Weight" />
+                                                                                    <span class="error font-small-3 error-empty-cls" id="spnSize" style="display: none; color: red;">This field is required</span>
+                                                                                    <input type="text" value="1" name="Weight" id="Weight" hidden />
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="wegihtate" style="display:none">
+                                                                            <div class="col">
+                                                                                <div class="form-group">
+                                                                                    <label for="">Measured</label>
+                                                                                    <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                    <select asp-items="Model.GetMeasurementList" class="form-control m-input--solid clear-cls" name="ItmMeasurement" id="ItmMeasurement">
+                                                                                        <option value="0">Select Measurement</option>
+                                                                                    </select>
+                                                                                    <input type="text" class="form-control m-input m-input--solid clearitem" id="ItmNetWeight" name="ItmNetWeight" placeholder="Qty" hidden />
+                                                                                    <span class="error font-small-3 error-empty-cls" id="SpnItmMeasurement" style="display: none; color: red;">This field is required</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col" style="display:none">
+                                                                            <div class="form-group">
+                                                                                <label for="">
+                                                                                    Wastage %
+                                                                                    <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                </label>
+                                                                                <input type="text" class="form-control m-input m-input--solid clear-cls" name="Wastage" id="Wastage" placeholder="Enter Wastage %">
+                                                                                <span class="error font-small-3" id="SpnWastage" style="display: none; color: red;">This field is required</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <div class="form-group">
+                                                                                <label for="">
+                                                                                    Purchase Price
+                                                                                    <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                </label>
+                                                                                <input type="text" class="form-control m-input m-input--solid clearitem" id="Purchaseprice" name="Purchaseprice" placeholder="Purchase Price" />
+                                                                                <span class="error font-small-3 error-empty-cls" id="spnPurchaseprice" style="display: none; color: red;">This field is required</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <div class="form-group">
+                                                                                <label for="">
+                                                                                    Selling Price
+                                                                                    <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                </label>
+                                                                                <input type="text" class="form-control m-input m-input--solid clearitem" id="SellingPrice" name="SellingPrice" placeholder="Selling Price" />
+                                                                                <span class="error font-small-3 error-empty-cls" id="spnSellingPrice" style="display: none; color: red;">This field is required</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <div class="form-group">
+                                                                                <label for="">
+                                                                                    Market Price
+                                                                                    <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                </label>
+                                                                                <input type="text" class="form-control m-input m-input--solid clearitem" id="MarketPrice" name="MarketPrice" placeholder="Market Price" />
+                                                                                <span class="error font-small-3 error-empty-cls" id="spnMarketPrice" style="display: none; color: red;">This field is required</span>
+                                                                                <input type="text" class="form-control m-input m-input--solid" name="ProfitMargin" id="ProfitPercentage" placeholder="Enter Profit Margin Price" hidden>
+                                                                                <input type="text" class="form-control m-input m-input--solid" name="ProfitPrice" id="ProfitPrice" placeholder="Enter Profit Price" hidden>
+                                                                                <input type="text" class="form-control m-input m-input--solid" name="ActualCost" id="ActualCost" placeholder="Enter Actual Price" hidden>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col" id="nonvegconsumption" style="display: block">
+                                                                            <div class="form-group">
+                                                                                <div class="weightdetails">
+                                                                                    <label for="">
+                                                                                        Weight Consumption (gm)
+                                                                                    </label>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <input type="text" class="form-control m-input m-input--solid clearitem" id="weightportion" name="size" placeholder=" nonveg portion in grams" />
+                                                                                    <span class="error font-small-3 error-empty-cls" id="spnweightportion" style="display: none; color: red;">this field is required</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <div class="form-group">
+                                                                                <label for="" style="visibility:hidden;">Button</label>
+                                                                                <button id="AddSize" type="button" class="btn btn-dark btn-block">
+                                                                                    <i class="fa fa-plus"></i> Add
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                                @if (Model.HubItemSizeInfo.Count > 0)
+                                                                {
+                                                                    <div class="row SizeRow" style="display:none">
+                                                                        <div class="table-responsive">
+                                                                            <hr />
+                                                                            <table id="ProductTblId" class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Size</th>
+                                                                                        <th>Measurement</th>
+                                                                                        <th>Purchase Price</th>
+                                                                                        <th>Selling Price</th>
+                                                                                        <th>Market Price</th>
+                                                                                        <th>Edit</th>
+                                                                                        <th>Action</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody id="Itemtbl_Body"></tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row WeightRow" style="display:none">
+                                                                        <div class="table-responsive">
+                                                                            <hr />
+                                                                            <table id="ProductTblId" class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Weight</th>
+                                                                                        <th>Measured</th>
+                                                                                        <th>Purchase Price</th>
+                                                                                        <th>Selling Price</th>
+                                                                                        <th>Market Price</th>
+                                                                                        <th>Edit</th>
+                                                                                        <th>Action</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody id="ItemtblW_Body"></tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row VaraintRow" style="display:none">
+                                                                        <div class="table-responsive">
+                                                                            <hr />
+                                                                            <table id="ProductTblId" class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Purchase Price</th>
+                                                                                        <th>Selling Price</th>
+                                                                                        <th>Market Price</th>
+                                                                                        <th>Edit</th>
+                                                                                        <th>Action</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody id="ItemtblNov_Body"></tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!---Measurement & color End-->
+                                                <!--Color Start Here...-->
+                                                <div class="kt-portlet">
+                                                    <div class="m-portlet m-portlet--tabs">
+                                                        <div class="m-portlet__body">
+                                                            <div class="kt-portlet__head">
+                                                                <div class="kt-portlet__head-label">
+                                                                    <h3 class="kt-portlet__head-title heading-style">
+                                                                        Create New Color
+                                                                    </h3>
+                                                                </div>
+                                                            </div>
+                                                            <hr />
+                                                            <div class="col-md-12">
+                                                                <div class="form-group row" style="display:none">
+                                                                    <div class="col-md-3 col-sm-3 col-6">
+                                                                        <label class="col-form-label pb-0">Color Type</label>
+                                                                        <select class="form-control m-input m-input--solid" id="entryTypeColor" name="">
+                                                                            <option selected disabled>Select option</option>
+                                                                            <option value="1">Solo</option>
+                                                                            <option value="2">Multiple</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <!--data1-->
+                                                                <div class="entryTypeshow 1">
+                                                                    <hr />
+                                                                    <div class="row">
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label for="">
+                                                                                    Color
+                                                                                    <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                </label>
+                                                                                <input type="text" class="form-control m-input m-input--solid clearitem" id="ColorId" name="ColorId" placeholder="Color Name" />
+                                                                                <span class="error font-small-3 error-empty-cls" id="spnColorErr" style="display:none">Connot be empty!</span>
+                                                                                <input type="text" class="form-control m-input m-input--solid clearitem" asp-for="ItemMastersDetail.ItemId" id="ItemId" hidden />
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label for="">
+                                                                                    Upload Image
+                                                                                    <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                </label>
+                                                                                <input type="file" class="form-control form-control-sm kt-input--solid" id="ImageId" name="ColorImageId">
+                                                                                <span class="error font-small-3 error-empty-cls" id="ImageIdErr" style="display:none">Connot be empty!</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label for="" style="visibility:hidden;">Button</label>
+                                                                                <button id="AddColor" type="button" class="btn btn-dark btn-block">
+                                                                                    <i class="fa fa-plus"></i> Add
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <hr />
+                                                                    <div class="table-responsive">
+                                                                        <table id="ProductTblId" class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Color</th>
+                                                                                    <th>Image</th>
+                                                                                    <th>Action</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody id="ColorTbl"></tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!--dta2-->
+                                                                <div class="entryTypeshow 2" style="display:none">
+                                                                    <hr />
+                                                                    <div class="row">
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label for="">
+                                                                                    Color
+                                                                                    <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                </label>
+                                                                                <input type="number" class="form-control m-input m-input--solid clearitem" id="ttl_Qty" name="" placeholder="Qty" />
+                                                                                <input hidden value="0" id="itemWight" />
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label for="">
+                                                                                    Upload Image
+                                                                                    <span>(</span><span id="measure" class="text-danger text-bold-600 font-small-2 clearitem"></span><span>)</span>
+                                                                                </label>
+                                                                                <input type="file" class="form-control form-control-sm kt-input--solid" id="ImageId" name="File">
+                                                                                <span class="errormsg" id="ImageIdErr" style="display:none">Connot be empty!</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label for="" style="visibility:hidden;">Button</label>
+                                                                                <button id="addItemBtn" type="button" class="btn btn-dark btn-block">
+                                                                                    <i class="fa fa-plus"></i> Add
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <hr />
+                                                                    <div class="table-responsive">
+                                                                        <hr />
+                                                                        <table id="ProductTblId" class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Color</th>
+                                                                                    <th>Image</th>
+                                                                                    <th>Action</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody id="Itemtbl_Body"></tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--Color End Here...-->
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- COLOR MAPPING TAB -->
+                                    <div class="tab-pane" id="_ColorMapping" role="tabpanel">
+                                        <div class="kt-portlet ColorMappingInfo">
+
+                                        </div>
+                                        <!--end::Portlet-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!--AB0069-->
+<!--Satrt Edit/Update Size_Pricelist-->
+<div class="modal fade" id="NewSize" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Size Informartion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" id="SizeUpdate" method="post" asp-action="EditSize" asp-controller="ItemMaster">
+                            <input type="text" class="form-control m-input m-input--solid PriceIds" id="PriceId" name="PriceId" hidden>
+                            <input type="text" class="form-control m-input m-input--solid ItemIds" id="ItemId" name="ItemId" hidden>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Size <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid size" id="Size" name="Size" placeholder="Enter Size">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                    <span class="error font-small-3 error-empty-cls spnSize " id="spnSize" style="display: none; color: red;">This field is required</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Purchase Price <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="number" class="form-control m-input m-input--solid purchaseprice" id="purchaseprice" name="Purchaseprice" placeholder="Enter Purchase Price">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Selling Price <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="number" class="form-control m-input m-input--solid sellingPrice" id="sellingPrice" name="SellingPrice" placeholder="Enter Selling Price">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Marketing Price <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="number" class="form-control m-input m-input--solid marketPrice" id="marketPrice" name="MarketPrice" placeholder="Enter Market Price">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2" id="SubmitSize"><i class="la la-upload"></i> Submit </button>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Edit/Update Size_Pricelist-->
+
+@section Scripts{
+    <script>
+
+        $("#paymentType").change(function () {
+            $(this).find("option:selected").each(function () {
+                var optionValue = $(this).attr("value");
+                if (optionValue) {
+                    $(".paymentTypeShow").not("." + optionValue).hide();
+                    $("." + optionValue + "paymentType").show();
+                } else {
+                    $(".paymentTypeShow").hide();
+                }
+            });
+        }).change();
+
+        $("#PaymentStatus").change(function () {
+            $(this).find("option:selected").each(function () {
+                var optionValue = $(this).attr("value");
+                if (optionValue) {
+                    $(".paymentAmountShow").not("." + optionValue).hide();
+                    $("." + optionValue + "paymentStatus").show();
+                } else {
+                    $(".paymentAmountShow").hide();
+                }
+            });
+        }).change();
+
+        $("#paymentOutward").change(function () {
+            $(this).find("option:selected").each(function () {
+                var optionValue = $(this).attr("value");
+                if (optionValue) {
+                    $(".partialAmountShow").not("." + optionValue).hide();
+                    $("." + optionValue + "paymentOutward").show();
+                } else {
+                    $(".partialAmountShow").hide();
+                }
+            });
+        }).change();
+
+    </script>
+    <script src="~/assets/scripts/Financial/Create.js"></script>
+    <script src="https://rawgit.com/andrewng330/PreviewImage/master/preview.image.min.js"></script>
+    <script src="~/assets/scripts/item/hubpriceDetail.js"></script>
+    <script src="~/assets/demo/demo6/custom/crud/forms/widgets/bootstrap-select.js" type="text/javascript"></script>
+    <script>
+
+
+    </script>
+
+
+}
+
+

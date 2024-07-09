@@ -1,0 +1,306 @@
+﻿@using Freshlo.Web.Models.BannerVM;
+@model BannerVM;
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var aliyunpath = Model.businessInfo.aliyunPath;
+}
+<link href="~/assets/img_crop/css/img_crop.css" rel="stylesheet" />
+<link href="~/assets/img_crop/css/img_crop_main.css" rel="stylesheet" />
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Banner Details</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">               
+                <li class="m-nav__item">
+                    <a href="/Banner/Manage/" class="m-nav__link">
+                        <span class="m-nav__link-text">Banner Manage</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-3">
+            <!--begin:: Widgets/Blog-->
+            <div class="m-portlet m-portlet--bordered-semi m-portlet--rounded-force">
+                <div class="m-portlet__body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Banner Title</label>
+                            <h6 class="font-medium-1 text-bold-600">@Model.GetBanner.Name</h6>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label>Status</label>
+                            <h6 class="font-medium-1 text-bold-600"><span class="font-medium-1 badge badge-@(@Model.GetBanner.Status=="Active"?"success":"danger")">@Model.GetBanner.Status</span></h6>
+                        </div>                       
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>created by</label>
+                            <h6 class="font-medium-1 text-bold-600">@Model.GetBanner.CreatedBy</h6>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Created on</label>
+                            <h6 class="font-medium-1 text-bold-600">@Model.GetBanner.CreatedOn</h6>
+                        </div>
+                        <div>
+                            <input type="text" value="@Model.GetBanner.BannerId" hidden/>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="text-center mb-4">
+                        <img alt="Banner Image" src="https://freshlo.oss-ap-south-1.aliyuncs.com/@aliyunpath/top-banner/@(Model.GetBanner.BannerId).png" onerror="this.onerror = null;
+                                                          this.src = 'https://freshlo.oss-ap-south-1.aliyuncs.com/@aliyunpath/no-image.png';" style="border-radius:5px;object-fit:contain;height: 200px" />
+                     </div>
+                </div>
+            </div>
+            <!--end:: Widgets/Blog-->
+        </div>
+        <div class="col-md-9">
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">
+                                Create New Item
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" action="/Banner/Details/" id="bannerUpdate" method="post">
+                        <input type="text" asp-for="GetBanner.T_Id" name="T_Id" id="T_Id" hidden />
+                        <input type="text" asp-for="GetBanner.Id" name="Id" id="Id" hidden />
+                        <input type="text" asp-for="GetBanner.RefferTag" id="scrollBanner" hidden />
+                        <input type="text" asp-for="GetBanner.BranchMapped1" id="BranchMapped1" hidden />
+                        <input hidden id="place" value="@Model.GetBanner.Place" />
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Status</label>
+                            <div class="col-md-3">
+                                <select class="form-control m-input m-input--solid" id="Status" name="Status" asp-for="GetBanner.Status">
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-3 col-form-label">Branch Enable</label>
+                            <div class="col-9">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <fieldset class="col-form-label float-left">
+                                            <label class="ab-switch mb-0">
+                                                <input type="checkbox" name="BranchMapped" id="BranchMapped" value="true">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row Branchshow" style="display:none">
+                            <label class="col-md-3 col-sm-12 col-12 col-form-label">Select Branch</label>
+                            <div class="col-md-3 col-sm-3 col-6">
+                                <select class="form-control m-input m-input--solid" id="Branch" name="Branch" asp-for="GetBanner.Branch">
+                                    <option value="0" selected>Select Branch</option>
+                                    @foreach (var hublist in Model.GetHubList)
+                                    {
+                                        <option value="@hublist.HubId">@hublist.HubName -@hublist.Area</option>
+                                    }
+                                </select>
+                                <span class="text-danger font-small-3 text-bold-600" id="spnbranch" style="display:none;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Banner Title <span class="text-warning">*</span></label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control m-input m-input--solid clear-cls SpaceValidation" name="Name" autocomplete="off" id="bannerName" placeholder="Enter Banner Name" asp-for="GetBanner.Name">
+                                <span class="error font-small-3 error-empty-cls" id="Spnbannername" style="display: none; color: red;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Is it Scroll Banner?<span class="text-warning"></span></label>
+                            <div class="col-md-3">
+                                <select class="form-control m-input--solid" id="ScrollBaner" name="ScrollBaner">
+                                    <option value="0" disabled>Select Option</option>
+                                    <option value="Y">Yes</option>
+                                    <option value="N">No</option>
+                                </select>
+                                <span class="error font-small-3" id="SpnTax" style="display: none; color: red;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Choose Size <span class="text-warning">*</span></label>
+                            <div class="col-md-3">
+                                <select class="form-control m-input--solid clear-cls" name="Size" id="bannerSize" asp-for="GetBanner.Size">
+                                    <option value="0" selected="selected" disabled>Select Size</option>
+                                    <option value="480 X 320">480 X 320</option>
+                                    <option value="480 X 220">480 X 220</option>
+                                    <option value="480 X 150">480 X 150</option>
+                                    <option value="512 X 512">512 X 512</option>
+                                    <option value="256 X 256">256 X 256</option>
+                                    <option value="480 X 620">480 X 620</option>
+                                </select>
+                                <span class="error font-small-3 error-empty-cls" id="SpnbannerSize" style="display: none; color: red;"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row" style="display:none">
+                            <label class="col-md-3 col-form-label">MainCategory <span class="text-warning">*</span></label>
+                            <div class="col-md-3">
+                                <select class="form-control m-input--solid clear-cls" name="MainCategory" id="MainCategory" asp-for="GetBanner.MainCategory">
+                                    <option value="0" selected disabled>MainCategory</option>
+                                    @foreach (var getManCategList in Model.GetMainCategoryList)
+                                    {
+                                        if (getManCategList.MancategoryId.Equals(Model.GetBanner.MainCategory))
+                                        {
+                                            <Option value="@getManCategList.MancategoryId" selected>@getManCategList.Mancategoryname</Option>
+                                        }
+                                        else
+                                        {
+                                            <Option value="@getManCategList.MancategoryId">@getManCategList.Mancategoryname</Option>
+                                        }
+                                    }
+                                </select>
+                                <span class="error font-small-3 error-empty-cls" id="SpnVisibility" style="display: none; color: red;"></span>
+                            </div>
+                        </div>
+                        <div class="" id="PlaceBanner">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Choose Position <span class="text-warning">*</span></label>
+                                <div class="col-md-3">
+                                    <select class="form-control m-input--solid clear-cls" name="Place" id="bannerPlace" asp-for="GetBanner.Place">
+                                        <option value="0" selected disabled>Choose Position</option>
+                                        <option selected="@(Model.GetBanner.Place=="BTB"?"Selected":null)" value="BTB">Below Top Banner</option>
+                                        <option selected="@(Model.GetBanner.Place == "BMC" ? "Selected" : null)" value="BMC">Below MainCategory</option>
+                                        <option selected="@(Model.GetBanner.Place == "B" ? "Selected" : null)" value="B">Bottom</option>
+                                        <option selected="@(Model.GetBanner.Place == "IMC" ? "Selected" : null)" value="IMC">Inside MainCategory</option>
+                                        <option selected="@(Model.GetBanner.Place == "POPUP" ? "Selected" : null)" value="POPUP">Pop-Up</option>
+                                    </select>
+                                    <span class="error font-small-3 error-empty-cls" id="SpnbannerPlace" style="display: none; color: red;"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Click Action Trigger <span class="text-warning">*</span></label>
+                            <div class="col-md-3">
+                                <select class="form-control m-input--solid clear-cls" name="ActionTrigger" id="ActionType" asp-for="GetBanner.ActionTrigger">
+                                    <option value="0" selected disabled>Select Trigger</option>
+                                    <option value="Offer">Offer</option>
+                                    <option value="MainCategory">MainCategory</option>
+                                    <option value="Custom Item">Custom Item</option>
+                                    <option value="Inner Web View">Inner Web View</option>
+                                    <option value="Third Party Link">Third Party Link</option>
+                                    <option value="Video Link">Video Link</option>
+                                    <option value="Category" hidden>Category</option>
+                                    <option value="SubCategory" hidden>SubCategory</option>
+                                    <option value="Tag" hidden>Tag</option>
+                                    <option value="Brand" hidden>Brand</option>
+                                    <option value="Supplier" hidden>Supplier</option>
+                                </select>
+                                <span class="error font-small-3 error-empty-cls" id="SpnVisibility" style="display: none; color: red;"></span>
+                            </div>
+                        </div>
+                        <div class="" id="TriggerIddiv">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Click Acction <span class="text-warning">*</span></label>
+                                <div class="col-md-3">
+                                    <select class="form-control m-input--solid clear-cls m-select-2" name="TriggerId" id="TriggerId">
+                                        @foreach (var data in Model.GetAcctiontriggerlist)
+                                        {
+                                            <option value="@data.Value" selected="@(data.Value == Model.GetBanner.TriggerId ? "Selected" : null)">@data.Text</option>
+                                        }
+                                    </select>
+                                    <span class="error font-small-3 error-empty-cls" id="SpnTriggerId" style="display: none; color: red;"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="" id="tagRowId" style="display:none">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Add Tag <span class="text-warning">*</span></label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control m-input m-input--solid SpaceValidation clear-cls" name="Taglist" autocomplete="off" id="Addtag" placeholder="Enter Tag Name">
+                                    <span class="error font-small-3 error-empty-cls" id="Spnname" style="display: none; color: red;">This field is required</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="" id="LinkRowId" style="display:none">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Add Link <span class="text-warning">*</span></label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control m-input m-input--solid clear-cls" name="TextLink" id="TextLink" placeholder="Enter Link" asp-for="GetBanner.TextLink">
+                                    <span class="error font-small-3" id="SpnTextLink" style="display: none; color: red;">This field is required</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="" id="VideoLinks" style="display:none">
+                            <div class="form-group row ">
+                                <label class="col-md-3 col-form-label">Add Video Link <span class="text-warning">*</span></label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control m-input m-input--solid clear-cls SpaceValidation" name="VideoLink" id="VideoLink" placeholder="Enter Video Link" asp-for="GetBanner.VideoLink">
+                                    <span class="error font-small-3" id="SpnVideoLink" style="display: none; color: red;">This field is required</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Upload Image (Thumbnail Primary Image) <span class="text-warning">*</span></label>
+                            <div class="col-md-3">
+                                <input type="file" class="form-control m-input m-input--solid" name="imageFiles" id="imageFiles" placeholder="">
+                            </div>
+                        </div>
+                        <div class="row" hidden>
+                            <div class="col-md-5">
+                                <div class="text-center">
+                                    <div class="text-center mb-4">
+                                        <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/@aliyunpath/top-banner/@(Model.GetBanner.Id).png" onerror="this.onerror = null;
+                                    this.src = 'https://freshlo.oss-ap-south-1.aliyuncs.com/@aliyunpath/no-image.png';" alt="" class="img-fluid" style="height:250px;width:100%;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group row">
+                            <div class="col-md-9 offset-md-3">
+                                <div class="float-left">
+                                    <button type="button" class="btn btn-success" id="UpdateBanner">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="text" id="Aliyunkey" name="Aliyunkey" value="@aliyunpath" hidden />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Priview" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Banner Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/@aliyunpath/@(Model.GetBanner.Id).png" id="imgfiles" onerror="this.onerror=null;this.src='https://freshlo.oss-ap-south-1.aliyuncs.com/dubaicreekstriders/DefaultFolder/no-image-found.png';" alt="" class="img-fluid" style="height:250px;width:100%;" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="viewMessage1" value="@(Model.ViewMessage ??"")" />
+<input type="hidden" id="errorMessage1" value="@(Model.ErrorMessage ?? "")" />
+@section Scripts{
+    <script src="~/assets/scripts/Banner/Details.js"></script>
+}

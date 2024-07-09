@@ -1,0 +1,231 @@
+﻿@model WastageVM
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Wastage Management</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="javascripts:;" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/Home/Index/" class="m-nav__link">
+                        <span class="m-nav__link-text">Home</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="javascripts:;" class="m-nav__link">
+                        <span class="m-nav__link-text">Wastage Create</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <button type="button" class="btn btn-outline-dark" onclick="window.location.href='/Wastage/Manage/'"><i class="la la-list"></i> Manage</button>
+            <button type="button" class="btn btn-dark toptouchdiv" onclick="btnsavechanges('@Model.GetItemList.Count');"><i class="la la-save"></i> Save Changes</button>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__body pb-0 m-top-static bg-white">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="ml-2 mr-2">
+                            <div class="form-group" style="margin-top: 5px;">
+                                <i class="la la-filter"></i> Filter :
+                            </div>
+                        </div>
+                        <div class="ml-2" style="width:77%">
+                            <div class="form-group">
+                                <select class="form-control m-input m-input--solid">
+                                    <option selected disabled>Main Category</option>
+                                    <option>Value 2</option>
+                                    <option>Value 3</option>
+                                    <option>Value 4</option>
+                                    <option>Value 5</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <select class="form-control m-input m-input--solid">
+                            <option selected disabled>Category</option>
+                            <option>Value 2</option>
+                            <option>Value 3</option>
+                            <option>Value 4</option>
+                            <option>Value 5</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <select class="form-control m-input m-input--solid">
+                            <option selected disabled>Item Type</option>
+                            <option>Value 2</option>
+                            <option>Value 3</option>
+                            <option>Value 4</option>
+                            <option>Value 5</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <select class="form-control m-input m-input--solid">
+                            <option selected disabled>Availability</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-secondary">Find</button>
+                        <button type="button" class="btn btn-link">Clear</button>
+                    </div>
+                </div>
+                <div class="col-md-2 showdiv" style="display:none;">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-dark pull-right" onclick="btnsavechanges('@Model.GetItemList.Count');"><i class="la la-save"></i> Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table ab-table-head-bg-warning-light table-bordered table-middle table-white-space text-bold-400 m-data-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <label class="m-checkbox m-checkbox--single m-checkbox--all m-checkbox--solid m-checkbox--brand">
+                                            <input type="checkbox">
+                                            <span></span>
+                                        </label>
+                                    </th>
+                                    <th style="width:200px;">Item Name</th>
+                                    <th class="text-center">Total Weight</th>
+                                    <th>Wastage %</th>
+                                    <th>Wastage Type</th>
+                                    <th>Notes</th>
+                                    <th class="text-center">Value</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblwastage">
+
+                                @if (Model.GetItemList != null)
+                                {
+                                    int i = 0;
+                                    foreach (var Itemlist in Model.GetItemList)
+                                    {
+                                        <tr id="@Itemlist.ItemId">
+                                            <td style="width: 2.5vw;">
+                                                <label class="m-checkbox m-checkbox--single m-checkbox--all m-checkbox--solid m-checkbox--brand">
+                                                    <input class="messageCheckbox" id="Was_@Itemlist.ItemId" value="@Itemlist.ItemId" type="checkbox" name="Check[]">
+                                                    <span></span>
+                                                </label>
+                                            </td>
+                                            <td style="width:200px;">
+                                                <a href="#" class="text-link">@Itemlist.PluName</a>
+                                            </td>
+                                            <td class="text-center">
+                                                <span id="Totalstock_@Itemlist.ItemId">@Itemlist.TotalStock </span><span>@Itemlist.Measurement</span>
+                                                <span hidden id="Wasstock_@Itemlist.ItemId"></span>
+                                                <span hidden id="WasPurchase_@Itemlist.ItemId"></span>
+                                                <span hidden id="wastageId_@Itemlist.ItemId">@Itemlist.wastageid</span>
+                                            </td>
+                                            <td>
+                                                <div class="display-inline-flex">
+                                                    <input id="WastageQuan_@Itemlist.ItemId" name="Wastage_Quan" type="text" class="form-control m-input m-input--solid" onchange="Wastagecal('@Itemlist.ItemId')">
+                                                    <span class="p-2" id="Measure_@Itemlist.ItemId">@Itemlist.Measurement</span>
+                                                    <span hidden id="stockPo_@Itemlist.ItemId"></span>
+                                                    <span hidden id="TotalWastagequan_@Itemlist.ItemId">@Itemlist.Wastage_Quan</span>
+                                                    <span hidden id="TotalWastagePrice_@Itemlist.ItemId">@Itemlist.ItemwastagePrice</span>
+                                                    <span hidden id="CalWastagequan_@Itemlist.ItemId"></span>
+                                                    <span hidden id="CalWastagePrice_@Itemlist.ItemId"></span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <select name="WastageType" id="WastageType_@Itemlist.ItemId" class="form-control m-input m-input--solid">
+                                                    <option value="0" selected="selected">Select Wastage</option>
+                                                    <option value="1">Garbage</option>
+                                                    <option value="2">Internal Employee</option>
+                                                    <option value="3">Charity</option>
+                                                    <option value="4">Bachat Pack</option>
+
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input id="WastageDescription_@Itemlist.ItemId" name="Wastage_Description" type="text" class="form-control m-input m-input--solid">
+                                            </td>
+                                            <td class="text-center">
+                                                <span id="TotalPrice_@Itemlist.ItemId">@Itemlist.WastageItemPrice Rs</span>
+                                                <span hidden id="Purchaseprice_@Itemlist.ItemId">@Itemlist.PurchasePrice</span>
+                                                <span hidden id="stockId_@Itemlist.ItemId">@Itemlist.Id</span>
+                                            </td>
+                                        </tr>
+                                        i++;
+                                    }
+                                    if (i == 0)
+                                    {
+                                        <tr>
+                                            <td colspan="7" class="text-center"> No Data </td>
+                                        </tr>
+                                    }
+                                }
+                                @*<tr>
+                                        <td style="width:200px;">
+                                            <a href="#" class="text-link">Chines Cabbage</a>
+                                        </td>
+                                        <td class="text-center">
+                                            <span>10.5kg</span>
+                                        </td>
+                                        <td>
+                                            <div class="display-inline-flex">
+                                                <input type="text" class="form-control m-input m-input--solid">
+                                                <span class="p-2">kg</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <select class="form-control m-input m-input--solid">
+                                                <option value="0" selected="selected">Select Wastage</option>
+                                                <option>Garbage</option>
+                                                <option>Internal Employee</option>
+                                                <option>Charity</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control m-input m-input--solid">
+                                        </td>
+                                        <td class="text-center">
+                                            <span>10.5</span>
+                                        </td>
+                                    </tr>*@
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/assets/scripts/wastage/create.js"></script>
+}

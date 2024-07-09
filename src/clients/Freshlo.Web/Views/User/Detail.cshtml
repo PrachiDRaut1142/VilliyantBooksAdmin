@@ -1,0 +1,337 @@
+﻿@model UserVM;
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">User Management</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+             
+                <li class="m-nav__item">
+                    <a href="/User/Manage/" class="m-nav__link">
+                        <span class="m-nav__link-text">User Manage</span>
+                    </a>
+                </li>
+               
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="m-portlet" style="position: sticky !important;top: 80px;z-index: 1;">
+                <div class="m-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="m-card-profile">
+                                <div class="m-card-profile__pic">
+                                    <div class="text-center">
+                                        <h2 class="mb-0">@Model.Employeelistbyid.LoginId</h2>
+                                        <span class="font-small-3 white-space-nowrap" title="@Model.Employeelistbyid.FullName"> @Model.Employeelistbyid.FullName</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-4">
+                            <form class="m-form m-form--fit">
+                                <div class="form-group row mb-0 mt-0">
+                                    <label class="col-md-4 col-sm-12 col-12">Status</label>
+                                    <div class="col-md-8 col-sm-3 col-6 ">
+                                        @if (Model.Employeelistbyid.Status == "Active")
+                                        {
+                                            <label class="white-space-nowrap">:&nbsp; <span class="m-badge m-badge--success  m-badge--wide m-badge--rounded">@Model.Employeelistbyid.Status</span></label>
+
+                                        }
+                                        @if (Model.Employeelistbyid.Status == "Inactive")
+                                        {
+                                            <label class="white-space-nowrap">:&nbsp; <span class="m-badge m-badge--danger m-badge--wide m-badge--rounded">@Model.Employeelistbyid.Status</span></label>
+                                        }
+                                        @if (Model.Employeelistbyid.Status == "InComplete Registration")
+                                        {
+                                            <label class="white-space-nowrap">:&nbsp; <span class="m-badge m-badge--warning m-badge--wide m-badge--rounded">@Model.Employeelistbyid.Status</span></label>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-0">
+                                    <label class="col-md-4 col-sm-12 col-12">User Role</label>
+                                    <div class="col-md-8 col-sm-3 col-6 ">
+                                        <label class="white-space-nowrap"> :&nbsp; @Model.Employeelistbyid.UserRole</label>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="form-group row mb-0 mt-0">
+                                    <div class="text-left">
+                                        <label class="mb-0 font-small-2 text-dark-65">Last Login</label>
+                                        <h6 class="font-small-4 text-bold-600 mb-0">
+                                            @if (@Model.Employeelistbyid.LastLogin.Value.ToString() == "1/1/1900 12:00:00 AM")
+                                            {
+                                                <span class="d-block font-small-2"></span>
+                                            }
+                                            else
+                                            {
+                                                <span class="d-block font-small-2">
+                                                    @Model.Employeelistbyid.LastLogin.Value.ToString("MM-dd-yyyy hh:mm tt", CultureInfo.InvariantCulture)
+                                                </span>
+                                            }
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-0 mt-0">
+                                    <div class="text-left">
+                                        <label class="mb-0 font-small-2 text-dark-65">Modified On</label>
+                                        <h6 class="font-small-4 text-bold-600 mb-0">
+                                            @if (@Model.Employeelistbyid.LastUpdatedOn.ToString() == "1/1/1900 12:00:00 AM")
+                                            {
+                                                <span class="d-block font-small-2"></span>
+                                            }
+                                            else
+                                            {
+                                                <span class="d-block font-small-2">
+                                                    @Model.Employeelistbyid.LastUpdatedOn.ToString("MM-dd-yyyy hh:mm tt", CultureInfo.InvariantCulture)
+                                                </span>
+                                            }
+                                        </h6>
+                                    </div>
+                                </div>
+                                <hr />
+                                @if (Model.Employeelistbyid.Status == "Active")
+                                {
+                                    <div class="form-group row">
+                                        <div class="col-md-12">
+                                            <div class="text-left">
+                                                <button type="button" class="btn btn-brand btn-block" data-toggle="modal" data-target="#rpModal">Reset Password</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (Model.Employeelistbyid.Status == "InComplete Registration")
+                                {
+                                    <div class="form-group row">
+                                        <div class="col-md-12">
+                                            <div class="text-left">
+                                                <button type="button" class="btn btn-danger btn-block" id="resendVEBtn">Resend Verfication Email</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-12">
+                    <!--begin::Portlet-->
+                    <div class="m-portlet m-portlet--tabs">
+                        <ul class="nav nav-tabs  m-tabs-line m-nav-tab-account-lookup" role="tablist">
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link active" data-toggle="tab" href="#userinfo" role="tab">
+                                    <i class="flaticon-info"></i> User Info
+                                </a>
+                            </li>
+                            <li class="nav-item m-tabs__item" style="display:none">
+                                <a class="nav-link m-tabs__link" id="recentlyAccessed" data-toggle="tab" href="#RecentlyAccesed" role="tab">
+                                    <i class="flaticon-list-3"></i> Recently Accesed Account
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="m-portlet__body">
+                            <div class="tab-content">
+                                <!--User Info START-->
+                                <div class="tab-pane active" id="userinfo" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <form class="m-form m-form--fit m-form--label-align-right" action="/User/Detail" id="EditUser" method="post">
+                                                <input asp-for="Employeelistbyid.id" type="hidden" class="form-control m-input m-input--solid" id="id" name="id" />
+                                                <input asp-for="Employeelistbyid.EmpId" type="hidden" class="form-control m-input m-input--solid" id="EmpId" name="EmpId" />
+                                                <input asp-for="Employeelistbyid.IsfirstLogin" type="hidden" id="IsfirstLogin" name="IsfirstLogin" />
+                                                <input asp-for="Employeelistbyid.Status" type="hidden" id="OldStatus" name="OldStatus" />
+                                                @foreach (var hub in Model.Employeelistuser)
+                                                {
+                                                    <input asp-for="Employeelistuser" type="hidden"  value="@hub.DecodeId" id="DecodeId" name="DecodeId" />
+                                                }
+                                                    <div class="form-group row">
+                                                        <label class="col-md-3 col-sm-12 col-12 col-form-label">Status</label>
+                                                        <div class="col-md-4 col-sm-3 col-6">
+                                                            <select class="form-control form-control-solid" id="Status" name="Status">
+                                                                <!option value="Active" @(Model.Employeelistbyid.Status == "Active" ? "selected" : "")>Active</!option>
+                                                                <!option value="Inactive" @(Model.Employeelistbyid.Status == "Inactive" ? "selected" : "")>Inactive</!option>
+                                                                <!option value="InComplete Registration" hidden @(Model.Employeelistbyid.Status == "InComplete Registration" ? "selected" : "")>InComplete Registration</!option>
+                                                            </select>
+                                                            <span class="text-danger font-small-3 " style="display:none;"></span>
+                                                        </div>
+                                                    </div>
+                                                    <hr />
+                                                    <div class="form-group row InternalEmp">
+                                                        <label class="col-md-3 col-sm-12 col-12 col-form-label">Select Hub</label>
+                                                        <div class="col-md-4 col-sm-3 col-6">
+                                                            <select class="form-control m-input m-input--solid" id="Branch" name="Branch" asp-for="Employeelistbyid.Branch">
+                                                                <option disabled hidden>Select Branch</option>
+                                                                @foreach (var hublist in Model.getHublist)
+                                                                {
+                                                                    <option value="@hublist.HubId">@hublist.HubName -@hublist.Area</option>
+                                                                }
+                                                            </select>
+                                                            <span class="text-danger font-small-3 " style="display:none;"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-md-3 col-sm-12 col-12 col-form-label">User Role <span class="text-warning">*</span></label>
+                                                        <div class="col-md-3 col-sm-3 col-6">
+                                                            <select class="form-control m-input m-input--solid Userrole" id="UserRoles" name="UserRole" asp-for="Employeelistbyid.UserRole">
+                                                                <option value="0" selected disabled>Select User Role</option>
+                                                                <option value="System Admin">System Admin</option>
+                                                                <option value="Management">Management</option>
+                                                                <option value="Branch Manager">Branch Manager</option>
+                                                                <option value="delivery person">Delivery Boy</option>
+                                                                <option value="Supplier">Supplier</option>
+                                                            </select>
+                                                            <span class="text-danger font-small-3 " style="display:none;" id="SpnUserRole"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-md-3 col-sm-12 col-12 col-form-label">Login Id<span class="text-warning">*</span></label>
+                                                        <div class="col-md-3 col-sm-3 col-6">
+                                                            <input asp-for="Employeelistbyid.LoginId" type="text" class="form-control m-input m-input--solid" id="LoginId" name="LoginId" placeholder="Enter Full Name" />
+                                                            <span class="text-danger font-small-3 " style="display:none;" id="SpnLoginId"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-md-3 col-sm-12 col-12 col-form-label">Full Name <span class="text-warning">*</span></label>
+                                                        <div class="col-md-3 col-sm-3 col-6">
+                                                            <input asp-for="Employeelistbyid.UserRole" type="hidden" class="form-control m-input m-input--solid hIddenUserRole" id="UserRole" />
+                                                            <input asp-for="Employeelistbyid.FullName" type="text" class="form-control m-input m-input--solid" id="FullName" name="FullName" placeholder="Enter Full Name" />
+                                                            <span class="text-danger font-small-3 " style="display:none;" id="SpnFullName"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-md-3 col-sm-12 col-12 col-form-label">Email ID <span class="text-warning">*</span></label>
+                                                        <div class="col-md-3 col-sm-3 col-6">
+                                                            <input asp-for="Employeelistbyid.EmailId" type="text" class="form-control m-input m-input--solid" id="EmailId" name="EmailId" placeholder="Enter Email ID" />
+                                                            <span class="text-danger font-small-3 " style="display:none;" id="SpnEmailId"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-md-3 col-sm-12 col-12 col-form-label">Contact Number <span class="text-warning">*</span></label>
+                                                        <div class="col-md-3 col-sm-3 col-6">
+                                                            <input asp-for="Employeelistbyid.ContactNo" type="text" class="form-control m-input m-input--solid" id="ContactNo" name="ContactNo" placeholder="Enter Contact Number" />
+                                                            <span class="text-danger font-small-3 " style="display:none;" id="SpnContactNo"></span>
+                                                        </div>
+                                                    </div>
+                                                    <hr />
+                                                    <div class="form-group row">
+                                                        <label class="col-md-3 col-sm-12 col-12 col-form-label">Address 1<span class="text-warning">*</span></label>
+                                                        <div class="col-md-3 col-sm-3 col-6">
+                                                            <textarea asp-for="Employeelistbyid.Address1" rows="3" class="form-control m-input m-input--solid" id="Address1" name="Address1" placeholder="Enter Address" style="resize:none;"></textarea>
+                                                            <span class="text-danger font-small-3 " style="display:none;" id="SpnAddress1"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-md-3 col-sm-12 col-12 col-form-label">Address 2 <span class="text-warning">*</span></label>
+                                                        <div class="col-md-3 col-sm-3 col-6">
+                                                            <textarea asp-for="Employeelistbyid.Address2" rows="3" class="form-control m-input m-input--solid" id="Address2" name="Address2" placeholder="Enter Address" style="resize:none;"></textarea>
+                                                            <span class="text-danger font-small-3 " style="display:none;"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-md-3 col-sm-12 col-12 col-form-label">City</label>
+                                                        <div class="col-md-2 col-sm-3 col-6">
+                                                            <input asp-for="Employeelistbyid.city" type="text" class="form-control m-input m-input--solid" id="City" name="City" placeholder="Enter City" />
+                                                        </div>
+                                                    </div>
+                                                    @*<div class="form-group row">
+                                                        <label class="col-md-3 col-sm-12 col-12 col-form-label">State</label>
+                                                        <div class="col-md-2 col-sm-3 col-6">
+                                                            <input asp-for="Employeelistbyid.state" type="text" class="form-control m-input m-input--solid" id="state" name="state" placeholder="Enter State" />
+                                                        </div>
+                                                    </div>*@
+                                                    <div class="form-group row">
+                                                        <label class="col-md-3 col-sm-12 col-12 col-form-label">Country</label>
+                                                        <div class="col-md-2 col-sm-3 col-6">
+                                                            <input asp-for="Employeelistbyid.country" type="text" class="form-control m-input m-input--solid" id="country" name="country" placeholder="Enter Country" />
+                                                        </div>
+                                                    </div>
+                                                    <hr />
+                                                    <div class="form-group row">
+                                                        <label class="col-md-3 col-form-label"></label>
+                                                        <div class="col-md-9 col-sm-9 col-6">
+                                                            <button type="button" class="btn btn-success mr-2" id="nextBtn" name="nextBtn" value="1"><i class="la la-upload"></i> Submit </button>
+                                                            @*<button type="reset" class="btn btn-link" id="clearBtn" hidden><i class="la la-times"></i> Clear</button>*@
+                                                        </div>
+                                                    </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--User Info END-->
+                                <!--Recently Accessed START-->
+                                <div class="tab-pane" id="RecentlyAccesed" role="tabpanel">
+
+                                </div>
+                                <!--Recently Accessed END-->
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Portlet-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--end::Entry-->
+<!-- Modal Chnage Password-->
+<div class="modal fade" id="rpModal" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="form">
+                            <input type="hidden" id="setting" data-length="@Model.Getsecurity.Password_Length"
+                                   data-spcl-char="@Model.Getsecurity.Allow_Special_Character"
+                                   data-numeric="@Model.Getsecurity.Alpha_Numeric" data-case="@Model.Getsecurity.Check_Capital" />
+                            <div class="form-group row">
+                                <label for="" class="col-md-3 col-form-label">New Password </label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control form-control-solid" placeholder="Enter New Password" id="Password" />
+                                    <span class="text-danger font-small-2 text-bold-700" id="PasswordErr"></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="rpModalSubmitBtn">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal Chnage Password-->
+
+<input type="hidden" id="viewMessage1" value="@(Model.ViewMessage ??"")" />
+<input type="hidden" id="errorMessage1" value="@(Model.ErrorMessage ?? "")" />
+
+@section scripts {
+    <script src="~/assets/scripts/user/detail.js"></script>
+}

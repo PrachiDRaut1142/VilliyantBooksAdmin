@@ -1,0 +1,1424 @@
+﻿@using Freshlo.Web.Models.Setting;
+@using Freshlo.Web.Helpers;
+@model SettingVM;
+@{
+    ViewData["Title"] = "Info";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <link href="~/assets/css/pages/setting/setting.css" rel="stylesheet" />
+    var aliyunpath = Model.businessInfo.aliyunPath;
+}
+
+<style>
+    #inventoryAssetCreateid .modal-dialog {
+        max-width: 800px;
+    }
+
+    .chips-wrapper {
+        display: flex;
+        align-items: center;
+    }
+
+    .chips-wrapper .chips {
+        padding: 6px 12px;
+        font-size: 12px;
+        border-radius: 25px;
+        position: relative;
+        background-color: #f2f3f7;
+        display: flex;
+        height: 38px;
+        align-items: center;
+    }
+
+    .chips-wrapper .chips span,
+    .chips-wrapper .chips a {
+        vertical-align: middle;
+    }
+
+    .chips-wrapper .chips a {
+        margin-left: 8px;
+    }
+
+    .chips-wrapper .chips a:hover {
+        color: #000000;
+    }
+
+    .qr-scanner-wrapper {
+        width: 300px;
+        height: 300px;
+        margin: 0 auto;
+    }
+
+    .qr-scanner-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .save-member {
+        display: none;
+    }
+
+    .icon-bttn {
+        width: 35px;
+        height: 35px;
+        padding: 0;
+        text-align: center;
+    }
+
+    .icon-bttn i {
+        font-size: 14px;
+    }
+</style>
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Setting & Configuration</h3>>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item">
+                    <span class="m-nav__link-text">Setting & Configuration</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="nav f-nav f-nav-pills nav-pills" role="tablist">
+                <li class="nav-item f-nav-item active">
+                    <a class="nav-link f-nav-link active businessInfo" data-toggle="tab" href="#_businessInfo">Business Info</a>
+                </li>
+                <li class="nav-item f-nav-item">
+                    <a class="nav-link f-nav-link taxaTion" data-toggle="tab" href="#_taxation">Taxation</a>
+                </li>
+                <li class="nav-item f-nav-item">
+                    <a class="nav-link f-nav-link zipCode" data-toggle="tab" href="#zips">Zip Code & Charges</a>
+                </li>
+                @*<li class="nav-item f-nav-item">
+                <a class="nav-link f-nav-link PaymentGetway" data-toggle="tab" href="#PaymentGetway">Payment Getway</a>
+                </li>*@
+                <li class="nav-item f-nav-item">
+                    <a class="nav-link f-nav-link deliverySlot" data-toggle="tab" href="#slots">Delivery Slots</a>
+                </li>
+                <li class="nav-item f-nav-item">
+                    <a class="nav-link f-nav-link OfferType" data-toggle="tab" href="#offer">Offer Type</a>
+                </li>
+                <li class="nav-item f-nav-item">
+                    <a class="nav-link f-nav-link brandInfo" data-toggle="tab" href="#brand" hidden>Brand</a>
+                </li>
+                <li class="nav-item f-nav-item">
+                    <a class="nav-link f-nav-link tableInfo" data-toggle="tab" href="#table" hidden>Table</a>
+                </li>
+                <li class="nav-item f-nav-item">
+                    <a class="nav-link f-nav-link InventoryAsset" data-toggle="tab" href="#InventoryAsset" hidden>Inventory Asset</a>
+                </li>
+                <li class="nav-item f-nav-item">
+                    <a class="nav-link f-nav-link RecipeInfo" data-toggle="tab" href="#RecipeInfo" hidden>Ingredient Used </a>
+                </li>
+                <li class="nav-item f-nav-item">
+                    <a class="nav-link f-nav-link LanguageInfo" data-toggle="tab" href="#_LanguageInfo">Language </a>
+                </li>
+                <li class="nav-item f-nav-item">
+                    <a class="nav-link f-nav-link currencyInfo" data-toggle="tab" href="#currencyconfig">Currency Configuration</a>
+                </li>
+                <li class="nav-item f-nav-item">
+                    <a class="nav-link f-nav-link ProductType" data-toggle="tab" href="#ProductType">Product Type</a>
+                </li>
+                <li class="nav-item f-nav-item">
+                    <a class="nav-link f-nav-link PasswordSecurityInfo" data-toggle="tab" href="#_PasswordSecurity">Password Policy</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <div class="tab-content">
+                <!-- BUSSINESS INFO TAB -->
+                <div class="tab-pane active" id="_businessInfo" role="tabpanel">
+                    <div class="businessInfodetails"></div>
+                </div>
+                <!-- TAXAATION TAB -->
+                <div class="tab-pane" id="_taxation" role="tabpanel">
+                    <div class="taxInfodetails"></div>
+                </div>
+                <div class="tab-pane" id="PaymentGetway" role="tabpanel">
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide">
+                                        <i class="la la-gear"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text">
+                                        Payment Getway
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="m-portlet__head-tools">
+                                <button type="button" class="btn btn-dark pull-right paymentZDLC"><i class="la la-plus"></i> Add ZipCode</button>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table ab-table-head-bg-warning-light Ziptbl" id="zipcodelist">
+                                            <thead>
+                                                <tr>
+                                                    <th>Channel Id</th>
+                                                    <th>Secret Key</th>
+                                                    <th>Public Key </th>
+                                                    <th>Edit</th>
+                                                    <th>Remove</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="paymentgateway"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="zips" role="tabpanel">
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide">
+                                        <i class="la la-gear"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text">
+                                        Manage Serviceable Zip Codes
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="m-portlet__head-tools">
+                                <button type="button" class="btn btn-dark pull-right zipMdlCls"><i class="la la-plus"></i> Add ZipCode</button>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table ab-table-head-bg-warning-light Ziptbl zipmanage" id="zipcodelist">
+                                            <thead>
+                                                <tr>
+                                                    <th>Hub Name</th>
+                                                    <th>ZipCode</th>
+                                                    <th>Standard Charges</th>
+                                                    <th>Express Charges</th>
+                                                    <th>Minimum Order Value</th>
+                                                    <th>Discription</th>
+                                                    <th>Edit</th>
+                                                    <th>Remove</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="ZipBody"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="slots" role="tabpanel">
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide">
+                                        <i class="la la-gear"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text">
+                                        Manage Serviceable Delivery Slots
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="m-portlet__head-tools">
+                                <button type="button" class="btn btn-dark pull-right slotMdlCls"><i class="la la-plus"></i> Add Slot</button>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table ab-table-head-bg-warning-light Slottbl" id="SlotList">
+                                            <thead>
+                                                <tr>
+                                                    <th>Timing</th>
+                                                    <th>SlotTypeDesc</th>
+                                                    <th>Edit</th>
+                                                    <th>Remove</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="SlotBody"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="offer" role="tabpanel">
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide">
+                                        <i class="la la-gear"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text">
+                                        Manage Offer Type
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="m-portlet__head-tools">
+                                <button type="button" class="btn btn-dark pull-right offerCls"><i class="la la-plus"></i> Add Offer Type</button>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table ab-table-head-bg-warning-light Slottbl" id="OfferList">
+                                            <thead>
+                                                <tr>
+                                                    <th>Offer Type</th>
+                                                    <th>Status</th>
+                                                    <th>Created By</th>
+                                                    <th>Edit</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="OfferBody"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="brand" role="tabpanel">
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide">
+                                        <i class="la la-gear"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text">
+                                        Manage Brands
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="m-portlet__head-tools">
+                                <button type="button" class="btn btn-dark pull-right brandMdlCls" data-toggle="modal"><i class="la la-plus"></i> Add Brand</button>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table ab-table-head-bg-warning-light Brandtbl" id="BrandList">
+                                            <thead>
+                                                <tr>
+                                                    <th>Brand Name</th>
+                                                    <th>Brand Logo</th>
+                                                    <th>Total Item</th>
+                                                    <th>Created On / By</th>
+                                                    <th>Edit</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="BrandBody"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="table" role="tabpanel">
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide">
+                                        <i class="la la-gear"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text">
+                                        Manage Tables
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="m-portlet__head-tools">
+                                <button type="button" class="btn btn-dark pull-right tableMdlCls" data-toggle="modal" data-target="#NewTable"><i class="la la-plus"></i> Add Table</button>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table ab-table-head-bg-warning-light Ordertbl" id="TableList">
+                                            <thead>
+                                                <tr>
+                                                    <th>Table Id</th>
+                                                    <th>Table Code</th>
+                                                    <th>Table Name</th>
+                                                    <th>Branch</th>
+                                                    <th>Created On / By</th>
+                                                    <th>Edit</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="TableBody"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="InventoryAsset" role="tabpanel">
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide">
+                                        <i class="la la-gear"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text">
+                                        Audit Master Lists
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="m-portlet__head-tools">
+                                <button type="button" class="btn btn-dark pull-right assetMdlCls" data-target="#inventoryAssetCreate"><i class="la la-plus"></i> Add Asset</button>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table" id="zipcodelist">
+                                            <thead>
+                                                <tr>
+                                                    @*<th>ID</th>*@
+                                                    <th>Inventory Item</th>
+                                                    @*   <th>Current Quantity</th>
+                                                    *@
+                                                    @*  <th>Unit Purchase Price</th>*@
+                                                    <th>Life Span</th>
+                                                    <th>Is Serviceable</th>
+                                                    @*<th>CreateBy</th>*@
+                                                    @*   <th>Action</th>*@
+                                                    @*<th>Remove</th>*@
+                                                </tr>
+                                            </thead>
+                                            <tbody id="inventoryasset">
+                                                @* <tr>
+                                                <td>AI001</td>
+                                                <td>Plates</td>
+                                                <td>100 RS</td>
+                                                <td>30 days</td>
+                                                <td>No</td>
+                                                <td>imthiyas</td>
+                                                <td><a href="#" data-toggle="modal" class="text-dark ziptDetailcls" data-id=""> <i class="flaticon-edit"> </i> </a></td>
+                                                <td><a href="#" class="text-danger zipDeleteCls" data-id=""> <i class="flaticon-delete deleteId"> </i></a></td>
+                                                </tr>
+                                                <tr>
+                                                <td>AI002</td>
+                                                <td>Fan</td>
+                                                <td>2000 RS</td>
+                                                <td>2 years</td>
+                                                <td>yes</td>
+                                                <td>Akashay Kumar</td>
+                                                <td><a href="#" data-toggle="modal" class="text-dark ziptDetailcls" data-id=""> <i class="flaticon-edit"> </i> </a></td>
+                                                <td><a href="#" class="text-danger zipDeleteCls" data-id=""> <i class="flaticon-delete deleteId"> </i></a></td>
+                                                </tr>
+                                                <tr>
+                                                <td>AI003</td>
+                                                <td>AC/Voltos</td>
+                                                <td>20000 RS</td>
+                                                <td>2.5 years</td>
+                                                <td>yes</td>
+                                                <td>Amir</td>
+                                                <td><a href="#" data-toggle="modal" class="text-dark ziptDetailcls" data-id=""> <i class="flaticon-edit"> </i> </a></td>
+                                                <td><a href="#" class="text-danger zipDeleteCls" data-id=""> <i class="flaticon-delete deleteId"> </i></a></td>
+                                                </tr>*@
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="currencyconfig" role="tabpanel">
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide">
+                                        <i class="la la-gear"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text">
+                                        Manage Currency
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="m-portlet__head-tools">
+                                <button type="button" class="btn btn-dark pull-right currnencyMdlCls" data-toggle="modal" data-target="#NewCurrency"><i class="la la-plus"></i> Add Currency</button>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table ab-table-head-bg-warning-light Currencytbl" id="CurrencyList">
+                                            <thead>
+                                                <tr>
+                                                    <th>Currency Name</th>
+                                                    <th>Short Code</th>
+                                                    <th>Symbol</th>
+                                                    <th>Edit</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="currencyBody"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Producr type-->
+                <div class="tab-pane" id="ProductType" role="tabpanel">
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide">
+                                        <i class="la la-gear"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text">
+                                        Manage Product type
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="m-portlet__head-tools">
+                                <button type="button" class="btn btn-dark pull-right " data-toggle="modal" data-target="#AddProduct"><i class="la la-plus"></i> Add Main Product</button>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table ab-table-head-bg-warning-light Currencytbl" id="CurrencyList">
+                                            <thead>
+                                                <tr>
+                                                  
+                                                    <th>Product Name</th>
+                                                    <th>Edit</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="Productmain"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="_PasswordSecurity" role="tabpanel">
+                    <div class="passwordsecrutiyDetails"></div>
+                </div>
+                <div class="tab-pane" id="_LanguageInfo" role="tabpanel">
+                    <div class="m-portlet">
+                        <div class="m-portlet__head d-flex" style="align-items:center;justify-content:space-between;">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide">
+                                        <i class="la la-gear"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text">Language Change</h3>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-dark pull-right" @*data-target="#add_language_md" data-toggle="modal" *@ id="AddLanguagesumbit1" hidden>Add Language</button>
+
+                        </div>
+                        <div class="m-portlet__body" id="add_language_md">
+                            <div class="form-group row">
+                                <label for="" class="col-3 col-form-label">Default Language</label>
+                                <div class="col-2">
+                                    <input type="text" class="form-control m-input--solid" value="English" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Secondary Language</label>
+                                <div class="col-3">
+                                    <select class="form-control m-input--solid clear-cls" id="Addlanguagetext1">
+                                        <option value="0">Select Language</option>
+                                        @foreach (var item in Model.getlanguagelist)
+                                        {
+                                            <option value="@item.Languagecode">@item.LanguageName</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn btn-dark pull-right" id="addlanguage">Add</button>
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-3"></div>
+                                <div class="col-6">
+                                    <div class="chips-wrapper" id="AddedLanguage">
+                                        @foreach (var item in Model.getaddedlanguagelist)
+                                        {
+                                            @if (@item.LanguageName == "English")
+                                            {
+                                                <div class="chips mr-1" id="selectoption11" data-id="@item.Id"><span>@item.LanguageName</span></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="chips mr-1" id="selectoption11" data-id="@item.Id"><span>@item.LanguageName</span> <a href="#"><i class="flaticon-cancel"></i></a></div>
+                                            }
+
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <input type="text" id="Examplechange" value="" style="display:none" />
+                        </div>
+                    </div>
+                </div>
+                <!--Recipe tab content-->
+                <div class="tab-pane" id="RecipeInfo" role="tabpanel">
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide">
+                                        <i class="la la-gear"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text">
+                                        Manage Recipes
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="m-portlet__head-tools">
+                                <button type="button" class="btn btn-dark pull-right RecipeMdlCls"><i class="la la-plus"></i> Add Ingredient</button>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table ab-table-head-bg-warning-light Recipetbl" id="recipelist">
+                                            <thead>
+                                                <tr>
+                                                    <th>RecipeId</th>
+                                                    <th>Item Name</th>
+                                                    <th>Item Type</th>
+                                                    <th>Edit</th>
+                                                    <th>Remove</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="RecipeBody"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Modal-->
+<!--Preview-->
+<div class="modal fade" id="Priview" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Brand Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <img src="" id="imageLogo" onerror="this.onerror=null;this.src='https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/no-image.png';" alt="" class="img-fluid" style="height:60px;width:60px;" />
+            </div>
+        </div>
+    </div>
+</div>
+<!--/Preview-->
+<!--ZipCode-->
+<div class="modal fade" id="zipcodesCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">ZipCode Information</h5>
+                <button type="button" class="close CleaerZip" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" asp-action="AddZipCode" asp-controller="Settings" id="ZipCreate" method="post">
+                            <input type="hidden" class="form-control m-input m-input--solid" id="id" name="id">
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Country<span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid country" id="Country" name="Country">
+                                        <option value="saudhi">saudhi</option>
+                                        <option value="dubai">dubai</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div style="display:block" id="zip" class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">ZipCode<span class="text-warning"></span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="ZipCode" name="ZipCode" placeholder="Enter ZipCode">
+
+                                </div>
+                            </div>
+                            <div class="form-group row" style="display:block" id="min">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Minimum Order Value <span class="text-warning"></span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid SpaceValidation" placeholder="Minimum Order Value" id="MinOrderValue" name="MinOrderValue">
+
+                                </div>
+                            </div>   <div class="form-group row" style="display:none" id="internal">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">International Delviery Charges <span class="text-warning"></span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid SpaceValidation" placeholder="International Charges" id="InternationalCharge" name="InternationalCharge">
+
+                                </div>
+                            </div>
+                            <div class="form-group row" style="display:block" id="sta">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Standard Delivery Charges <span class="text-warning"></span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid SpaceValidation" placeholder="Standard Charges" id="StandradDeleiveryCharges" name="StandradDeleiveryCharges">
+
+                                </div>
+                            </div>
+                            <div class="form-group row" style="display:block" id="exp">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Express Delivery Charges <span class="text-warning"></span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid SpaceValidation" placeholder="Express Charges" id="ExpressDeleiveryCharges" name="ExpressDeleiveryCharges">
+
+                                </div>
+                            </div>
+                            <div class="form-group row" style="display:block" id="des">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Description <span class="text-warning"></span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid Desc SpaceValidation" id="Discription" name="Discription" placeholder="Enter Description">
+
+                                </div>
+                            </div>
+                            <div class="form-group row" style="display:block" id="cod">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">COD Available</label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid CODAVAL" id="CODAVAL" name="CODAVAL">
+                                        <option value="0">Select Status</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="form-group row" style="display:block" id="expdel">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Express Delivery Available</label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid ExpressDaval" id="ExpressDaval" name="ExpressDaval">
+                                        <option value="0">Select Status</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2" id="SubmitZip"><i class="la la-upload"></i> Save </button>
+                                    <button type="button" class="btn btn-link CleaerZip" data-dismiss="modal id=" CleaerZip""><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/ZipCode-->
+<!--Payment gateway-->
+
+<div class="modal fade" id="paymentsCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Payment gateway Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" asp-action="Addpaymentsgateway" asp-controller="Settings" id="paymentCreate" method="post">
+                            <input type="hidden" class="form-control m-input m-input--solid" id="id" name="id">
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Channel Id<span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="ChannelId" name="ChannelId" placeholder="Enter Channel Id">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Secret Key<span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid SpaceValidation" placeholder="Enter Secret Key" id="SecretKey" name="SecretKey">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Public Key<span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid SpaceValidation" placeholder="Enter Public Key" id="PublicKey" name="PublicKey">
+                                </div>
+                            </div>
+
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2" id="Submitpayment"><i class="la la-upload"></i> Save </button>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--/Payment gateway-->
+<!--Slot-->
+<div class="modal fade" id="Slots" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Slot Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" action="" id="SlotUpdateForm" method="post">
+                            <input type="text" class="form-control m-input m-input--solid" id="Id" name="Id" hidden>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Slot Type</label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid SlotTypes" id="SlotType" name="SlotType">
+                                        <option value="-1">Select Slot</option>
+                                        <option value="0">Standrad</option>
+                                        <option value="1">Express</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Timing <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid Timings SpaceValidation" id="Timing" name="Timing" placeholder="Enter Timing">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2" id="SlotSubmitBtn"><i class="la la-upload SlotSubmitBtn"></i> Save </button>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/Slot-->
+<!--Offer-->
+<div class="modal fade" id="Offers" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Slot Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" action="" id="OfferUpdateForm" method="post">
+                            <input type="text" class="form-control m-input m-input--solid" id="Id" name="Id" hidden>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Status</label>
+                                <div class="col-md-6 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid Status" id="Status" name="Status">
+                                        <option value="-1" selected>Select Slot</option>
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Offer Type <span class="text-warning">*</span></label>
+                                <div class="col-md-6 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid Timings SpaceValidation" id="OfferName" name="OfferName" placeholder="Enter Offer Type">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2" id="OfferSubmitBtn"><i class="la la-upload OfferSubmitBtn"></i> Save </button>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/Offer-->
+<!--Brand-->
+<div class="modal fade" id="NewBrand" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Brand Informartion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" id="BrandCreate" method="post">
+                            <input type="text" id="Aliyunkey" name="Aliyunkey" value="@aliyunpath" hidden />
+                            <input type="text" class="form-control m-input m-input--solid BIds" id="Id" name="Id" hidden>
+                            <input type="text" class="form-control m-input m-input--solid BrandIds" id="BrandId" name="BrandId" hidden>
+
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Brand Name <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="BrandName" name="BrandName" placeholder="Enter Brand Name">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Brand Logo <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="file" class="form-control m-input m-input--solid logse" id="ImageLogo" name="ImageLogo" placeholder="Choose File" />
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <img id="BrandImg" src="" onerror="this.onerror = null;
+                                    this.src = 'https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/no-image.png';" alt="" class="img-fluid" style="height:60px;width:60px;" />
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Select Suppliers <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <select class="form-control m-bootstrap-select m_selectpicker m-input m-input--solid" id="Supplierlist" data-live-search="true" multiple="multiple" name="Supplierlist" asp-items="@Model.GetSupplier"></select>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2" id="SubmitBrand"><i class="la la-upload"></i> Submit </button>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/Brand-->
+<!--Table -->
+<div class="modal fade" id="NewTable" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Table Informartion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" id="TableCreate" method="post" asp-action="AddTable" asp-controller="Settings">
+                            <input type="text" class="form-control m-input m-input--solid TIds" id="id" name="id" hidden>
+                            <input type="text" class="form-control m-input m-input--solid tableIds" id="tableId" name="tableId" hidden>
+                            @*<input type="text" class="form-control m-input m-input--solid tableCode" id="TableCode" name="TableCode" hidden>*@
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Table Name <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="tableName" name="tableName" placeholder="Enter Table Name">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label" disabled>Select Branch</label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid HubInfo" id="Hub" name="Hub" disabled>
+                                        @foreach (var item in Model.GetHubList)
+                                        {
+                                            @if (@ViewBag.hubId == @item.Value)
+                                            {
+                                                <option value="@item.Value" selected>@item.Text</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">@item.Text</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Select Table Perfernce</label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid tblPerfernce" asp-items="@Model.Gettblperferncelist" id="tblPerfernce" name="tblPerfernce">
+                                        <option value="0" selected>Select Booking Perference</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Table Code <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="tableCode" name="tableCode" placeholder="Enter Table Code">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2" id="SubmitTable"><i class="la la-upload"></i> Submit </button>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/Table-->
+<!--Currency -->
+<div class="modal fade" id="NewCurrency" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Currency Informartion</h5>
+                <button type="button" class="close clearcurrency" data-dismiss="modal" aria-label="Close" id="clearcurrency">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" id="CurrencyCreate" method="post" asp-action="AddCurrency" asp-controller="Settings">
+                            <input type="text" class="form-control m-input m-input--solid CIds" id="Id" name="Id" hidden>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Country Name <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid CountryName SpaceValidation" id="CountryName" name="CountryName" placeholder="Enter Country Name">
+                                    <span class="text-danger font-small-3" style="display:none;" id="SpnCountryName"></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Short Code</label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid ShortCode SpaceValidation" id="ShortCode" name="ShortCode" placeholder="Enter Short Code">
+                                    <span class="text-danger font-small-3" style="display:none;" id="SpnShortCode"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Symbol</label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid symbol SpaceValidation" id="symbol" name="symbol" placeholder="Enter Currency Symbol">
+                                    <span class="text-danger font-small-3" style="display:none;" id="Spnsymbol"></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2" id="Submitcurrency"><i class="la la-upload"></i> Submit </button>
+                                    <button type="button" class="btn btn-link clearcurrency" data-dismiss="modal" id="clearcurrency"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/Currency-->
+<!--AddProduct -->
+
+<div class="modal fade" id="AddProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add Product Category</h5>
+                <button type="button" class="close clearProductType" data-dismiss="modal" aria-label="Close" id="clearProductType">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" id="ProductMainCreate" method="post" asp-action="AddProduct" asp-controller="Settings">
+                            <input type="text" class="form-control m-input m-input--solid CIds" id="Id" name="Id" hidden>
+
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Product Type : <span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid producttype SpaceValidation" id="producttype" name="producttype" placeholder="Enter Product Type">
+
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2 SubmitMainProduct" id="SubmitMainProduct"><i class="la la-upload"></i> Submit </button>
+                                    <button type="button" class="btn btn-link clearProductType" data-dismiss="modal" id="clearProductType"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--/AddProduct-->
+<!-- PRODUCT SPECIFICATION BEGIN -->
+<div class="modal fade" id="product_specification_md" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Product Specification</h5>
+                <button type="button" class="close clearcurrency" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <label>Product Type </label>
+                    </div>
+                    <div class="col-4">
+                        <input type="text" class="form-control m-input m-input--solid"  id="MainProductcatValue" value=""/>
+                        <input type="text" hidden class="form-control m-input m-input--solid"  id="MainProductcatId" value="" />
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-primary" id="EditProductMainCat">Edit</button>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-12">
+                        <div class="text-right mb-3">
+                            <button type="button" class="btn btn-dark" id="add_product_specification">+ Add</button>
+                        </div>
+                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table ab-table-head-bg-warning-light" id="product_table">
+                            <thead>
+                                <tr>
+                                    <th>Product Spec Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                             <tbody id="productSubcategoryList">
+                                 
+                                
+                              
+                             </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <hr>
+            <div class="modal-footer text-right">
+                <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- PRODUCT SPECIFICATION ENDED -->
+<!-- PRODUCT SPECIFICATION BEGIN -->
+<div class="modal fade" id="kuch_to_de_md" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Product Specification</h5>
+                <button type="button" class="close clearcurrency" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                MODAL
+            </div>
+        </div>
+    </div>
+</div>
+<!-- PRODUCT SPECIFICATION ENDED -->
+<!--Inventory Asset-->
+<div class="modal fade" id="inventoryAssetCreateid" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" ata-target="#inventoryAssetCreateid" data-toggle="modal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Inventory Asset Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" asp-controller="Settings" id="Assetcreate" method="post">
+                            <input type="hidden" class="form-control m-input m-input--solid" id="assetsId" name="id">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label"> Name</label>
+                                <div class="col-md-7 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="AssetName" name="AssetName" placeholder="Enter  Name" autocomplete="off">
+                                    <span id="AssetNameErr" class="text-danger error-msg AssetNameErr font-small-3" style="display:none;">Please Add Asset Name!</span>
+                                    <span id="AssetNameErr1" class="text-danger error-msg AssetNameErr1"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Description </label>
+                                <div class="col-md-7 col-sm-3 col-6">
+                                    <textarea class="form-control m-input m-input--solid" id="assetDescription" name="AssetDescriptions" placeholder="Description" rows="5" autocomplete="off"></textarea>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Quantity</label>
+                                <div class="col-md-7 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="Quantity" name="Quantity" placeholder="Quantity" autocomplete="off">
+                                    <span id="QuantityErr" class="text-danger error-msg QuantityErr font-small-3" style="display:none;">Please Add Quantity!</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label"> Units Price</label>
+                                <div class="col-md-7 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="AssetUnit" name="AssetsUnitPrice" placeholder="Enter Unit Price" autocomplete="off">
+                                    <span id="AssetUnitErr" class="text-danger error-msg AssetUnitErr font-small-3" style="display:none;">Please Add Asset Unit Price!</span>
+
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label"> Life Span </label>
+                                <div class="col-md-7 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="AssetLife" name="AssetsLifespan" placeholder="Enter  Life span" autocomplete="off">
+                                    <span id="AssetLifeErr" class="text-danger error-msg AssetLifeErr font-small-3" style="display:none;">Please Add Assets Life span!</span>
+
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Is Serviceable ?</label>
+                                <div class="col-md-7 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid Serviceable" id="Serviceable" name="IsServicable">
+                                        <option value="0">Select Is Serviceable</option>
+                                        <option value="1">Yes</option>
+                                        <option value="2">No</option>
+                                    </select>
+                                    <span id="ServiceableErr" class="text-danger error-msg AssetLifeErr font-small-3" style="display:none;">Please Add Assets Life span!</span>
+
+                                </div>
+
+                            </div>
+
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label"></label>
+                                <div class="col-md-7 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                                    <button type="button" class="btn btn-success mr-2" id="SubmitAsset"><i class="la la-upload"></i> Save </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/Inventory Asset-->
+<!-- LANGUAGE TRANSLATION MODAL -->
+@*<div class="modal fade" id="add_language_md" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLongTitle">Category Language Translation</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">x</span>
+    </button>
+    </div>
+
+    <form>
+    <div class="modal-body">
+    <div class="form-group row mb-0">
+    <label class="col-md-3 col-form-label">Add Language<span class="text-danger">*</span></label>
+    <div class="col-6">
+    <input type="text" class="form-control" name="addLanguage" autocomplete="off" id="Addlanguagetext1" placeholder="Enter Add Language" />
+    </div>
+    </div>
+    </div>
+
+    <div class="modal-footer">
+    <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-danger" id="addlanguage">Add</button>
+    </div>
+    </form>
+
+    </div>
+    </div>
+    </div>*@
+
+<!--Recipe add modal -->
+<div class="modal fade" id="RecipeCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Ingredients Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" asp-action="AddRecipe" asp-controller="Settings" id="RecipeCreate" method="post">
+                            <input type="hidden" class="form-control m-input m-input--solid" id="R_Id" name="R_Id" />
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Item name<span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="Item_name" name="Item_name" placeholder="Enter Item Name">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Item Type</label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid Item_type" id="Item_type" name="Item_type">
+                                        <option value="0">Select Item type</option>
+                                        <option value="Meat">Meat</option>
+                                        <option value="Oils and Fats">Oils and Fats</option>
+                                        <option value="Spices">Spices</option>
+                                        <option value="Cereal Grains and Pasta">Cereal Grains and Pasta</option>
+                                        <option value="Vegetable">Vegetable  </option>
+                                        <option value="Fruits">Fruits  </option>
+                                        <option value="Essence">Essence</option>
+                                        <option value="Dairy Products">Dairy Products</option>
+                                        <option value="Confectionery">Confectionery</option>
+                                        <option value="Flour">Flour</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2" id="SubmitRecipe"><i class="la la-upload"></i> Save </button>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Qr Generation Modal-->
+<!--Table -->
+<div class="modal fade" id="QrCode" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">QR Generation</h5>
+            </div>
+            <div class="modal-body">
+                <div class="qr-scanner-wrapper">
+                    <input type="text" id="QRtableCode" hidden>
+                    <div class="qr-scanner">
+                        <img src="" class="img-thumbnail" id="imgae-qr" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="margin:0 auto">
+                <button type="button" class="btn btn-success mr-2" id="QrGenerate"><i class="la la-download"></i> QR Generate & Download </button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal" id="closeQR"><i class="la la-times"></i> Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/Table-->
+@section scripts {
+    <script src="~/assets/scripts/settings/index.js"></script>
+    <script src="~/assets/scripts/settings/language.js"></script>
+    <script src="~/assets/app/js/datatable.js"></script>
+    <script src="~/assets/scripts/shared/layout.js"></script>
+    <script src="~/assets/demo/demo6/custom/crud/forms/widgets/bootstrap-select.js" type="text/javascript"></script>
+}

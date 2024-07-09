@@ -1,0 +1,42 @@
+﻿
+@{
+    Layout = null;
+}
+
+<html>
+<head>
+    <title>Index</title>
+    @*<script src="http://code.jquery.com/jquery-1.4.3.min.js"></script>*@
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#loaderFrame').on('load', function () {
+                var w = (this.contentWindow || this.contentDocument.defaultView);
+                w.print();
+            })
+
+            //$('#loaderFrame').load(function () {
+            //    var w = (this.contentWindow || this.contentDocument.defaultView);
+            //    w.print();
+            //});
+
+            $('#mymoney').click(function () {
+                alert(0);
+                $('#loaderFrame').attr('src', 'http://localhost:55285/Print/Index');
+            });
+        });
+    </script>
+    <style>
+        #loaderFrame {
+            visibility: hidden;
+            height: 1px;
+            width: 1px;
+        }
+    </style>
+</head>
+<body>
+    <input type="button" id="mymoney" name="print" value="Print It" />
+
+    <iframe id="loaderFrame"></iframe>
+</body>
+</html>

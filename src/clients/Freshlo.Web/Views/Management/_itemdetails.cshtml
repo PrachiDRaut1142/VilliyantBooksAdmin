@@ -1,0 +1,109 @@
+﻿@using Freshlo.Web.Models.ItemMaster;
+@model ItemMasterVM;
+
+ <div class="m-portlet__body">
+            <div class="container-fluid">
+                <div class="header-body">
+                     <div class="row mt-3">
+                         @foreach (var item in Model.Itemvegnonvegcount)
+                        {
+                          <div class="col-3">
+                             <div class="card chicken-summary">
+                                 <a class="nav-link"  data-toggle="tab"  role="tab" >
+                                  <div class="d-flex align-items-center" style="justify-content:space-between;">
+                                      <div>
+                                          <h6>@item.FoodType</h6>
+                                           <small class="h5 font-weight-bold d-block">Sold</small>
+                                      </div>
+                                      <small class="h5 font-weight-bold d-block">Price</small>
+                                  </div>
+
+                        <div class="d-flex align-items-center" style="justify-content:space-between;">
+                            <span class="h2 font-weight-bold text-black">@item.QuantityValue Kg</span>
+                        <span class="h2 font-weight-bold text-black">@item.TotalPrice </span>
+                        </div> 
+                    </a>         
+                    </div>
+                       
+                        
+                         </div>
+                          }
+                        @* <div class="col-3">
+                             <div class="card Mutton-summary">
+                                 <a class="nav-link" id="nonvegcount" data-toggle="tab" role="tab" >
+                                   <div class="d-flex align-items-center" style="justify-content:space-between;">
+                                        <div>
+                                            <h6>Mutton</h6>
+                                            <small class="h5 font-weight-bold d-block">Sold</small>
+                                        </div>
+                                        <small class="h5 font-weight-bold d-block">Price</small>
+                                    </div>
+                                 <div class="d-flex align-items-center" style="justify-content:space-between;">
+                                     <span class="h2 font-weight-bold text-black">@Model.Itemvegnonvegcount.Mutton Kg</span>
+                                 <span class="h2 font-weight-bold text-black">@Model.Itemvegnonvegcount.MuttonTotalPrice </span>
+                                 </div>
+                             </a>
+                             </div>
+                         </div>
+                         <div class="col-3">
+                             <div class="card SeaFood-summary">
+                                 <a class="nav-link" id="nonvegcount1" data-toggle="tab" role="tab" >
+                                   <div class="d-flex align-items-center" style="justify-content:space-between;">
+                                        <div>
+                                            <h6>Sea_Food</h6>
+                                            <small class="h5 font-weight-bold d-block">Sold</small>
+                                        </div>
+                                        <small class="h5 font-weight-bold d-block">Price</small>
+                                    </div>
+                                 <div class="d-flex align-items-center" style="justify-content:space-between;">
+                                     <span class="h2 font-weight-bold text-black">@Model.Itemvegnonvegcount.SeaFood Kg</span>
+                                 <span class="h2 font-weight-bold text-black">@Model.Itemvegnonvegcount.seafoodTotalPrice</span>
+                                 </div>
+                             </a>
+                             </div>
+                         </div>*@
+                     </div>
+
+                     <div class="row mt-5">
+                          <div class="col-md-12 col-lg-12">
+                              <div class="table-responsive">
+                                  <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle dataTable" id="itemname">
+                                      <thead>
+                                            <tr>
+                                                <th style="width:50%;">Item Name</th>
+                                                <th>kilogram</th>
+                                                <th>Variant</th>
+                                                <th>Total Amout</th>                                
+                                            </tr>
+                                     </thead>
+
+                                     <tbody >
+                                @foreach (var im in @Model.GetvegItemDetails)
+                                {
+                                                 <tr>
+                                                     <td>@im.PluName</td>
+                                                     <td>@im.totalnetweight</td>
+                                                     <td>@im.Variant</td>
+                                                     <td>@im.TotalPrice</td>
+                                                 </tr>
+                                }
+
+                                     </tbody>
+
+                                  </table>
+                              </div>
+                          </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+
+
+        @section Scripts {
+
+ <script type="text/javascript" src="~/assets/vendors/custom/datatables/datatables.bundle.js"></script>
+    <script>
+            $('.dataTable').DataTable();
+    </script>
+}
+

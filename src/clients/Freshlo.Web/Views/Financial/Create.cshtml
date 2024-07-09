@@ -1,0 +1,325 @@
+﻿@using Freshlo.Web.Helpers
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Financial Management</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="javascripts:;" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/Sale/Index/" class="m-nav__link">
+                        <span class="m-nav__link-text">Home</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/Financial/Manage/" class="m-nav__link">
+                        <span class="m-nav__link-text">Financial Manage</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="javascripts:;" class="m-nav__link">
+                        <span class="m-nav__link-text">New Financial Entry</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon m--hide">
+                        <i class="la la-gear"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                        Create New Financial Entry
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-sm-12 col-12 col-form-label">Entry Type</label>
+                        <div class="col-md-3 col-sm-3 col-6">
+                            <select class="form-control m-input m-input--solid" id="entryType" name="">
+                                <option selected disabled>Select Entry Type</option>
+                                <option value="1">Incoming</option>
+                                <option value="2">Outgoing</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="entryTypeshow 1">
+                        <hr />
+                        <form class="m-form m-form--fit m-form--label-align-right" asp-controller="Financial" asp-action="Create" id="createForm1" method="post">
+                            <input hidden id="FEntry_Type1" name="Entry_Type" value="" />
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Payment Type</label>
+                                <div class="col-md-3 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid" id="paymentType" name="Inward_Payment_Type" asp-items="@FinanceHelper.InwardList">
+                                        <option selected disabled>Select Payment Type</option>
+                                     
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row 7paymentType paymentTypeShow">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Others <span class="text-warning">*</span></label>
+                                <div class="col-md-3 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="" name="Other_Payment" placeholder="Enter " />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Reference Number ( PO / Bill )  <span class="text-warning">*</span></label>
+                                <div class="col-md-3 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="" name="Reference_No" autocomplete="off" placeholder="Enter Refecent Number ( PO / Bill )" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Recieved From <span class="text-warning">*</span></label>
+                                <div class="col-md-3 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="" name="Received_From"  autocomplete="off" placeholder="Enter Recieved From" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Payment Status  <span class="text-warning">*</span></label>
+                                <div class="col-md-3 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid" name="Payment_Status" id="PaymentStatus">
+                                        <option selected disabled>Select Payment Status</option>
+                                        <option value="1">Paid Fully </option>
+                                        <option value="2">Pending</option>
+                                        <option value="3">Partailly Paid</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Total Amount<span class="text-warning">*</span></label>
+                                <div class="col-md-3 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="" name="Total_Amount" autocomplete="off" placeholder="Enter Amount" />
+                                </div>
+                            </div>
+                            <div class="form-group row 3paymentStatus paymentAmountShow">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Partial Amount<span class="text-warning">*</span></label>
+                                <div class="col-md-3 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="" name="Partail_Amount"  autocomplete="off" placeholder="Enter Partial Amount" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Payment Mode  <span class="text-warning">*</span></label>
+                                <div class="col-md-3 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid" name="Payment_Mode">
+                                        <option selected disabled>Select Payment Mode</option>
+                                        <option value="1">Online </option>
+                                        <option value="2">Cash</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Recieved On  <span class="text-warning">*</span></label>
+                                <div class="col-md-3 col-sm-3 col-6">
+                                    <div class="input-group date">
+                                        <input type="text" id="m_datetimepicker_8" name="Paid_On" autocomplete="off" class="form-control m-input m-input--solid" placeholder="Paid On" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="la la-calendar-check-o"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Remarks</label>
+                                <div class="col-md-3 col-sm-3 col-6">
+                                    <textarea rows="3" class="form-control m-input m-input--solid" id="" name="Remark" placeholder="Enter Remark"></textarea>
+                                </div>
+                            </div>
+
+                        </form>
+                        <hr />
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label"></label>
+                            <div class="col-md-9 col-sm-9 col-6">
+                                <button type="button" class="btn btn-success mr-2" id="submitForm1" name="nextBtn" value="1"><i class="la la-upload"></i> Submit </button>
+                                <button type="reset" class="btn btn-link" id="clearBtn"><i class="la la-times"></i> Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="entryTypeshow 2">
+                        <hr />
+                        <form class="m-form m-form--fit m-form--label-align-right" asp-controller="Financial" asp-action="Create" id="createForm2" method="post">
+                            <input hidden id="FEntry_Type2" name="Entry_Type" value="" />
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Payment Type</label>
+                                <div class="col-md-3 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid" name="Outward_Payment_Type" asp-items="@FinanceHelper.OutwardList">
+                                        <option selected disabled>Select Payment Type</option>
+                                     
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Reference Number ( PO / Bill )  <span class="text-warning">*</span></label>
+                                <div class="col-md-3 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="" name="Reference_No"  autocomplete="off" placeholder="Enter Refecent Number ( PO / Bill )" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Paid To / Vendor Name <span class="text-warning">*</span></label>
+                                <div class="col-md-3 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="" name="Paid_To"  autocomplete="off" placeholder="Enter Paid To / Vendor Name" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Payment Status  <span class="text-warning">*</span></label>
+                                <div class="col-md-3 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid" id="paymentOutward" name="Payment_Status">
+                                        <option selected disabled>Select Payment Status</option>
+                                        <option value="1">Paid Fully </option>
+                                        <option value="2">Pending</option>
+                                        <option value="3">Partially Paid</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Total Amount<span class="text-warning">*</span></label>
+                                <div class="col-md-3 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="" name="Total_Amount"  autocomplete="off" placeholder="Enter Amount" />
+                                </div>
+                            </div>
+                            <div class="form-group row 3paymentOutward partialAmountShow">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Partial Amount<span class="text-warning">*</span></label>
+                                <div class="col-md-3 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="" name="Partail_Amount" autocomplete="off" placeholder="Enter Partial Amount" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Payment Mode  <span class="text-warning">*</span></label>
+                                <div class="col-md-3 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid" name="Payment_Mode">
+                                        <option selected disabled>Select Payment Mode</option>
+                                        <option value="1">Online </option>
+                                        <option value="2">Cash</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Paid On  <span class="text-warning">*</span></label>
+                                <div class="col-md-3 col-sm-3 col-6">
+                                    <div class="input-group date">
+                                        <input type="text" id="m_datetimepicker_6" name="Paid_On" autocomplete="off" class="form-control m-input m-input--solid" placeholder="Paid On" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="la la-calendar-check-o"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Remarks</label>
+                                <div class="col-md-3 col-sm-3 col-6">
+                                    <textarea rows="3" class="form-control m-input m-input--solid" id="" name="Remark" placeholder="Enter Remark"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                        <hr />
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label"></label>
+                            <div class="col-md-9 col-sm-9 col-6">
+                                <button type="button" class="btn btn-success mr-2" id="submitForm2" name="nextBtn" value="1"><i class="la la-upload"></i> Submit </button>
+                                <button type="reset" class="btn btn-link" id="clearBtn"><i class="la la-times"></i> Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+
+        !(function ($) {
+            $("#entryType").change(function () {
+                $(this).find("option:selected").each(function () {
+                    var optionValue = $(this).attr("value");
+                    if (optionValue == 1) $('#FEntry_Type1').prop('value', optionValue);
+                    else $('#FEntry_Type2').prop('value', optionValue);
+
+                    if (optionValue) {
+                        $(".entryTypeshow").not("." + optionValue).hide();
+                        $("." + optionValue).show();
+                    } else {
+                        $(".entryTypeshow").hide();
+                    }
+                });
+            }).change();
+
+            $("#paymentType").change(function () {
+                $(this).find("option:selected").each(function () {
+                    var optionValue = $(this).attr("value");
+                    if (optionValue) {
+                        $(".paymentTypeShow").not("." + optionValue).hide();
+                        $("." + optionValue + "paymentType").show();
+                    } else {
+                        $(".paymentTypeShow").hide();
+                    }
+                });
+            }).change();
+
+
+            $("#PaymentStatus").change(function () {
+                $(this).find("option:selected").each(function () {
+                    var optionValue = $(this).attr("value");
+                    if (optionValue) {
+                        $(".paymentAmountShow").not("." + optionValue).hide();
+                        $("." + optionValue + "paymentStatus").show();
+                    } else {
+                        $(".paymentAmountShow").hide();
+                    }
+                });
+            }).change();
+
+
+            $("#paymentOutward").change(function () {
+                $(this).find("option:selected").each(function () {
+                    var optionValue = $(this).attr("value");
+                    if (optionValue) {
+                        $(".partialAmountShow").not("." + optionValue).hide();
+                        $("." + optionValue +"paymentOutward").show();
+                    } else {
+                        $(".partialAmountShow").hide();
+                    }
+                });
+            }).change();
+
+        })(jQuery);
+    </script>
+    <script src="~/assets/scripts/Financial/Create.js"></script>
+
+}
+
+
+
+
+@*Payment Recieved From
+
+    Payment Status Reviews On*@

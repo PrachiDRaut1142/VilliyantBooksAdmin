@@ -1,0 +1,771 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="m-subheader-search mb-4">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2 class="m-subheader-search__title mb-2">
+                            <span class="m-subheader-search__desc text-black-50">Customer Mobile Number:</span>
+                        </h2>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <input type="text" class="form-control m-input m-input--solid" placeholder="Customer Id or Number" list="cNumber" />
+                                    <datalist id="cNumber">
+                                        <option>(001) +91 8870706921 - Abdul Munaf</option>
+                                        <option>(002) +91 8870706921 - Abdul Salam Shaikh</option>
+                                        <option>(003) +91 8870706921 - Harun</option>
+                                        <option>(004) +91 8870706921 - Abdul Basit</option>
+                                        <option>(005) +91 8870706921 - Rakesh Naidu</option>
+                                        <option>(006) +91 8870706921 - Poonam Bhursan</option>
+                                        <option>(007) +91 8870706921 - Hemant Bagwe</option>
+                                        <option>(008) +91 8870706921 - Divya</option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-secondary"><i class="la la-search la-rotate-270"></i> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="float-right">
+                            <div class="text-muted font-large-1 text-bold-500"><i class="fas fa-weight font-large-1"></i> 2501.23</div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="mt-1" />
+                <div class="row" style="position: sticky !important;top: 80px;z-index: 3;">
+                    <div class="col-md-4">
+                        <div class="form-group mb-0">
+                            <input type="text" class="form-control form-control-lg m-input m-input--solid" placeholder="Product Code / Name" list="pNumber" />
+                            <datalist id="pNumber">
+                                <option>01002 - Onion</option>
+                                <option>02001 - Apple</option>
+                                <option>03031 - Fish</option>
+                                <option>03031 - Bread</option>
+                                <option>03031 - Fresh Cream</option>
+                                <option>03031 - Meat</option>
+                                <option>03031 - Dairy Milk</option>
+                                <option>03031 - Mango</option>
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group mb-0">
+                            <input type="text" class="form-control form-control-lg m-input m-input--solid" placeholder="Qty" />
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group mb-0">
+                            <input type="text" class="form-control form-control-lg m-input m-input--solid" placeholder="Net Weight" />
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group mb-0">
+                            <input type="text" class="form-control form-control-lg m-input m-input--solid" placeholder="00%" title="Discount" />
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group mb-0">
+                            <input type="text" class="form-control form-control-lg m-input m-input--solid" value="Rs.00.00" readonly />
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group mb-0">
+                            <button type="button" class="btn btn-secondary btn-lg btn-block"><i class="la la-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet" style="position: sticky !important;top: 80px;z-index: 3;">
+                <div class="m-portlet__body pt-3">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="nav nav-tabs  m-tabs-line" role="tablist">
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link active" data-toggle="tab" href="#items" role="tab">Items</a>
+                                </li>
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#cartlist" role="tab">Cart List</a>
+                                </li>
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#customerdetail" role="tab">Customer Detail</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="items" role="tabpanel">
+                                    <div class="row mb-2">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control m-input m-input--solid" placeholder="Product Code / Name..." />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row f-item_list">
+                                        <div class="col-md-2">
+                                            <a href="#" class="text-center" data-toggle="modal" data-target="#Additem">
+                                                <div class="mb-3 item_list">
+                                                    <img src="~/assets/app/media/img/products/Tomato.png" alt="Tomato Image" class="img-fluid" />
+                                                    <h6 class="mb-0 font-medium-1">Tomato</h6>
+                                                    <h6 class="font-small-3">1kg X 250.00</h6>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a href="#" class="text-center" data-toggle="modal" data-target="#Additem">
+                                                <div class="mb-3 item_list">
+                                                    <img src="~/assets/app/media/img/products/Tomato.png" alt="Tomato Image" class="img-fluid" />
+                                                    <h6 class="mb-0 font-medium-1">Tomato</h6>
+                                                    <h6 class="font-small-3">1kg X 250.00</h6>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a href="#" class="text-center " data-toggle="modal" data-target="#Additem">
+                                                <div class="mb-3 item_list">
+                                                    <img src="~/assets/app/media/img/products/Tomato.png" alt="Tomato Image" class="img-fluid" />
+                                                    <h6 class="mb-0 font-medium-1">Tomato</h6>
+                                                    <h6 class="font-small-3">1kg X 250.00</h6>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a href="#" class="text-center " data-toggle="modal" data-target="#Additem">
+                                                <div class="mb-3 item_list">
+                                                    <img src="~/assets/app/media/img/products/Tomato.png" alt="Tomato Image" class="img-fluid" />
+                                                    <h6 class="mb-0 font-medium-1">Tomato</h6>
+                                                    <h6 class="font-small-3">1kg X 250.00</h6>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a href="#" class="text-center " data-toggle="modal" data-target="#Additem">
+                                                <div class="mb-3 item_list">
+                                                    <img src="~/assets/app/media/img/products/Tomato.png" alt="Tomato Image" class="img-fluid" />
+                                                    <h6 class="mb-0 font-medium-1">Tomato</h6>
+                                                    <h6 class="font-small-3">1kg X 250.00</h6>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a href="#" class="text-center " data-toggle="modal" data-target="#Additem">
+                                                <div class="mb-3 item_list">
+                                                    <img src="~/assets/app/media/img/products/Tomato.png" alt="Tomato Image" class="img-fluid" />
+                                                    <h6 class="mb-0 font-medium-1">Tomato</h6>
+                                                    <h6 class="font-small-3">1kg X 250.00</h6>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a href="#" class="text-center " data-toggle="modal" data-target="#Additem">
+                                                <div class="mb-3 item_list">
+                                                    <img src="~/assets/app/media/img/products/Tomato.png" alt="Tomato Image" class="img-fluid" />
+                                                    <h6 class="mb-0 font-medium-1">Tomato</h6>
+                                                    <h6 class="font-small-3">1kg X 250.00</h6>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="cartlist" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Product Name</th>
+                                                            <th>Unit</th>
+                                                            <th>Qty</th>
+                                                            <th>Discount</th>
+                                                            <th>Total Price</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="m-widget4__img m-widget4__img--logo">
+                                                                    <img src="~/assets/app/media/img/client-logos/logo5.png" alt="">
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <h6 class="mb-1">
+                                                                    Trump Themes
+                                                                </h6>
+                                                                <span class="display-block font-small-3 text-bold-500 text-muted">Milk Product</span>
+                                                            </td>
+                                                            <td>
+                                                                <span>1kg X Rs.2530.23</span>
+                                                            </td>
+                                                            <td><span class="text-bold-400"> 1 </span></td>
+                                                            <td>
+                                                                <span>30%</span>
+                                                            </td>
+                                                            <td><span class="text-bold-500 text-info"> Rs.250.50</span></td>
+                                                            <td>
+                                                                <a href="#" class="text-danger font-medium-1 text-bold-600">X</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="m-widget4__img m-widget4__img--logo">
+                                                                    <img src="~/assets/app/media/img/client-logos/logo5.png" alt="">
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <h6 class="mb-1">
+                                                                    Trump Themes
+                                                                </h6>
+                                                                <span class="display-block font-small-3 text-bold-500 text-muted">Milk Product</span>
+                                                            </td>
+                                                            <td>
+                                                                <span>1kg X Rs.2530.23</span>
+                                                            </td>
+                                                            <td><span class="text-bold-400"> 100 </span></td>
+                                                            <td>
+                                                                <span>30%</span>
+                                                            </td>
+                                                            <td><span class="text-bold-500 text-info"> Rs.250.50</span></td>
+                                                            <td>
+                                                                <a href="#" class="text-danger font-medium-1 text-bold-600">X</a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="customerdetail" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Customer ID</label>
+                                                <input type="text" class="form-control m-input m-input--solid" placeholder="Enter Customer ID" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Customer Name</label>
+                                                <input type="text" class="form-control m-input m-input--solid" placeholder="Enter Customer Name" />
+                                            </div>
+                                        </div>
+                                        @*<div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label>Same Name <span class="text-warning">*</span></label>
+                                                    <label class="m-checkbox m-checkbox--solid m-checkbox--success display-block">
+                                                        <input type="checkbox"> Yes?
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                            </div>*@
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Email ID</label>
+                                                <input type="text" class="form-control m-input m-input--solid" placeholder="Enter Email ID" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Contact Number <span class="text-warning">*</span></label>
+                                                <input type="text" class="form-control m-input m-input--solid" placeholder="Enter Contact Number" />
+                                            </div>
+                                        </div>
+                                        @*<div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label>Same Contact No <span class="text-warning">*</span></label>
+                                                    <label class="m-checkbox m-checkbox--solid m-checkbox--success display-block">
+                                                        <input type="checkbox"> Yes?
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                            </div>*@
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Address 1</label>
+                                                <input type="text" class="form-control m-input m-input--solid" placeholder="Enter Address 1" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Address 2 <span class="font-small-2">(Optional)</span></label>
+                                                <input type="text" class="form-control m-input m-input--solid" placeholder="Enter Address 2 " />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Zip Code</label>
+                                                <input type="text" class="form-control m-input m-input--solid" placeholder="Enter Zip Code" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>City</label>
+                                                <input type="text" class="form-control m-input m-input--solid" placeholder="Enter City" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>State</label>
+                                                <input type="text" class="form-control m-input m-input--solid" placeholder="Enter State" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Location </label>
+                                                <input type="text" class="form-control m-input m-input--solid" placeholder="Enter Location" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="float-right">
+                                                    <button type="button" class="btn btn-secondary btn-sm"><i class="la la-plus"></i> Add New</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row mt-2">
+                                        <div class="col-md-12">
+                                            <h6>List of Address's</h6>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="item_list" style="width:250px;">
+                                                                    <div class="mb-2">
+                                                                        <h6>445 Mount Eden Road</h6>
+                                                                        <h6>Mount Eden</h6>
+                                                                        <h6>Auckland</h6>
+                                                                        <h6>Loc : Jama Masjid</h6>
+                                                                        <h6>Nerul - 400706</h6>
+                                                                        <h6>Navi Mumbai</h6>
+                                                                        <div class="row mt-4">
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                                        <input type="checkbox" value="1" checked="checked"> Default
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="item_list" style="width:250px;">
+                                                                    <div class="mb-2">
+                                                                        <h6>445 Mount Eden Road</h6>
+                                                                        <h6>Mount Eden</h6>
+                                                                        <h6>Auckland</h6>
+                                                                        <h6>Loc : Jama Masjid</h6>
+                                                                        <h6>Nerul - 400706</h6>
+                                                                        <h6>Navi Mumbai</h6>
+                                                                        <div class="row mt-4">
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                                        <input type="checkbox" value="45"> Select
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="item_list" style="width:250px;">
+                                                                    <div class="mb-2">
+                                                                        <h6>445 Mount Eden Road</h6>
+                                                                        <h6>Mount Eden</h6>
+                                                                        <h6>Auckland</h6>
+                                                                        <h6>Loc : Jama Masjid</h6>
+                                                                        <h6>Nerul - 400706</h6>
+                                                                        <h6>Navi Mumbai</h6>
+                                                                        <div class="row mt-4">
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                                        <input type="checkbox" value="45"> Select
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="item_list" style="width:250px;">
+                                                                    <div class="mb-2">
+                                                                        <h6>445 Mount Eden Road</h6>
+                                                                        <h6>Mount Eden</h6>
+                                                                        <h6>Auckland</h6>
+                                                                        <h6>Loc : Jama Masjid</h6>
+                                                                        <h6>Nerul - 400706</h6>
+                                                                        <h6>Navi Mumbai</h6>
+                                                                        <div class="row mt-4">
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                                        <input type="checkbox" value="45"> Select
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="item_list" style="width:250px;">
+                                                                    <div class="mb-2">
+                                                                        <h6>445 Mount Eden Road</h6>
+                                                                        <h6>Mount Eden</h6>
+                                                                        <h6>Auckland</h6>
+                                                                        <h6>Loc : Jama Masjid</h6>
+                                                                        <h6>Nerul - 400706</h6>
+                                                                        <h6>Navi Mumbai</h6>
+                                                                        <div class="row mt-4">
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                                        <input type="checkbox" value="45"> Select
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="item_list" style="width:250px;">
+                                                                    <div class="mb-2">
+                                                                        <h6>445 Mount Eden Road</h6>
+                                                                        <h6>Mount Eden</h6>
+                                                                        <h6>Auckland</h6>
+                                                                        <h6>Loc : Jama Masjid</h6>
+                                                                        <h6>Nerul - 400706</h6>
+                                                                        <h6>Navi Mumbai</h6>
+                                                                        <div class="row mt-4">
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                                        <input type="checkbox" value="45"> Select
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="item_list" style="width:250px;">
+                                                                    <div class="mb-2">
+                                                                        <h6>445 Mount Eden Road</h6>
+                                                                        <h6>Mount Eden</h6>
+                                                                        <h6>Auckland</h6>
+                                                                        <h6>Loc : Jama Masjid</h6>
+                                                                        <h6>Nerul - 400706</h6>
+                                                                        <h6>Navi Mumbai</h6>
+                                                                        <div class="row mt-4">
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                                        <input type="checkbox" value="45"> Select
+                                                                                        <span></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <a href="#" class="ml-3 text-danger text-bold-500">Delete</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <!--begin:: Widgets/Audit Log-->
+            <div class="m-portlet" style="position: sticky !important;top: 80px;z-index: 3;display:ruby-text">
+                <div class="m-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <h6>Customer Detail</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="font-small-3">Customer ID </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="font-small-4"> : 5002</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="font-small-3">Customer Name </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="font-small-4"> : Enayat Sayyed Shaikh</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="font-small-3">Mobile No </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="font-small-4"> : +91 887 070 6921</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="font-small-3">App Installed ?</div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="font-small-4">
+                                :  @*<a href="#" class="font-small-4" data-container="body" data-toggle="m-popover" data-placement="top" data-content="App link" data-original-title="" title="">
+                                        No
+                                        <sup><span class="m-nav__link-badge m-badge--dot m-badge--dot-small m-badge m-badge--danger"></span></sup>
+                                    </a>*@
+                                <span class="font-small-4"> Yes <sup><span class="m-nav__link-badge  m-badge--dot m-badge--dot-small m-badge m-badge--success"></span></sup></span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="text-left">
+                                <div class="">Total Items : <span class="text-bold-400">50</span></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="text-left">
+                                <div class="">Total Qty : <span class="text-bold-400">50</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <label class="col-md-12">Apply coupon code</label>
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <input type="text" class="form-control m-input m-input--solid" placeholder="Enter Coupen Code" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-sm btn-secondary pull-right"><i class="la la-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="">
+                                <div class="float-right">
+                                    <h6 class="text-right">Sub Total : <span class="">Rs.1520.33</span></h6>
+                                    <h6 class="text-right font-small-2">Tax : <span class="">14%</span></h6>
+                                    <h6 class="text-right font-small-2">Gst Tax : <span class="">28%</span></h6>
+                                    <h6 class="text-right font-small-2">Coupon Discount : <span class="">- 1520.33</span></h6>
+                                    <h6 class="text-right">Grand Total : <span class="text-danger font-medium-5">Rs.1520.33</span></h6>
+                                    <h6 class="text-right font-small-2">Your Saving : <span class="">Rs.257.33</span></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <div class="m-checkbox-list float-right">
+                                <label class="m-checkbox">
+                                    <input type="checkbox" class="transaction_value"> ATM Trastraction
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="transaction_Show" style="display:block;">
+                                <div class="form-group">
+                                    <input type="text" class="form-control m-input m-input--solid" id="amount1" placeholder="Enter Amount" value="1520.33" readonly />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control m-input m-input--solid amount2" id="amount2" placeholder="Recieved Amount" />
+                                </div>
+                            </div>
+                            <div class="transaction" style="display:none;">
+                                <div class="form-group">
+                                    <input type="text" class="form-control m-input m-input--solid" id="" placeholder="Reciept ID" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group text-right">
+                            <h4 class="text-danger" id="total"></h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="">
+                                <button type="button" class="btn btn-primary btn-block" id="mymoney">Pay Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end:: Widgets/Audit Log-->
+        </div>
+    </div>
+    <!--End::Section-->
+</div>
+
+<!-- Modal -->
+<div class="modal animated fadeIn" id="Additem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="text-center">
+                                <div class="text-muted font-large-1 text-bold-500"><i class="fas fa-weight font-large-1"></i> 2501.23</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 text-muted">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h6>Product ID</h6>
+                                    <h5><span class=""> 002</span></h5>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h6>Product Name</h6>
+                                    <h5><span class=""> Tomato</span></h5>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h6>Unit</h6>
+                                    <h5><span class=""> 1Kg</span></h5>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h6>Unit Price</h6>
+                                    <h5><span class="">Rs.250.55</span></h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="" style="border-left: 2px solid #f4f5f8;padding-left: 10px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-lg m-input m-input--solid" value="2501.23" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-lg m-input m-input--solid" placeholder="Qty" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-lg m-input m-input--solid" placeholder="00%" title="Discount" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-lg m-input m-input--solid" value="Rs.00.00" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Add to cart</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/assets/scripts/sales/index.js"></script>
+}
+

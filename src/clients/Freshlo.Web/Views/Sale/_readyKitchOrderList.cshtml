@@ -1,0 +1,30 @@
+﻿@using Freshlo.Web.Models.Sale;
+@model SalesManageVM;
+@{
+    ViewData["Title"] = "_readyKitchOrderList";
+}
+<div class="col-md-12" id="">
+    <div class="tab-content">
+        <div class="tab-pane animated fadeIn active" id="aaceptItem" role="tabpanel">
+            @foreach (var item in Model.GetKitcheOrderList)
+            {
+                <div class="accept-ready-itrem-list">
+                    <div class="card ready-card">
+                        <div class="media">
+                            <div class="media-left mr-3">@item.tableName</div>
+                            <div class="media-body">
+                                <h3 class="mt-0 text-white">@item.PluName @item.Size</h3>
+                                <div class="card-cutom-footer">
+                                    <h6 class="mins">@item.QuantityValue</h6>
+                                    <button type="button" class="btn btn-danger ready-btn text-uppercase btn-close" data-id="@item.SalesId" data-approval="@item.SalesListId">Close</button>
+                                    <input class="allIds1" id="@item.SalesId" hidden>
+                                    <input class="allIdss2" id="@item.SalesListId" hidden>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

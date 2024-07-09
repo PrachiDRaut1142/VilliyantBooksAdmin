@@ -1,0 +1,93 @@
+﻿@using Freshlo.Web.Models
+@using Freshlo.Web.Helpers
+@model SalesVM
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Arabian Dastar</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <link href="~/assets/print/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/print/print.css" rel="stylesheet" />
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Oswald:wght@300&display=swap" rel="stylesheet">
+    <style>
+
+
+        .table-middle td {
+            vertical-align: middle !important
+        }
+
+        .table-borderless th, .table-borderless td, .table-borderless thead th, .table-borderless tbody + tbody {
+            border: 0 !important
+        }
+
+        .print {
+            break-inside: avoid;
+        }
+        /*div {
+            page-break-inside: avoid;
+        }*/
+        /*table {
+            page-break-inside: avoid;
+        }*/
+
+    </style>
+
+</head>
+<!-- end::Head -->
+<!-- begin::Body -->
+<body style="font-family: 'Open Sans';font-size: 17px;">
+        <div class="p-4">
+            <div class="container-fluid" id="div_print" style="display: block; ">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-condensed table-borderless table-middle mb-0">
+                            <thead style="">
+                                <tr>
+                                    <th>Item</th>
+                                    <th class="text-right">Qty.</th>
+                                </tr>
+                            </thead>
+                            <tbody style="">
+                                @foreach (var list in Model.GetSalesPrintList)
+                                {
+
+                                        @if (list.KOT_Print == 1)
+                                        {
+                                            <tr>
+                                                <td style="font-size: 20px; font-weight: 800">@list.PluName</td>
+                                                <td class="text-right" style="font-size: 22px; font-weight: 800">@(list.ItemType == "Packed" ? list.QuantityValue : list.QuantityValue)</td>
+                                            </tr>
+                                        }
+                                 }
+                            </tbody>
+                        </table>
+                        <hr />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        window.onload = function () {
+            window.print();              
+        },
+            window.onafterprint = function () {
+                window.location.href = '/Sale/tablestate/';
+            };
+    </script>
+</body>
+</html>
+

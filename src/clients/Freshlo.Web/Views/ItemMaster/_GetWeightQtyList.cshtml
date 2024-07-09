@@ -1,0 +1,32 @@
+﻿@using Freshlo.Web.Models.ItemMaster;
+@model ItemMasterVM;
+
+@foreach (var detail in Model.getItemMasterList)
+{
+    if (detail.MeasuredIn == "C")
+    {
+        <tr id="@detail.Size">
+            <td id="Size_@detail.Size">@detail.Size</td>
+            <td>@detail.Measurement</td>
+            <td>@detail.Purchaseprice<span class="ml-3">@Model.getccurrencylist.FirstOrDefault(x => x.status == 1).symbol</span></td>
+            <td>@detail.SellingPrice<span class="ml-3">@Model.getccurrencylist.FirstOrDefault(x => x.status == 1).symbol</span></td>
+            <td>@(Convert.ToDecimal(@detail.MarketPrice).ToString("#0.00")) <span class="ml-3">@Model.getccurrencylist.FirstOrDefault(x => x.status == 1).symbol</span></td>
+            <td>@detail.Barcode</td>
+            <td>
+                <a href="#" class="text-dark SizeDetails" onclick="EditSize('@detail.PId')" data-toggle="modal" data-id="@detail.PId">
+                    <i class="flaticon-edit"></i>
+                </a>
+            </td>
+            <td>
+                <a href="#" class="text-link" onclick="RemoveWeight('@detail.PriceId')" ; id="@detail.Size" title="Remove">
+                    <i class="flaticon-delete text-danger"></i>
+                    <span class="Spn_@detail.Size" hidden id="Spn_@detail.Size" ;>Weight</span>
+                    <span class="Spnweight_@detail.PriceId" hidden id="Spnweight_@detail.PriceId" ;>@detail.PriceId</span>
+                </a>
+            </td>
+        </tr>
+
+    }
+
+
+}

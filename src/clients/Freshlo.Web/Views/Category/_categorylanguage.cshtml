@@ -1,0 +1,18 @@
+﻿@using Freshlo.Web.Models.CategoriesVM;
+@model MainCatgoriesVM;
+@{
+    ViewData["Title"] = "_categorylanguage";
+}
+
+ @foreach (var item in Model.Languageitemcategorieslist)
+{
+ <tr>
+   <td>@item.CategoryLanguage</td>
+   <td>@item.CategoryDescription</td>
+   <td>
+       <a href="#" class="text-danger">
+           <i class="m-menu__link-icon la la-trash"></i>
+       </a>
+   </td>
+ </tr>
+}

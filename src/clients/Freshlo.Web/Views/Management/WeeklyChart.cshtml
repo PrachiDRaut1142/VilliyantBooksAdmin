@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewData["Title"] = "WeeklyChart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>WeeklyChart</h2>
+
+<div class="m-content">
+  <div class="m-portlet m-portlet--tabs">
+    <ul class="nav nav-tabs m-tabs-line m-nav-tab-account-lookup Mainul" role="tablist">
+      <li class="nav-item m-tabs__item">
+        <a class="nav-link m-tabs__link active" data-toggle="tab" name="saleSummary" href="#SaleSummary" role="tab">
+          <i class="flaticon-info"></i> Sale Summary </a>
+      </li>
+      <li class="nav-item m-tabs__item">
+        <a class="nav-link m-tabs__link" id="recentlyAccessed" name="discountSummary" data-toggle="tab" href="#DiscountSummary" role="tab">
+          <i class="flaticon-list-3"></i> Discount Summary </a>
+      </li>
+    </ul>
+    <div class="m-portlet__body">
+      <div class="tab-content">
+        <!-- SALE SUMMARY CHART -->
+        <div class="tab-pane active" id="SaleSummary" role="tabpanel">
+          <div class="row">
+          </div>
+        </div>
+        <!-- DISCOUNT SUMMARY CHART -->
+        <div class="tab-pane" id="DiscountSummary" role="tabpanel">
+          <div class="row">
+            <div class="col-md-12">
+               <div class="chart-wrapper">  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

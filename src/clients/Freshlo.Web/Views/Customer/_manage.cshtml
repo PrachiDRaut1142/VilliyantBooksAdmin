@@ -1,0 +1,105 @@
+﻿@using Freshlo.Web.Models.CustomerVM;
+@using System.Globalization
+@model CustomerManageVM;
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<table class="table table-striped-even ab-table-head-bg-warning-light table-borderless" id="m_table_1">
+    @if (Model.getCustomerHistoryList != null)
+    {
+        <thead>
+            <tr>
+                <th width="15%">Customer Name</th>
+                <th width="15%">Email-ID</th>
+                <th>Contact1 Number</th>
+                <th>Status</th>
+                <th>Source</th>
+                <th>Created By/On</th>
+                <th>Last Login</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="tbdyId">
+            @foreach (var custlist in Model.getCustomerHistoryList)
+            {
+                <tr>
+                    <td width="15%">
+                        <a href="/Customer/Detail/@custlist.DecodeId1" class="text-link">@custlist.Name</a>
+                    </td>
+                    <td width="15%">@custlist.EmailId</td>
+                    <td>@custlist.Contact</td>
+                    <td>@custlist.Status</td>
+                    <td>@custlist.Source</td>
+                    <td class="text-dark">
+                        @custlist.CreatedBy
+                        <span class="d-block font-small-2">
+                            @custlist.CreatedOn.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture)
+                        </span>
+                        <span class="d-block font-small-2">
+                            @custlist.CreatedOn.ToString("hh:mm tt", CultureInfo.InvariantCulture)
+                        </span>
+                        @*<span class="d-block font-small-2">@custlist.CreatedOn.ToString("hh:mm tt", CultureInfo.InvariantCulture)</span>*@
+                    </td>
+                    <td class="text-dark">
+                        @custlist.LastLogin.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture)
+                        <span class="d-block font-small-2">
+                            @custlist.LastLogin.ToString("hh:mm tt", CultureInfo.InvariantCulture)
+                        </span>
+                        @*<span class="d-block font-small-2">@custlist.CreatedOn.ToString("hh:mm tt", CultureInfo.InvariantCulture)</span>*@
+                    </td>
+                    <td>
+                        <a href="/Customer/Detail/@custlist.DecodeId1" class="text-dark"> <i class="flaticon-edit"></i> </a>
+                        <a href="#" class="text-danger deleteId" data-id="@custlist.Id"> <i class="flaticon-delete deleteId"> </i></a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    }
+    @if (Model.GetCustomerRegOrderlist != null)
+    {
+        <thead>
+            <tr>
+                <th>Customer Id</th>
+                <th>Customer Name</th>
+                <th>Contact No </th>
+                <th>EmailId</th>
+                <th>CreatedOn</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="tbdyId">
+            @foreach (var custlist in Model.GetCustomerRegOrderlist)
+            {
+                <tr>
+                    <td>
+                        <a href="/Customer/Detail/@custlist.DecodeId" class="text-link">@custlist.CustomerId</a>
+                    </td>
+                    <td>@custlist.Name</td>
+                    <td>@custlist.ContactNo</td>
+                    <td>@custlist.EmailId</td>
+                    <td class="text-dark">
+                        @custlist.CreatedOn.ToString("dd-MMM-yyyy", CultureInfo.InvariantCulture)
+                        <span class="d-block font-small-2">@custlist.CreatedOn.ToString("hh:mm tt", CultureInfo.InvariantCulture)</span>
+                    </td>
+                    <td><span class="badge badge-@(custlist.Status == "Active" ? "success" : "danger")">@custlist.Status</span></td>
+                    <td>
+                        <a href="/Customer/Detail/@custlist.DecodeId" class="text-dark"> <i class="flaticon-edit"></i> </a>
+                        <a href="#" class="text-danger deleteId" data-id="@custlist.Id"> <i class="flaticon-delete deleteId"> </i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    }
+</table>
+
+
+
+<script>
+    $('#m_table_1').DataTable({
+        "pageLength": 10,
+        "ordering": false,
+        "sorting": true
+    });
+</script>

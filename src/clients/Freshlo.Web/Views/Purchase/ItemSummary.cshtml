@@ -1,0 +1,262 @@
+﻿@using Freshlo.Web.Models.PurchaseVM
+@model SummaryVM;
+@{
+    ViewData["Title"] = "ItemSummary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Item Summary</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item">
+                    <a href="/Dashboard/Financial/" class="m-nav__link">
+                        <span class="m-nav__link-text">Dashboard</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            @*<button type="button" class="btn btn-success"><i class="la la-save"></i> Save Changes</button>*@
+        </div>
+    </div>
+</div>
+<!---Tab-->
+<div class="m-content">
+    <div class="m-portlet" id="m_portlet_loader_1" style="position: sticky !important;top: 80px;z-index: 3;">
+        <div id="m_portlet_loader_1_app"></div>
+
+        <ul class="nav nav-tabs  m-tabs-line bg-white MainUl mb-2" id="MainUl" role="tablist" style="position: sticky !important;top: 80px;z-index: 3;">
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link active" data-toggle="tab" name="pending" href="#allItem" role="tab">All Items</a>
+            </li>
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link category-cls" data-toggle="tab" name="category" href="#category" role="tab">Category Item</a>
+            </li>
+        </ul>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tab-content">
+                        <div class="tab-pane animated fadeIn active" id="allItem" role="tabpanel">
+                            <form id="summaryForm">
+                                <div class="row">
+                                    <div class="mt-2">
+                                        <p class="mb-1 mr-2"><i class="la la-filter"></i> Filter : </p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select class="form-control m-input" id="filterDrpDwn">
+                                            <option value="1">Today</option>
+                                            <option value="6">Yesterday</option>
+                                            <option value="2">This Week</option>
+                                            <option value="3">This Month</option>
+                                            <option value="4">Previous Week</option>
+                                            <option value="5">Previous Month</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select class="form-control m-input" id="categoryDrpDwn">
+                                            <option selected disabled>Select Category</option>
+                                            <option>All</option>
+                                            @foreach (var list in Model.Categorylist)
+                                            {
+                                                <option value="@list.CategoryId">@list.Name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    @*<div class="col-md-2">
+                                            <select class="form-control m-input" id="subCatDrpDwn" asp-items="Model.SubCategorylist">
+                                                <option selected disabled>Select SubCategory</option>
+                                                <option>All</option>
+                                            </select>
+                                        </div>*@
+
+                                    <div class="col-md-2">
+                                        <select class="form-control m-input" id="approvalDrpDwn">
+                                            <option selected disabled>Select Approval</option>
+                                            <option value="Approved">Approved</option>
+                                            <option value="Pending">Pending</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <select class="form-control m-input" id="availabilityDrpDwn">
+                                                <option selected disabled>Select Availability</option>
+                                                <option value="Y">Yes</option>
+                                                <option value="N">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="float-left">
+                                            <button type="button" id="filterBtn" class="btn btn-brand ml-2 px-4 filter">
+                                                <i class="la la-question-circle"></i> Filter
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="float-left">
+                                            <button type="button" class="btn btn-success clear-Cls">
+                                                <i class="la la-question-circle"></i> Clear
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*<div class="row">
+                                        <h5  class="text-right">Stock Total :<span id="AmountId" class="">0.0</span></h5>
+                                        <spn>    </spn>
+                                        <h5 class="text-right">Stock Value :<span id="AmountId" class="">0.0</span></h5>
+
+                                    </div>*@
+                            </form>
+                            <hr class="" />
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive" id="tblDivId">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane animated fadeIn" id="category" role="tabpanel">
+                            <form id="categorySummaryForm">
+                                @*<div class="row">
+                                    <div class="mt-2">
+                                        <p class="mb-1 mr-2"><i class="la la-filter"></i> Filter : </p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select class="form-control m-input" id="ForcategoryDrpDwn">
+                                            <option selected disabled>Select Category</option>
+                                            <option>All</option>
+                                            @foreach (var list in Model.Categorylist)
+                                            {
+                                                <option value="@list.CategoryId">@list.Name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select class="form-control m-input" id="subCatDrpDwn" asp-items="Model.SubCategorylist">
+                                            <option selected disabled>Select SubCategory</option>
+                                            <option>All</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="float-left">
+                                            <button type="button" id="CategoryFilter" class="btn btn-brand ml-2 px-4 filter">
+                                                <i class="la la-question-circle"></i> Filter
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="float-left">
+                                            <button type="button" class="btn btn-success Categoryclear-Cls">
+                                                <i class="la la-question-circle"></i> Clear
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>*@
+                            </form>
+                            <hr class="" />
+                            <div class="row">
+                                <div class="col-md-12">
+                                   <div class="table-responsive" id="tblCategory">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End tab-->
+<!-- END: Subheader -->
+@*<div class="m-content">
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <form id="summaryForm">
+                    <div class="row">
+                        <div class="mt-2">
+                            <p class="mb-1 mr-2"><i class="la la-filter"></i> Filter : </p>
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-control m-input" id="filterDrpDwn">
+                                <option value="1">Today</option>
+                                <option value="6">Yesterday</option>
+                                <option value="2">This Week</option>
+                                <option value="3">This Month</option>
+                                <option value="4">Previous Week</option>
+                                <option value="5">Previous Month</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-control m-input" id="categoryDrpDwn">
+                                <option selected disabled>Select Category</option>
+                                <option>All</option>
+                                @foreach (var list in Model.Categorylist)
+                                {
+                                    <option value="@list.CategoryId">@list.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-control m-input" id="subCatDrpDwn" asp-items="Model.SubCategorylist">
+                                <option selected disabled>Select SubCategory</option>
+                                <option>All</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-2">
+                            <select class="form-control m-input" id="approvalDrpDwn">
+                                <option selected disabled>Select Approval</option>
+                                <option value="Approved">Approved</option>
+                                <option value="Pending">Pending</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <select class="form-control m-input" id="availabilityDrpDwn">
+                                    <option selected disabled>Select Availability</option>
+                                    <option value="Y">Yes</option>
+                                    <option value="N">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="float-left">
+                                <button type="button" id="filterBtn" class="btn btn-brand ml-2 px-4 filter">
+                                    <i class="la la-question-circle"></i> Filter
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="float-left">
+                                <button type="button" class="btn btn-success clear-Cls">
+                                    <i class="la la-question-circle"></i> Clear
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="m-portlet">
+            <div class="m-portlet__body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive" id="tblDivId">
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+@section scripts {
+    <script src="~/assets/scripts/purchase/Summary.js"></script>
+}

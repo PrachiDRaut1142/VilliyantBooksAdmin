@@ -1,0 +1,83 @@
+﻿@using Freshlo.Web.Models.PurchaseVM;
+@using Freshlo.Web.Helpers;
+@model DetailVM;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PurchaseOrderPdf</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    @*
+    <link href="~/Content/app-assets/css/bootstrap.min.css" rel="stylesheet" />*@
+    <link href="~/Content/app-assets/css/invoice-css.css" rel="stylesheet" />
+    <style>
+        .toptable > tbody > tr > th {
+            border-top: none;
+        }
+
+        .toptable > tbody > tr > td {
+            border-top: none;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="text-center">
+                    <h2>Purchase List</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p style="margin-top: 50px; font-size:20px;">Product List</p>
+                <table class="table table-striped" id="ProductTblId">
+                    <thead>
+                        <tr>
+                            <th>Item Name</th>
+                            <th>Category Name</th>
+                            <th>Last Purchase Price</th>
+                            <th>Total Quantity</th>
+                            <th>Current Stock</th>
+                        </tr>
+                    </thead>
+                    <tbody id="Itemtbl_Body">
+                        @if (Model.List != null)
+                        {
+                        @foreach (var list in Model.List)
+                        {
+
+                        <tr id="@list.ItemId">
+                            <td>@list.ProductName</td>
+                            <td> @list.categoryName  </td>
+                            <td>@list.Purchase_Price</td>
+                            <td>@list.TotalQuantity </td>
+                            <td> @list.currentsock </td>
+                        </tr>
+
+                        }
+                        }
+                    </tbody>
+                </table>
+                <p class="font-15"><b>Total Items</b><span class="font-small-3">&nbsp;: @Model.Detail.Plu_Count</span> </p>
+                <p class="font-15"><b>Total Quantity</b><span class="font-small-3">&nbsp;: @Model.Detail.TotalQuantity</span> </p>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+@section scripts {
+<script src="~/assets/scripts/PurchaseOrder/Detail.js"></script>
+
+}

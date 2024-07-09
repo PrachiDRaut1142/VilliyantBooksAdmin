@@ -1,0 +1,91 @@
+﻿@using Freshlo.Web.Models.DashboardVM;
+@using Freshlo.Web.Helpers;
+@using System.Globalization
+@model FinancialDashboardVM;
+
+@{
+    ViewData["Title"] = "_SaleMonths";
+    var currencySymbol = Model.getCurrencysybmollist.FirstOrDefault(x => x.status == 1).symbol;
+}
+
+
+<div class="header bg-gradient-primary pb-8 pt-1 pt-md-8">
+          <div class="container-fluid">
+            <div class="header-body">
+               <div class="row mt-3">
+                    <div class="col-xl-3 col-lg-6">
+                      <div class="card card-stats mb-4 mb-xl-0">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col" id="cash1">
+                              <h5 class="card-title text-uppercase text-muted mb-1">Cash</h5>
+                              <span class="h2 font-weight-bold text-success"><small><span class="CurrencyData">@currencySymbol</span> </small> @Model.GetallCountDashbaord.TotalCashSaleTotalAmount.ToString("#,##0.00") <small>(@Model.GetallCountDashbaord.TotalCashSaleAmountCount.ToString("#,##0"))</small></span>
+                            </div>
+                            <div class="col-auto">
+                              <div class="icon icon-shape bg-success text-white rounded-circle shadow">
+                                <img src="~/assets/img/payment-status/cash.png" alt="payment" />
+                              </div>
+                            </div>
+                          </div>
+                         
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6">
+                      <div class="card card-stats mb-4 mb-xl-0">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col" id="upi2">
+                              <h5 class="card-title text-uppercase text-muted mb-1">UPI</h5>
+                              <span class="h2 font-weight-bold text-warning"><small><span class="CurrencyData">@currencySymbol</span> </small>@Model.GetallCountDashbaord.TOTAlGpayphoneAmount.ToString("#,##0.00") <small>(@Model.GetallCountDashbaord.TOTAlGpayphoneCount.ToString("#,##0"))</small></span>
+                            </div>
+                            <div class="col-auto">
+                              <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+                               <img src="~/assets/img/payment-status/UPI.png" alt="payment" />
+                              </div>
+                            </div>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6">
+                      <div class="card card-stats mb-4 mb-xl-0">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col" id="Card2">
+                              <h5 class="card-title text-uppercase text-muted mb-1">Card</h5>
+                              <span class="h2 font-weight-bold text-primary"><small><span class="CurrencyData">@currencySymbol</span></small>@Model.GetallCountDashbaord.TotalCardSaleTotalAmount.ToString("#,##0.00") <small>(@Model.GetallCountDashbaord.TotalCardSaleAmountCount.ToString("#,##0"))</small></span>
+                            </div>
+                            <div class="col-auto">
+                              <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                                <img src="~/assets/img/payment-status/card.png" alt="payment" />
+                              </div>
+                            </div>
+                          </div>
+                         
+                        </div>
+                      </div>
+                   </div>
+                    <div class="col-xl-3 col-lg-6">
+                      <div class="card card-stats mb-4 mb-xl-0">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col" id="pending2">
+                              <h5 class="card-title text-uppercase text-muted mb-1">Pending</h5>
+                             <span class="h2 font-weight-bold text-danger">@Model.GetallCountDashbaord.TotalOverallPendingPaymentCount.ToString("#,##0") <small>(<span class="CurrencyData">@currencySymbol</span>@Model.GetallCountDashbaord.TotalOverallPendingPaymenttotalAmount.ToString("#,##0.00"))</small></span>
+                            </div>
+                            <div class="col-auto">
+                              <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                                <img src="~/assets/img/payment-status/pending.png" alt="payment" />
+                              </div>
+                            </div>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+      </div>

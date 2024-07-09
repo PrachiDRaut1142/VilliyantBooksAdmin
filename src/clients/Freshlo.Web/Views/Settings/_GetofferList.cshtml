@@ -1,0 +1,14 @@
+﻿@using Freshlo.DomainEntities;
+@model List<OfferType>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@item.OfferName </td>
+        <td>@item.Status</td>
+        <td>@item.CreatedBy</td>
+        <td><a href="#" data-toggle="modal" data-target="#Offers" class="text-dark offerDetailscls" data-id="@item.Id"> <i class="flaticon-edit"> </i> </a></td>
+
+    </tr>
+
+}

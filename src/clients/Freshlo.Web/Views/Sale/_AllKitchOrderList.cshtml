@@ -1,0 +1,104 @@
+﻿@using Freshlo.Web.Models.Sale;
+@model SalesManageVM;
+@{
+    ViewData["Title"] = "_AllKitchOrderList";
+}
+
+<div class="" id="">
+    <div class="tab-content">
+        <div class="tab-pane animated fadeIn active" id="aaceptItem" role="tabpanel">
+            @foreach (var item in Model.GetKitcheOrderList)
+            {
+                @if (item.Status == "Pending")
+                {
+                    <div class="accept-ready-itrem-list">
+                        <div class="card">
+                            <div class="media">
+                                <div class="media-left mr-3">@item.tableName</div>
+                                <div class="media-body">
+                                    <h3 class="mt-0 text-white">@item.PluName</h3>
+                                    <button type="button" class="btn btn-danger accept-btn text-uppercase btn-approval" data-id="@item.SalesId" data-approval="@item.SalesListId">Pending</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (item.Status == "Accepted")
+                {
+                    <div class="accept-ready-itrem-list">
+                        <div class="card ready-card">
+                            <div class="media">
+                                <div class="media-left mr-3">@item.tableName</div>
+                                <div class="media-body">
+                                    <h3 class="mt-0 text-white">@item.PluName</h3>
+                                    <div class="card-cutom-footer">
+                                        <h6 class="mins">10 mins</h6>
+                                        <button type="button" class="btn btn-danger ready-btn text-uppercase btn-ready" data-id="@item.SalesId" data-approval="@item.SalesListId">Accept</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+                @if (item.Status == "Ready")
+                {
+                    <div class="accept-ready-itrem-list">
+                        <div class="card ready-card">
+                            <div class="media">
+                                <div class="media-left mr-3">@item.tableName</div>
+                                <div class="media-body">
+                                    <h3 class="mt-0 text-white">@item.PluName</h3>
+                                    <div class="card-cutom-footer">
+                                        <h6 class="mins">10 mins</h6>
+                                        <button type="button" class="btn btn-danger ready-btn text-uppercase btn-close" data-id="@item.SalesId" data-approval="@item.SalesListId">Ready</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @if (item.Status == "Close")
+                {
+                    <div class="accept-ready-itrem-list close-item">
+                        <div class="card ready-card close-card">
+                            <div class="media card-close">
+                                <div class="media-left mr-3">@item.tableName</div>
+                                <div class="media-body">
+                                    <h3 class="mt-0 text-white">@item.PluName</h3>
+                                    <div class="card-cutom-footer">
+                                        <h6 class="mins">10 mins</h6>
+                                        <button type="button" class="btn btn-danger accept-btn text-uppercase" data-id="@item.SalesId">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @if (item.Status == "Cancelled")
+                {
+                    <div class="accept-ready-itrem-list">
+                        <div class="card ready-card">
+                            <div class="media">
+                                <div class="media-left mr-3">@item.tableName</div>
+                                <div class="media-body">
+                                    <h3 class="mt-0 text-white">@item.PluName</h3>
+                                    <div class="card-cutom-footer">
+                                        <h6 class="mins">10 mins</h6>
+                                        <button type="button" class="btn btn-danger ready-btn text-uppercase">Cancelled</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+
+
+
+        </div>
+    </div>
+</div>

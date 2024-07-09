@@ -1,0 +1,111 @@
+﻿@using Freshlo.Web.Models;
+@using Freshlo.Web.Helpers
+@using Freshlo.DomainEntities;
+@model SalesVM;
+
+
+@if (Model.AddIteminCart.ErrorMessage == null)
+{
+    <tr class="card-table-row" id="@Model.AddIteminCart.PriceId" data-itemid="@Model.AddIteminCart.ItemId">
+        <td>
+            <input type="checkbox" class="homedelivery" onclick="CheckboxId('@Model.AddIteminCart.ItemId')" id="@Model.AddIteminCart.ItemId" value="@Model.AddIteminCart.ItemId" name="Check">
+
+        </td>
+        <td>
+
+            <div class="m-widget4__img m-widget4__img--logo">
+                <img id="imgId_@Model.AddIteminCart.ItemId" src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/Product-image/@(Model.AddIteminCart.ItemId).png" onerror="this.onerror = null;
+            this.src = 'https://freshlo.oss-ap-south-1.aliyuncs.com/freshlo-img/no-image.png';" alt="" style="width:60px;">
+
+            </div>
+
+            <span hidden id="cateId_@Model.AddIteminCart.ItemId">@Model.AddIteminCart.Category</span>
+            <span hidden id="itemTp_@Model.AddIteminCart.ItemId">@Model.AddIteminCart.ItemType</span>
+            <span hidden id="ItemType_@Model.AddIteminCart.ItemId">@Model.AddIteminCart.ItemType</span>
+            <span hidden id="stockId_@Model.AddIteminCart.ItemId">@Model.AddIteminCart.stockId</span>
+            <span hidden id="coupenDisc_@Model.AddIteminCart.ItemId">@Model.AddIteminCart.CoupenDisc</span>
+            <span hidden id="ItemId_@Model.AddIteminCart.PriceId">@Model.AddIteminCart.ItemId</span>
+            <input hidden id="plu_name" value="@Model.AddIteminCart.PluName" />
+            @* </td>
+                <td>*@
+            @if (Model.AddIteminCart.Size != "NOVAR")
+            {
+                <h5 id="SpnPluname_@Model.AddIteminCart.ItemId">@Model.AddIteminCart.PluName </h5>
+
+            }
+            @if (Model.AddIteminCart.Size == "NOVAR")
+            {
+                <h5 id="SpnPluname_@Model.AddIteminCart.ItemId">@Model.AddIteminCart.PluName</h5>
+            }
+        </td>
+        <td class="">
+            <span hidden id="Totalitemstock_@Model.AddIteminCart.ItemId">@Model.AddIteminCart.itemstock</span>
+            <span hidden id="ItemId_@Model.AddIteminCart.PriceId">@Model.AddIteminCart.ItemId</span>
+            <span> @Model.AddIteminCart.Size</span>
+        </td>
+
+        <td class="display-none">
+            <span>@Model.AddIteminCart.Weight  @Model.AddIteminCart.Measurement X @Model.currencyInfo.FirstOrDefault(x => x.status == 1).symbol @Model.AddIteminCart.SellingPrice</span>
+            <span hidden id="measure_@Model.AddIteminCart.PriceId">@Model.AddIteminCart.Measurement</span>
+            <span hidden class="imthiyas" id="unitprice_@Model.AddIteminCart.PriceId">@Model.AddIteminCart.SellingPrice</span>
+            <span hidden class="imthiyas1" id="imthi">20</span>
+            <input hidden type="text" class="imthiyas2" id="imthiyas23" value="550" />
+            <span hidden class="deleveryall" id="delivery_@Model.AddIteminCart.PriceId">no</span>
+            <span hidden id="Market_@Model.AddIteminCart.PriceId">@Model.AddIteminCart.MarketPrice</span>
+            <span id="weightId_@Model.AddIteminCart.PriceId">@Model.AddIteminCart.Weight</span>
+            <span hidden id="purchaseprice_@Model.AddIteminCart.PriceId">@Model.AddIteminCart.Purchaseprice</span>
+        </td>
+        <td class="display-none">
+            @if (Model.AddIteminCart.ItemType == "Packed")
+            {
+                @*<span>@Model.AddIteminCart.Weight</span>*@
+                <input type="text" id="Netweight_@Model.AddIteminCart.PriceId" class="form-control weight" name="weightList" value="@Model.AddIteminCart.Weight" readonly style="width:100px;display:block" />
+
+            }
+            else
+            {
+                @*<span>@Model.AddIteminCart.Weight</span>*@
+                <input type="text" id="Netweight_@Model.AddIteminCart.PriceId" class="form-control weight" name="weightList" value="@Model.AddIteminCart.Weight" style="width:100px;display:block" />
+
+            }
+            <span class="text-bold-400" id="spnNetweight_@Model.AddIteminCart.PriceId" hidden>@Model.AddIteminCart.Weight</span>
+            <span class="text-bold-400" id="ActualNetweight_@Model.AddIteminCart.PriceId" hidden>@Model.AddIteminCart.Weight</span>
+
+        </td>
+        <td class="card-input-label">
+            @if (Model.AddIteminCart.ItemType == "Loose")
+            {
+                <input type="text" class="form-control Quantity" id="quantity_@Model.AddIteminCart.PriceId" name="QuantityValues" value="@Model.AddIteminCart.Quantity" readonly style="width:50px;" />
+            }
+            else
+            {
+                <input type="text" class="form-control Quantity" id="quantity_@Model.AddIteminCart.PriceId" name="QuantityValues" value="@Model.AddIteminCart.Quantity" style="width:50px;" />
+            }
+            @*<input type="text" class="form-control Remark" id="remark_@Model.AddIteminCart.ItemId" name="remarkValues" value="@Model.AddIteminCart.Remark" style="width:50px;" hidden />*@
+            <input type="text" class="form-control Remark" id="remark_@Model.AddIteminCart.ItemId" name="remarkValues" value="Nothing" style="width:50px;" hidden />
+            <span class="text-bold-400" id="spanquantity_@Model.AddIteminCart.PriceId" hidden>@Model.AddIteminCart.Quantity</span>
+            <span class="text-bold-400" id="Actualquantity_@Model.AddIteminCart.PriceId" hidden>@Model.AddIteminCart.Quantity</span>
+            <span class="text-bold-400" id="spnRemark_@Model.AddIteminCart.ItemId" hidden>@Model.AddIteminCart.Remark</span>
+
+        </td>
+        <td style="display:none">
+            <span hidden id="discount_@Model.AddIteminCart.PriceId">@Model.AddIteminCart.Discount</span>
+            <span hidden id="discountId_@Model.AddIteminCart.PriceId">@Model.AddIteminCart.Discount</span>
+        </td>
+        <td>
+            <span> @Model.currencyInfo.FirstOrDefault(x => x.status == 1).symbol </span> <span id="actualPrice_@Model.AddIteminCart.PriceId" class="text-bold-500 font-medium-1">@Model.AddIteminCart.ActualCost</span>
+            <input type="hidden" class="barcodedata" id="Barcode_@Model.AddIteminCart.ItemId" name="Barcode" value="@Model.AddIteminCart.PluCode" />
+            <input type="text" class="finalcost" id="finalcost_@Model.AddIteminCart.PriceId" name="ActualCost" value="@Model.AddIteminCart.ActualCost" hidden />
+            <span hidden id="AddedDiscount_@Model.AddIteminCart.PriceId">@Model.AddIteminCart.AddedDiscount</span>
+
+        </td>
+        <td>
+            <a href="#" id="removeId" onclick="remove('@Model.AddIteminCart.PriceId')" class="badge text-danger d-inline-flex remove-items">
+                <i class="fas fa-trash"></i>
+            </a>
+        </td>
+
+    </tr>
+}
+
+

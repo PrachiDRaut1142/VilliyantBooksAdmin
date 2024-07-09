@@ -1,0 +1,202 @@
+﻿@using Freshlo.Web.Models
+@using Freshlo.DomainEntities
+@model SalesVM
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<style>
+       /*
+    * Row with equal height columns
+    * --------------------------------------------------
+    */
+       .row-eq-height {
+           display: -webkit-box;
+           display: -webkit-flex;
+           display: -ms-flexbox;
+           display: flex;
+       }
+</style>
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="m-portlet">
+                <div class="m-portlet__body pt-3">
+                    <div class="row mb-2 bg-white topstrick">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <input type="text" class="form-control m-input m-input--solid SearchItem my-4" id="SearchItem" placeholder="Product Code / Name..." />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="input-group date">
+                                    <input type="text" id="m_datetimepicker_1" class="form-control m-input m-input--solid  my-4" placeholder="Delivery Date" onclick="ClearError();" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="la la-calendar-check-o"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <ul class="nav nav-tabs  m-tabs-line bg-white" role="tablist">
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link active" data-toggle="tab" href="#allitems" id="Allitem1" role="tab">All</a>
+                                </li>
+                                @foreach (ItemCategory c in Model.CategoryList)
+                                {
+                                    <li class="nav-item m-tabs__item">
+                                        <a class="nav-link m-tabs__link" data-toggle="tab" href="#@c.CategoryId" role="tab">@c.Name</a>
+                                    </li>
+                                }
+                                @*<li class="nav-item m-tabs__item">
+                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#vegetables" role="tab">Vegetables</a>
+                </li>
+                <li class="nav-item m-tabs__item">
+                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#fruits" role="tab">Fruits</a>
+                </li>
+                <li class="nav-item m-tabs__item">
+                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#meats" role="tab">Meats</a>
+                </li>*@
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" id="list">
+                            <div class="tab-content">
+                                <div class="tab-pane animated fadeIn active" id="allitems" role="tabpanel">
+                                    <div class="row row-eq-height" id="ItemDetails">
+                                        @foreach (var Item in Model.ItemList)
+                                        {
+                                            var image = Item.ItemId + ".png";
+                                            <div class="col-md-2 col-sm-3 col-6 text animated zoomIn" id="divItem_@Item.ItemId" disabled="true">
+                                                <div class="text-center">
+                                                    <div class="mb-3 item_list">
+                                                        @*<div style="position: absolute;width: 50px;height: 50px;background-color: #f4526d;color: white;font-weight: 600;border-radius: 50px;text-align: -webkit-center;">
+                                                                <span style="line-height: 3.7;">20%</span>
+                                                            </div>*@
+                                                        @if (Item.DiscountPerctg.ToString() != "")
+                                                        {
+                                                            <div class="circle">
+                                                                <div class="circle__inner">
+                                                                    <div class="circle__wrapper">
+                                                                        <div class="circle__content">@Item.DiscountPerctg%</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="float-right" style="cursor:pointer;" data-container="body" data-toggle="m-popover" data-placement="top" data-content="@Item.OfferDescription">
+                                                                <i class="la la-info" style="opacity:0.2;"></i>
+                                                            </div>
+                                                            <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/@image" onerror="this.onerror=null;this.src='http://drawingzoro.com/wp-content/uploads/2018/03/fruit-and-veg-pencil-drawing-black-and-white-fruits-vegetables-clipart-basket-drawing-pencil-and-in-color.jpg';" alt="Item Image" class="img-fluid mb-2" style="width:120px;height:120px;text-align:center;" />
+                                                            <div class="text-left">
+                                                                <h6 class="font-medium-1">@Item.PluName</h6>
+                                                                <h6 class="font-small-3">@Item.Weight @Item.Measurement </h6>
+                                                                <h6 class="font-medium-1"><span class="m-badge m-badge--info m-badge--rounded m-badge--wide font-medium-1 mr-2">Rs. @Item.DiscountedPrice</span> <del class="font-small-3">Rs. @Item.SellingPrice</del></h6>
+                                                                @*<h6 class="text-dark font-small-2 ">Offers End: @Item.OfferEndDate</h6>*@
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/@image" onerror="this.onerror=null;this.src='http://drawingzoro.com/wp-content/uploads/2018/03/fruit-and-veg-pencil-drawing-black-and-white-fruits-vegetables-clipart-basket-drawing-pencil-and-in-color.jpg';" alt="Item Image" class="img-fluid mb-2" style="width:120px;height:120px;text-align:center;" />
+                                                            <h6 class="font-medium-1">@Item.PluName</h6>
+                                                            <h6 class="font-small-3">@Item.Weight @Item.Measurement </h6>
+                                                            <h6 class="font-medium-1"><span class="m-badge m-badge--info m-badge--rounded m-badge--wide font-medium-1 mr-2">Rs. @Item.SellingPrice</span>  <del class="font-small-3">Rs. @Item.MarketPrice</del></h6>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+
+                                @foreach (ItemCategory c in Model.CategoryList)
+                                {
+                                    <div class="tab-pane animated fadeIn" id="@c.CategoryId" role="tabpanel">
+                                        <div class="row" id="r_@c.CategoryId">
+                                            @foreach (var Item in Model.ItemList.Where(i => i.Category == c.CategoryId))
+                                            {
+                                                var image = Item.ItemId + ".png";
+                                                <div class="col-md-2 col-sm-3 col-6 text animated zoomIn" id="divItem_@Item.ItemId" disabled="true">
+
+                                                    <div class="text-center">
+                                                        <div class="mb-3 item_list">
+                                                            @*<div style="position: absolute;width: 50px;height: 50px;background-color: #f4526d;color: white;font-weight: 600;border-radius: 50px;text-align: -webkit-center;">
+                                                                    <span style="line-height: 3.7;">20%</span>
+                                                                </div>*@
+                                                            @if (Item.DiscountPerctg.ToString() != "")
+                                                            {
+                                                                <div class="circle">
+                                                                    <div class="circle__inner">
+                                                                        <div class="circle__wrapper">
+                                                                            <div class="circle__content">@Item.DiscountPerctg%</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="float-right" style="cursor:pointer;" data-container="body" data-toggle="m-popover" data-placement="top" data-content="@Item.OfferDescription">
+                                                                    <i class="la la-info" style="opacity:0.2;"></i>
+                                                                </div>
+                                                                <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/@image" onerror="this.onerror=null;this.src='http://drawingzoro.com/wp-content/uploads/2018/03/fruit-and-veg-pencil-drawing-black-and-white-fruits-vegetables-clipart-basket-drawing-pencil-and-in-color.jpg';" alt="Item Image" class="img-fluid mb-2" style="width:120px;height:120px;text-align:center;" />
+                                                                <div class="text-left">
+                                                                    <h6 class="font-medium-1">@Item.PluName</h6>
+                                                                    <h6 class="font-small-3">@Item.Weight @Item.Measurement </h6>
+                                                                    <h6 class="font-medium-1"><span class="m-badge m-badge--info m-badge--rounded m-badge--wide font-medium-1 mr-2">Rs. @Item.DiscountedPrice</span> <del class="font-small-3">Rs. @Item.SellingPrice</del></h6>
+                                                                    @*<h6 class="text-dark font-small-2 ">Offers End: @Item.OfferEndDate</h6>*@
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/@image" onerror="this.onerror=null;this.src='http://drawingzoro.com/wp-content/uploads/2018/03/fruit-and-veg-pencil-drawing-black-and-white-fruits-vegetables-clipart-basket-drawing-pencil-and-in-color.jpg';" alt="Item Image" class="img-fluid mb-2" style="width:120px;height:120px;text-align:center;" />
+                                                                <h6 class="font-medium-1">@Item.PluName</h6>
+                                                                <h6 class="font-small-3">@Item.Weight @Item.Measurement </h6>
+                                                                <h6 class="font-medium-1"><span class="m-badge m-badge--info m-badge--rounded m-badge--wide font-medium-1 mr-2">Rs. @Item.SellingPrice</span>  <del class="font-small-3">Rs. @Item.MarketPrice</del></h6>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+@*<div class="modal animated fadeIn text-left" id="appInstall" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h5>Notification</h5>
+                    <hr />
+                    <p>
+                        You can now download the Freshlo - Mobile App from the google playstore.
+                    </p>
+                    <hr />
+                    <button type="button" class="btn btn-success btn-sm mr-2" onClick="javascript:window.open('https://play.google.com/store/apps/details?id=com.automatebuddy.freshlo', '_blank');">DOWNLOAD</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">CANCEL</button>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+@section Scripts {
+    <script src="~/assets/scripts/sales/index.js"></script>
+    <script src="~/assets/scripts/home/textHighlight.js"></script>
+    <script src="~/assets/scripts/home/app.js"></script>
+    <script type="text/javascript">
+        $(window).on('load', function () {
+            $('#appInstall').modal('show');
+        });
+    </script>
+}
+

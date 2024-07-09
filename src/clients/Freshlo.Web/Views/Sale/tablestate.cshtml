@@ -1,0 +1,2209 @@
+﻿@using Freshlo.Web.Models.Sale;
+@using Freshlo.Web.Helpers
+@model SalesManageVM
+@{
+    int counterHeader1 = 0;
+    int counterHeader2 = 0;
+    int counterHeader3 = 0;
+    int counterHeader4 = 0;
+    int counterHeader5 = 0;
+    int counterHeader6 = 0;
+    int counterHeader7 = 0;
+    int counterHeader8 = 0;
+    int counterBody1 = 0;
+    int counterBody2 = 0;
+    var branchId = @User.FindFirst("branch").Value;
+
+}
+
+<link href="~/assets/css/pages/live-table/live-table-tataus.css" rel="stylesheet" />
+<link href="~/assets/css/right-panel.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"
+      rel="stylesheet">
+
+<style>
+    .measured-choose {
+        margin-top: 0.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+        .measured-choose input {
+            display: none;
+        }
+
+        .measured-choose label {
+            border: 1px solid #fff;
+            padding: 0.3rem 1rem;
+            cursor: pointer;
+            color: #fff;
+            background-color: #808080;
+            border-radius: 25px;
+            font-size: 12px;
+            margin-bottom: 0;
+        }
+
+            .measured-choose label:hover {
+                background-color: #f4516c;
+            }
+
+    /*input[name='measuredStatus']:checked + label {
+            background-color: #f4516c;
+        }*/
+
+    .add_cart_bttn.btn.btn-dark {
+        color: #343a40;
+        background-color: #d3d5d9;
+        border-color: #ffffff;
+    }
+
+        .add_cart_bttn.btn.btn-dark:hover {
+            background-color: #f4516c;
+            border-color: #f4516c;
+            color: #fff;
+        }
+
+    .search-item-input input {
+        color: #575962;
+        font-size: 16px;
+        padding: 1.4rem 1.15rem;
+        border-color: #d7d7d7;
+    }
+
+    i#clearinputElement {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+    }
+
+    i#editclearinputElement {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+    }
+
+    .badge-danger {
+        color: #fff;
+        background-color: #f4516c;
+        font-size: 12px;
+    }
+</style>
+
+<style>
+    .customer-drop-down {
+        padding: 15px;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #ebedf2;
+    }
+
+        .customer-drop-down .form-group .select2-container {
+            width: 100% !important;
+        }
+
+    .ab-table-head-bg-warning-light thead th {
+        white-space: nowrap;
+    }
+
+    .modal-backdrop.show {
+        opacity: 0 !important;
+    }
+
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: -99999 !important;
+        background-color: #000;
+    }
+
+    .ab-table-head-bg-warning-light thead th {
+        white-space: nowrap;
+    }
+
+    .assign-table-list .select2-container {
+        width: 100% !important;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .advance_booking_status {
+        display: none;
+        align-content: center;
+    }
+
+    .dropdown-menu.show {
+        top: 1rem !important;
+        left: 2rem !important;
+    }
+</style>
+
+<div class="m-subheader section-main-title">
+    <div class="section-header align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Live Table Status</h3>
+        </div>
+
+
+
+       
+
+         
+        <div class="header-bttns">
+            <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#addWatchMD">
+                Add Waiting
+            </button>
+        </div>
+        <div class="header-bttns">
+            <button class="btn btn-dark" type="button" id="bannerTextMessage" data-toggle="modal" data-target="#AnnouncementMessageHeader">
+                TV Scroll Message
+            </button>
+        </div>
+        <div class="header-bttns">
+            <button class="btn btn-dark" type="button" id="allItems_view">
+                Items in Order
+            </button>
+        </div>
+        <div class="header-bttns">
+            <button class="btn btn-dark SalesPrintList" type="button" id="SalesPrintList" data-toggle="modal" data-target="#SalesListPrint">
+                <i class="icon fa fa-print"></i> Order Summary Print
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<div class="m-content">
+    <div class="row">
+        <div class="col">
+            <div class="m-portlet">
+                <!-- DAINING TABLE BEGIN -->
+                <!-- HEAD CONTENT -->
+                <div class="m-portlet__head pl-3">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">
+                                All Orders
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <!--DINE IN TABLE BODY CONTENT BEGIN-->
+                <div class="m-portlet__body">
+                    <div class="">
+                        <div class="row">
+                            <div class="col-3 pb-2 d-none">
+                                <select class="form-control m-input" id="Hub" name="Hub">
+                                    <option value="0" selected="" disabled="">Select Branch</option>
+                                    <option value=""></option>
+                                </select>
+                                <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                            </div>
+                            <div class="col col-2 pb-2 mr-5" style="display:none">
+                                <button class="btn btn-warning mt-1 ConsolidateTblKot" data-toggle="modal" data-target="#ConsolidatetblkotPrintListView" data-Id="" style="display:block">
+                                    <i class="icon fa fa-print"></i>
+                                    CONSOLIDATE KOT PRINT
+                                </button>
+                            </div>
+                            <div class="col col-2 pb-2" style="display:none">
+                                <button class="btn btn-warning mt-1 allTblKot" data-toggle="modal" data-target="#AlltblkotPrintListView" data-Id="" style="display:block">
+                                    <i class="icon fa fa-print"></i>
+                                    ALL KOT PRINT
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row" id="">
+                            <div class="col">
+                                <div class="row custom-row">
+                                    @foreach (var item in Model.GetTableStateList)
+                                    {
+                                        @if (item.OrderStatus == "Ordered" || item.OrderStatus == "Confirmed" || item.OrderStatus == "Pending")
+                                        {
+                                            <div class="col custom-col p-1">
+                                                <div class="card booking-order-status-card" style="background-color: #f4506c;">
+                                                    <div class="table-header">
+                                                        <h2 class="font-large-1 mb-0 pb-0 text-bold-600">
+                                                            @item.tableName<small class="ml-2 m-badge m-badge--rounded m-badge--wide font-small-3 m-badge--dark" style="letter-spacing: normal;">@item.UpdateDuration</small>
+                                                            <span class="font-small-4 d-block">@item.CName</span>
+                                                        </h2>
+                                                        <input class="allSalesId" id="@item.SalesOrderId" hidden>
+                                                        <input class="ConsolidateSalesId" id="@item.SalesOrderId" hidden>
+                                                        <div class="header-dropdown">
+                                                            <div class="dropdown dropleft">
+                                                                <a href="#" class="cog-icon" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    <img src="~/assets/main/setting-icon.png" alt="setting">
+                                                                </a>
+                                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                    @if (Convert.ToString(User.FindFirst("userRole").Value) == "10" || Convert.ToString(User.FindFirst("userRole").Value) == "9")
+                                                                    {
+
+                                                                        <a href="#" class="dropdown-item editCustomer" data-id="@item.SalesOrderId">
+                                                                            <span class="">Edit Customer</span>
+                                                                        </a>
+                                                                        <hr class="pb-0" />
+                                                                        <a href="#" class="dropdown-item add_item" id="add_Items" data-type="1" data-id="@item.Id">
+                                                                            <span class="">Create New Order</span>
+                                                                        </a>
+                                                                        <a href="#" class="dropdown-item kotPrintListView" data-id="@item.SalesOrderId">
+                                                                                <span class="">View KOT List</span>
+                                                                            </a>
+                                                                        @if (item.KotPrint != 0)
+                                                                        {
+                                                                            <a href="#" class="dropdown-item kot_log_md" data-id="@item.SalesOrderId">
+                                                                                <span class=""> KOT LOGS</span>
+                                                                            </a>
+                                                                        }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <a class="dropdown-item" href="/Sale/Detail/@item.SalesOrderId" id="viewSellOrder">View Order</a>
+                                                                        <a href="#" class="dropdown-item applyCoupenCode" data-id="@item.SalesOrderId">
+                                                                            <span class="">Apply Discount</span>
+                                                                        </a>
+
+                                                                        <a href="#" class="dropdown-item editCustomer" data-id="@item.SalesOrderId">
+                                                                            <span class="">Edit Customer</span>
+                                                                        </a>
+                                                                        <hr class="pb-0" />
+                                                                        <a href="#" data-toggle="modal" data-target="#changeOrderPaymentMD" data-id="@item.SalesOrderId" data-update="Delivered" class="Orderstatus dropdown-item">
+                                                                            <span class="">Close Order</span>
+                                                                        </a>
+                                                                       @* <a href="#" data-toggle="modal" data-target="#changeOrderPaymentMD" data-id="@item.SalesOrderId" data-update="Cancelled" class="Orderstatuscancel dropdown-item">
+                                                                            <span class="">Cancel Order</span>
+                                                                        </a>*@
+
+                                                                          <a href="#" data-toggle="modal" data-target="#changeOrderPaymentMD" @*data-toggle="modal" data-target="#Cancel_Order"*@ id="CancelledOrder" data-id="@item.SalesOrderId" data-update="Cancelled" class="Orderstatuscancel dropdown-item" >
+                                                                            <span class="">Cancel Order</span>
+                                                                        </a>
+                                                                        <hr class="pb-0" />
+                                                                        <a href="#" class="dropdown-item add_item" data-type="1" id="add_Items" data-id="@item.Id">
+                                                                            <span class="">Create New Order</span>
+                                                                        </a>
+                                                                        @*<a href="#" class="dropdown-item kotPrintListView" data-id="@item.SalesOrderId">
+                                                                                <span class="">View KOT List</span>
+                                                                            </a>*@
+                                                                        @if (item.KotPrint != 0)
+                                                                        {
+                                                                            <a href="#" class="dropdown-item kot_log_md" data-id="@item.SalesOrderId">
+                                                                                <span class=""> KOT LOGS</span>
+                                                                            </a>
+                                                                        }
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="table-body">
+                                                        <div class="row">
+                                                            @if (item.KotPrint == 0)
+                                                            {
+                                                                <div class="col-6">
+                                                                    <a class="print-kot kotPrintListView" href="#!" data-id="@item.SalesOrderId">
+                                                                        <span class="m-animate-blink"><i class="fas fa-circle"></i> <span>KOT</span></span>
+                                                                    </a>
+                                                                </div>
+                                                            }
+
+                                                            <div class="col-6">
+                                                                <a class="print-kot viewItems" href="#!" data-id="@item.SalesOrderId"><i class="fas fa-eye"></i> ITEM</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="table-footer">
+                                                        @if (item.PaymentStatus != "Paid" || item.PaymentStatus != "Partially")
+                                                        {
+                                                            <div class="price" style="background-color: #cf4159;">
+                                                                <span><img src="/assets/main/coins.png" alt="alt" style="width: 20px"> <span style="vertical-align: middle">@item.BillingAmount /-</span></span>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="price" style="background-color: #0a896f;">
+                                                                <span><img src="/assets/main/coins.png" alt="alt" style="width: 20px"> <span style="vertical-align: middle">@item.BillingAmount /-</span></span>
+                                                            </div>
+                                                        }
+                                                        <div class="print">
+                                                            <a href="@Url.Action("Index","Print",new { id1 = item.SalesOrderId })">
+                                                                <img src="/assets/main/print-icon.png" alt="print" style="width: 25px">
+                                                            </a>
+                                                        </div>
+                                                        <div>
+                                                            <a href="#!" class="update_Items" id="update_Items" data-id="@item.SalesOrderId" >
+                                                                <img src="/assets/main/add-icon.png" alt="alt" style="width: 25px">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        @if (item.OrderStatus == "Billing")
+                                        {
+                                            <div class="col custom-col p-1">
+                                                <div class="card booking-order-status-card" style="background-color: #275fb3;">
+                                                    <div class="table-header">
+                                                        <h2 class="font-large-1 mb-0 pb-0 text-bold-600">
+                                                            @item.tableName<small class="ml-2 m-badge m-badge--rounded m-badge--wide font-small-3 m-badge--dark" style="letter-spacing: normal;">@item.UpdateDuration</small>
+                                                            <span class="font-small-4 d-block">@item.CName</span>
+                                                        </h2>
+                                                        <div class="header-dropdown">
+                                                            <div class="dropdown dropleft">
+                                                                <a href="#" class="cog-icon" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    <img src="~/assets/main/setting-icon.png" alt="setting">
+                                                                </a>
+                                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                    <a class="dropdown-item" href="/Sale/Detail/@item.SalesOrderId" data-url="">View Order</a>
+                                                                    <a href="#!" class="dropdown-item applyCoupenCode" data-id="@item.SalesOrderId">
+                                                                        <span class="">Apply Discount</span>
+                                                                    </a>
+                                                                    <a href="#" class="dropdown-item paymentStatus" data-id="@item.SalesOrderId">
+                                                                        <span class="">Payment Status</span>
+                                                                    </a>
+                                                                    <a href="@Url.Action("Index","Print",new { id1 = item.SalesOrderId })" class="dropdown-item">
+                                                                        <span class="">Bill Print</span>
+                                                                    </a>
+                                                                    <a href="#" data-toggle="modal" data-target="#changeOrderPaymentMD" data-id="@item.SalesOrderId" data-update="Delivered" class="Orderstatus dropdown-item">
+                                                                        <span class="">Close Order</span>
+                                                                    </a>
+                                                                   @* <hr class="pb-0" />
+                                                                    <a href="#" class="dropdown-item add_item" data-type="1" id="add_Items" data-id="@item.Id" hidden>
+                                                                        <span class="">Create New Order</span>
+                                                                    </a>*@
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="table-body">
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                @if (item.PaymentStatus != "Paid")
+                                                                {
+                                                                    <a class="staus-mode paymentStatus" href="#!" data-id="@item.SalesOrderId"><span class="m-animate-blink">Payments</span></a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a class="staus-mode paymentStatus" href="#!" data-id="@item.SalesOrderId"><span class="">Payments</span></a>
+
+                                                                }
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <a class="staus-mode Orderstatus" href="#!" data-toggle="modal" data-target="#changeOrderPaymentMD" data-id="@item.SalesOrderId" data-update="Delivered">Close Order</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="table-footer">
+                                                        @if (item.PaymentStatus != "Paid")
+                                                        {
+                                                            <div class="price" style="background-color: #cf4159;">
+                                                                <span class="m-animate-blink"><img src="/assets/main/coins.png" alt="alt" style="width: 20px"> <span style="vertical-align: middle">@item.BillingAmount /-</span></span>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="price" style="background-color: #0a896f;">
+                                                                <span><img src="/assets/main/coins.png" alt="alt" style="width: 20px"> <span style="vertical-align: middle">@item.BillingAmount /-</span></span>
+                                                            </div>
+                                                        }
+
+                                                        <div class="print">
+                                                            <a href="@Url.Action("Index","Print",new { id1 = item.SalesOrderId })">
+                                                                <img src="/assets/main/print-icon.png" alt="print" style="width: 25px">
+                                                            </a>
+                                                        </div>
+                                                        <div>
+                                                            <a href="#!" class="update_Items" id="update_Items" data-id="@item.SalesOrderId">
+                                                                <img src="/assets/main/add-icon.png" alt="alt" style="width: 25px">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        }
+                                        @if (item.OrderStatus == "")
+                                        {
+                                            <div class="col custom-col p-1">
+                                                <div class="card booking-order-status-card kt-bg-fill-danger" style="background-color: #0a896f;">
+                                                    <div class="table-header">
+                                                        <h2 class="font-large-1 mb-0 pb-0 text-bold-600">
+                                                            @item.tableName
+                                                            @*<small class="ml-2 m-badge m-badge--rounded m-badge--wide font-small-3 m-badge--dark" style="letter-spacing: normal;">@item.UpdateDuration</small>*@
+                                                            @* <span class="font-small-4 d-block">Guest Name</span>*@
+                                                        </h2>
+
+                                                    </div>
+                                                    <div class="table-body"></div>
+                                                    <div class="table-footer">
+                                                        <div class="price"></div>
+                                                        <div class="print"></div>
+                                                        <div>
+                                                            <a href="#!" class="add_item" data-type="1" id="add_Items" data-id="@item.Id">
+                                                                <img src="/assets/main/add-icon.png" alt="alt" style="width: 25px">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+
+                            <!-- ADVANCE BOOKING TABLE -->
+                            @*<div class="col-md-4" id="bookingInfo">
+
+                                </div>*@
+
+                        </div>
+                        <!--DINE IN TABLE BODY CONTNET END-->
+
+
+                    </div>
+                </div>
+
+
+                <!-- TAKE AWAY ORDERS BEGIN -->
+                <!-- HEAD CONTENT -->
+                <div class="m-portlet__head pl-3">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">
+                                Take Away Orders
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- BODY CONTENT -->
+                <div class="m-portlet__body">
+                    <div class="row custom-row">
+                        <div class="col custom-col p-1">
+                            <div class="card booking-order-status-card take-away-create-orders">
+                                <img src="~/assets/main/take-away.png" alt="take away" />
+                                <a class="create-orders add_item" data-type="2" href="#!" id="add_Items">Create New</a>
+                            </div>
+                        </div>
+                        @foreach (var item in Model.GetTableStateListTKWY)
+                        {
+                            @if (item.OrderStatus == "Ordered" || item.OrderStatus == "Confirmed" || item.OrderStatus == "Pending" || item.OrderStatus == "Ready")
+                            {
+                                <div class="col custom-col p-1">
+                                    <div class="card booking-order-status-card" style="background-color: #383838;">
+                                        <div class="table-header">
+                                            <h2 class="font-medium-5 mb-0 pb-0 text-bold-600" style="white-space: nowrap;">
+                                                @item.TokenNumberOrder<small class="ml-2 m-badge m-badge--rounded m-badge--wide font-small-3" style="background-color:#151616;color:#fff;letter-spacing: normal;">@item.UpdateDuration</small>
+                                                <span class="font-small-4 d-block">@item.CName</span>
+                                            </h2>
+                                            <div class="header-dropdown">
+                                                <div class="dropdown dropleft">
+                                                    <a href="#" class="cog-icon" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <img src="~/assets/main/setting-icon.png" alt="setting">
+                                                    </a>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        @if (Convert.ToString(User.FindFirst("userRole").Value) == "10" || Convert.ToString(User.FindFirst("userRole").Value) == "9")
+                                                        {
+
+                                                            <a href="#" class="dropdown-item editCustomer" data-id="@item.SalesOrderId">
+                                                                <span class="">Edit Customer</span>
+                                                            </a>
+                                                            <hr class="pb-0" />
+                                                            <a href="#" class="dropdown-item add_item" data-type="2" id="add_Items" data-id="@item.Id">
+                                                                <span class="">Create New Order</span>
+                                                            </a>
+                                                            @*<a href="#" class="dropdown-item kotPrintListView" data-id="@item.SalesOrderId">
+                                                                    <span class="">View KOT List</span>
+                                                                </a>*@
+                                                            @if (item.KotPrint != 0)
+                                                            {
+                                                                <a href="#" class="dropdown-item kot_log_md" data-id="@item.SalesOrderId">
+                                                                    <span class=""> KOT LOGS</span>
+                                                                </a>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <a class="dropdown-item" href="/Sale/Detail/@item.SalesOrderId" id="viewSellOrder">View Order</a>
+                                                            <a href="#" class="dropdown-item applyCoupenCode" data-id="@item.SalesOrderId">
+                                                                <span class="">Apply Discount</span>
+                                                            </a>
+
+                                                            <a href="#" class="dropdown-item editCustomer" data-id="@item.SalesOrderId">
+                                                                <span class="">Edit Customer</span>
+                                                            </a>
+                                                            <hr class="pb-0" />
+                                                            <a href="#" data-toggle="modal" data-target="#changeOrderPaymentMD" data-id="@item.SalesOrderId" data-update="Delivered" class="Orderstatus dropdown-item">
+                                                                <span class="">Close Order</span>
+                                                            </a>
+                                                           @* <a href="#" data-toggle="modal" data-target="#changeOrderPaymentMD" data-id="@item.SalesOrderId" data-update="Cancelled" class="Orderstatuscancel dropdown-item">
+                                                                <span class="">Cancel Order</span>
+                                                            </a>*@
+
+                                                              <a href="#" data-toggle="modal" data-target="#changeOrderPaymentMD" @*data-toggle="modal" data-target="#Cancel_Order"*@ id="CancelledOrder" data-id="@item.SalesOrderId" data-update="Cancelled" class="Orderstatuscancel dropdown-item" >
+                                                                <span class="">Cancel Order</span>
+                                                            </a>
+                                                            <hr class="pb-0" />
+                                                            <a href="#" class="dropdown-item add_item" data-type="2" id="add_Items" data-id="@item.Id">
+                                                                <span class="">Create New Order</span>
+                                                            </a>
+                                                            @*<a href="#" class="dropdown-item kotPrintListView" data-id="@item.SalesOrderId">
+                                                                    <span class="">View KOT List</span>
+                                                                </a>*@
+                                                            @if (item.KotPrint != 0)
+                                                            {
+                                                                <a href="#" class="dropdown-item kot_log_md" data-id="@item.SalesOrderId">
+                                                                    <span class=""> KOT LOGS</span>
+                                                                </a>
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="table-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <a class="print-kot viewItems" href="#!" data-id="@item.SalesOrderId"><span><i class="fas fa-eye"></i> ITEM</span></a>
+                                                </div>
+                                                @if (item.KotPrint == 0)
+                                                {
+                                                    <div class="col-6">
+                                                        <a class="print-kot kotPrintListView" href="#!" data-id="@item.SalesOrderId">
+                                                            <span class="m-animate-blink" style="white-space:nowrap;"><span><i class="fas fa-circle"></i> PRINT KOT</span></span>
+                                                        </a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-6 announcemnt">
+                                                        <a href="#!" class="print-kot bg-danger announcement-bttn ReadyOrderstatus" onclick="ReadyAnnouncment(this)" data-id="@item.SalesOrderId" data-update="Ready">
+                                                            <i class="announcement announcement-icon fas fa-bullhorn" style="display: inline-block;"></i>
+                                                            <img class="announcement loader-icon" src="~/assets/main/ready-order.gif" alt="announcement" style="display: none;" /> Ready
+                                                        </a>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="table-footer">
+                                            @if (item.PaymentStatus == "Pending")
+                                            {
+                                                <div class="price" style="background-color: rgb(0 0 0 / 15%);">
+                                                    <span class="m-animate-blink"><img src="/assets/main/coins.png" alt="alt" style="width: 20px"> <span style="vertical-align: middle">@item.TotalPrice /-</span></span>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="price" style="background-color: #0a896f;">
+                                                    <span class="m-animate-blink"><img src="/assets/main/coins.png" alt="alt" style="width: 20px"> <span style="vertical-align: middle">@item.TotalPrice /-</span></span>
+                                                </div>
+                                            }
+                                            <div class="print">
+                                                <a href="@Url.Action("Index","Print",new { id1 = item.SalesOrderId })">
+                                                    <img src="/assets/main/print-icon.png" alt="print" style="width: 25px">
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a href="#!" class="update_Items" id="update_Items" data-id="@item.SalesOrderId" >
+                                                    <img src="/assets/main/add-icon.png" alt="alt" style="width: 25px">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @if (item.OrderStatus == "Billing")
+                            {
+                                <div class="col custom-col p-1">
+                                    <div class="card booking-order-status-card" style="background-color: #275fb3;">
+                                        <div class="table-header">
+                                            <h2 class="font-medium-5 mb-0 pb-0 text-bold-600" style="white-space: nowrap;">
+                                                @item.TokenNumberOrder<small class="ml-2 m-badge m-badge--rounded m-badge--wide font-small-3 m-badge--dark" style="letter-spacing: normal;">@item.UpdateDuration</small>
+                                                <span class="font-small-4 d-block">@item.CName</span>
+                                            </h2>
+                                            <div class="header-dropdown">
+                                                <div class="dropdown dropleft">
+                                                    <a href="#" class="cog-icon" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <img src="~/assets/main/setting-icon.png" alt="setting">
+                                                    </a>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="/Sale/Detail/@item.SalesOrderId" data-url="">View Order</a>
+                                                        <a href="#!" class="dropdown-item applyCoupenCode" data-id="@item.SalesOrderId">
+                                                            <span class="">Apply Discount</span>
+                                                        </a>
+                                                        <a href="#" class="dropdown-item paymentStatus" data-id="@item.SalesOrderId">
+                                                            <span class="">Payment Status</span>
+                                                        </a>
+                                                        <a href="@Url.Action("Index","Print",new { id1 = item.SalesOrderId })" class="dropdown-item">
+                                                            <span class="">Bill Print</span>
+                                                        </a>
+                                                        <a href="#" data-toggle="modal" data-target="#changeOrderPaymentMD" data-id="@item.SalesOrderId" data-update="Delivered" class="Orderstatus dropdown-item">
+                                                            <span class="">Close Order</span>
+                                                        </a>
+                                                        <hr class="pb-0" />
+                                                        <a href="#" class="dropdown-item add_item" data-type="2" id="add_Items" data-id="@item.Id" hidden>
+                                                            <span class="">Create New Order</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="table-body">
+                                            <div class="row">
+                                                @if (item.PaymentStatus == "Pending")
+                                                {
+                                                    <div class="col-6">
+                                                        <a class="staus-mode paymentStatus" href="#!" data-id="@item.SalesOrderId"><span class="m-animate-blink">Payments</span></a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-6">
+                                                        <a class="staus-mode paymentStatus" href="#!" data-id="@item.SalesOrderId"><span class="">Payments</span></a>
+                                                    </div>
+                                                }
+                                                <div class="col-6">
+                                                    <a class="staus-mode Orderstatus" href="#!" data-toggle="modal" data-target="#changeOrderPaymentMD" data-id="@item.SalesOrderId" data-update="Delivered">Close Order</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="table-footer">
+                                            @if (item.PaymentStatus == "Pending")
+                                            {
+                                                <div class="price" style="background-color: #cf4159;">
+                                                    <span class="m-animate-blink"><img src="/assets/main/coins.png" alt="alt" style="width: 20px"> <span style="vertical-align: middle">@item.TotalPrice /-</span></span>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="price" style="background-color: #0a896f;">
+                                                    <span class="m-animate-blink"><img src="/assets/main/coins.png" alt="alt" style="width: 20px"> <span style="vertical-align: middle">@item.TotalPrice /-</span></span>
+                                                </div>
+                                            }
+                                            <div class="col-6" style="display:none">
+                                                <a class="print-kot viewItems" href="#!" data-id="@item.SalesOrderId"><span><i class="fas fa-eye"></i> ITEM</span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-footer">
+                                        @if (item.PaymentStatus == "Pending")
+                                        {
+                                            <div class="price" style="background-color: #cf4159;">
+                                                <span class="m-animate-blink"><img src="/assets/main/coins.png" alt="alt" style="width: 20px"> <span style="vertical-align: middle">@item.TotalPrice /-</span></span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="price" style="background-color: #0a896f;">
+                                                <span class=""><img src="/assets/main/coins.png" alt="alt" style="width: 20px"> <span style="vertical-align: middle">@item.TotalPrice /-</span></span>
+                                            </div>
+                                        }
+                                        <div class="print">
+                                            <a href="@Url.Action("Index","Print",new { id1 = item.SalesOrderId })">
+                                                <img src="/assets/main/print-icon.png" alt="print" style="width: 25px">
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <a href="#!" class="update_Items" id="update_Items" data-id="@item.SalesOrderId" >
+                                                <img src="/assets/main/add-icon.png" alt="alt" style="width: 25px">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                        <div class="col custom-col p-1" style="display:none">
+                            <div class="card booking-order-status-card take-away-orders">
+                                <div class="table-header">
+                                    <h2 class="font-medium-5 mb-0 pb-0 text-bold-600" style="white-space:nowrap;">
+                                        TK01<small class="ml-2 m-badge m-badge--rounded m-badge--wide font-small-3 m-badge--dark" style="letter-spacing: normal;">00:01:20</small>
+                                        <span class="font-small-4 d-block">Guest</span>
+                                    </h2>
+
+                                    <div class="header-dropdown">
+                                        <div class="dropdown dropleft">
+                                            <a href="#" class="cog-icon" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <img src="/assets/main/setting-icon.png" alt="setting">
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" href="/Sale/Detail/SO06" id="viewSellOrder">View Order</a>
+                                                <a href="#" class="dropdown-item applyCoupenCode" data-id="SO06">
+                                                    <span class="">Apply Discount</span>
+                                                </a>
+                                                <a href="#" class="dropdown-item editCustomer" data-id="SO06">
+                                                    <span class="">Edit Customer</span>
+                                                </a>
+                                                <hr class="pb-0">
+                                                <a href="#" data-toggle="modal" data-target="#changeOrderPaymentMD" data-id="SO04743" data-update="Delivered" class="Orderstatus dropdown-item">
+                                                    <span class="">Close Order</span>
+                                                </a>
+                                                <hr class="pb-0">
+                                                <a href="#" class="dropdown-item add_item" id="add_Items" data-id="1036">
+                                                    <span class="">Create New Order</span>
+                                                </a>
+                                                <a href="#" class="dropdown-item kotPrintListView" data-id="SO04743">
+                                                    <span class="">View KOT List</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-body">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <a class="print-kot" href="#!" style="background-color:#585858;">
+                                                <span class="m-animate-blink"><i class="fas fa-circle"></i> <span>KOT</span></span>
+                                            </a>
+                                        </div>
+                                        <div class="col-6">
+                                            <a href="#!" class="print-kot bg-danger announcement-bttn" id="announcement_bttn">
+                                                <i class="announcement announcement-icon fas fa-bullhorn" style="display: inline-block;"></i>
+                                                @*<img class="announcement announcement-icon" src="~/assets/main/announcement.png" alt="announcement" style="display: inline-block;" />*@
+                                                <img class="announcement loader-icon" src="~/assets/main/ready-order.gif" alt="announcement" style="display: none;" /> Ready
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-footer">
+                                    <div class="price take-away-price" style="background-color:#585858;">
+                                        <span class="m-animate-blink">
+                                            <img src="/assets/main/coins.png" alt="alt" style="width: 20px">
+                                            <span style="vertical-align: middle">200 /-</span>
+                                        </span>
+                                    </div>
+                                    <div class="print">
+                                        <a href="#!">
+                                            <img src="/assets/main/print-icon.png" alt="print" style="width: 25px">
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a href="#!" class="update_Items">
+                                            <img src="/assets/main/add-icon.png" alt="alt" style="width: 25px">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- TAKE AWAY ORDERS END -->
+                <!-- HOME DELEIVERY ORDERS BEGIN -->
+                <!-- HEAD CONTENT -->
+                <div class="m-portlet__head pl-3">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">
+                                Home Delievery Orders
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- BODY CONTENT -->
+                <div class="m-portlet__body">
+                    <div class="row custom-row">
+                        <div class="col custom-col p-1">
+                            <div class="card booking-order-status-card take-away-create-orders">
+                                <img src="~/assets/main/delivery.png" alt="take away" />
+                                <a class="create-orders add_item" data-type="3" href="#!" id="add_Items">Create New</a>
+                            </div>
+                        </div>
+                        @foreach (var item in Model.GetTableStateListHOD)
+                        {
+                            @if (item.OrderStatus == "Ordered" || item.OrderStatus == "Confirmed" || item.OrderStatus == "Pending")
+                            {
+                                <div class="col custom-col p-1">
+                                    <div class="card booking-order-status-card" style="background-color: #383838;">
+                                        <div class="table-header">
+                                            <h2 class="font-medium-5 mb-0 pb-0 text-bold-600" style="white-space: nowrap;">
+                                                @item.TokenNumberOrder<small class="ml-2 m-badge m-badge--rounded m-badge--wide font-small-3" style="background-color:#151616;color:#fff;letter-spacing: normal;">@item.UpdateDuration</small>
+                                                <span class="font-small-4 d-block">@item.CName</span>
+                                            </h2>
+                                            <div class="header-dropdown">
+                                                <div class="dropdown dropleft">
+                                                    <a href="#" class="cog-icon" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <img src="~/assets/main/setting-icon.png" alt="setting">
+                                                    </a>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        @if (Convert.ToString(User.FindFirst("userRole").Value) == "10" || Convert.ToString(User.FindFirst("userRole").Value) == "9")
+                                                        {
+
+                                                            <a href="#" class="dropdown-item editCustomer" data-id="@item.SalesOrderId">
+                                                                <span class="">Edit Customer</span>
+                                                            </a>
+                                                            <hr class="pb-0" />
+                                                            <a href="#" class="dropdown-item add_item" data-type="3" id="add_Items" data-id="@item.Id">
+                                                                <span class="">Create New Order</span>
+                                                            </a>
+                                                            @*<a href="#" class="dropdown-item kotPrintListView" data-id="@item.SalesOrderId">
+                                                                    <span class="">View KOT List</span>
+                                                                </a>*@
+                                                            @if (item.KotPrint != 0)
+                                                            {
+                                                                <a href="#" class="dropdown-item kot_log_md" data-id="@item.SalesOrderId">
+                                                                    <span class=""> KOT LOGS</span>
+                                                                </a>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <a class="dropdown-item" href="/Sale/Detail/@item.SalesOrderId" id="viewSellOrder">View Order</a>
+                                                            <a href="#" class="dropdown-item applyCoupenCode" data-id="@item.SalesOrderId">
+                                                                <span class="">Apply Discount</span>
+                                                            </a>
+
+                                                            <a href="#" class="dropdown-item editCustomer" data-id="@item.SalesOrderId">
+                                                                <span class="">Edit Customer</span>
+                                                            </a>
+                                                            <hr class="pb-0" />
+                                                            <a href="#" data-toggle="modal" data-target="#changeOrderPaymentMD" data-id="@item.SalesOrderId" data-update="Delivered" class="Orderstatus dropdown-item">
+                                                                <span class="">Close Order</span>
+                                                            </a>
+                                                            <hr class="pb-0" />
+                                                            <a href="#" class="dropdown-item add_item" data-type="3" id="add_Items" data-id="@item.Id">
+                                                                <span class="">Create New Order</span>
+                                                            </a>
+                                                            @*<a href="#" class="dropdown-item kotPrintListView" data-id="@item.SalesOrderId">
+                                                                    <span class="">View KOT List</span>
+                                                                </a>*@
+                                                            @if (item.KotPrint != 0)
+                                                            {
+                                                                <a href="#" class="dropdown-item kot_log_md" data-id="@item.SalesOrderId">
+                                                                    <span class=""> KOT LOGS</span>
+                                                                </a>
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="table-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <a class="print-kot viewItems" href="#!" data-id="@item.SalesOrderId"><span><i class="fas fa-eye"></i> ITEM</span></a>
+                                                </div>
+                                                @if (item.KotPrint == 0)
+                                                {
+                                                    <div class="col-6">
+                                                        <a class="print-kot kotPrintListView" href="#!" data-id="@item.SalesOrderId">
+                                                            <span class="m-animate-blink" style="white-space:nowrap;"><span><i class="fas fa-circle"></i> PRINT KOT</span></span>
+                                                        </a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-6">
+                                                        <a href="#!" class="print-kot bg-danger announcement-bttn" id="announcement_bttn">
+                                                            <i class="announcement announcement-icon fas fa-bullhorn" style="display: inline-block;"></i>
+                                                            @*<img class="announcement announcement-icon" src="~/assets/main/announcement.png" alt="announcement" style="display: inline-block;" />*@
+                                                            <img class="announcement loader-icon" src="~/assets/main/ready-order.gif" alt="announcement" style="display: none;" /> Ready
+                                                        </a>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="table-footer">
+                                            @if (item.PaymentStatus == "Pending")
+                                            {
+                                                <div class="price" style="background-color: rgb(0 0 0 / 15%);">
+                                                    <span class="m-animate-blink"><img src="/assets/main/coins.png" alt="alt" style="width: 20px"> <span style="vertical-align: middle">@item.TotalPrice /-</span></span>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="price" style="background-color: #0a896f;">
+                                                    <span class="m-animate-blink"><img src="/assets/main/coins.png" alt="alt" style="width: 20px"> <span style="vertical-align: middle">@item.TotalPrice /-</span></span>
+                                                </div>
+                                            }
+                                            <div class="print">
+                                                <a href="@Url.Action("Index","Print",new { id1 = item.SalesOrderId })">
+                                                    <img src="/assets/main/print-icon.png" alt="print" style="width: 25px">
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a href="#!" class="update_Items" id="update_Items" data-id="@item.SalesOrderId">
+                                                    <img src="/assets/main/add-icon.png" alt="alt" style="width: 25px">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @if (item.OrderStatus == "Billing")
+                            {
+                                <div class="col custom-col p-1">
+                                    <div class="card booking-order-status-card" style="background-color: #275fb3;">
+                                        <div class="table-header">
+                                            <h2 class="font-medium-5 mb-0 pb-0 text-bold-600" style="white-space: nowrap;">
+                                                @item.TokenNumberOrder<small class="ml-2 m-badge m-badge--rounded m-badge--wide font-small-3 m-badge--dark" style="letter-spacing: normal;">@item.UpdateDuration</small>
+                                                <span class="font-small-4 d-block">@item.CName</span>
+                                            </h2>
+                                            <div class="header-dropdown">
+                                                <div class="dropdown dropleft">
+                                                    <a href="#" class="cog-icon" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <img src="~/assets/main/setting-icon.png" alt="setting">
+                                                    </a>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="/Sale/Detail/@item.SalesOrderId" data-url="">View Order</a>
+                                                        <a href="#!" class="dropdown-item applyCoupenCode" data-id="@item.SalesOrderId">
+                                                            <span class="">Apply Discount</span>
+                                                        </a>
+                                                        <a href="#" class="dropdown-item paymentStatus" data-id="@item.SalesOrderId">
+                                                            <span class="">Payment Status</span>
+                                                        </a>
+                                                        <a href="@Url.Action("Index","Print",new { id1 = item.SalesOrderId })" class="dropdown-item">
+                                                            <span class="">Bill Print</span>
+                                                        </a>
+                                                        <a href="#" data-toggle="modal" data-target="#changeOrderPaymentMD" data-id="@item.SalesOrderId" data-update="Delivered" class="Orderstatus dropdown-item">
+                                                            <span class="">Close Order</span>
+                                                        </a>
+                                                        <hr class="pb-0" />
+                                                        <a href="#" class="dropdown-item add_item" data-type="3" id="add_Items" data-id="@item.Id" hidden>
+                                                            <span class="">Create New Order</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="table-body">
+                                            <div class="row">
+                                                @if (item.PaymentStatus == "Pending")
+                                                {
+                                                    <div class="col-6">
+                                                        <a class="staus-mode paymentStatus" href="#!" data-id="@item.SalesOrderId"><span class="m-animate-blink">Payments</span></a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-6">
+                                                        <a class="staus-mode paymentStatus" href="#!" data-id="@item.SalesOrderId"><span class="">Payments</span></a>
+                                                    </div>
+                                                }
+                                                <div class="col-6">
+                                                    <a class="staus-mode Orderstatus" href="#!" data-toggle="modal" data-target="#changeOrderPaymentMD" data-id="@item.SalesOrderId" data-update="Delivered">Close Order</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="table-footer">
+                                            @if (item.PaymentStatus == "Pending")
+                                            {
+                                                <div class="price" style="background-color: #cf4159;">
+                                                    <span class="m-animate-blink"><img src="/assets/main/coins.png" alt="alt" style="width: 20px"> <span style="vertical-align: middle">@item.TotalPrice /-</span></span>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="price" style="background-color: #0a896f;">
+                                                    <span class="m-animate-blink"><img src="/assets/main/coins.png" alt="alt" style="width: 20px"> <span style="vertical-align: middle">@item.TotalPrice /-</span></span>
+                                                </div>
+                                            }
+                                            <div class="col-6" style="display:none">
+                                                <a class="print-kot viewItems" href="#!" data-id="@item.SalesOrderId"><span><i class="fas fa-eye"></i> ITEM</span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-footer">
+                                        @if (item.PaymentStatus == "Pending")
+                                        {
+                                            <div class="price" style="background-color: #cf4159;">
+                                                <span class="m-animate-blink"><img src="/assets/main/coins.png" alt="alt" style="width: 20px"> <span style="vertical-align: middle">@item.TotalPrice /-</span></span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="price" style="background-color: #0a896f;">
+                                                <span class=""><img src="/assets/main/coins.png" alt="alt" style="width: 20px"> <span style="vertical-align: middle">@item.TotalPrice /-</span></span>
+                                            </div>
+                                        }
+                                        <div class="print">
+                                            <a href="@Url.Action("Index","Print",new { id1 = item.SalesOrderId })">
+                                                <img src="/assets/main/print-icon.png" alt="print" style="width: 25px">
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <a href="#!" class="update_Items" id="update_Items" data-id="@item.SalesOrderId">
+                                                <img src="/assets/main/add-icon.png" alt="alt" style="width: 25px">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                        <div class="col custom-col p-1" style="display:none">
+                            <div class="card booking-order-status-card take-away-orders">
+                                <div class="table-header">
+                                    <h2 class="font-medium-5 mb-0 pb-0 text-bold-600" style="white-space:nowrap;">
+                                        TK01<small class="ml-2 m-badge m-badge--rounded m-badge--wide font-small-3 m-badge--dark" style="letter-spacing: normal;">00:01:20</small>
+                                        <span class="font-small-4 d-block">Guest</span>
+                                    </h2>
+
+                                    <div class="header-dropdown">
+                                        <div class="dropdown dropleft">
+                                            <a href="#" class="cog-icon" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <img src="/assets/main/setting-icon.png" alt="setting">
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" href="/Sale/Detail/SO06" id="viewSellOrder">View Order</a>
+                                                <a href="#" class="dropdown-item applyCoupenCode" data-id="SO06">
+                                                    <span class="">Apply Discount</span>
+                                                </a>
+                                                <a href="#" class="dropdown-item editCustomer" data-id="SO06">
+                                                    <span class="">Edit Customer</span>
+                                                </a>
+                                                <hr class="pb-0">
+                                                <a href="#" data-toggle="modal" data-target="#changeOrderPaymentMD" data-id="SO04743" data-update="Delivered" class="Orderstatus dropdown-item">
+                                                    <span class="">Close Order</span>
+                                                </a>
+                                                <hr class="pb-0">
+                                                <a href="#" class="dropdown-item add_item" id="add_Items" data-id="1036">
+                                                    <span class="">Create New Order</span>
+                                                </a>
+                                                <a href="#" class="dropdown-item kotPrintListView" data-id="SO04743">
+                                                    <span class="">View KOT List</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-body">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <a class="print-kot" href="#!" style="background-color:#585858;">
+                                                <span class="m-animate-blink"><i class="fas fa-circle"></i> <span>KOT</span></span>
+                                            </a>
+                                        </div>
+                                        <div class="col-6">
+                                            <a href="#!" class="print-kot bg-danger announcement-bttn" id="announcement_bttn">
+                                                <i class="announcement announcement-icon fas fa-bullhorn" style="display: inline-block;"></i>
+                                                @*<img class="announcement announcement-icon" src="~/assets/main/announcement.png" alt="announcement" style="display: inline-block;" />*@
+                                                <img class="announcement loader-icon" src="~/assets/main/ready-order.gif" alt="announcement" style="display: none;" /> Ready
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-footer">
+                                    <div class="price take-away-price" style="background-color:#585858;">
+                                        <span class="m-animate-blink">
+                                            <img src="/assets/main/coins.png" alt="alt" style="width: 20px">
+                                            <span style="vertical-align: middle">200 /-</span>
+                                        </span>
+                                    </div>
+                                    <div class="print">
+                                        <a href="#!">
+                                            <img src="/assets/main/print-icon.png" alt="print" style="width: 25px">
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a href="#!" class="update_Items">
+                                            <img src="/assets/main/add-icon.png" alt="alt" style="width: 25px">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- HOME DELIVERY ORDERS END -->
+            </div>
+
+            <div class="m-content salesData">
+
+            </div>
+
+        </div>
+        @if (Model.bookingCount.Result.BookingCount > 0)
+        {
+            <div class="col-md-4 col-sm-12" id="bookingInfo">
+
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+
+<div class="right-panel toggle-pane addItems">
+    <div class="panel-wrapper">
+        <div class="panel-header">
+            <div style="flex: 95% 0;">
+                <div class="row align-items-center">
+                    <div class="col-4">
+                        @*<h5>Add Item</h5>*@
+                        <div class="tableName"></div>
+                        <div class="table-name-title">
+                            <h5 class="mb-0 font-medium-1">Ordering for Customer : <span class="font-medium-4 font-weight-bold custName"></span></h5>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group search-item-input mb-0">
+                            <input type="search" class="form-control" placeholder="Enter Search Item Name" id="serachProduct" />
+                            <i class="fas fa-times" id="clearinputElement" style="display:none"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                        <div class="form-group Get_customerNo mb-0 font-medium-3">
+                            <select id="GetcustomerNo" class="form-control m-input m-input--solid m-select2">
+                                <option value="19653" data-select2-id="19653">CI019653-0000000000-Guest</option>
+                            </select>
+                        </div>
+                        <input type="hidden" id="HomeSalesId" />
+                        <div id="spn_html" style="display:none"></div>
+                        <div class="customerdetails display-none" style="">
+                            <div class="animated fadeIn mt-3">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <h6>Customer Detail</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="font-small-3">Customer ID </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="font-small-4"> : <span id="cusdetailId">CI019653</span> </div>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="font-small-3">Customer ID </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="font-small-4"> : <span id="custdetailorgid"></span> </div>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="font-small-3">Customer Name </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="font-small-4"> : <span id="customerName"></span></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="font-small-3">Mobile No </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="font-small-4"> : <span id="customermobileno"></span></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="font-small-3">Address </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="font-small-4"> : <span id="spnaddress"></span></div>
+                                        <div id="AddDiv" class="font-small-4"> :</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="font-small-3">App Installed</div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="font-small-4">
+                                            :  <a href="#" class="font-small-4" data-container="body" data-toggle="m-popover" data-placement="top" data-content="App link" data-original-title="" title="">
+                                                No
+                                                <sup><span class="m-nav__link-badge m-badge--dot m-badge--dot-small m-badge m-badge--danger"></span></sup>
+                                            </a>
+                                            <span class="font-small-4" id="customerappinstall"></span><sup><span id="spnappinstall" class="m-nav__link-badge"></span></sup>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="itemDetailsPrice" style="display:none">
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="text-left font-medium-2 text-bold-700">
+                                        <span id="cusdetailId" hidden></span>
+                                        <div class="">Total Items : <span id="TotalCartItemId" class="font-medium-2 text-bold-700">0</span></div>
+                                        <span hidden id="SavedPriceId"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 font-medium-2 text-bold-700">
+                                    <div class="text-left">
+                                        <div class="">Total Qty : <span id="totalCartQuantity" class="font-medium-2 text-bold-700">0</span></div>
+                                        <div class="" style="display:none">Total Qty : <span id="totalCartremark" class="font-medium-2 text-bold-700"></span></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="divdelevery" style="display:none">
+                                <hr />
+                                <div class="row">
+                                    <label class="col-md-12">Delivery Charges</label>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" id="Deliverycharges" class="form-control m-input m-input--solid" value="0" placeholder="Enter Delivery Charges" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="">
+                                        <div class="float-right">
+                                            <span hidden id="ItemWithCoupen"></span>
+                                            <span hidden id="ItemWitoutCoupen"></span>
+                                            <h6 class="text-right font-medium-2 text-bold-700">Sub Total : @(SalesHelpers.Data) <span id="AmountId" class="">0.0</span></h6>
+                                            <h6 class="text-right font-medium-2 text-bold-700">Discount Amount : @(SalesHelpers.Data) <span id="DisAmountId" class="">0.0</span></h6>
+                                            <hr />
+                                            <h6 class="text-right font-medium-2 text-bold-700">Total  Payable : @(SalesHelpers.Data) <span id="TDisAmountId" class="">0.0</span></h6>
+                                            <span hidden id="Amountspn"></span>
+                                            @*<h6 class="text-right font-small-2">Tax : <span class="">14%</span></h6>
+                                                <h6 class="text-right font-small-2">Gst Tax : <span class="">28%</span></h6>*@
+                                            @*<h6 class="text-right font-small-2">Coupon Discount : <span class="">- 1520.33</span></h6>*@
+                                            @*<h6 class="text-right">Grand Total : <span class="text-danger font-medium-5">Rs.1520.33</span></h6>
+                                                <h6 class="text-right font-small-2">Your Saving : <span class="">Rs.257.33</span></h6>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="transaction_Show" style="display:block;">
+
+                                        @*<div id="orderStatus">
+                                                <div class="form-group">
+                                                    <select class="form-control text-bold-600" id="OrderStatusId" name="OrderStatus" asp-for="getstats" asp-items="@SalesHelpers.StatusList">
+                                                        <option selected disabled>Select Order Status</option>
+                                                    </select>
+                                                </div>
+                                            </div>*@
+                                        <div id="coupenDivId">
+
+                                            <div class="form-group">
+                                                <select asp-items="Model.GetCoupenList" class="form-control m-input m-input--solid" id="selectCoupen">
+                                                    <option value="1" selected="selected">Apply Cash Discount</option>
+                                                    <option value="0">Select Coupon</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group" id="divDisAmount" style="display:none">
+                                                <div class="row">
+                                                    <input type="number" style="width:90%" ; class="form-control m-input m-input--solid amount2" id="Discountamount" autocomplete="off" placeholder="Discount Percentage" /> <span class="font-medium-3">%</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" id="divCashDisAmount" style="display:block">
+                                                <input type="number" class="form-control m-input m-input--solid" autocomplete="off" name="DiscountedCash" id="Cashamount" placeholder=" Discounted Cash Amount" />
+                                                <span class="error font-small-4" id="SpnDisCashAmnt" style="display: none; color: red;">No Item in Cart!</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="number" class="form-control m-input m-input--solid" id="amount1" placeholder="Enter Amount" value="0" readonly />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="number" class="form-control m-input m-input--solid amount2" id="amount2" placeholder="Received Amount" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="hidden" class="form-control m-input m-input--solid amount2" id="DiscountTotalamt" />
+                                            <input type="hidden" class="form-control m-input m-input--solid amount2" id="ActualDiscountAmt" />
+                                            <input type="hidden" class="form-control m-input m-input--solid amount2" id="coupenIds" />
+                                        </div>
+                                    </div>
+                                    <div class="transaction" style="display:none;">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control m-input m-input--solid" id="" placeholder="Reciept ID" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group text-right">
+                                    <h4 id="total" name="Remaining_Amount"></h4>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control m-input m-input--solid" id="PaymentMode">
+                                        <option value="COD" selected="selected">Cash</option>
+                                        <option value="CrOD">Card Payment</option>
+                                        <option value="UPI">UPI Wallet</option>
+
+                                        @*<option value="POD">POD</option>*@
+                                        @*<option value="CCP">CCP</option>*@
+                                    </select>
+                                    <span class="error font-small-4" id="SpnPaymentMode" style="display: none; color: red;"></span>
+
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control m-input m-input--solid" id="PaymentStatus">
+                                        @* <option value="0" selected>Select Payment Status</option>*@
+                                        <option value="Pending" selected="selected">Pending</option>
+                                        <option value="Paid">Paid</option>
+                                        <option value="Partially">Partially</option>
+                                    </select>
+                                    <span class="error font-small-4" id="SpnPaymentstatus" style="display: none; color: red;"></span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-danger btn-block mymoney" name="print" id="mymoney">CREATE ORDER</button>
+                        <audio src="https://freshlo.oss-ap-south-1.aliyuncs.com/freshpos/buzz.wav" id="myaudio" muted="" hidden=""></audio>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button type="button" class="close" id="close_add_item">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div style="position: sticky !important; top: 0; z-index: 4; background-color:#fff;">
+            <!-- iITEM ALL TABS -->
+            <div class="row m-0">
+                <div class="col-md-8">
+                    <div class="sticky-top" style="position: sticky !important;top: 80px;z-index: 3;">
+                        <div class="item-tabs MainCategorytabs">
+                            <ul class="nav nav-tabs m-tabs-line bg-white mb-0" role="tablist">
+                                @foreach (var mc in Model.getmainList)
+                                {
+                                    @if (counterHeader1 == 0)
+                                    {
+                                        <li class="nav-item m-tabs__item">
+                                            <a class="nav-link m-tabs__link p-2 pl-2 pr-2 maincategory active" data-toggle="tab" href="#MCT_@mc.MaincatId" role="tab">@mc.Name</a>
+                                        </li>
+
+                                    }
+                                    else
+                                    {
+                                        <li class="nav-item m-tabs__item">
+                                            <a class="nav-link m-tabs__link p-2 pl-2 pr-2 maincategory" data-toggle="tab" href="#MCT_@mc.MaincatId" role="tab">@mc.Name</a>
+                                        </li>
+
+                                    }
+                                    counterHeader1++;
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-2 border-right pl-0 pr-0" id="categoryesd">
+                    <div class="table-responsive" style="position: sticky !important; top: 0; z-index: 3; background-color:#fff;">
+                        <div class="sub-category-tab">
+                            <div class="sub-category-tab-heading"><h3>Categories:</h3></div>
+                            <div class="tab-content">
+                                @foreach (var item in Model.getmainList)
+                                {
+                                    @if (counterHeader2 == 0)
+                                    {
+                                        <div class="tab-pane categorytabpane row active" id="MCT_@item.MaincatId" role="tabpanel">
+                                            <ul class="nav nav-tabs m-tabs-line bg-white mb-0 categorytabs" role="tablist">
+                                                @foreach (var cat in Model.getcatlist)
+                                                {
+                                                    @if (item.MaincatId == cat.MainCategory)
+                                                    {
+                                                        @if (counterHeader3 == 0)
+                                                        {
+                                                            <li class="nav-item m-tabs__item">
+                                                                <a class="nav-link m-tabs__link category active" data-toggle="tab" href="#CT_@cat.categoryId" role="tab">@cat.Category</a>
+                                                            </li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li class="nav-item m-tabs__item ">
+                                                                <a class="nav-link m-tabs__link category" data-toggle="tab" href="#CT_@cat.categoryId" role="tab">@cat.Category</a>
+                                                            </li>
+                                                        }
+                                                        counterHeader3++;
+                                                    }
+                                                }
+                                            </ul>
+
+                                        </div>
+
+                                    }
+                                    else
+                                    {
+                                        <div class="tab-pane categorytabpane row" id="MCT_@item.MaincatId" role="tabpanel">
+                                            <ul class="nav nav-tabs m-tabs-line bg-white mb-0 categorytabs" role="tablist">
+                                                @foreach (var cat in Model.getcatlist)
+                                                {
+                                                    @if (item.MaincatId == cat.MainCategory)
+                                                    {
+                                                        @if (counterHeader4 == 0)
+                                                        {
+                                                            <li class="nav-item m-tabs__item">
+                                                                <a class="nav-link m-tabs__link category active" data-toggle="tab" href="#CT_@cat.categoryId" role="tab">@cat.Category</a>
+                                                            </li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li class="nav-item m-tabs__item ">
+                                                                <a class="nav-link m-tabs__link category " data-toggle="tab" href="#CT_@cat.categoryId" role="tab">@cat.Category</a>
+                                                            </li>
+                                                        }
+                                                        counterHeader4++;
+                                                    }
+                                                }
+                                            </ul>
+
+                                        </div>
+
+                                    }
+                                    counterHeader2++;
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 pl-0">
+                    <div class="tab-content position-static">
+                        <div class="mb-2" style="display:none">
+                            <div class="form-group">
+                                <input type="text" class="form-control m-input m-input--solid" id="SearchItem" placeholder="Product Code / Name..." />
+                            </div>
+                        </div>
+                        @foreach (var getmainbody in Model.getmainList)
+                        {
+                            @foreach (var getcatbody in Model.getcatlist)
+                            {
+                                @if (getmainbody.MaincatId == getcatbody.MainCategory)
+                                {
+                                    if (counterBody1 == 0)
+                                    {
+                                        <div class="tab-pane itemtabpane row active" id="CT_@getcatbody.categoryId" role="tabpanel">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="add-item-wrapper p-0" style="width:100%">
+                                                            <div class="table-responsive">
+                                                                <table class="table ab-table-head-bg-warning-light table-borderless table-middle table-white-space-th">
+                                                                    <thead></thead>
+                                                                    <tbody id="CartBodyList_@getcatbody.categoryId"></tbody>
+                                                                    @*<tbody id="CartBodyList22"></tbody>*@
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="tab-pane itemtabpane row" id="CT_@getcatbody.categoryId" role="tabpanel">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="add-item-wrapper p-0" style="width:100%">
+                                                            <div class="table-responsive">
+                                                                <table class="table ab-table-head-bg-warning-light table-borderless table-middle table-white-space-th">
+                                                                    <thead></thead>
+                                                                    <tbody id="CartBodyList_@getcatbody.categoryId"></tbody>
+                                                                    @*<tbody id="CartBodyList22"></tbody>*@
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    counterBody1++;
+
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="col-md-4 fixed-right-height pl-0 pr-0 pbl">
+                    <div class="table-responsive" style="position: sticky !important; top: 0; z-index: 3; background-color:#fff;">
+                        <span></span>
+                        <table class="table ab-table-head-bg-warning-light table-borderless table-middle">
+                            <thead>
+                                <tr>
+                                    @*<th>Remove</th>*@
+                                    <th>Product Name</th>
+                                    <th>Qty</th>
+                                    <th>Total Price</th>
+                                </tr>
+                            </thead>
+                            <tbody id="CartListbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="right-panel toggle-pane itemUpdate">
+    <div class="panel-wrapper">
+        <div class="panel-header">
+            <div style="flex: 95% 0;">
+                <div class="row align-items-center">
+                    <div class="col-12">
+                        @*<h5>Add Item</h5>*@
+                        <div class="OrderInfoDetails">
+
+                        </div>
+                    </div>
+                    <div class="col-4" style="position:absolute;left:20%;">
+                        <div class="form-group search-item-input mb-0">
+                            <input type="text" class="form-control" placeholder="Enter Search Item Name" name="search" id="findProduct" />
+                            <i class="fas fa-times" id="editclearinputElement" style="display:none"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="close" id="close_update_item">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="row m-0" style="position: sticky !important; top: 0; z-index: 4; background-color: #fff;">
+            <div class="col-md-8">
+                <div class="item-tabs EditMainCategorytabs">
+                    <ul class="nav nav-tabs m-tabs-line bg-white mb-0" role="tablist">
+                        @foreach (var mc in Model.getmainList)
+                        {
+                            @if (counterHeader5 == 0)
+                            {
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link p-2 pl-2 pr-2 Editmaincategory active" data-toggle="tab" href="#MCE_@mc.MaincatId" role="tab">@mc.Name</a>
+                                </li>
+
+                            }
+                            else
+                            {
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link p-2 pl-2 pr-2 Editmaincategory" data-toggle="tab" href="#MCE_@mc.MaincatId" role="tab">@mc.Name</a>
+                                </li>
+
+                            }
+                            counterHeader5++;
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- CATEGORY WISE -->
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-2 border-right pl-0 pr-0" id="Editcategoryesd">
+                    <div class="table-responsive" style="position: sticky !important; top: 0; z-index: 3; background-color:#fff;">
+                        <div class="sub-category-tab">
+                            <div class="sub-category-tab-heading">Categories:</div>
+                            <div class="tab-content">
+                                @foreach (var item in Model.getmainList)
+                                {
+                                    @if (counterHeader6 == 0)
+                                    {
+                                        <div class="tab-pane Editcategorytabpane row active" id="MCE_@item.MaincatId" role="tabpanel">
+                                            <ul class="nav nav-tabs m-tabs-line bg-white mb-0  Editcategorytabs" role="tablist">
+                                                @foreach (var cat in Model.getcatlist)
+                                                {
+                                                    @if (item.MaincatId == cat.MainCategory)
+                                                    {
+                                                        @if (counterHeader7 == 0)
+                                                        {
+                                                            <li class="nav-item m-tabs__item">
+                                                                <a class="nav-link m-tabs__link Editcategory active" data-toggle="tab" id="CE_@cat.categoryId" href="#CE_@cat.categoryId" role="tab">@cat.Category</a>
+                                                            </li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li class="nav-item m-tabs__item ">
+                                                                <a class="nav-link m-tabs__link Editcategory" data-toggle="tab" id="CE_@cat.categoryId" href="#CE_@cat.categoryId" role="tab">@cat.Category</a>
+                                                            </li>
+                                                        }
+                                                        counterHeader7++;
+                                                    }
+                                                }
+                                            </ul>
+
+                                        </div>
+
+                                    }
+                                    else
+                                    {
+                                        <div class="tab-pane Editcategorytabpane row" id="MCE_@item.MaincatId" role="tabpanel">
+                                            <ul class="nav nav-tabs m-tabs-line bg-white mb-0  Editcategorytabs" role="tablist">
+                                                @foreach (var cat in Model.getcatlist)
+                                                {
+                                                    @if (item.MaincatId == cat.MainCategory)
+                                                    {
+                                                        @if (counterHeader8 == 0)
+                                                        {
+                                                            <li class="nav-item m-tabs__item active">
+                                                                <a class="nav-link m-tabs__link Editcategory active" data-toggle="tab" id="CE_@cat.categoryId" href="#CE_@cat.categoryId" role="tab">@cat.Category</a>
+                                                            </li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li class="nav-item m-tabs__item ">
+                                                                <a class="nav-link m-tabs__link Editcategory" data-toggle="tab" id="CE_@cat.categoryId" href="#CE_@cat.categoryId" role="tab">@cat.Category</a>
+                                                            </li>
+                                                        }
+                                                        counterHeader8++;
+                                                    }
+                                                }
+                                            </ul>
+
+                                        </div>
+
+                                    }
+                                    counterHeader6++;
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 pl-0">
+                    <div class="tab-content position-static">
+                        <div class="mb-2">
+                            <div class="form-group" style="display:none">
+                                <input type="text" class="form-control m-input m-input--solid" id="SearchItem" placeholder="Product Code / Name..." />
+                            </div>
+                        </div>
+                        @foreach (var getmainbody in Model.getmainList)
+                        {
+                            @foreach (var getcatbody in Model.getcatlist)
+                            {
+                                @if (getmainbody.MaincatId == getcatbody.MainCategory)
+                                {
+                                    if (counterBody2 == 0)
+                                    {
+                                        <div class="tab-pane Edititemtabpane row active" id="divCE_@getcatbody.categoryId" role="tabpanel">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="add-item-wrapper p-0" style="width:100%">
+                                                            <div class="table-responsive">
+                                                                <table class="table ab-table-head-bg-warning-light table-borderless table-middle table-white-space-th">
+                                                                    <thead></thead>
+                                                                    <tbody id="CartBodyListabc_@getcatbody.categoryId"></tbody>
+                                                                    <tbody id="cartbodylistupdate22"></tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="tab-pane Edititemtabpane row" id="divCE_@getcatbody.categoryId" role="tabpanel">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="add-item-wrapper p-0" style="width:100%">
+                                                            <div class="table-responsive">
+                                                                <table class="table ab-table-head-bg-warning-light table-borderless table-middle table-white-space-th">
+                                                                    <thead></thead>
+                                                                    <tbody id="CartBodyListabc_@getcatbody.categoryId"></tbody>
+                                                                    <tbody id="CartBodyListupdate22"></tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    counterBody2++;
+
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="col-md-4 fixed-right-height pl-0 pr-0 PdlistData">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="create_new_address" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Address Detail</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form form-horizontal" method="post" enctype="multipart/form-data" action="/Sale/CreateorUpdateCustomerDetail/" id="CustomerDetailId">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label for="" class="col-md-4 col-12 col-form-label">Customer Name</label>
+                                <div class="col-md-4 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="Name" name="Name" placeholder="Enter Customer Name" />
+                                    <input type="hidden" class="form-control m-input m-input--solid" id="CustomerId" name="CustomerId" />
+                                    <input type="hidden" class="form-control m-input m-input--solid" id="Id" name="Id" />
+
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="col-md-4 col-12 col-form-label">Contact Number</label>
+                                <div class="col-md-4 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="ContactNo" name="ContactNo" placeholder="Enter Contact Number" />
+                                    <span id="ContactNo_err" style="color:red;display:none"></span>
+                                    <input type="hidden" class="form-control m-input m-input--solid" id="addid" name="Addids" />
+                                    <input type="hidden" class="form-control m-input m-input--solid" id="compAddId" name="AddId" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="col-md-4 col-12 col-form-label">Email ID</label>
+                                <div class="col-md-7 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="EmailId" name="EmailId" placeholder="Enter Email ID" />
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group row">
+                                <label for="" class="col-md-4 col-12 col-form-label">Building / Chawl Name</label>
+                                <div class="col-md-4 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="BuildingName" name="BuildingName" placeholder="Enter Building / Chawl Name" />
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="RoomNo" name="RoomNo" placeholder="Enter Room Number" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="col-md-4 col-12 col-form-label">Street Name / Sec Number</label>
+                                <div class="col-md-4 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="Sector" name="Sector" placeholder="Enter Street Name / Sec Number" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="col-md-4 col-12 col-form-label">Landmark / Near by</label>
+                                <div class="col-md-4 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="Landmark" name="Landmark" placeholder="Enter Landmark / Near by" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="col-md-4 col-12 col-form-label">Town / Locality</label>
+                                <div class="col-md-4 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="Locality" name="Locality" placeholder="Enter Town / Locality" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="col-md-4 col-12 col-form-label">Address Type</label>
+                                <div class="col-md-4 col-sm-3 col-6">
+                                    <select id="AddressType" name="AddressType" class="form-control m-input m-input--solid">
+                                        <option value="0" selected disabled>Select Type</option>
+                                        <option value="Home">Home</option>
+                                        <option value="Office">Office</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group row">
+                                <label for="" class="col-md-4 col-12 col-form-label">Zip Code</label>
+                                <div class="col-md-4 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="ZipCode" name="ZipCode" placeholder="Enter Zip Code" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="col-md-4 col-12 col-form-label">City</label>
+                                <div class="col-md-4 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="City" name="City" placeholder="Enter City" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="col-md-4 col-12 col-form-label">State</label>
+                                <div class="col-md-4 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="State" name="State" placeholder="Enter State" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="col-md-4 col-12 col-form-label">Country</label>
+                                <div class="col-md-4 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid" id="Country" name="Country" placeholder="Enter Country" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="btnCustomerAdd" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ALL ITEMS PANEL -->
+<div class="all-items-panel">
+    <div class="panel-wrapper">
+        <div class="panel-header">
+            <h5>Ongoing Orders</h5>
+            <button type="button" class="close" id="close_all_items">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="all-items-body p-3 ">
+            <div class="row" style="margin-bottom:10px;">
+                <div class="col">
+                    <div class="float-right">
+                        <button class="btn btn-success " type="button" id="AddItemId">
+                            Close Items
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="kt-checkbox-list">
+                                            <label class="kt-checkbox">
+                                                <input type="checkbox" id="selectallid">
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </th>
+                                    <th>Table Name</th>
+                                    <th>Item</th>
+                                    <th>Quantity</th>
+                                    <th>Status</th>
+                                    <th>Time</th>
+                                    <th style="display:block">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="AllitemBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--TOKEN ANNOUNCEMENT MESSAGE -->
+<div class="modal fade" id="AnnouncementMessageHeader" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Announcement Message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" id="EditAnnouncement" method="post" asp-action="EditAnnouncementMessage" asp-controller="Sale">
+                            <input type="text" class="form-control m-input m-input--solid hotel_id" id="hotel_id" name="hotel_id" hidden>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Announcement Message<span class="text-warning">*</span></label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <textarea rows="5" class="form-control m-input m-input--solid" id="AnnouncemntMessage" name="AnnouncemntMessage" placeholder="Enter Announcement Message"></textarea>
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2" id="SubmitMessage"><i class="la la-upload"></i> Submit </button>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/TOKEN ANNOUNCMENT MESSAGE-->
+<!-- ADD WATCH MODAL -->
+<div class="modal fade" id="addWatchMD" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add Waiting List</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right">
+                            <input type="text" class="form-control m-input m-input--solid custId" name="custId" id="custId" hidden />
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Mobile Number</label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid custNumber font-medium-2 text-bold-700" id="custNumber" name="custNumber" placeholder="Enter Mobile Name" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Customer Name</label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="text" class="form-control m-input m-input--solid custName font-medium-2 text-bold-700" name="custName" id="custName" placeholder="Enter Customer Name" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Total Guests</label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <input type="number" class="form-control m-input m-input--solid totalGuest font-medium-2 text-bold-700" name="totalGuest" id="totalGuest" min="1" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Advance Booking?</label>
+                                <div class="col-1">
+                                    <fieldset class="col-form-label float-left">
+                                        <label class="ab-switch mb-0">
+                                            <input type="checkbox" class="font-medium-2 text-bold-700 advance_booking" name="bookings" value="fales" id="advance_booking">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-6 col-sm-3 col-3">
+                                    <input type="text" class="form-control m-input m-input--solid advance_booking_status font-medium-2 text-bold-700" name="slotTime" id="slotTime" placeholder="Select time">
+                                </div>
+                                @*<div class="col-md-3 col-sm-3 col-3">
+                                        <input type="text" class="form-control m-input m-input--solid advance_booking_status" name="slotTime" id="slotTime" />
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-3">
+                                        <select class="form-control m-input m-input--solid timeType advance_booking_status" name="timeType" id="timeType">
+                                            <option value="AM">AM</option>
+                                            <option value="PM" selected>PM</option>
+                                        </select>
+                                    </div>*@
+                            </div>
+                            @*<div class="form-group row">
+                                    <label class="col-md-4 col-sm-12 col-12 col-form-label">Slot Time</label>
+
+                                </div>*@
+                            <div class="form-group row">
+                                <label class="col-md-4 col-sm-12 col-12 col-form-label">Table Preferance</label>
+                                <div class="col-md-8 col-sm-3 col-6">
+                                    <select class="form-control m-input m-input--solid font-medium-2 text-bold-700" name="perferencType" id="perferencType" asp-items="@Model.Getperferncelist">
+                                        <option value="0">Select Table Type</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2" id="BookingSubmit"><i class="la la-upload" id="BookingSubmit"></i> Submit </button>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal" id="closewatching"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="assign_tableMD" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Assign Table</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="m-form m-form--fit m-form--label-align-right">
+                            <div class="form-group row">
+                                <input type="text" id="customerIds" name="customerIds" hidden />
+                                <input type="text" id="bookingIds" name="bookingIds" hidden />
+                                <label class="col-md-3 col-sm-12 col-12 col-form-label">Assign Table</label>
+                                <div class="col-md-8 col-sm-12 col-12 assign-table-list">
+                                    <select class="form-control m-input--solid clear-cls" name="TriggerId" id="TriggerId"></select>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label"></label>
+                                <div class="col-md-8 col-sm-9 col-6">
+                                    <button type="button" class="btn btn-success mr-2" id="Assginetable"><i class="la la-upload" id="Assginetable"></i> Submit </button>
+                                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal For TodaySalesTo Print -->
+<div class="modal fade" id="SalesListPrint" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Order Summary Print</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label class="col-form-label col-lg-2 col-sm-12">Today</label>
+                    <div class="">
+                        <label class="ab-switch mt-2">
+                            <input type="checkbox" id="customdatetoggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <label class="mt-2   col-lg-3 col-sm-12 text-left">Custom Days</label>
+                </div>
+                <div class="form-group row" id="divdate" style="display:none">
+                    <label class="col-form-label col-lg-2 col-sm-12"></label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="TodayDate" value="@ViewBag.TodayDatetime" />
+                        <span class="error font-small-4" id="SalesdateError" style="display: none; color: red;"></span>
+
+                    </div>
+                </div>
+                <div class="row" id="divddaterange" style="display:none">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-2 col-sm-12"></label>
+                            <div class="col-lg-9 col-md-9 col-sm-12">
+                                <div class='input-group' id='m_daterangepicker_2'>
+                                    <input type='text' class="form-control m-input" id="salesdaterange" readonly placeholder="Select date range" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
+                                    </div>
+
+                                </div>
+                                <span class="error font-small-4" id="SalesdaterangError" style="display: none; color: red;"></span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-dark" id="SalestoPrint">Print</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--  Cancellation modal-->
+<div class="modal fade" id="Cancel_Order" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <input id="SalesId"  type="text" hidden/>
+                <div class="modal-header">
+                    <h5 class="modal-title">Cancel Order</h5>
+                  @*  <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>*@
+                </div>
+                <div class="modal-body">
+                     <div class="input-group row mb-3 align-items-center">
+                          <label class="form-label col-md-3 text-right mb-0">Cancellation Reason</label>
+                          <div class="col-md-7">
+                                <input type="text" class="form-control" id="CancellationReason" name="CancellationReason" placeholder="Please Enter Reason for Cancellation" autocomplete="off"  />
+
+                                <span id="cmp_LocationErr" class="text-danger" style="display:none;">Please Enter this field</span>
+                          </div>
+                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary"   data-update="Cancelled" id="CancelReason">Submit</button>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+
+
+@section Scripts{
+    <script src="~/assets/scripts/sales/stateList.js"></script>
+    <script src="~/assets/scripts/sales/UpdateItem.js"></script>
+    <script src="~/assets/scripts/sales/_SalesPartialView.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js">
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#advance_booking").on('change', function () {
+                if (this.checked) {
+                    $(".advance_booking_status").css("display", "flex");
+                }
+                else {
+                    $(".advance_booking_status").css("display", "none");
+                }
+            });
+
+            $('#slotTime').datetimepicker({
+                "allowInputToggle": true,
+                "showClose": true,
+                "showClear": true,
+                "showTodayButton": true,
+                "format": "hh:mm:ss A",
+            });
+
+
+        })
+         </script>
+        <script type="text/javascript">
+          function set_cookie (cookieName,cookieValue,nDays) {
+          var today = new Date();
+           var expire = new Date();
+            if (nDays==null || nDays==0) nDays=1;
+            expire.setTime(today.getTime() + 3600000*24*nDays);
+            document.cookie = cookieName+"="+escape(cookieValue)
+                       + ";expires="+expire.toGMTString() 
+                       + "; path=/";
+}
+
+             function get_atribute () {
+           var myinfo = document.getElementsByTagName("input")[0].getAttribute("value");
+           if(myinfo != null)
+           {
+              set_cookie("BranchId", myinfo);
+           }
+             }
+
+           $(document).ready(function () {
+            get_atribute ();
+           });
+           </script>
+   
+}

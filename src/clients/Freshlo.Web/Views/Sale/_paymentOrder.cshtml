@@ -1,0 +1,97 @@
+﻿@using Freshlo.DomainEntities.DTO
+@using System.Globalization
+@using Freshlo.Web.Helpers
+
+@model List<PendingData>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+    m-data-table
+*@
+
+<table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle table-white-space-th" id="paymentSales">
+    <thead>
+        <tr>
+            <th>Sales Id</th>
+            <th>Customer Name</th>
+            <th>Address</th>
+            <th>Total Price</th>
+            <th>Order Status</th>
+            <th>Payment</th>
+            <th>Order On</th>
+            <th>Delivery Date</th>
+            <th>Bill Print</th>
+        </tr>
+    </thead>
+    <tbody id="saleslist">
+        @foreach (var saleslist in Model)
+        {
+        <tr>
+            <td class="">
+                <a href="#" class="text-link">@saleslist.SalesOrder</a>
+            </td>
+            <td>
+                <a href="/Customer/Detail/@saleslist.CustId" class="text-link">@(saleslist.Name == null ? "N/A" : saleslist.Name)</a><span class="font-small-3 display-block text-dark">@saleslist.ContactNo</span>
+            </td>
+            <td class="text-dark">
+                @saleslist.BuildingName, @saleslist.RoomNo, @saleslist.Locality, @saleslist.Sector, @saleslist.ZipCode
+            </td>
+
+            <td class="font-medium-1 text-bold-700">
+                <span class="CurrencyData">@saleslist.currencttype</span>
+                @if (saleslist.taxType == 1 && saleslist.taxbillType == 1 && saleslist.gstTax == 0)
+                {
+                    <span class="font-large-1 text-bold-700">@(Convert.ToDouble(saleslist.TotalPrice) - (saleslist.Wallet) )</span>
+                }
+                else if (saleslist.taxType == 1 && saleslist.taxbillType == 2 && saleslist.gstTax == 0)
+                {
+                    <span class="font-large-1 text-bold-700">@(Convert.ToDouble(saleslist.TaxableAmount))</span>
+                }
+                else if (saleslist.taxType == 1 && saleslist.taxbillType == 1 && saleslist.gstTax != 0)
+                {
+                    <span class="font-large-1 text-bold-700">@(Convert.ToDouble(saleslist.TotalPrice) - (saleslist.Wallet) )</span>
+                }
+                else if (saleslist.taxType == 1 && saleslist.taxbillType == 2 && saleslist.gstTax != 0)
+                {
+                    <span class="font-large-1 text-bold-700">@(Convert.ToDouble(saleslist.TaxableAmount))</span>
+                }
+                else if (saleslist.taxType == 2 && saleslist.taxbillType == 1)
+                {
+                    <span class="font-large-1 text-bold-700">@(Convert.ToDouble(saleslist.TotalPrice) - (saleslist.Wallet) )</span>
+                }
+                else if (saleslist.taxType == 2 && saleslist.taxbillType == 1 && saleslist.gstTax == 2)
+                {
+                    <span class="font-large-1 text-bold-700">@(Convert.ToDouble(saleslist.TaxableAmount))</span>
+                }
+                else
+                {
+                    <span class="font-large-1 text-bold-700">@(Convert.ToDouble(saleslist.TotalPrice) - (saleslist.Wallet) )</span>
+                }
+            </td>
+
+            <td><span class="m-badge m-badge--rounded m-badge--wide font-small-3 m-badge--@(SalesHelpers.OrderStatusTag.ContainsKey(saleslist.OrderStatus) ? SalesHelpers.OrderStatusTag[saleslist.OrderStatus]:"info")">@saleslist.OrderStatus</span></td>
+
+
+            <td><span class="m-badge m-badge--rounded m-badge--wide font-small-3 m-badge--@(SalesHelpers.PaymentStatusTag.ContainsKey(saleslist.PaymentStatus) ? SalesHelpers.PaymentStatusTag[saleslist.PaymentStatus]:"Not Known")">@saleslist.PaymentStatus</span></td>
+
+            <td class="text-dark">
+                @saleslist.CreatedOn.ToString("dd-MMM-yyyy", CultureInfo.InvariantCulture)
+            </td>
+            <td class="text-dark">
+                @saleslist.DeliveryDate.ToString("dd-MMM-yyyy", CultureInfo.InvariantCulture)
+            </td>
+            <td>
+                <a href="@Url.Action("Index","Print",new { id1 = saleslist.SalesOrder })">
+                    <i class="flaticon-technology text-muted"></i>
+                </a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<script>
+    $('#paymentSales').DataTable({
+        "pageLength": 100,
+        "ordering": false,
+        "sorting": true
+    });
+</script>

@@ -1,0 +1,121 @@
+﻿@using Freshlo.Web.Models
+@using Freshlo.Web.Helpers
+@model SalesVM
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Arabian Dastar</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <link href="~/assets/print/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/print/kotprint.css" rel="stylesheet" />
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Oswald:wght@300&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="#">
+    <style>
+        .table-middle td {
+            vertical-align: middle !important
+        }
+
+        .table-borderless th, .table-borderless td, .table-borderless thead th, .table-borderless tbody + tbody {
+            border: 0 !important
+        }
+
+        .print {
+            break-inside: avoid;
+        }
+    </style>
+
+</head>
+<!-- end::Head -->
+<!-- begin::Body -->
+<body style="font-family: 'Open Sans';font-size: 17px;">
+    <div class="p-4" id="Kotprintdata">
+        <div class="container-fluid" style="display: block; ">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3 class="text text-center">@Model.GetSalesOrderdetail.OrderType</h3><br />
+                    <div class="text-left">
+                        Bill No : @Model.GetSalesOrderdetail.SalesOrderId - @Model.GetSalesOrderdetail.LastUpdatedOn.ToString("dd-MM-yyyy hh:mm tt")<br>
+                        @*Cashier ID : @Model.GetSalesOrderdetail.CreatedBy  - @Model.GetSalesOrderdetail.EmpName<br />*@
+                        Table : <span class="font-medium-4 text-bold-700" style="font-size: 20px; font-weight: 800"> @Model.GetSalesOrderdetail.tableName  ( @Model.GetSalesOrderdetail.Name )</span><br>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-condensed table-borderless table-middle mb-0">
+                        <thead style="">
+                            <tr>
+                                @*<th class="text-left">Qty.</th>*@
+                                <th>Item</th>
+                            </tr>
+                        </thead>
+                        <tbody style="">
+                            @*@foreach (var tax in Model.GetGSTCount)
+                                {*@
+                            @foreach (var list in Model.GetSalesPrintList)
+                            {
+                                @if (list.KOT_Print == 1)
+                                {
+                                    <tr>
+                                        @*<td class="text-left" style="font-size: 22px; font-weight: 800"></td>*@
+
+                                        @if (list.Size == "NOVAR")
+                                        {
+                                            <td style="font-size: 20px; font-weight: 800">
+                                                @(list.ItemType == "Packed" ? list.QuantityValue : list.QuantityValue)  X   @list.PluName
+                                                @if (list.Remark != "No Remark")
+                                                {
+                                                    <br /> <span class="font" style="font-size:2rem;font-weight:400;padding-left:3rem;">(@list.Remark)</span>
+                                                }
+                                            </td>
+                                        }
+                                        @if (list.Size != "NOVAR")
+                                        {
+                                            <td style="font-size: 20px; font-weight: 800">
+                                                @(list.ItemType == "Packed" ? list.QuantityValue : list.QuantityValue)  X   @list.PluName  @list.Size
+                                                @if (list.Remark != "No Remark")
+                                                {
+                                                    <br /> <span class="font" style="font-size:2rem;font-weight:400;padding-left:3rem;">(@list.Remark)</span>
+                                                }
+                                            </td>
+
+                                        }
+                                    </tr>
+
+                                }
+                            }
+                            @*}*@
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <hr />
+
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            window.print();
+        });
+        window.onafterprint = function () {
+            window.location.href = '/Sale/tablestate/';
+        }
+    </script>
+
+
+</body>
+</html>

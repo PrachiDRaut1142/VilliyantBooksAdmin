@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BarCode" Version="2023.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Freshlo.Common\Freshlo.Common.csproj" />
+    <ProjectReference Include="..\Freshlo.Repository\Freshlo.Repository.csproj" />
+    <ProjectReference Include="..\Freshlo.RI\Freshlo.RI.csproj" />
+    <ProjectReference Include="..\Freshlo.SI\Freshlo.SI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Mvc.ViewFeatures">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.mvc.viewfeatures\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.ViewFeatures.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Identity.Core">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.identity.core\2.1.1\lib\netstandard2.0\Microsoft.Extensions.Identity.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

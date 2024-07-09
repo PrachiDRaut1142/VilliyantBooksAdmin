@@ -1,0 +1,37 @@
+﻿@using Freshlo.Web.Models.Sale;
+@using System.Globalization;
+@using Freshlo.Web.Helpers;
+@model SalesVM
+@{
+
+
+}
+
+<div class="table-name-title">
+    @if (Model.ViewMessage == "2")
+    {
+        <h5 class="mb-2 mt-3 font-medium-1">Ordering for Table : <span class="font-medium-4 font-weight-bold">TKWY</span></h5>
+        <span id="TableId" class="display-none">TKWY</span>
+        <span id="OrderType" style="display:none">Take Away</span>
+
+    }
+    @if (Model.ViewMessage == "3")
+    {
+        <h5 class="mb-2 mt-3 font-medium-1">Ordering for Table : <span class="font-medium-4 font-weight-bold">HOD</span></h5>
+        <span id="TableId" class="display-none">HOD</span>
+        <span id="OrderType" style="display:none">Home Delivery</span>
+
+    }
+    @if (Model.ViewMessage == "1")
+    {
+        <h5 class="mb-2 if-3 font-medium-1">Ordering for Table : <span class="font-medium-4 font-weight-bold">@Model.GetTableDetails.tableName</span></h5>
+        <span id="TableId" class="display-none">@Model.GetTableDetails.tableId</span>
+        <span id="OrderType" style="display:none">Dine In</span>
+    }
+</div>
+
+
+
+@{ 
+<script></script>
+}

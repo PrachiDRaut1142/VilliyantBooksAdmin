@@ -1,0 +1,64 @@
+﻿@using Freshlo.Web.Models.ItemMaster;
+@using Freshlo.Web.Helpers;
+@using System.Globalization
+@model ItemMasterVM;
+
+@{
+    ViewData["Title"] = "ItemDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/assets/css/pages/management/itemdetail.css" rel="stylesheet" />
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+    <div class="col-md-12">
+        <div class="">
+            <h3 class="m-subheader__title m-subheader__title--separator">Items Detail</h3>
+        </div>
+    </div>
+    <div class="">
+         <div class="row">
+              <div class="col-md-12">
+                  <div class="form-group row">
+                      <div class="col-md-4 col-sm-4 col-4">
+                          <div class='input-group'>
+                              <input type='text' class="form-control datetimerange" name="DeliveryDate" id="deliverydate" placeholder="Select Date Range" />
+                              <span class="input-group-addon" id="DateTimeIcon" onclick="clearError();"><span class="icon-calendar"></span></span>
+                          </div>
+                      </div>
+                      <div class="col-md-3">
+                          <div class="form-group">
+                              <button type="submit" class="btn btn-dark " onclick="filterData();" id="filterButton">Filter</button>
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+     <div class="m-portlet">
+         <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon m--hide">
+                        <i class="la la-gear"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">Non-Veg Summary</h3>
+                </div>
+            </div>
+        </div>
+        <div id="itemdetails">
+
+        </div>
+     </div>
+</div>
+
+@section Scripts{
+   <script type="text/javascript" src="~/assets/scripts/Dashboard/Financialdashboard.js"></script>
+   <script type="text/javascript" src="~/assets/scripts/management/itemdetails.js"></script>
+  <script type="text/javascript" src="~/assets/vendors/custom/datatables/datatables.bundle.js"></script>
+}

@@ -1,0 +1,708 @@
+﻿@using Freshlo.Web.Models.CustomerVM
+@model DetailViewModel
+@using Freshlo.Web.Helpers
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Customer Detail</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item">
+                    <a href="/Customer/Manage/" class="m-nav__link">
+                        <span class="m-nav__link-text">Customer Manage</span>
+                    </a>
+                </li>
+
+            </ul>
+
+
+        </div>
+        <div>
+            <div class="d-inline-flex">
+
+                @*<button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#refundInitiated"><i class="fa fa-save"> </i> Update Changes</button>*@
+                <div class="m-dropdown m-dropdown--inline  m-dropdown--arrow m-dropdown--align-right" m-dropdown-toggle="click">
+                    <a href="#" class="m-dropdown__toggle btn btn-dark dropdown-toggle" hidden>
+                        More Action
+                    </a>
+                    <div class="m-dropdown__wrapper">
+                        <span class="m-dropdown__arrow m-dropdown__arrow--right"></span>
+                        <div class="m-dropdown__inner">
+                            <div class="m-dropdown__body">
+                                <div class="m-dropdown__content">
+                                    <ul class="m-nav">
+                                        <li class="m-nav__section m-nav__section--first">
+                                            <span class="m-nav__section-text">Update Order</span>
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="#" class="m-nav__link" data-toggle="modal" data-target="#changeDeliveryDate">
+                                                <i class="m-nav__link-icon flaticon-file"></i>
+                                                <span class="m-nav__link-text">Change Delivery Date</span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="#" class="m-nav__link" data-toggle="modal" data-target="#updateDeliveryCharges">
+                                                <i class="m-nav__link-icon flaticon-file"></i>
+                                                <span class="m-nav__link-text">Update Delivery Charges</span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="#" class="m-nav__link" data-toggle="modal" data-target="#changeDeliveryDate">
+                                                <i class="m-nav__link-icon flaticon-file"></i>
+                                                <span class="m-nav__link-text">Initiate Refund</span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="#" class="m-nav__link" data-toggle="modal" data-target="#applyCouponCode">
+                                                <i class="m-nav__link-icon flaticon-file"></i>
+                                                <span class="m-nav__link-text">Apply Coupon Code</span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__item">
+                                            <a href="#" class="m-nav__link">
+                                                <i class="m-nav__link-icon flaticon-file-2"></i>
+                                                <span class="m-nav__link-text">Print Bill</span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+
+    <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" action="/ItemMaster/Detail/" id="itemMasterDetailformid" method="post">
+
+        <div class="row">
+            <div class="col-md-3">
+                <!--begin:: Widgets/Blog-->
+                <div class="m-portlet m-portlet--bordered-semi m-portlet--rounded-force">
+                    @*<div class="m-portlet__head m-portlet__head--fit" style="background-color: #f2f3f863;">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-action ">
+                                    <button type="button" id="DefaultImages" class="btn btn-sm m-btn--pill btn-primary">Set default</button>
+                                    <div class="">
+                                        <h3 class="mt-4">John Smith</h3>
+                                        <h6>95465465465</h6>
+                                        <h6 class="pt-0 m-0"><small>10 Jul 2020 12:22PM</small></h6>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="m-portlet__body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="m-widget19">
+                                    @*<div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides">
+                                            <img id="myImage" src="https://www.bsn.eu/wp-content/uploads/2016/12/user-icon-image-placeholder-300-grey.jpg" alt="" style="height:100px; width: 100px;">
+
+                                            <div class="m-widget19__shadow"></div>
+                                        </div>*@
+                                    @*<div class="m-widget19__content">
+                                            <div class="m-widget19__header">
+                                                <div id="appImage" class="">
+
+                                                    <a href="#" class="PictureImg" data-id="1">
+                                                        <img id="galleryid_1" src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/" class="img-thumb-df" style="width: 50px; height: 50px;" />
+                                                        <span hidden id="SpnId_1">https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/</span>
+                                                    </a>
+                                                    <input type="hidden" id="DefaultImg_1" value="" />
+
+                                                </div>
+                                                <span id="ImagesCount" hidden></span>
+                                                <a href="#" title="Upload Image">
+                                                    <span style="opacity:0.4" onclick=""><i class="fa fa-cart-arrow-down font-large-1"></i></span>
+                                                    <input id="Useravatar" type="file" name="files" multiple="" style="visibility: hidden" onchange="PreviewImage();">
+                                                </a>
+                                            </div>
+                                        </div>*@
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row ">
+                            <div class="col-md-12 mt-2">
+                                @*<label>Customer Sinze</label>*@
+                                <h2 class="font-medium-5 text-bold-600 ">@Model.CustomerDetail.Name <small>(@Model.Summary.Contact)</small></h2>
+
+                                <input hidden value="@Model.CustomerDetail.CustomerId" id="CustomerId" />
+                            </div>
+                            @*<div class="col-md-6">
+                                    <label>Last Ordered</label>
+                                    <h6 class="font-medium-1 text-bold-600">4 days ago</h6>
+                                </div>*@
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Cust ID</label>
+                                <h6 class="font-medium-1 text-bold-600">@Model.Summary.Name</h6>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Registered On</label>
+                                <h6 class="font-medium-1 text-bold-600">@Model.Summary.CreatedOn.ToString("dd-MMM-yyyy hh:mm tt")</h6>
+                            </div>
+
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Total Orders</label>
+                                <h6 class="font-medium-1 text-bold-600">@Model.Summary.OpenOrders</h6>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Last Ordered</label>
+                                <h6 class="font-medium-1 text-bold-600">@Model.Summary.DaysLeft days ago</h6>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Closed Orders</label>
+                                <h6 class="font-medium-1 text-success text-bold-600">@Model.Summary.ClosedOrders</h6>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Total Amount</label>
+                                <h6 class="font-medium-1 text-success text-bold-600"> <span class="CurrencyData">@Model.Summary.Symbol</span>  @Model.Summary.ClosedOrderAmount</h6>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-md-6 ">
+                                <label>Cancelled Order</label>
+                                <h6 class="font-medium-1 text-danger text-bold-600">@Model.Summary.CancelledOrderCount</h6>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Cancelled Amount</label>
+                                <h6 class="font-medium-1 text-danger text-bold-600"> <span class="CurrencyData">@Model.Summary.Symbol</span> @Model.Summary.CancelledOrderAmount</h6>
+                            </div>
+                        </div>
+                        @*<hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Wallet Cash</label>
+                                    <h6 class="font-medium-1 text-bold-600">@(SalesHelpers.Data) @Model.Summary.InWallet</h6>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Wallet Used</label>
+                                    <h6 class="font-medium-1 text-bold-600">@(SalesHelpers.Data) @Model.Summary.WalletUsed</h6>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Reward Points</label>
+                                    <h6 class="font-medium-1 text-bold-600">@Model.Summary.RewardPoint points</h6>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Points Redeemed</label>
+                                    <h6 class="font-medium-1 text-bold-600">@Model.Summary.RedeemedPoint Redeemed</h6>
+                                </div>
+                            </div>*@
+                    </div>
+                </div>
+
+                <!--end:: Widgets/Blog-->
+
+
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!--begin::Portlet-->
+                        <div class="m-portlet m-portlet--tabs">
+                            <ul class="nav nav-tabs  m-tabs-line m-nav-tab-account-lookup" role="tablist">
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link active" id="recentlyAccessed" data-toggle="tab" href="#Orderslist" role="tab">
+                                        <i class="flaticon-list-3"></i> List of Orders
+                                    </a>
+                                </li>
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link " data-toggle="tab" href="#CustomerInfo" role="tab">
+                                        <i class="flaticon-info"></i> Customer Detail
+                                    </a>
+                                </li>
+                                <li class="nav-item m-tabs__item" hidden>
+                                    <a class="nav-link m-tabs__link " data-toggle="tab" href="#CustAddress" role="tab">
+                                        <i class="flaticon-info"></i> Address
+                                    </a>
+                                </li>
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#Addadresslist" role="tab">
+                                        <i class="flaticon-list-3"></i>Add Address
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="m-portlet__body">
+                                <div class="tab-content">
+                                    <!--User Info START-->
+                                    <div class="tab-pane active" id="Orderslist" role="tabpanel">
+                                    </div>
+
+                                    <div class="tab-pane" id="CustomerInfo" role="tabpanel">
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                @*  <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" action="/ItemMaster/Detail/" id="itemMasterDetailformid" method="post">*@
+                                                <div class="form-group row">
+                                                    <label for="" class="col-md-3 col-form-label">Customer Name<span class="text-warning">*</span></label>
+                                                    <div class="col-md-5">
+                                                        <input type="text" class="form-control m-input m-input--solid" value="@Model.CustomerDetail.UserType @Model.CustomerDetail.Name" placeholder="Customer Name">
+                                                        <span class="error font-small-3" id="SpnTagId" style="display: none; color: red;">This field is required</span>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-md-3 col-form-label">Mobile Number<span class="text-warning">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <input type="text" class="form-control m-input m-input--solid" value="@Model.CustomerDetail.ContactNo" placeholder="Contact No">
+                                                        <span class="error font-small-3" id="SpnTagId" style="display: none; color: red;">This field is required</span>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-md-3 col-form-label">Email Address<span class="text-warning">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <input type="text" class="form-control m-input m-input--solid" value="@Model.CustomerDetail.EmailId" placeholder="Email Address">
+                                                        <span class="error font-small-3" id="SpnTagId" style="display: none; color: red;">This field is required</span>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-md-3 col-form-label">Status<span class="text-warning">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <input type="text" class="form-control m-input m-input--solid" value="@Model.CustomerDetail.Status" disabled placeholder="Status">
+                                                        <span class="error font-small-3" id="SpnTagId" style="display: none; color: red;">This field is required</span>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-md-3 col-form-label">Source<span class="text-warning">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <input type="text" class="form-control m-input m-input--solid" value="@Model.CustomerDetail.Source" disabled placeholder="Source">
+                                                        <span class="error font-small-3" id="SpnTagId" style="display: none; color: red;">This field is required</span>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" hidden>
+                                                    <label for="" class="col-md-3 col-form-label">Hub<span class="text-warning">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <input type="text" class="form-control m-input m-input--solid" value="@Model.CustomerDetail.Hub" disabled placeholder="Hub">
+                                                        <span class="error font-small-3" id="SpnTagId" style="display: none; color: red;">This field is required</span>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--User Info END-->
+                                    <!--Recently Accessed START-->
+                                    <!--Recently Accessed END-->
+
+                                    <div class="tab-pane" id="CustAddress" role="tabpanel">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">Address <span class="text-warning">*</span></label>
+                                                    <div class="col-md-5">
+                                                        <input type="text" class="form-control m-input m-input--solid" value="@Model.CustomerDetail.AddressType " disabled placeholder="Addree Type">
+                                                        <span class="error font-small-3" id="SpnTagId" style="display: none; color: red;">This field is required</span>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" hidden>
+                                                    <label class="col-md-3 col-form-label" hidden>Building Name<span class="text-warning">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <input type="text" class="form-control m-input m-input--solid" value="@Model.CustomerDetail.BuildingName" disabled placeholder="Building Name">
+                                                        <span class="error font-small-3" id="SpnTagId" style="display: none; color: red;">This field is required</span>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" hidden>
+                                                    <label class="col-md-3 col-form-label" hidden>Room No.<span class="text-warning">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <input type="text" class="form-control m-input m-input--solid" value="@Model.CustomerDetail.RoomNo" disabled placeholder="Room No">
+                                                        <span class="error font-small-3" id="SpnTagId" style="display: none; color: red;">This field is required</span>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">Locality<span class="text-warning">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <input type="text" class="form-control m-input m-input--solid" value="@Model.CustomerDetail.Locality" disabled placeholder="Status">
+                                                        <span class="error font-small-3" id="SpnTagId" style="display: none; color: red;">This field is required</span>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">Sector<span class="text-warning">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <input type="text" class="form-control m-input m-input--solid" value="@Model.CustomerDetail.Sector" disabled placeholder="Sector">
+                                                        <span class="error font-small-3" id="SpnTagId" style="display: none; color: red;">This field is required</span>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">Landmark<span class="text-warning">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <input type="text" class="form-control m-input m-input--solid" value="@Model.CustomerDetail.Landmark" disabled placeholder="Landmark">
+                                                        <span class="error font-small-3" id="SpnTagId" style="display: none; color: red;">This field is required</span>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">City<span class="text-warning">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <input type="text" class="form-control m-input m-input--solid" value="@Model.CustomerDetail.City" disabled placeholder="Landmark">
+                                                        <span class="error font-small-3" id="SpnTagId" style="display: none; color: red;">This field is required</span>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" hidden>
+                                                    <label class="col-md-3 col-form-label">Zip Code<span class="text-warning">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <input type="text" class="form-control m-input m-input--solid" value="@Model.CustomerDetail.ZipCode" disabled placeholder="Zip Code">
+                                                        <span class="error font-small-3" id="SpnTagId" style="display: none; color: red;">This field is required</span>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">State<span class="text-warning">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <input type="text" class="form-control m-input m-input--solid" value="@Model.CustomerDetail.State" disabled placeholder="State">
+                                                        <span class="error font-small-3" id="SpnTagId" style="display: none; color: red;">This field is required</span>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label">Country<span class="text-warning">*</span></label>
+                                                    <div class="col-md-3">
+                                                        <input type="text" class="form-control m-input m-input--solid" value="@Model.CustomerDetail.Country" disabled placeholder="Coumtry">
+                                                        <span class="error font-small-3" id="SpnTagId" style="display: none; color: red;">This field is required</span>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="tab-pane" id="Addadresslist" role="tabpanel">
+                                        <div class="text-right mb-3">
+                                            <button type="button" class="btn btn-dark" id="add_sec_address" @*data-toggle="modal" data-target="#add_second_address"*@ data-id="@Model.CustomerDetail.CustomerId"><i class="la la-plus"></i> Add Address</button>
+                                        </div>
+                                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle table-white-space-th" id="Addaddresslist">
+                                            <thead>
+                                                <tr>
+                                                    <th>Customer Id</th>
+                                                    <th>Address</th>
+                                                    <th>Edit</th>
+                                                    <th>Remove</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="addaddress">
+                                                @{
+                                                    if (Model.CustomerDetailist != null)
+                                                    {
+                                                        foreach (var item in @Model.CustomerDetailist)
+                                                        {
+                                                            <tr>
+                                                                <th>@item.AddId</th>
+                                                                <th>@item.Address1</th>
+                                                                <td><a href="#" class="text-dark" data-id="@item.AddId" id="editadd" @*data-toggle="modal" @*data-target="#address_details" *@ value="@item.AddId"> <i class="flaticon-edit"></i> </a></td>
+                                                                <td><a href="#" class="text-danger " data-id="@item.AddId" id="deleteadd"> <i class="flaticon-delete"> </i></a></td>
+
+
+                                                            </tr>
+                                                        }
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--end::Portlet-->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+
+<!-- ADDRESS DETAILS -->
+<div class="modal fade" id="address_details" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Address Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="m-form m-form--fit m-form--label-align-right" action="/Customer/Edit" id="UpdateUser" method="post">
+               
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label class="col-md-4 col-sm-12 col-12 col-form-label">Customer Name</label>
+                        <div class="col-md-4 col-sm-3 col-6">
+                            <input type="text" class="form-control m-input m-input--solid" id="Name" name="name" placeholder="Enter Customer Name" autocomplete="off">
+                            <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-md-4 col-sm-12 col-12 col-form-label">Customer Number</label>
+                        <div class="col-md-4 col-sm-3 col-6">
+                            <input type="text" class="form-control m-input m-input--solid" name="contactNo" id="ContactNo" placeholder="Enter Customer Number" autocomplete="off">
+                            <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-4 col-sm-12 col-12 col-form-label">Email ID</label>
+                        <div class="col-md-7 col-sm-3 col-6">
+                            <input type="text" class="form-control m-input m-input--solid" name="emailId" id="EmailId" placeholder="Enter Email ID" autocomplete="off">
+                            <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div class="form-group row">
+                        <label class="col-md-4 col-sm-12 col-12 col-form-label">Address Type</label>
+                        <div class="col-md-4 col-sm-3 col-6">  
+                            <select class="form-control m-input m-input--solid" id="AddressType" name="addressType" autocomplete="off">
+                                <option value="Home" selected>Home</option>
+                                <option value="Office" >Office</option>
+                                <option value="Default">Default</option>
+                            </select>
+                          
+                            <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-4 col-sm-12 col-12 col-form-label">Address </label>
+                        <div class="col-md-4 col-sm-3 col-6">
+                            <textarea type="text" class="form-control m-input m-input--solid" id="Address2" name="address2" placeholder="Enter Address" style="resize:none;" autocomplete="off"></textarea>
+                            <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4 col-sm-12 col-12 col-form-label">Area</label>
+                        <div class="col-md-4 col-sm-3 col-6">
+                            <input type="text" class="form-control m-input m-input--solid" id="Locality" name="locality" placeholder="Enter Area" autocomplete="off">
+                            <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4 col-sm-12 col-12 col-form-label">Sector</label>
+                        <div class="col-md-4 col-sm-3 col-6">
+                            <input type="text" class="form-control m-input m-input--solid" id="Sector" name="sector" autocomplete="off">
+                            <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                        </div>
+                    </div>
+
+                    <hr />
+                    <div class="form-group row">
+                        <label class="col-md-4 col-sm-12 col-12 col-form-label">Landmark</label>
+                        <div class="col-md-4 col-sm-3 col-6">
+                            <input type="text" class="form-control m-input m-input--solid" id="Landmark" name="landmark" placeholder="Enter landmark" autocomplete="off"/>
+                            <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-4 col-sm-12 col-12 col-form-label">City</label>
+                        <div class="col-md-4 col-sm-3 col-6">
+                            <input type="text" class="form-control m-input m-input--solid" id="City" name="city" placeholder="Enter City" autocomplete="off"/>
+                            <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-4 col-sm-12 col-12 col-form-label">State</label>
+                        <div class="col-md-4 col-sm-3 col-6">
+                            <input type="text" class="form-control m-input m-input--solid" id="State" name="state" placeholder="Enter State" autocomplete="off"/>
+                            <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-4 col-sm-12 col-12 col-form-label">Country</label>
+                        <div class="col-md-4 col-sm-3 col-6">
+                            <input type="text" class="form-control m-input m-input--solid" id="Country" name="country" value="" placeholder="Enter Country" autocomplete="off"/>
+                            <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                        </div>
+                        <input type="text" id="Addid" name="addid" value="" hidden />
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success mr-2" id="addresschangebutton">Change</button>
+                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- ADD SECOND ADDRESS -->
+<div class="modal fade" id="add_second_address" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add Address</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="m-form m-form--fit m-form--label-align-right" action="/Customer/AddAddress" id="Create2address" method="post">
+                <input type="text" id="custId" name="CustomerId" hidden/>
+                <div class="modal-body">
+                    <div class="form-group row" hidden>
+                        <label class="col-md-4 col-sm-12 col-12 col-form-label">Customer Name</label>
+                        <div class="col-md-4 col-sm-3 col-6">
+                            <input type="text" class="form-control m-input m-input--solid" id="Name" name="name" placeholder="Enter Customer Name" autocomplete="off">
+                            <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row" hidden>
+                        <label class="col-md-4 col-sm-12 col-12 col-form-label">Customer Number</label>
+                        <div class="col-md-4 col-sm-3 col-6">
+                            <input type="text" class="form-control m-input m-input--solid" name="contactNo" id="ContactNo" placeholder="Enter Customer Number" autocomplete="off">
+                            <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row" hidden>
+                        <label class="col-md-4 col-sm-12 col-12 col-form-label">Email ID</label>
+                        <div class="col-md-7 col-sm-3 col-6">
+                            <input type="text" class="form-control m-input m-input--solid" name="emailId" id="EmailId" placeholder="Enter Email ID" autocomplete="off">
+                            <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div class="form-group row">
+                        <label class="col-md-4 col-sm-12 col-12 col-form-label">Address Type</label>
+                        <div class="col-md-4 col-sm-3 col-6">
+                            <select class="form-control m-input m-input--solid" id="AddressType" name="addressType" autocomplete="off">
+                                <option value="Default" selected>Default</option>
+                                <option value="Home">Home</option>
+                                <option value="Office">Office</option>
+
+                            </select>
+                            <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-4 col-sm-12 col-12 col-form-label">Address </label>
+                        <div class="col-md-4 col-sm-3 col-6">
+                            <textarea type="text" class="form-control m-input m-input--solid" id="Address1" name="Address1" placeholder="Enter Address" style="resize:none;" autocomplete="off"></textarea>
+                            <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4 col-sm-12 col-12 col-form-label">Area</label>
+                        <div class="col-md-4 col-sm-3 col-6">
+                            <input type="text" class="form-control m-input m-input--solid" id="Locality" name="locality" placeholder="Enter Area" autocomplete="off">
+                            <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4 col-sm-12 col-12 col-form-label">Sector</label>
+                        <div class="col-md-4 col-sm-3 col-6">
+                            <input type="text" class="form-control m-input m-input--solid" id="Sector" name="sector" placeholder="Enter Sector" autocomplete="off">
+                            <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                        </div>
+                    </div>
+
+                    <hr />
+                    <div class="form-group row">
+                        <label class="col-md-4 col-sm-12 col-12 col-form-label">Landmark</label>
+                        <div class="col-md-4 col-sm-3 col-6">
+                            <input type="text" class="form-control m-input m-input--solid" id="Landmark" name="landmark" placeholder="Enter landmark" autocomplete="off"/>
+                            <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-4 col-sm-12 col-12 col-form-label">City</label>
+                        <div class="col-md-4 col-sm-3 col-6">
+                            <input type="text" class="form-control m-input m-input--solid" id="City" name="city" placeholder="Enter City" autocomplete="off" />
+                            <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-4 col-sm-12 col-12 col-form-label">State</label>
+                        <div class="col-md-4 col-sm-3 col-6">
+                            <input type="text" class="form-control m-input m-input--solid" id="State" name="state" placeholder="Enter State" autocomplete="off" />
+                            <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-4 col-sm-12 col-12 col-form-label">Country</label>
+                        <div class="col-md-4 col-sm-3 col-6">
+                            <input type="text" class="form-control m-input m-input--solid" id="Country" name="country" value="" placeholder="Enter Country" autocomplete="off" />
+                            <span class="text-danger font-small-3 text-bold-600" style="display:none;"></span>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success mr-2" id="create2add" data-id="@Model.CustomerDetail.CustomerId">Add</button>
+                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+
+    <script src="~/assets/scripts/customer/detail.js"></script>
+
+    <script>
+
+                //$('#addresschangebutton').click(function () {
+
+
+                //    alert('check');
+                //});
+
+    </script>
+}

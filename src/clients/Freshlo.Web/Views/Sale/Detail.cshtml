@@ -1,0 +1,1809 @@
+﻿@using Freshlo.Web.Models.Sale;
+@using System.Globalization;
+@using Freshlo.Web.Helpers;
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Options
+@model SalesDetailVM
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int counterHeader = 0;
+    int counterBody = 0;
+    var currencySymbol = Model.Currencyinfo.FirstOrDefault(x => x.status == 1).symbol;
+
+}
+<style>
+    .payment_status,
+    .payment_mode {
+        display: flex;
+        padding: 0;
+        flex-wrap: wrap;
+        margin-top: 0.5rem;
+    }
+
+        .payment_status li,
+        .payment_mode li {
+            list-style: none;
+            display: inline-block;
+            padding: 0.5rem 0;
+            margin-right: 1rem;
+            text-align: center;
+            border: 2px dashed #c5c1c1;
+            cursor: pointer;
+            width: 30%;
+            margin-bottom: 1rem;
+        }
+
+            .payment_status li i,
+            .payment_mode li i {
+                margin-right: 0.2rem;
+                vertical-align: middle;
+                display: none;
+            }
+
+            .payment_status li.active {
+                border-color: #cc2424;
+                color: #cc2424;
+            }
+
+            .payment_mode li.active {
+                border-color: #cc2424;
+                color: #cc2424;
+            }
+
+
+            .payment_status li.active i {
+                display: inline-block;
+            }
+
+            .payment_mode li.active i {
+                display: inline-block;
+            }
+</style>
+
+
+<link href="~/assets/css/pages/pos/detail.css" rel="stylesheet" />
+<link href="~/assets/css/right-panel.css" rel="stylesheet" />
+
+<form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" action="/Sale/Detail/" id="SalesDetailformid" method="post">
+    <input type="text" id="getprevurl" name="getprevurl" hidden />
+    <input hidden id="AWBNumber" name="AWBNumber" asp-for="@Model.SaleData.AWBNumber" />
+
+    <!-- BEGIN: Subheader -->
+    <div class="m-subheader">
+        <div class="d-flex align-items-center">
+            <div class="mr-auto">
+                <h3 class="m-subheader__title m-subheader__title--separator">Order Detail</h3>
+                <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+
+                    <li class="m-nav__item">
+                        <a href="/Sale/Manage/" class="m-nav__link">
+                            <span class="m-nav__link-text">Sale Manage</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            <div>
+                @*<div class="" style="position: fixed;top: 95px;right: 20px;z-index:3;">
+                    <button type="button" class="btn btn-primary"><i class="fa fa-save"></i> Update Order</button>
+                    </div>*@
+                <div class="row display-inline-flex pr-2">
+
+                    @if (Model.SaleData.OrderdStatus == "Delivered" || Model.SaleData.OrderdStatus == "Cancelled")
+                    {
+                                        <div class="mr-2">
+                            @*<label>Order Status</label>*@
+                                            <select class="form-control text-bold-600" id="OrderStatusId" name="OrderStatus" asp-for="SaleData.OrderdStatus" asp-items="@SalesHelpers.StatusList" disabled>
+                                                <option selected disabled>Select Order Status</option>
+                                            </select>
+                                            <span hidden name="SalesId" id="SalesId" asp-for="@Model.SaleData.SalesOrderId">@Model.SaleData.SalesOrderId</span>
+                                            <input hidden id="SalesId" name="SalesId" asp-for="@Model.SaleData.SalesOrderId" />
+
+
+                            @*<select asp-items="@SalesHelpers.StatusList" class="form-control m-input m-input--solid" id="pending_Status">
+                                <option value="">Select Order Status</option>
+                                </select>*@
+                                        </div>
+                    }
+                    else
+                    {
+                                        <div class="mr-2">
+                            @*<label>Order Status</label>*@
+                                            <select class="form-control text-bold-600" id="OrderStatusId" name="OrderStatus" asp-for="SaleData.OrderdStatus" asp-items="@SalesHelpers.StatusList">
+                                                <option selected disabled>Select Order Status</option>
+                                            </select>
+                                            <span hidden name="SalesId" id="SalesId" asp-for="@Model.SaleData.SalesOrderId">@Model.SaleData.SalesOrderId</span>
+                                            <input hidden id="SalesId" name="SalesId" asp-for="@Model.SaleData.SalesOrderId" />
+                            @*<select asp-items="@SalesHelpers.StatusList" class="form-control m-input m-input--solid" id="pending_Status">
+                                <option value="">Select Order Status</option>
+                                </select>*@
+                                        </div>
+                    }
+
+
+                    <button type="button" class="btn btn-success mr-2" id="UpdateSalesOrder"><i class="fa fa-save"> </i> Save</button>
+                    <a class="btn btn-dark mr-2" href="@Url.Action("Index","Print",new { id1 = @Model.SaleData.SalesOrderId })">
+                        <i class="flaticon-technology"></i>
+                    </a>
+                    @*<button type="button" class="btn btn-dark" id="PrintBill"><i class="m-nav__link-icon flaticon-technology">  </i></button>*@
+                    @if (Convert.ToString(User.FindFirst("userRole").Value) == "System Admin" || Convert.ToString(User.FindFirst("userRole").Value) == "Management")
+                    {
+                                        <button type="button" class="btn btn-danger mr-2" id="ChanePaymentStatus" data-toggle="modal" data-target="#changepaymentStatus"><i class="m-nav__link-icon flaticon-file">  </i>Payment Status</button>
+
+                                    <br>
+
+                                    <br>
+
+                    }
+                    <div class="m-dropdown m-dropdown--inline  m-dropdown--arrow m-dropdown--align-right float-right" m-dropdown-toggle="click">
+                        <a href="#" class="m-dropdown__toggle btn btn-dark dropdown-toggle" style="height: 38px; line-height: 20px">
+                            <i class="m-nav__link-icon flaticon-settings">  </i>
+                            Options
+                        </a>
+                        <div class="m-dropdown__wrapper">
+                            <span class="m-dropdown__arrow m-dropdown__arrow--right"></span>
+                            <div class="m-dropdown__inner">
+                                <div class="m-dropdown__body">
+                                    <div class="m-dropdown__content">
+                                        <ul class="m-nav">
+                                            <li class="m-nav__section m-nav__section--first">
+
+                                                <span class="m-nav__section-text">Update Order</span>
+                                            </li>
+                                            @*  @if(Model.SaleData.OrderdStatus != "Ordered" ){*@
+                                            @if (Model.SaleData.OrderType == "Home Delivery")
+                                            {
+                                                                <li class="m-nav__item">
+                                                                    <a href="#" class="m-nav__link" id="ChangeDeliveryDate" data-toggle="modal" data-target="#changeDeliveryDate">
+                                                                        <i class="m-nav__link-icon flaticon-file"></i>
+                                                                        <span class="m-nav__link-text">Change Delivery Date</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="m-nav__item">
+                                                                    <a href="#" class="m-nav__link" data-toggle="modal" data-target="#updateDeliveryCharges">
+                                                                        <i class="m-nav__link-icon flaticon-file"></i>
+                                                                        <span class="m-nav__link-text">Update Delivery Charges</span>
+                                                                    </a>
+                                                                </li>
+                                            }
+
+                                            @*<li class="m-nav__item">
+                                                <a href="@Url.Action("Index","Print",new { id1 = @Model.SaleData.SalesOrderId })" class="m-nav__link" target="popup">
+                                                <i class="m-nav__link-icon flaticon-technology"></i>
+                                                <span class="m-nav__link-text">Print Bill</span>
+                                                </a>
+                                                </li>*@
+
+                                            @*}*@
+                                            <li class="m-nav__item" style="display:none">
+                                                <a href="#" class="m-nav__link" data-toggle="modal" data-target="#refundInitiateds">
+                                                    <i class="m-nav__link-icon flaticon-file"></i>
+                                                    <span class="m-nav__link-text">Initiate Refund</span>
+                                                </a>
+                                            </li>
+                                            <li class="m-nav__item">
+                                                <a href="#" class="m-nav__link" data-toggle="modal" data-target="#applyCouponCode">
+                                                    <i class="m-nav__link-icon flaticon-file"></i>
+                                                    <span class="m-nav__link-text">Apply Coupon Code</span>
+                                                </a>
+                                            </li>
+
+                                            <li class="m-nav__item" style="display:none">
+                                                <a href="#" class="m-nav__link" data-toggle="modal" data-target="#changeCustomerMd">
+                                                    <i class="m-nav__link-icon flaticon-file"></i>
+                                                    <span class="m-nav__link-text">Change Customer</span>
+                                                </a>
+                                            </li>
+                                            @if (Model.SaleData.PaymentStatus != "Paid")
+                                            {
+                                                @*<li class="m-nav__item">
+                                                    <a href="#" class="m-nav__link" data-toggle="modal" data-target="#changepaymentStatus">
+                                                    <i class="m-nav__link-icon flaticon-file"></i>
+                                                    <span class="m-nav__link-text">Change Payment Status</span>
+                                                    </a>
+                                                    </li>*@
+                                            }
+                                            <li class="m-nav__item" id="DeliveryPerson_li" style="display:none">
+                                                <a href="#" class="m-nav__link" data-toggle="modal" id="AssignDelivery-DrpDwn">
+                                                    <i class="m-nav__link-icon flaticon-file"></i>
+                                                    <span class="m-nav__link-text">Assign Delivery Person</span>
+                                                </a>
+                                            </li>
+                                            @if (Model.SaleData.TransactionId != "NA")
+                                            {
+                                                                <li class="m-nav__item" id="Refresh_li">
+                                                                    <a href="#" class="m-nav__link" id="Refresh">
+                                                                        <i class="m-nav__link-icon flaticon-file"></i>
+                                                                        <span class="m-nav__link-text">Refresh</span>
+                                                                    </a>
+                                                                </li>
+
+                                            }
+
+                                            @*<li class="m-nav__item">
+                                                <a href="#" class="m-nav__link">
+                                                <i class="m-nav__link-icon flaticon-file-2"></i>
+                                                <span class="m-nav__link-text">Print Bill</span>
+                                                </a>
+                                                </li>*@
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END: Subheader -->
+
+    <div class="m-content">
+        @* <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" action="/Sale/Detail/" id="SalesDetailformid" method="post">*@
+        <div class="row">
+            <div class="col-md-3">
+                <div class="m-portlet" style="position: sticky !important;top: 80px;z-index: 3;">
+                    <div class="m-portlet__body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="mb-1 font-small-2">Sales Order ID</label>
+                                    <h6 class="font-medium-1 text-bold-600" id="SalesId">@Model.SaleData.SalesOrderId <small>(@Model.SaleData.Source)</small></h6>
+                                    <span hidden name="Sales_Id" id="SalesOrderId" asp-for="@Model.SaleData.SalesOrderId">@Model.SaleData.SalesOrderId</span>
+                                    <input hidden name="CreatedBy" asp-for="SaleData.CreatedBy" />
+                                    <input hidden id="sales-Id" name="Id" asp-for="SaleData.Id" />
+                                    <span hidden id="CreatedBy">@Model.SaleData.CreatedBy</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="mb-1 font-small-2">Ordered Date</label>
+                                    <h6 class="font-medium-1 text-bold-600">@(Model.SaleData.OrderedOn.ToString("dd-MMM-yyyy  hh:mm", CultureInfo.InvariantCulture))</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="mb-1 font-small-2">Sales Order Status</label>
+                                    <h6 class="font-medium-1 text-bold-600">
+                                        <span class="text-uppercase m-badge m-badge--@(SalesHelpers.OrderStatusTag.ContainsKey(Model.SaleData.OrderdStatus) ? SalesHelpers.OrderStatusTag[Model.SaleData.OrderdStatus]:"info") m-badge--wide">@Model.SaleData.OrderdStatus</span>
+                                    </h6>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="mb-1 font-small-2">Payment Status</label>
+                                    <h6 class="font-medium-1 text-bold-600">
+                                        <span class="text-uppercase m-badge m-badge--@(SalesHelpers.PaymentStatusTag.ContainsKey(Model.SaleData.PaymentStatus) ? SalesHelpers.PaymentStatusTag[Model.SaleData.PaymentStatus]:"warning") m-badge--wide" id="PaymentStatus">@Model.SaleData.PaymentStatus</span>
+
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="mb-1 font-small-2">Payment Mode</label>
+                                    <h6 class="font-medium-1 text-bold-600" id="PaymentMode">@Model.SaleData.PaymentMode</h6>
+                                    <h6 class="font-medium-1 text-bold-600" id="TransactionIdS" style="display:none">@Model.SaleData.TransactionId</h6>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="mb-1 font-small-2">Coupon Applied</label>
+                                    <h6 class="font-medium-1 text-bold-600" name="CoupenCode" id="CoupenCode">@Model.SaleData.Coupencode</h6>
+                                    <input hidden id="CoupenId" name="CoupenId" asp-for="@Model.SaleData.CoupenId" />
+                                    <input hidden id="Coupendisc" name="Coupen_Disc" asp-for="@Model.SaleData.DiscountPer" />
+                                    <input hidden id="DiscountValue" name="Discount" asp-for="@Model.SaleData.Discount" />
+
+                                </div>
+                            </div>
+                        </div>
+                       @* <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="mb-1 font-small-2">Delivery Date</label>
+                                    <h6 class="font-medium-1 text-bold-600">@(Model.SaleData.DeliveryDate.ToString("dd-MMM-yyyy", CultureInfo.InvariantCulture))</h6>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="mb-1 font-small-2">Slot</label>
+                                    <h6 class="font-medium-1 text-bold-600">@Model.SaleData.SlotId</h6>
+                                    <span hidden id="MaxDiscount">@Model.SaleData.MaxDiscount</span>
+                                </div>
+                            </div>
+                        </div>*@
+                        @* <div class="row" >
+                            @if (Model.SaleData.AWBNumber == null || Model.SaleData.AWBNumber == "NA" || Model.SaleData.AWBNumber == "")
+                            {
+                            <div class="col-6" style="display:none">
+                            <div class="form-group">
+                            <label class="mb-1 font-small-2">Shippment Tracking Number</label>
+                            <h6 class="font-medium-1 d-inline text-bold-600">@(Model.SaleData.AWBNumber)</h6>
+                            <button class="ml-2 d-inline btn badge badge-pill btn-outline-dark" >UPDATE</button>
+                            </div>
+                            </div>
+                            }
+                            else
+                            {
+                            <div class="col-6">
+                            <div class="form-group">
+                            <label class="mb-1 font-small-2">Shippment Tracking Number</label>
+                            <h6 class="font-medium-1 d-inline text-bold-600">@(Model.SaleData.AWBNumber)</h6>
+                            <button class="ml-2 d-inline btn badge badge-pill btn-outline-dark" >UPDATE</button>
+                            </div>
+                            </div>
+                            }
+
+                            </div>*@
+
+                        <hr class="mt-0" />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <input hidden value="@Model.SaleData.TotalPrice" id="totalPr" />
+                                    <input hidden value="@Model.SaleData.Discount" id="discount" />
+                                    <input hidden value="@Model.SaleData.DeliveryCharges" id="deliveryChr" />
+                                    <input hidden value="@Model.SaleData.WalletAmount" id="walletAmount" />
+                                    <input hidden value="@Model.GSTDetail.TaxableAmount" id="TaxationPrice" />
+                                    <input hidden value="@Model.GSTDetail.CGSTValue" id="CGSTValue" />
+                                    <table class="table table-striped table-borderless">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2">Bill Summary</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Order Value<span id="currency" hidden>@(SalesHelpers.Data)</span> </td>
+                                                <td class="text-right text-bold-600">
+                                                    @currencySymbol 
+                                                        <span class="text-bold-600" id="billSubAmount1">
+                                                        @Model.SaleData.TotalPrice
+                                                        </span>
+                                                        <span hidden id="TotalCartDiscValue">@Model.SaleData.TotalPrice</span>
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>Delivery Charge</td>
+                                                <td class="text-right text-bold-600">
+                                                    + @currencySymbol 
+                                                    <span class="text-bold-600" id="billDeliveryCharge"> 
+                                                        @Model.SaleData.DeliveryCharges
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Discount Applied</td>
+                                                <td class="text-right text-bold-600">
+                                                    - @currencySymbol 
+                                                    <span class="text-bold-600" id="billDiscountAmt">
+                                                        @(Model.SaleData.Discount)
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Total Amount</td>
+                                                <td class="text-right text-bold-600"> 
+                                                    @currencySymbol 
+                                                    <span class="text-bold-600" id="billCalculationtAmt1">
+                                                        @((Model.SaleData.TotalPrice - Model.SaleData.Discount + Convert.ToDouble(Model.SaleData.DeliveryCharges)))
+                                                    </span></td>
+                                            </tr>
+
+                                            @*<tr>
+                                                <td>Wallet Cash Applied</td>
+                                                <td class="text-right text-bold-600">- @currencySymbol <span class="text-bold-600" id="WallentAmount">@(Model.SaleData.WalletAmount)</span></td>
+                                                </tr>*@
+                                            @if (Model.SaleData.taxType == 0 && Model.SaleData.taxBillType == 0)
+                                            {
+
+                                                    <tr>
+                                                        <td>GST (CGST + SGST)</td>
+                                                        <td class="text-right">
+                                                        <span class="text-bold-600">+  @currencySymbol <span class="text-bold-600" id="GSTValueId">@Model.GSTDetail.GST_Sum</span></span><br />
+                                                        </td>
+                                                        </tr>
+
+                                                                <tr style="background-color: #ffdd78;color: #3e3e3e;font-weight: bold;font-size: 15px;">
+                                                                    <td>Payable Amount</td>
+                                                                    <td class="text-right text-bold-600">
+                                                        @ViewBag.SellingPrice<span class="text-bold-600" id="billFinalAmount"></span>
+                                                                        <span hidden id="TotalsalesListCount"> @Model.salesListcount</span>
+                                                                    </td>
+                                                                </tr>
+
+                                            }
+                                            @if (Model.SaleData.taxType == 1 && Model.SaleData.taxBillType == 1 && Model.SaleData.gstTax == 0)
+                                            {
+                                                     <tr>
+                                                        <td>GST (CGST + SGST)</td>
+                                                        <td class="text-right">
+                                                        <span class="text-bold-600">+  @currencySymbol <span class="text-bold-600" id="GSTValueId">@Model.GSTDetail.GST_Sum</span></span><br />
+                                                        </td>
+                                                        </tr>
+                                                                <tr style="background-color: #ffdd78;color: #3e3e3e;font-weight: bold;font-size: 15px;">
+                                                                    <td>Payable Amount</td>
+                                                                    <td class="text-right text-bold-600">
+                                                        @ViewBag.SellingPrice<span class="text-bold-600" id="billFinalAmount"></span>
+                                                                        <span hidden id="TotalsalesListCount"> @Model.salesListcount</span>
+                                                                    </td>
+                                                                </tr>
+                                            }
+                                            @if (Model.SaleData.taxType == 1 && Model.SaleData.taxBillType == 2 && Model.SaleData.gstTax == 0)
+                                            {
+                                                     <tr>
+                                                        <td>GST (CGST + SGST)</td>
+                                                        <td class="text-right">
+                                                        <span class="text-bold-600">+   @currencySymbol  <span class="text-bold-600" id="GSTValueId">@Model.GSTDetail.GST_Sum</span></span><br />
+                                                        </td>
+                                                        </tr>
+                                                            <tr style="background-color: #ffdd78;color: #3e3e3e;font-weight: bold;font-size: 15px;">
+                                                                    <td>Payable Amount</td>
+                                                                    <td class="text-right text-bold-600" style="display:none">
+                                                        @ViewBag.SellingPrice<span class="text-bold-600" id="billFinalAmount"></span>
+                                                                        <span hidden id="TotalsalesListCount"> @Model.salesListcount</span>
+                                                                    </td>
+                                                    @if (Model.SaleData.DeliveryCharges == "0")
+                                                    {
+                                                                                        <td class="text-right text-bold-600">
+                                                            @Model.GSTDetail.TaxableAmount<span class="text-bold-600"></span>
+                                                                                        </td>
+                                                    }
+                                                    @if (Model.SaleData.DeliveryCharges != "0")
+                                                    {
+                                                                                        <td class="text-right text-bold-600">
+                                                            @ViewBag.SellingPrice<span class="text-bold-600" id="billFinalAmountDelivery"></span>
+                                                                                            <span hidden id="TotalsalesListCount"> @Model.salesListcount</span>
+                                                                                        </td>
+                                                    }
+                                                                </tr>
+                                            }
+                                            @if (Model.SaleData.taxType == 2 && Model.SaleData.taxBillType == 1)
+                                            {
+                                                    <tr>
+                                                        <td>Amount( Inc tax VAT @Model.SaleData.vatTax %)</td>
+                                                        <td class="text-right">
+                                                        <span class="text-bold-600">   @currencySymbol  <span class="text-bold-600" id="GSTValueId">@Model.GSTDetail.CGSTValue</span></span><br />
+                                                        </td>
+                                                        </tr>
+                                                               <tr style="background-color: #ffdd78;color: #3e3e3e;font-weight: bold;font-size: 15px;">
+                                                                    <td>Payable Amount</td>
+                                                                    <td class="text-right text-bold-600">
+                                                       @((Model.SaleData.TotalPrice - Model.SaleData.Discount + Convert.ToDouble(Model.SaleData.DeliveryCharges)))<span class="text-bold-600" id="billCalculationtAmt1"></span>
+                                                                        <span hidden id="TotalsalesListCount"> @Model.salesListcount</span>
+                                                                    </td>
+                                                                </tr>
+                                            }
+                                            @if (Model.SaleData.taxType == 2 && Model.SaleData.taxBillType == 2)
+                                            {
+                                                     <tr>
+                                                        <td>Amount( Exc tax VAT @Model.SaleData.vatTax %)</td>
+                                                        <td class="text-right">
+                                                        <span class="text-bold-600">+   @currencySymbol  <span class="text-bold-600" id="GSTValueId">@Model.GSTDetail.CGSTValue</span></span><br />
+                                                        </td>
+                                                        </tr>
+
+                                                                <tr style="background-color: #ffdd78;color: #3e3e3e;font-weight: bold;font-size: 15px;">
+                                                                    <td>Payable Amount</td>
+                                                                    <td class="text-right text-bold-600" style="display:none">
+                                                        @ViewBag.SellingPrice<span class="text-bold-600" id="billFinalAmount"></span>
+                                                                        <span hidden id="TotalsalesListCount"> @Model.salesListcount</span>
+                                                                    </td>
+                                                    @if (Model.SaleData.DeliveryCharges == "0")
+                                                    {
+                                                                                        <td class="text-right text-bold-600">
+                                                            @Model.GSTDetail.TaxableAmount<span class="text-bold-600"></span>
+                                                                                        </td>
+                                                    }
+                                                    @if (Model.SaleData.DeliveryCharges != "0")
+                                                    {
+                                                                                        <td class="text-right text-bold-600">
+                                                            @ViewBag.SellingPrice<span class="text-bold-600" id="billFinalAmountDelivery"></span>
+                                                                                            <span hidden id="TotalsalesListCount"> @Model.salesListcount</span>
+                                                                                        </td>
+                                                    }
+                                                                </tr>
+                                            }
+
+
+                                            @if (Model.SaleData.taxType == 1 && Model.SaleData.taxBillType == 1 && Model.SaleData.gstTax != 0)
+                                            {
+                                                    <tr>
+                                                        <td>GST</td>
+                                                        <td class="text-right">
+                                                        <span class="text-bold-600">+   @currencySymbol  <span class="text-bold-600" id="GSTValueId">@Model.GSTDetail.CGSTValue</span></span><br />
+                                                        </td>
+                                                        </tr>
+                                                                <tr style="background-color: #ffdd78;color: #3e3e3e;font-weight: bold;font-size: 15px;">
+                                                                    <td>Payable Amount</td>
+                                                                    <td class="text-right text-bold-600">
+                                                        @ViewBag.SellingPrice<span class="text-bold-600" id="billFinalAmount"></span>
+                                                                        <span hidden id="TotalsalesListCount"> @Model.salesListcount</span>
+                                                                    </td>
+                                                                </tr>
+                                            }
+                                            @if (Model.SaleData.taxType == 1 && Model.SaleData.taxBillType == 2 && Model.SaleData.gstTax != 0)
+                                            {
+                                                     <tr>
+                                                        <td>GST</td>
+                                                        <td class="text-right">
+                                                        <span class="text-bold-600">+ @currencySymbol  <span class="text-bold-600" id="GSTValueId">@Model.GSTDetail.CGSTValue</span></span><br />
+                                                        </td>                                                       </tr>
+
+                                                                <tr style="background-color: #ffdd78;color: #3e3e3e;font-weight: bold;font-size: 15px;">
+                                                                    <td>Payable Amount</td>
+                                                                    <td class="text-right text-bold-600" style="display:none">
+                                                        @ViewBag.SellingPrice<span class="text-bold-600" id="billFinalAmount"></span>
+                                                                        <span hidden id="TotalsalesListCount"> @Model.salesListcount</span>
+                                                                    </td>
+                                                    @if (Model.SaleData.DeliveryCharges == "0")
+                                                    {
+                                                                                        <td class="text-right text-bold-600">
+                                                            @Model.GSTDetail.TaxableAmount<span class="text-bold-600"></span>
+                                                                                        </td>
+                                                    }
+                                                    @if (Model.SaleData.DeliveryCharges != "0")
+                                                    {
+                                                                                        <td class="text-right text-bold-600">
+                                                            @ViewBag.SellingPrice<span class="text-bold-600" id="billFinalAmountDelivery"></span>
+                                                                                            <span hidden id="TotalsalesListCount"> @Model.salesListcount</span>
+                                                                                        </td>
+                                                    }
+                                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="m-portlet">
+                            <div class="m-portlet__body">
+                                <div class="row">
+                                    <div class="col-md-3 col-6" style="display:none">
+                                        <div class="form-group">
+                                            <label class="mb-1 font-small-2 d-block">Customer Name / ID</label>
+                                            <a class="d-inline-block" href="/Customer/Detail/@Model.SaleData.CustomerId" style="vertical-align: top;">
+                                                <h6 class="font-medium-1 text-bold-500 mb-0" id="CustomerName">@Model.SaleData.CustomerName</h6>
+                                                <span class="font-small-3" id="CustId">@Model.SaleData.CustomerId</span>
+                                            </a>
+                                            <a href="#" class="editable-customer" data-toggle="modal" data-target="#changeCustomerMd">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </a>
+                                            <input type="hidden" id="CustomerIds" name="CustomerId" asp-for="SaleData.CustomerId" />
+                                            <input type="hidden" id="TableId" asp-for="SaleData.tableId" />
+                                            <input type="hidden" id="HubId" asp-for="SaleData.Hub" />
+                                            <input type="hidden" id="CustomerNo" asp-for="SaleData.CustomerNo" />
+                                            <input type="hidden" id="TransactionId" asp-for="SaleData.TransactionId" />
+                                            <input type="hidden" id="PaymentStatus" asp-for="SaleData.PaymentStatus" />
+                                        </div>
+                                    </div>
+                                    @if (@Model.SaleData.CustomerName == "Guest")
+                                    {
+                                                        <div class="col-md-3 col-6">
+                                                            <div class="form-group">
+                                                                <label class="mb-1 font-small-2">Customer Name</label>
+                                                                <h6 class="font-medium-1 text-bold-500">@Model.SaleData.Name</h6>
+                                                            </div>
+                                                        </div>
+                                    }
+                                    else
+                                    {
+                                                        <div class="col-md-3 col-6">
+                                                            <div class="form-group">
+                                                                <label class="mb-1 font-small-2">Customer Number</label>
+                                                                <h6 class="font-medium-1 text-bold-500">@Model.SaleData.CustomerName</h6>
+                                                            </div>
+                                                        </div>
+                                    }
+                                    <div class="col-md-3 col-6">
+                                        <div class="form-group">
+                                            <label class="mb-1 font-small-2">Customer Number</label>
+                                            <h6 class="font-medium-1 text-bold-500">
+                                                @Model.SaleData.CustomerNo
+                                            </h6>
+                                        </div>
+                                    </div>
+                                     <div class="col-md-3 col-6">
+                                        <div class="form-group">
+                                            <label class="mb-1 font-small-2">Email Address</label>
+                                            <h6 class="font-medium-1 text-bold-500">@(Model.SaleData.EmailId)</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                               <div class="row" >
+                                    <div class="col-md-3 col-6">
+                                        <div class="form-group">
+                                            <label class="mb-1 font-small-2">Address</label>
+                                            <h6 class="font-medium-1 text-bold-500">@(Model.SaleData.BuildingName + ' ' + Model.SaleData.RoomNo + ' ' + Model.SaleData.Locality + ' ' + Model.SaleData.Landmark + ' ' + Model.SaleData.City + ' ' + Model.SaleData.state)</h6>
+                                        </div>
+                                    </div> 
+                                      <div class="col-md-3 col-6">
+                                        <div class="form-group">
+                                            <label class="mb-1 font-small-2">Total Items</label>
+                                            <h6 class="font-medium-1 text-bold-500 active">
+                                                @Model.SaleData.TotalQuantity
+                                            </h6>
+                                        </div>
+                                    </div> 
+                                    @if (Model.SaleData.AWBNumber == null || Model.SaleData.AWBNumber == "NA" || Model.SaleData.AWBNumber == "")
+                                    {
+                                        @*<div class="col-md-3 col-6" style="display:none">
+                                            <div class="form-group">
+                                            <label class="mb-1 font-small-2">Shipment Reference</label>
+                                            <h6 class="font-medium-1 text-bold-500">
+                                            @Model.SaleData.AWBNumber
+                                            <p>www.aramex.com</p>
+                                            </h6>
+                                            </div>
+                                            </div>*@
+                                    }
+                                    else
+                                    {
+                                              <div class="col-md-6 col-6">
+                                            <div class="form-group">
+                                                <label class="mb-1 font-small-2">Shipment Reference</label>
+                                                <h6 class="font-medium-1 text-bold-500">
+                                                    @Model.SaleData.AWBNumber
+                                                    <a style="word-break: break-all;" class="text-link d-block" href="@Model.SaleData.AWBShipLink">@Model.SaleData.AWBShipLink</a>
+                                                </h6>
+                                            </div>
+                                            </div> 
+                                    }
+                                    @* <div class="col-md-3 col-6">
+                                        @if (Model.SaleData.DeliveryNotes == null || Model.SaleData.DeliveryNotes == "NA")
+                                        {
+                                        <div class="form-group" style="display:none">
+                                        <label class="mb-1 font-small-2">Delivery Note's</label>
+                                        <h6 class="font-medium-1 text-bold-500">
+                                        @(Model.SaleData.DeliveryNotes)
+                                        </h6>
+                                        </div>
+                                        }
+                                        else
+                                        {
+                                        <div class="form-group">
+                                        <label class="mb-1 font-small-2">Delivery Note's</label>
+                                        <h6 class="font-medium-1 text-bold-500">
+                                        @(Model.SaleData.DeliveryNotes)
+                                        </h6>
+                                        </div>
+                                        }
+
+                                        </div>*@
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 p-2">
+                                        <div class="row">
+
+                                            <div class="col-md-3 col-6">
+                                                @if (Model.SaleProductStatus.ConfirmedStatusPersonName == null || Model.SaleProductStatus.ConfirmedStatusPersonName == "NA")
+                                                {
+                                                                     <div class="form-group" style="display:none">
+                                                                    <label class="mb-1 font-small-2">Confirmed By</label>
+                                                                    <h6 class="font-medium-1 text-bold-600">@(Model.SaleProductStatus.ConfirmedStatusPersonName)</h6>
+                                                                    <span>@(Model.SaleProductStatus.ConfirmedStatusDate.ToString("dd-MMM-yyyy hh:mm:ss", CultureInfo.InvariantCulture))</span>
+                                                                </div>
+                                                }
+                                                else
+                                                {
+                                                                   <div class="form-group">
+                                                                    <label class="mb-1 font-small-2">Confirmed By</label>
+                                                                    <h6 class="font-medium-1 text-bold-600">@(Model.SaleProductStatus.ConfirmedStatusPersonName)</h6>
+                                                                    <span>@(Model.SaleProductStatus.ConfirmedStatusDate.ToString("dd-MMM-yyyy hh:mm:ss", CultureInfo.InvariantCulture))</span>
+                                                                </div>  
+                                                }
+
+                                            </div>
+                                            <div class="col-md-3 col-6">
+                                                @if (Model.SaleProductStatus.PackedStatusPersonName == null || Model.SaleProductStatus.PackedStatusPersonName == "NA")
+                                                {
+                                                                    <div class="form-group" style="display:none">
+                                                                        <label class="mb-1 font-small-2">Packed By</label>
+                                                                        <h6 class="font-medium-1 text-bold-600">@(Model.SaleProductStatus.PackedStatusPersonName)</h6>
+                                                                        <span>@(Model.SaleProductStatus.PackedStatusDate.ToString("dd-MMM-yyyy hh:mm:ss", CultureInfo.InvariantCulture))</span>
+                                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                                  <div class="form-group">
+                                                                        <label class="mb-1 font-small-2">Packed By</label>
+                                                                        <h6 class="font-medium-1 text-bold-600">@(Model.SaleProductStatus.PackedStatusPersonName)</h6>
+                                                                        <span>@(Model.SaleProductStatus.PackedStatusDate.ToString("dd-MMM-yyyy hh:mm:ss", CultureInfo.InvariantCulture))</span>
+                                                                    </div>
+                                                }
+                                            </div>
+                                            <div class="col-md-3 col-6">
+                                                @if (Model.SaleData.DeliveryPerson == null || Model.SaleData.DeliveryPerson == "NA")
+                                                {
+                                                                <div class="form-group" style="display:none">
+                                                                    <label class="mb-1 font-small-2">Delivery Person</label>
+                                                                    <h6 class="font-medium-1 text-bold-600">@Model.SaleData.DeliveryPerson</h6>
+                                                                    <span id="spnDeliveryDate">@(Model.SaleData.DeliveryDate.ToString("dd-MMM-yyyy hh:mm:ss", CultureInfo.InvariantCulture))</span>
+                                                                    <input type="hidden" name="ProductDeliveryDates" asp-for="@Model.SaleData.DeliveryDate" />
+                                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                                     <div class="form-group">
+                                                                    <label class="mb-1 font-small-2">Delivery Person</label>
+                                                                    <h6 class="font-medium-1 text-bold-600">@Model.SaleData.DeliveryPerson</h6>
+                                                                    <span id="spnDeliveryDate">@(Model.SaleData.DeliveryDate.ToString("dd-MMM-yyyy hh:mm:ss", CultureInfo.InvariantCulture))</span>
+                                                                    <input type="hidden" name="ProductDeliveryDates" asp-for="@Model.SaleData.DeliveryDate" />
+                                                                    </div>
+                                                }
+                                            </div>
+                                            @*  <div class="col-md-3 col-6">
+                                                <div class="form-group">
+                                                <label class="mb-1 font-small-2">Settelment Status</label>
+                                                <h6 class="font-medium-1 text-bold-600">Unknown</h6>
+                                                <span></span>
+                                                </div>
+                                                </div>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="m-portlet" style="position: sticky !important;top: 80px;z-index: 3;">
+                            <ul class="nav nav-tabs  m-tabs-line bg-white" role="tablist" style="position: sticky !important;top: 80px;z-index: 3;">
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link active" data-toggle="tab" href="#cartlist" role="tab">Cart List</a>
+                                </li>
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#OrderTracking" role="tab">Order Tracking</a>
+                                </li>
+                                <li class="nav-item m-tabs__item" style="display:none">
+                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#items" role="tab">Items Search</a>
+                                </li>
+                            </ul>
+                            <div class="m-portlet__body pt-3">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="tab-content">
+                                            <!-- ITEM TAB CONTENT -->
+                                            <div class="tab-pane animated fadeIn" id="items" role="tabpanel">
+                                                <div class="row">
+                                                    <div class="">
+                                                        <ul class="nav nav-tabs  m-tabs-line bg-white" role="tablist">
+                                                            @foreach (var mc in Model.getmainList)
+                                                            {
+                                                                @if (counterHeader == 0)
+                                                                {
+                                                                                                    <li class="nav-item m-tabs__item">
+                                                                                                        <a class="nav-link m-tabs__link active" data-toggle="tab" href="#catg_@mc.MaincatId" role="tab">@mc.Name</a>
+                                                                                                    </li>
+
+                                                                }
+                                                                else
+                                                                {
+                                                                                                    <li class="nav-item m-tabs__item">
+                                                                                                        <a class="nav-link m-tabs__link" data-toggle="tab" href="#catg_@mc.MaincatId" role="tab">@mc.Name</a>
+                                                                                                    </li>
+
+                                                                }
+                                                                counterHeader++;
+
+                                                            }
+                                                        </ul>
+                                                    </div>
+
+                                                    <!-- PRODUCT ITEM LIST VIEW -->
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="mb-2" style="display:block">
+                                                                    <div class="form-group d-inline-block">
+                                                                        <input type="text" class="form-control m-input m-input--solid" id="SearchItem" placeholder="Product Code / Name..." />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="tab-content">
+
+                                                            @foreach (var mc in Model.getmainList)
+                                                            {
+                                                                if (counterBody == 0)
+                                                                {
+
+                                                                                                    <div class="tab-pane row active" id="catg_@mc.MaincatId" role="tabpanel">
+                                                                                                        <div class="container">
+                                                                                                            <div class="row" id="ItemDetails_@mc.MaincatId">
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+
+                                                                }
+                                                                else
+                                                                {
+                                                                                                    <div class="tab-pane row mtabs" id="catg_@mc.MaincatId" role="tabpanel">
+                                                                                                        <div class="container">
+                                                                                                            <div class="row" id="ItemDetails_@mc.MaincatId">
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                }
+                                                                counterBody++;
+
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- ORDER TRACKING TAB -->
+                                            <div class="tab-pane animated fadeIn" id="OrderTracking" role="tabpanel">
+                                                <div class="m-portlet--tabs">
+                                                    <div class="m-portlet__body">
+                                                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle table-white-space-th">
+                                                            <thead>
+                                                                <tr>
+
+                                                                    <th>Order Status</th>
+                                                                    <th>Remarks</th>
+                                                                    <th>Updated by</th>
+                                                                    <th>Created by</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                                @foreach (var item in Model.OrderTracking)
+                                                                {
+
+
+                                                                                    <tr>
+
+                                                                                        <td>@item.status</td>
+                                                                                        <td>@item.Remark</td>
+                                                                                        <td>@item.CreatedOn</td>
+                                                                                        <td>@item.CreatedBy</td>
+
+                                                                                    </tr>
+                                                                }
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- CARD LIST TAB CONTENT -->
+                                            <div class="tab-pane animated fadeIn active" id="cartlist" role="tabpanel">
+                                                <div class="m-portlet--tabs">
+                                                    <div class="m-portlet__body">
+                                                        <div class="">
+                                                            <div class="" id="" role="">
+                                                                @*<div class="row animated fadeIn mb-2">
+                                                                    <div class="col-md-4">
+                                                                    <div class="form-group mb-0">
+                                                                    <select id="temp55" class="form-control m-input m-input--solid m-select2  temp55 clearitem"></select>
+                                                                    </div>
+                                                                    <span id="spnProductMsg"></span>
+                                                                    <span hidden id="ItemWithCoupen"></span>
+                                                                    <span hidden id="ItemWitoutCoupen"></span>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                    <div class="form-group">
+                                                                    <select class="form-control m-input--solid clear-cls Varaint" name="Varaint" id="Varaint">
+                                                                    <option value="0" selected disabled>Select Size</option>
+                                                                    </select>
+                                                                    </div>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                    <div class="form-group mb-0">
+                                                                    <input type="text" id="SearchQuantity" class="form-control m-input m-input--solid clearitem" placeholder="Qty" title="Quantity" />
+                                                                    <span id="SpnSearchquantity_Err" class="clearitem" style="color:red;display:none"></span>
+                                                                    <span hidden id="itemstock" class="clearitem"></span>
+                                                                    <span hidden id="SPurchaseprice" class="clearitem" style="color:red"></span>
+                                                                    <span hidden  id="SstockId" class="clearitem"></span>
+                                                                    <span hidden id="SItemId" class="clearitem"></span>
+                                                                    <span hidden id="SCategoryName" class="clearitem"></span>
+                                                                    <span hidden  id="SCategoryId" class="clearitem"></span>
+                                                                    <span hidden id="SItemName" class="clearitem"></span>
+                                                                    <span hidden id="SMarketPrice" class="clearitem" style="color:red"></span>
+                                                                    <span hidden id="SItemtype" class="clearitem"></span>
+                                                                    <span hidden id="SItem_Id" class="clearitem"></span>
+                                                                    <span hidden id="STaxValue" class="clearitem"></span>
+                                                                    <span hidden id="PriceId" class="clearitem"></span>
+                                                                    </div>
+                                                                    </div>
+                                                                    <div class="col-md-2 display-none">
+                                                                    <div class="form-group mb-0">
+                                                                    <input type="text" id="NetWeightId" class="form-control m-input m-input--solid clearitem" placeholder="Net Weight" title="Net Weight" />
+                                                                    <span hidden id="Smeaure" class="clearitem"></span>
+                                                                    <input type="text" id="ShiddenWeight" class="clearitem" />
+                                                                    <span  id="Sprice" class="clearitem"></span>
+                                                                    <span  id="SCoupenDisc" class="clearitem"></span>
+                                                                    </div>
+                                                                    </div>
+                                                                    <div class="col-md-1 display-none">
+                                                                    <div class="form-group mb-0">
+                                                                    <input type="text" id="SearchDiscount" class="form-control  m-input m-input--solid clearitem" placeholder="00" title="Discount" />
+                                                                    </div>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                    <div class="form-group mb-0">
+                                                                    <input type="text" id="SearchAmount" class="form-control m-input m-input--solid clearitem" placeholder="@(SalesHelpers.Data) 00.00" readonly />
+                                                                    <span hidden id="ShdMarket" style="visibility:hidden;" class="clearitem"></span>
+                                                                    <span hidden id="tempSearchAmount" class="clearitem"></span>
+                                                                    <span hidden id="totalGst"></span>
+                                                                    <input type="hidden" id="TotalsalesOrderCost" class="form-control TotalsalesOrderCost" name="TotalsalesOrderCost" style="width:100px;" />
+                                                                    </div>
+                                                                    </div>
+                                                                    <div class="col-md-1">
+                                                                    <div class="form-group mb-0">
+                                                                    <button type="button" id="AddSearchId" class="btn btn-danger btn-block"><i class="la la-plus"></i></button>
+                                                                    </div>
+                                                                    </div>
+                                                                    </div>*@
+
+                                                                <div class="row">
+
+                                                                    <!-- RPODUCT TABLE VIEW-->
+                                                                    <div class="col-md-12">
+                                                                        <div class="row" style="display:none">
+                                                                            <div class="col-md-6">
+                                                                                <div class="qty-update-bttn mb-3">
+                                                                                    <button type="button" class="btn btn-dark">Update</button>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6 text-right">
+                                                                                <button type="button" class="btn btn-dark" id="add_item">Add Item</button>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="table-responsive">
+                                                                            <table class="table ab-table-head-bg-warning-light table-borderless table-middle table-white-space-th">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        @* <th></th>*@
+                                                                                        <th>Product Name</th>
+                                                                                        @*<th>Measurement</th>*@
+                                                                                        @*<th>Weight</th>*@
+                                                                                        <th>Qty</th>
+                                                                                          <th>Total Price</th>
+                                                                                        <th>Discount</th>
+                                                                                        @*<th>Unit Price</th>
+                                                                                            <th>Discount</th>*@
+                                                                                        @if (Model.SaleData.taxType == 2 && Model.SaleData.taxBillType == 1)
+                                                                                        {
+                                                                                         <th>Include Tax</th>
+                                                                                        }          
+                                                                                        @if (Model.SaleData.taxType == 2 && Model.SaleData.taxBillType == 2)
+                                                                                                                                                                                {
+                                                                                         <th>Exclude Tax</th>
+                                                                                        }
+
+                                                                                        <th>Total Amount</th>
+                                                                                      
+
+                                                                                        <th>Action</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody id="tblsaleslist">
+
+                                                                                    @foreach (var itemlist in Model.productSalesList)
+                                                                                    {
+
+                                                                                                        <tr id="@itemlist.SalesListId">
+                                                                                            @*  <td>
+                                                                                                <div class="m-widget4__img m-widget4__img--logo">
+                                                                                                <img alt="" src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/@(itemlist.ItemId).png" onerror="this.onerror = null;
+                                                                                                this.src = 'https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/no-image.png';" style="width:60px;border-radius:5px;" />
+                                                                                                </div>
+                                                                                                </td>*@
+
+                                                                                                            <td>
+                                                                                                                <span hidden id="ItemSalesId_@itemlist.SalesListId">@itemlist.SalesListId</span>
+                                                                                                                <span hidden="" id="Totalitemstock_@itemlist.SalesListId">-12</span>
+                                                                                                                <a href="/ItemMaster/Detail/@itemlist.Item_Id" class="text-link">
+                                                                                                    @if (itemlist.Size != "NOVAR" && itemlist.Size != "NA")
+                                                                                                    {
+                                                                                                                                        <span class="pluname">@itemlist.PluName</span> <span>@itemlist.Size</span>
+                                                                                                    }
+                                                                                                    else
+                                                                                                    {
+                                                                                                        @itemlist.PluName
+                                                                                                    }
+                                                                                                                </a>
+                                                                                                                <span class="display-block font-small-3 text-bold-500 text-muted">@itemlist.Barcode</span>
+                                                                                                            </td>
+                                                                                                            <td class="display-none">
+                                                                                                                <span>@itemlist.ItemWeight @itemlist.Measurement X Rs. @itemlist.PricePerMeas</span>
+                                                                                                @* <span hidden id="TotalsalesListCount">@Model.salesListcount</span>*@
+                                                                                                                <input type="hidden" id="TotalsalesListCount_@itemlist.SalesListId" class="form-control" name="TotalsalesListCount" asp-for="@Model.salesListcount" style="width:100px;" />
+                                                                                                                <input type="text" id="editsalesListCount_@itemlist.SalesListId" class="form-control weight" name="editsalesListCount" style="width:100px;" />
+                                                                                                                <span hidden id="coupenDisc_@itemlist.SalesListId">@itemlist.Coupen_Disc</span>
+                                                                                                                <span hidden id="taxValue_@itemlist.SalesListId">@itemlist.Item_Cost</span>
+                                                                                                            </td>
+                                                                                                            <td class="display-none">
+                                                                                                @if (itemlist.ItemType == "Packed")
+
+
+                                                                                                {
+                                                                                                                                    <input type="text" id="Netweight_@itemlist.SalesListId" class="form-control weight" readonly name="weightList" asp-for="@itemlist.ItemWeight" style="width:100px;" />
+
+                                                                                                }
+                                                                                                else
+                                                                                                {
+                                                                                                                                    <input type="text" class="form-control weight" id="Netweight_@itemlist.SalesListId" readonly name="weightList" asp-for="@itemlist.ItemWeight" style="width:100px;" />
+
+                                                                                                }
+                                                                                                                <input type="text" id="Itemstatus_@itemlist.SalesListId" class="form-control status" readonly name="statusList" asp-for="@itemlist.status" style="width:100px;" hidden />
+                                                                                                                <span class="text-bold-400" id="spnNetweight_@itemlist.SalesListId" hidden>@itemlist.ItemWeight</span>
+                                                                                                                <span class="text-bold-400" id="spnItemstatus_@itemlist.SalesListId" hidden>@itemlist.status</span>
+
+                                                                                                            </td>
+                                                                                                            <td style="display:none">
+                                                                                                                <div class="qty">
+                                                                                                                    <div class="input-group">
+                                                                                                                        <div class="input-group-btn">
+                                                                                                                            <div class="btn-number low-qty" disabled="disabled" data-type="minus" data-field="quant[1]">
+                                                                                                                                <img src="~/img/qty-left-arrow.png" alt="arrow" />
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                        <input type="text" name="quant[1]" class="form-control input-number" value="0" min="1" max="10" maxlength="2" />
+                                                                                                                        <div class="input-group-btn">
+                                                                                                                            <div class="btn-number" data-type="plus" data-field="quant[1]">
+                                                                                                                                <img src="~/img/qty-right-arrow.png" alt="arrow" />
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </td>
+                                                                                                            <td>
+                                                                                                @if (itemlist.ItemType == "Loose")
+                                                                                                {
+                                                                                                                                    <div class="d-flex align-items-center">
+                                                                                                                                        <input type="text" class="form-control Quantity" name="QuantityValues" id="quantity_@itemlist.SalesListId" readonly asp-for="@itemlist.QuantityValue" style="width:50px;" />
+                                                                                                                                        <span class="ml-3"> X @(Convert.ToDecimal(itemlist.PricePerMeas).ToString("#0.00"))</span>
+                                                                                                                                    </div>
+                                                                                                }
+                                                                                                else
+                                                                                                {
+                                                                                                                                    <div class="d-flex align-items-center">
+                                                                                                                                        <input type="text" class="form-control Quantity" id="quantity_@itemlist.SalesListId" name="QuantityValues" asp-for="@itemlist.QuantityValue" style="width:50px;" readonly />
+                                                                                                                                        <span class="ml-3"> X @(Convert.ToDecimal(itemlist.PricePerMeas).ToString("#0.00"))</span>
+                                                                                                                                    </div>
+
+                                                                                                }
+                                                                                                                <span class="text-bold-400" id="spanquantity_@itemlist.SalesListId" hidden>@itemlist.QuantityValue</span>
+
+                                                                                                            </td>
+                                                                                                             <td class="text-dark font-medium-3 font-weight-bold">
+                                                                                                                <span>  @currencySymbol </span>
+                                                                                                                <span class="text-bold-500 " id="TotalPrice_@itemlist.SalesListId">@itemlist.TotalPrice</span>
+
+                                                                                                            </td>
+
+                                                                                            @*<td> <span class="display-block font-medium-3 text-bold-500" id="AddedDiscount_@itemlist.SalesListId">@(SalesHelpers.Data) @itemlist.PricePerMeas</span></td>*@
+
+                                                                                                            <td class="font-medium-1">
+                                                                                                                 <span>  @currencySymbol </span>
+                                                                                                                <span style="color:#ff0905;" id="discount_@itemlist.SalesListId">@itemlist.Discount</span>
+                                                                                                            </td>
+                                                                                                      
+                                                                                        @if (Model.SaleData.taxType == 2 && Model.SaleData.taxBillType == 1)
+                                                                                        {
+                                                                                         <td class="text-dark font-medium-3 font-weight-bold">
+                                                                                                                <span>  @currencySymbol </span>
+                                                                                                                <span class="text-bold-500" style="color:#027802;" id="TaxPrice_@itemlist.SalesListId">@itemlist.Item_Cost</span>
+
+                                                                                                            </td>
+                                                                                        }          
+                                                                                        @if (Model.SaleData.taxType == 2 && Model.SaleData.taxBillType == 2)
+                                                                                                                                                                                {
+                                                                                          <td class="text-dark font-medium-3 font-weight-bold">
+                                                                                                                <span>  @currencySymbol </span>
+                                                                                                                <span class="text-bold-500" style="color:#0707fa;" id="TaxPrice_@itemlist.SalesListId">@itemlist.Item_Cost</span>
+
+                                                                                                            </td>
+                                                                                        }
+
+
+                                                                                                          
+                                                                                                             <td class="text-dark font-medium-3 font-weight-bold">
+                                                                                                                <span>  @currencySymbol </span>
+                                                                                                                <span class="text-bold-500" style="color:#d48a02;" id="Price_@itemlist.SalesListId">@(itemlist.TotalPrice - itemlist.Discount - itemlist.Item_Cost)</span>
+
+                                                                                                            </td>
+                                                                                                           
+
+
+
+                                                                                                            <td>
+                                                                                                @if (Convert.ToString(User.FindFirst("userRole").Value) == "Coock" || Convert.ToString(User.FindFirst("userRole").Value) == "Cashier")
+                                                                                                {
+                                                                                                    @if (itemlist.status == "Pending")
+                                                                                                    {
+
+                                                                                                                                                        <a href="#" data-Id="@(itemlist.SalesListId)" data-ktid="@(itemlist.KitchListId)" class="text-danger font-medium-1 text-bold-600 removeSaleList">X</a>
+                                                                                                    }
+                                                                                                    else
+                                                                                                    {
+                                                                                                                                                        <a href="#" class="text-danger font-medium-1 text-bold-600 removeSaleDisable" data-title="You Can't Cancelled This Its Ready For Cooked">X</a>
+
+                                                                                                    }
+
+                                                                                                }
+                                                                                                else if (Convert.ToString(User.FindFirst("userRole").Value) == "System Admin" || Convert.ToString(User.FindFirst("userRole").Value) == "Management" || Convert.ToString(User.FindFirst("userRole").Value) == "Branch Manager")
+                                                                                                {
+
+                                                                                                                                    <a href="#" data-Id="@(itemlist.SalesListId)" data-ktid="@(itemlist.KitchListId)" class="text-danger font-medium-1 text-bold-600 removeSaleList">X</a>
+
+                                                                                                }
+                                                                                                                <input hidden type="text" id="SalesIds_@itemlist.SalesListId" asp-for="@itemlist.SalesId" />
+                                                                                                                <input hidden type="text" id="CustomerIds_@itemlist.SalesListId" asp-for="@itemlist.CustomerId" />
+                                                                                                                <input hidden type="text" id="Category_@itemlist.SalesListId" name="Categorys" asp-for="@itemlist.Category" />
+                                                                                                                <input hidden type="text" id="ItemId_@itemlist.SalesListId" name="ItemIds" asp-for="@itemlist.ItemId" />
+                                                                                                                <input hidden type="text" id="PriceId_@itemlist.SalesListId" name="PriceId" asp-for="@itemlist.PriceId" />
+                                                                                                                <input hidden type="text" id="Measurements_@itemlist.SalesListId" name="Measurements" asp-for="@itemlist.Measurement" />
+                                                                                                                <input hidden type="text" id="PercePerItemId_@itemlist.SalesListId" name="PricePerMeasList" asp-for="@itemlist.PricePerMeas" />
+                                                                                                                <input hidden type="text" id="TotalPriceList_@itemlist.SalesListId" name="TotalPriceList" asp-for="@itemlist.TotalPrice" />
+                                                                                                                <input hidden type="text" id="DiscountListId_@itemlist.SalesListId" name="DiscountList" asp-for="@itemlist.Discount" />
+                                                                                                                <input hidden type="text" id="ItemWeight_@itemlist.SalesListId" name="ItemWeight" asp-for="@itemlist.ItemWeight" />
+                                                                                                                <input hidden type="text" id="ItemStatus_@itemlist.SalesListId" name="ItemStatus" asp-for="@itemlist.status" />
+                                                                                                                <input hidden type="text" id="Table_@itemlist.SalesListId" name="TableId" asp-for="@itemlist.tableId" />
+                                                                                                                <input hidden type="text" id="Remark_@itemlist.SalesListId" name="Remark" asp-for="@itemlist.Remark" />
+                                                                                                @*<input type="text" id="ItemStatus_@itemlist.ItemId" name="StatusValues" asp-for="@itemlist.ItemStatus" />*@
+                                                                                                @*<input type="hidden" name="weightList" asp-for="@itemlist.weight" />*@
+                                                                                                @*<input type="hidden" name="DeliveryDateList" asp-for="@itemlist.DeliveryDate" />*@
+                                                                                                @*<input type="hidden" name="CreatedByList" value="@Model.SaleData.CreatedBy" />*@
+
+                                                                                                            </td>
+
+                                                                                                        </tr>
+
+                                                                                    }
+                                                                                    @*<tr>
+                                                                                        <td>
+                                                                                        <div class="m-widget4__img m-widget4__img--logo">
+                                                                                        <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/ITM0239.png" alt="" style="width:60px;">
+                                                                                        </div>
+                                                                                        </td>
+                                                                                        <td><span hidden="" id="Totalitemstock_ITM0239">-12</span></td>
+                                                                                        <td>
+                                                                                        <h6 class="mb-1">Jaggery Powder Traditional (Natural Sugar) 500g</h6>
+                                                                                        <span class="display-block font-small-3 text-bold-500 text-muted">Masala, Spices & Chutney</span>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                        <span>1 pk X Rs. 56</span>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                        <span class="text-bold-400">1</span>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                        <span class="text-bold-400">1</span>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                        <span>0</span>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                        <span> Rs.</span>
+                                                                                        <span class="text-bold-500 text-info">56</span>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                        <a href="#" class="text-danger font-medium-1 text-bold-600">X</a>
+                                                                                        </td>
+                                                                                        </tr>*@
+                                                                                </tbody>
+
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*</form>*@
+    </div>
+</form>
+
+<!-- RIGHT PANEL -->
+<div class="right-panel toggle-pane">
+    <div class="panel-wrapper">
+        <div class="panel-header">
+            <h5>Add Item</h5>
+            <button type="button" class="close" id="close_add_item">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="item-tabs">
+            <ul class="nav nav-tabs  m-tabs-line bg-white mb-0" role="tablist">
+                @foreach (var mc in Model.getmainList)
+                {
+                    @if (counterHeader == 0)
+                    {
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link active" data-toggle="tab" href="#catg_@mc.MaincatId" role="tab">@mc.Name</a>
+                                </li>
+                    }
+                    else
+                    {
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#catg_@mc.MaincatId" role="tab">@mc.Name</a>
+                                </li>
+                    }
+                    counterHeader++;
+                }
+            </ul>
+        </div>
+
+
+        <div class="add-item-wrapper">
+            <div class="table-responsive">
+                <table class="table ab-table-head-bg-warning-light table-borderless table-middle table-white-space-th product-item-list-wrapper">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Add Qty</th>
+                            <th>Remark</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="item-title">
+                                    <h3 class="mb-0 font-medium-1 text-bold-700">ATC Butter Toss Half</h3>
+                                    <h6 class="font-small-3 mb-0 mt-1">1 Ut X Rs. 300</h6>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="qty">
+                                    <div class="input-group">
+                                        <div class="input-group-btn">
+                                            <div class="btn-number low-qty" disabled="disabled" data-type="minus" data-field="quant[1]">
+                                                <img src="~/img/qty-left-arrow.png" alt="arrow" />
+                                            </div>
+                                        </div>
+                                        <input type="text" name="quant[1]" class="form-control input-number" value="0" min="1" max="10" maxlength="2" />
+                                        <div class="input-group-btn">
+                                            <div class="btn-number" data-type="plus" data-field="quant[1]">
+                                                <img src="~/img/qty-right-arrow.png" alt="arrow" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Test</td>
+                            <td>
+                                <a href="#" class="font-medium-1 text-bold-600 add-item-bttn"><i class="fas fa-plus"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<!-- Change Delivery Date -->
+<div class="modal fade" id="changeDeliveryDate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Change Delivery Date</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="mb-1">Current Delivery Date</label>
+                            <h6 class="font-medium-3 text-bold-600">@(Model.SaleData.DeliveryDate.ToString("MM-dd-yyyy", CultureInfo.InvariantCulture))</h6>
+                        </div>
+                        <div class="form-group">
+                            <label class="mb-1">Change Delivery Date</label>
+                            <div class="input-group date">
+                                <input type="text" id="m_datetimepicker_6" class="form-control m-input m-input--solid newDeliveryDate" placeholder="Delivery Date" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="la la-calendar-check-o"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="btnUpdateDeliveryDate">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Change Delivery Charges -->
+<div class="modal fade" id="updateDeliveryCharges" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Update Delivery Charges</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="mb-1">Current Delivery Charges</label>
+                            <h6 class="font-medium-1 text-bold-500"> @(SalesHelpers.Data)  @Model.SaleData.DeliveryCharges</h6>
+                        </div>
+                        <div class="form-group">
+                            <label class="mb-1">Change Delivery Charges</label>
+                            <input type="number" class="form-control m-input m-input--solid" id="DeliveryCharge" min="0" />
+                            <input type="text" class="form-control m-input m-input--solid salesIds" id="SalesOrderId" value="@Model.SaleData.SalesOrderId" hidden />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="btnChangeDeliveryCharge">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Apply Coupon Code -->
+<div class="modal fade" id="applyCouponCode" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Apply Coupon Code</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="mb-1">Apply Coupon Code</label>
+                            @* <input type="text" class="form-control m-input m-input--solid" />*@
+                            <select class="form-control text-bold-600" id="CoupenCodeId" asp-for="@Model.SaleData.ComputedCoupen" asp-items="Model.GetCoupenList">
+                                <option value="0" selected="selected">Select Coupen Code</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="btnCouponSubmit">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Refund Initiated -->
+<div class="modal fade" id="refundInitiateds" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Refund Initiated</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="mb-1">Refund Initiated Notes</label>
+                            <textarea rows="3" class="form-control m-input m-input--solid"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--AWB for out for delviery-->
+<div class="modal fade" id="AssignAWBshipped" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Shipping Tracking Number</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="text" class="form-control m-input m-input--solid salesIds" id="SalesOrderId12" value="@Model.SaleData.SalesOrderId" hidden />
+                            <label class="mb-1">Enter Tracking number</label>
+                            @*<select class="form-control m-input--solid" id="DeliveryPersonId">
+                                <option value="0" selected disabled>Select Name</option>
+                                </select>*@
+                            <input type="text" class="form-control m-input--solid" id="AWBShipped" value="" placeholder="Enter Shippment Tracking number" />
+                            <span class="errormsg" id="AWErrorErr" style="display:none">Field Cannot be Empty !</span>
+
+
+                        </div>
+                        <span class="errormsg" id="AWErrorErr" style="display:none">Field Cannot be Empty !</span>
+                        <div>
+                              <label class="mb-2">Enter Tracking link</label>
+                            <input type="text" class="form-control m-input--solid" id="AWBShippedlink" value="" placeholder="Enter Shippment Tracking link"/>
+                        </div>
+                          <span class="errormsg" id="AWErrorErr" style="display:none">Field Cannot be Empty !</span>
+                        @*<div class="form-group">
+                            <label class="mb-1">Delivery Notes</label>
+                            <textarea class="form-control m-input--solid" id="DeliveryNotes" name="DeliveryNotes"></textarea>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="btnout">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Assign DeleliveryPerson -->
+<div class="modal fade" id="AssignDeliveryPerson" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Assign Delivery Of Product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="text" class="form-control m-input m-input--solid salesIds" id="SalesOrderId1" value="@Model.SaleData.SalesOrderId" hidden />
+                            <label class="mb-1">Delivery Person</label>
+                            <select class="form-control m-input--solid" id="DeliveryPersonId">
+                                <option value="0" selected disabled>Select Name</option>
+                            </select>
+                        </div>
+                        <span class="errormsg" id="DeliveryPersonErr" style="display:none">Field Cannot be Empty !</span>
+                        <div class="form-group">
+                            <label class="mb-1">Delivery Notes</label>
+                            <textarea class="form-control m-input--solid" id="DeliveryNotes" name="DeliveryNotes"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="BtnAssignDelivery">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Change Payment Status -->
+<div class="modal fade" id="changepaymentStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Change Payment Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group mb-0">
+                            <label class="mb-1">Payment Status</label>
+                            <ul class="payment_status" id="PaymentStatusId">
+                                @foreach (var item in SalesHelpers.PaymentStatusList)
+                                {
+                                    if (Model.SaleData.PaymentStatus == item.Text)
+                                    {
+                                                                        <li class="active" data-value="@item.Value"><i class="fas fa-check"></i>@item.Text</li>
+
+                                    }
+                                    else
+                                    {
+                                                                        <li data-value="@item.Value"><i class="fas fa-check"></i>@item.Text</li>
+
+                                    }
+
+                                }
+                            </ul>
+                            <input id="PaymentStatusValue" size="15" name="size" type="text" hidden />
+                            <input id="PaymentStatusValueSet" asp-for="@Model.SaleData.PaymentStatus" hidden />
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group mb-0">
+                            <label class="mb-1">Payment Mode</label>
+                            <ul class="payment_mode" id="PaymentModeId">
+                                @foreach (var item in SalesHelpers.ModeList)
+                                {
+                                    if (Model.SaleData.PaymentMode == item.Value)
+                                    {
+                                                                        <li class="active" data-value="@item.Value"><i class="fas fa-check"></i>@item.Text</li>
+
+                                    }
+                                    else
+                                    {
+                                                                        <li data-value="@item.Value"><i class="fas fa-check"></i>@item.Text</li>
+
+                                    }
+
+                                }
+                            </ul>
+                            <input id="PaymentModeValue" size="15" name="size" type="text" hidden />
+                            <input id="PaymentModeValueSet" asp-for="@Model.SaleData.PaymentMode" hidden />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="BtnPaymentStatus">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Add Cart Item -->
+<div class="modal animated fadeIn" id="Additem" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="text-center" id="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="">
+                    </div>
+                    <div class="row">
+                        <div class="" style="border-left: 2px solid #f4f5f8;padding-left: 10px;">
+                            <div class="row">
+                                <span hidden id="ItemType" class=""></span>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <h6>Item ID</h6>
+                                        <h5><span id="SpnItemId" class=""> </span></h5>
+                                        <h5 hidden><span id="SpnPriceId" class=""> </span></h5>
+                                        <span hidden id="SpnCategory" class=""></span>
+                                        <span hidden id="SpnCategoryId" class=""></span>
+                                        <span hidden id="spnPlucode"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <h6>Item Name</h6>
+                                        <h5><span id="SpnItemName" class=""></span> <span id="SpnItemSize"></span> </h5>
+                                     </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group" style="display:block">
+                                        <h6>Varaints</h6>
+                                        <h5 hidden><span id="SpnItemWeight" class=""></span><span id="meaure"></span><span  id="TotalItemstock"></span></h5>
+                                        <span hidden id="stockId"></span>
+                                        <span hidden id="MarketPrice"></span>
+                                        <span hidden id="MItemType"></span>
+                                    </div>
+                                    <div class="form-group">
+                                            <select class="form-control m-input--solid clear-cls VaraintId" name="VaraintId" id="VaraintId">
+                                                <option value="0" selected disabled>Select Size</option>
+                                            </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <h6>Unit Price</h6>
+                                        <h5><span id="SpnItemPrice" class=""></span></h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 display-none">
+                                    <div class="form-group">
+                                        <input type="text" id="weightId" class="form-control form-control-lg m-input m-input--solid" placeholder="Net Weight" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="number" id="quantityId" min="0" class="form-control form-control-lg m-input m-input--solid selected" value="1" placeholder="Qty" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 display-none">
+                                    <div class="form-group">
+                                        <input type="text" id="discountId" class="form-control form-control-lg m-input m-input--solid" placeholder="00" title="Discount" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" id="actualPrice" class="form-control form-control-lg m-input m-input--solid" value="@(SalesHelpers.Data) 00.00" readonly />
+                                        <span hidden id="hdMarket"></span>
+                                        <input type="hidden" value="" id="item_image" />
+                                        <span hidden id="PurchasePrice"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" id="remark" class="form-control form-control-lg m-input m-input--solid selected" placeholder="Remark" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+                <button type="button" id="AddCartId" class="btn btn-primary">Add to cart</button>
+                @*onclick="AddCartId('#SpnItemId','#weightId','#quantityId','#discountId','#actualPrice','#SpnCategory','#SpnItemName','#meaure','#SpnItemPrice','#SpnCategoryId', '#item_image')"*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CHANGES CUSTOMER MODAL -->
+<div class="modal animated fadeIn" id="changeCustomerMd" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Change Customer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Table Code</label>
+                        <div class="form-group">
+                            <select class="form-control m-input m-input--solid font-medium-3" id="selecttableId" name="tableId">
+                                <option value="0" selected="selected">Choose the Table</option>
+                                <option value="T1">T1</option>
+                                <option value="T2">T2</option>
+                                <option value="T3">T3</option>
+                                <option value="T4">T4</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label>Customer Name</label>
+                        <div class="form-group mb-0 font-medium-3" data-select2-id="4">
+                            <input type="text" class="form-control" placeholder="Select Customer Name/Number" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="BtnPaymentStatus">Change</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--cancel order modal -->
+<div class="modal fade" id="Cancel_Order1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+            @*<input id="SalesorderId" value="@Model.GetTableStateList[0].SalesOrderId"  type="hidden"/>*@
+                  <input hidden id="sales-Id1" name="Id" asp-for="SaleData.Id" />
+                <div class="modal-header">
+                    <h5 class="modal-title">Cancel Order</h5>
+                @*  <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>*@
+                </div>
+                <div class="modal-body">
+                     <div class="input-group row mb-3 align-items-center">
+                          <label class="form-label col-md-3 text-right mb-0">Cancellation Reason</label>
+                          <div class="col-md-7">
+                                <input type="text" class="form-control" id="CancellationReason" name="CancellationReason" placeholder="Please Enter Reason for Cancellation" autocomplete="off"  />
+
+                                <span id="cmp_LocationErr" class="text-danger" style="display:none;">Please Enter this field</span>
+                          </div>
+                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary"   data-update="Cancelled" id="CancelReason1">Submit</button>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+@section scripts {
+    <script src="~/assets/scripts/sales/detail.js"></script>
+    <script src="~/assets/scripts/sales/OrderStatus.js"></script>
+
+    <script>
+
+
+        @*Add Item*@
+        $("#add_item").click(function () {
+            $(".right-panel").toggleClass("toggle-panel")
+        });
+
+        $("#close_add_item").click(function () {
+            $(".right-panel").removeClass("toggle-panel")
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            $(".payment_status li").click(function () {
+                $(this).addClass('active').siblings().removeClass('active');
+            });
+
+            $(".payment_mode li").click(function () {
+                $(this).addClass('active').siblings().removeClass('active');
+            });
+        })
+    </script>
+
+}
+

@@ -1,0 +1,151 @@
+﻿
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Wastage Management</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="javascripts:;" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/Home/Index/" class="m-nav__link">
+                        <span class="m-nav__link-text">Home</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="javascripts:;" class="m-nav__link">
+                        <span class="m-nav__link-text">Wastage Manage</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <button type="button" class="btn btn-dark" onclick="window.location.href='/Wastage/Create/'"><i class="la la-plus"></i> Create New</button>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon m--hide">
+                        <i class="la la-gear"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                        List of Wastage
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table">
+                            <thead>
+                                <tr>
+                                    <th>Item Name / Code</th>
+                                    <th>Item Type</th>
+                                    <th>Wastage</th>
+                                    <th>Wastage ?</th>
+                                    <th>Brand</th>
+                                    <th>Vendor</th>
+                                    <th>Created On / By</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <a href="/User/Detail/" class="text-link">Sugar - 100g</a><span class="display-block font-small-2">U5002</span>
+                                    </td>
+                                    <td>
+                                        Pocket
+                                    </td>
+                                    <td>
+                                        <span class="text-bold-600 text-danger">5kg</span>
+                                    </td>
+                                    <td>
+                                        Purchase
+                                    </td>
+                                    <td>
+                                        Freshlo
+                                    </td>
+                                    <td>Freshlo</td>
+                                    <td>
+                                        20-02-2018 02:55 PM
+                                        <span class="display-block font-small-2">Enayath Sayyed</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="/User/Detail/" class="text-link">Sugar - 100g</a><span class="display-block font-small-2">U5002</span>
+                                    </td>
+                                    <td>
+                                        Pocket
+                                    </td>
+                                    <td>
+                                        <span class="text-bold-600 text-danger">3.2kg</span>
+                                    </td>
+                                    <td>
+                                        Delivery
+                                    </td>
+                                    <td>
+                                        Freshlo
+                                    </td>
+                                    <td>Freshlo</td>
+                                    <td>
+                                        20-02-2018 02:55 PM
+                                        <span class="display-block font-small-2">Enayath Sayyed</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="/User/Detail/" class="text-link">Sugar - 100g</a><span class="display-block font-small-2">U5002</span>
+                                    </td>
+                                    <td>
+                                        Pocket
+                                    </td>
+                                    <td>
+                                        <span class="text-bold-600 text-danger">0.8kg</span>
+                                    </td>
+                                    <td>
+                                       Expire
+                                    </td>
+                                    <td>
+                                        Freshlo
+                                    </td>
+                                    <td>Freshlo</td>
+                                    <td>
+                                        20-02-2018 02:55 PM
+                                        <span class="display-block font-small-2">Enayath Sayyed</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/assets/scripts/wastage/manage.js"></script>
+}
+
+
+

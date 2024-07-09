@@ -1,0 +1,491 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor httpContextaccessor;
+@if (Convert.ToString(User.FindFirst("userRole").Value) == "System Admin")
+{
+
+    <style>
+        .boxes:hover .card {
+            background-color: #f8f8f8;
+        }
+    </style>
+    <!-- BEGIN: Subheader -->
+    <div class="m-subheader ">
+        <div class="d-flex align-items-center">
+            <div class="mr-auto">
+                <h3 class="m-subheader__title m-subheader__title--separator">Admin Panel</h3>
+                <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                    <li class="m-nav__item m-nav__item--home">
+                        <a href="/Sale/tablestate/" class="m-nav__link m-nav__link--icon">
+                            <i class="m-nav__link-icon la la-home"></i>
+                        </a>
+                    </li>
+                    @*<li class="m-nav__separator">-</li>*@
+                    @*<li class="m-nav__item">
+                        <a href="/Sale/tablestate/" class="m-nav__link">
+                            <span class="m-nav__link-text">Home</span>
+                        </a>
+                    </li>*@
+                    <li class="m-nav__separator">></li>
+                    <li class="m-nav__item">
+                        <a href="javascripts:;" class="m-nav__link">
+                            <span class="m-nav__link-text">Admin Panel</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            @*<div>
+                    <button type="button" class="btn btn-dark" onclick="window.location.href='/Coupen/Create/'"><i class="la la-plus"></i> Create New</button>
+                </div>*@
+        </div>
+    </div>
+    <!-- END: Subheader -->
+
+    <div class="m-content">
+        <div class="m-portlet">
+            <div class="m-portlet__head border border-bottom-0">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <span class="m-portlet__head-icon m--hide">
+                            <i class="la la-gear"></i>
+                        </span>
+                        <h3 class="m-portlet__head-text">
+                            Item Master , Categories and Sales Order Management
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body pt-0">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="header-body" id="">
+                            <div class="row mb-3">
+                                <div class="col-xl-2 col-lg-3 col-sm-6 col-md-3">
+                                    <a href="/ItemMaster/Create/" class="boxes">
+                                        <div class="card card-stats mb-4 mb-xl-0">
+                                            <div class="card-body">
+                                                <div class="">
+                                                    <div class="col text-center pb-2" id="">
+                                                        <img src="~/img/new-product.png" alt="Items">
+                                                    </div>
+                                                    <div class="col text-center">
+                                                        <span class="font-medium-2 text-xl-center font-weight-bold text-black" id="">Create New Item</span>
+                                                        <span class="d-block text-muted font-small-3">Create new product with description and define categories.</span>
+
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-xl-2 col-lg-3 col-sm-6 col-md-3">
+                                    <a href="/ItemMaster/Manage/" class="boxes">
+                                        <div class="card card-stats mb-4 mb-xl-0">
+                                            <div class="card-body">
+                                                <div class="">
+                                                    <div class="col text-center pb-2" id="">
+                                                        <img src="~/img/checklist.png" alt="Items">
+                                                    </div>
+                                                    <div class="col text-center">
+                                                        <span class="font-medium-2 text-xl-center font-weight-bold text-black" id="">Manage Items Master</span>
+                                                        <span class="d-block text-muted font-small-3">Edit the list of products and their price variances</span>
+
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                @if (httpContextaccessor.HttpContext.Request.Cookies["BranchId"] != "HID01")
+                                {
+                                    <div class="col-xl-2 col-lg-3 col-sm-6 col-md-3">
+                                        <a href="/ItemMaster/ManagePrice/" class="boxes">
+                                            <div class="card card-stats mb-4 mb-xl-0">
+                                                <div class="card-body">
+                                                    <div class="">
+                                                        <div class="col text-center pb-2" id="">
+                                                            <img src="~/img/checklist.png" alt="Items">
+                                                        </div>
+                                                        <div class="col text-center">
+                                                            <span class="font-medium-2 text-xl-center font-weight-bold text-black" id="">Branch Level Items </span>
+                                                            <span class="d-block text-muted font-small-3">Edit the list of products and their price variances</span>
+
+                                                        </div>
+
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                }
+                              
+
+                                    <div class="col-xl-2 col-lg-3 col-sm-6 col-md-3">
+                                        <a href="/Category/Manage/" class="boxes">
+                                            <div class="card card-stats mb-4 mb-xl-0">
+                                                <div class="card-body">
+                                                    <div class="">
+                                                        <div class="col text-center pb-2" id="">
+                                                            <img src="~/img/categories.png" alt="Items">
+                                                        </div>
+                                                        <div class="col text-center">
+                                                            <span class="font-medium-2 text-xl-center font-weight-bold text-black" id="">Product Categorisation</span>
+                                                            <span class="d-block text-muted font-small-3">Create and manage product categories sub-categories.</span>
+                                                        </div>
+
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                
+                                    <div class="col-xl-2 col-lg-3 col-sm-6 col-md-3">
+                                    <a href="/Sale/Manage/" class="boxes">
+                                        <div class="card card-stats mb-4 mb-xl-0">
+                                            <div class="card-body">
+                                                <div class="">
+                                                    <div class="col text-center pb-2" id="">
+                                                        <img src="~/img/checklist.png" alt="Items">
+                                                    </div>
+                                                    <div class="col text-center">
+                                                        <span class="font-medium-2 text-xl-center font-weight-bold text-black" id="">Manage Sales Orders</span>
+                                                        <span class="d-block text-muted font-small-3">Manage or Edit Sales Orders</span>
+
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-xl-2 col-lg-3 col-sm-6 col-md-3">
+                                    <a href="/StockManagement/StockUpdate/" class="boxes">
+                                        <div class="card card-stats mb-4 mb-xl-0">
+                                            <div class="card-body">
+                                                <div class="">
+                                                    <div class="col text-center pb-2" id="">
+                                                        <img src="~/img/stock-update.png" alt="Items">
+                                                    </div>
+                                                    <div class="col text-center">
+                                                        <span class="font-medium-2 text-xl-center font-weight-bold text-black" id="">Stock Update</span>
+                                                        <span class="d-block text-muted font-small-3">Stock Market and Share Market Live Updates</span>
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__head border-bottom-0">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <span class="m-portlet__head-icon m--hide">
+                            <i class="la la-gear"></i>
+                        </span>
+                        <h3 class="m-portlet__head-text">
+                            Branchs and Hubs
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body pt-0">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="header-body" id="">
+                            <div class="row mb-3">
+                                <div class="col-xl-2 col-lg-3 col-sm-6 col-md-3">
+                                    <a href="/Hub/Create/" class="boxes">
+                                        <div class="card card-stats mb-4 mb-xl-0">
+                                            <div class="card-body">
+                                                <div class="">
+                                                    <div class="col text-center pb-2" id="">
+                                                        <img src="~/img/pin.png" alt="Items">
+                                                    </div>
+                                                    <div class="col text-center">
+                                                        <span class="font-medium-2 text-xl-center font-weight-bold text-black" id="">Create New Branch</span>
+                                                        <span class="d-block text-muted font-small-3">Create a new branch or a hub of the business</span>
+
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-xl-2 col-lg-3 col-sm-6 col-md-3">
+                                    <a href="/Hub/Manage/" class="boxes">
+                                        <div class="card card-stats mb-4 mb-xl-0">
+                                            <div class="card-body">
+                                                <div class="">
+                                                    <div class="col text-center pb-2" id="">
+                                                        <img src="~/img/branches.png" alt="Items">
+                                                    </div>
+                                                    <div class="col text-center">
+                                                        <span class="font-medium-2 text-xl-center font-weight-bold text-black" id="">Manage Branches</span>
+                                                        <span class="d-block text-muted font-small-3">Manage or edit the list of your business branches</span>
+
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__head border-bottom-0">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        @*<span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>*@
+                        <h3 class="m-portlet__head-text">
+                            User Management
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body pt-0">
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <div class="header-body 0" id="">
+                            <div class="row mb-3">
+                                <div class="col-xl-2 col-lg-3 col-sm-6 col-md-3">
+                                    <a href="/User/Create/" class="boxes">
+                                        <div class="card card-stats mb-4 mb-xl-0">
+                                            <div class="card-body">
+                                                <div class="">
+                                                    <div class="col text-center pb-2" id="">
+                                                        <img src="~/img/new-user.png" alt="Items">
+                                                    </div>
+                                                    <div class="col text-center">
+                                                        <span class="font-medium-2 text-xl-center font-weight-bold text-black" id="">Create New User</span>
+                                                        <span class="d-block text-muted font-small-3">Create a new user account and define the role.</span>
+
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-xl-2 col-lg-3 col-sm-6 col-md-3">
+                                    <a href="/User/Manage/" class="boxes">
+                                        <div class="card card-stats mb-4 mb-xl-0">
+                                            <div class="card-body">
+                                                <div class="">
+                                                    <div class="col text-center pb-2" id="">
+                                                        <img src="~/img/usrrs.png" alt="Items">
+                                                    </div>
+                                                    <div class="col text-center">
+                                                        <span class="font-medium-2 text-xl-center font-weight-bold text-black" id="">Manage Users</span>
+                                                        <span class="d-block text-muted font-small-3">Edit or manage the list of all your employees.</span>
+
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-xl-2 col-lg-3 col-sm-6 col-md-3">
+                                    <a href="/User/Accesscontrol/" class="boxes">
+                                        <div class="card card-stats mb-4 mb-xl-0">
+                                            <div class="card-body">
+                                                <div class="">
+                                                    
+                                                    <div class="col text-center pb-2" id="">
+                                                        <img src="~/assets/img/access-control.png" />
+                                                    </div>
+                                                    <div class="col text-center">
+                                                        <span class="font-medium-2 text-xl-center font-weight-bold text-black" id="">User Access Control</span>
+                                                        <span class="d-block text-muted font-small-3">Edit or manage the list of all your employees.</span>
+
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__head border-bottom-0">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <span class="m-portlet__head-icon m--hide">
+                            <i class="la la-gear"></i>
+                        </span>
+                        <h3 class="m-portlet__head-text">
+                            Banners, Coupons , Offerspage and Customers Management
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body pt-0">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="header-body" id="">
+                            <div class="row mb-3">
+                                <div class="col-xl-2 col-lg-3 col-sm-6 col-md-3">
+                                    <a href="/Coupen/Manage/" class="boxes">
+                                        <div class="card card-stats mb-4 mb-xl-0">
+                                            <div class="card-body">
+                                                <div class="">
+                                                    <div class="col text-center pb-2" id="">
+                                                        <img src="~/img/voucher.png" alt="Items">
+                                                    </div>
+                                                    <div class="col text-center">
+                                                        <span class="font-medium-2 text-xl-center font-weight-bold text-black" id="">Manage Coupons</span>
+                                                        <span class="d-block text-muted font-small-3">Manage and edit discount coupons with validity</span>
+
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-xl-2 col-lg-3 col-sm-6 col-md-3">
+                                    <a href="/Banner/Manage/" class="boxes">
+                                        <div class="card card-stats mb-4 mb-xl-0">
+                                            <div class="card-body">
+                                                <div class="">
+                                                    <div class="col text-center pb-2" id="">
+                                                        <img src="~/img/online-advertising.png" alt="Items">
+                                                    </div>
+                                                    <div class="col text-center">
+                                                        <span class="font-medium-2 text-xl-center font-weight-bold text-black" id="">Manage Banners</span>
+                                                        <span class="d-block text-muted font-small-3">Manage or edit banners and posters for the web.</span>
+
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-xl-2 col-lg-3 col-sm-6 col-md-3">
+                                    <a href="/Offer/Manage/" class="boxes">
+                                        <div class="card card-stats mb-4 mb-xl-0">
+                                            <div class="card-body">
+                                                <div class="">
+                                                    <div class="col text-center pb-2" id="">
+                                                        <img src="~/img/discount.png" alt="Items">
+                                                    </div>
+                                                    <div class="col text-center">
+                                                        <span class="font-medium-2 text-xl-center font-weight-bold text-black" id="">Manage Offers</span>
+                                                        <span class="d-block text-muted font-small-3">Manage or edit time limited product discount ofers.</span>
+
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-xl-2 col-lg-3 col-sm-6 col-md-3">
+                                    <a href="/Vendor/Manage/" class="boxes">
+                                        <div class="card card-stats mb-4 mb-xl-0">
+                                            <div class="card-body">
+                                                <div class="">
+                                                    <div class="col text-center pb-2" id="">
+                                                        <img src="~/assets/img/business-vendor.png" alt="Vendors">
+                                                    </div>
+                                                    <div class="col text-center">
+                                                        <span class="font-medium-2 text-xl-center font-weight-bold text-black" id="">Manage Vendors</span>
+                                                        <span class="d-block text-muted font-small-3">Manage or edit all your vendors and suplliers.</span>
+
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                 <div class="col-xl-2 col-lg-3 col-sm-6 col-md-3">
+                                    <a href="/Customer/Manage/" class="boxes">
+                                        <div class="card card-stats mb-4 mb-xl-0">
+                                            <div class="card-body">
+                                                <div class="">
+                                                    <div class="col text-center pb-2" id="">
+                                                        <img  src="~/img/usrrs.png" alt="Customer">
+                                                    </div>
+                                                    <div class="col text-center">
+                                                        <span class="font-medium-2 text-xl-center font-weight-bold text-black" id="">Manage Customer</span>
+                                                        <span class="d-block text-muted font-small-3">Manage or edit all your Customers.</span>
+
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

@@ -1,0 +1,94 @@
+﻿@using Freshlo.Web.Models.Sale;
+@using System.Globalization;
+@using Freshlo.Web.Helpers;
+@model SalesDetailVM
+@{
+
+}
+
+<!-- KOT LIST VIEW MODAL FOR ALL TABLE -->
+<div class="modal animated fadeIn" id="ConsolidatetblkotPrintListView" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered kot-custom-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">KOT List</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle  m-data-table">
+                                <thead>
+                                    <tr>
+                                        <th style="display:none">Ids</th>
+                                        <th>Item Name</th>
+                                        <th>Quantity</th>
+                                        <th>Created date</th>
+                                        <th>Print KOT?</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="ConsolidatetblKotListView">
+                                    @foreach (var item in Model.kotTblSaleList)
+                                    {
+                                        @if (item.KOT_Print == 1 || item.KOT_Print == 2)
+                                        {
+                                            @if (item.KOT_Status != 1)
+                                            {
+                                                <tr>
+                                                    <td style="display:none">
+                                                        <input class="SalesOrderId" id="@item.SalesOrderId">
+                                                        <input class="KitchListId" id="@item.KitchListId">
+                                                        <input class="SalesListId" id="@item.SalesListId">
+
+                                                    </td>
+                                                    <td><a href="#" class="text-link">@item.PluName</a></td>
+                                                    <td>@item.QuantityValue</td>
+                                                    <td class="text-dark">@item.CreatedOn</td>
+                                                    @if (item.KOT_Print == 1)
+                                                    {
+                                                        <td>
+                                                            <div class="checkbox-inline d-inline-block ml-3">
+                                                                <label class="checkbox">
+                                                                    <input type="checkbox" name="itemCheck" checked />
+                                                                </label>
+                                                            </div>
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>
+                                                            <div class="checkbox-inline d-inline-block ml-3">
+                                                                <label class="checkbox">
+                                                                    <input type="checkbox" name="itemCheck" />
+                                                                </label>
+                                                            </div>
+                                                        </td>
+                                                    }
+                                                </tr>
+
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-dark" id="ConsolidatetblBtnKotUpdate">CONFIRM & PRINT</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    <script src="~/assets/scripts/sales/_SalesPartialView.js"></script>
+}
+

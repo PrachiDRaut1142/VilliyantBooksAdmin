@@ -1,0 +1,140 @@
+﻿@model SalesVM;
+@using System.Globalization
+@{
+    ViewData["Title"] = "TodaySalesToPrint";
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Arabian Dastar</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <link href="~/assets/print/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/print/print.css" rel="stylesheet" />
+    <link href="~/assets/main/main.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div class="container-fluid" id="outprint">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center">
+                    <div class="row flex-column">
+                        <div class="col-6"><h3>@ViewBag.businessName</h3></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="printTodaysSalesData">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-condensed mb-0" style="">
+                        <thead>
+                            <tr>
+                                <td><h3>Table No.</h3></td>
+                                <td style="display:none"><h3>Order Type</h3></td>
+                                <td><h3><strong>Customer Name</strong></h3></td>
+                                <td class="text-center"><h3><strong> Payment Mode</strong></h3></td>
+                                <td class="text-center"><h3><strong> Payment Status</strong></h3></td>
+                                <td class="text-right"><h3><strong>Amt.</strong></h3></td>
+                            </tr>
+                        </thead>
+                        <tbody id="printBody">
+                            @if (Model.GetTodaySalesList != null)
+                            {
+                                @foreach (var item in Model.GetTodaySalesList)
+                                {
+                                    <tr>
+                                        <td><h3>@item.tableName</h3></td>
+                                        <td style="display:none"><h3>@item.OrderType</h3></td>
+                                        <td><h3>@item.Name</h3></td>
+                                        <td class="text-center"><h3>@item.PaymentMode </h3></td>
+                                        <td class="text-center"><h3>@item.PaymentStatus </h3></td>
+                                        <td class="text-right"><h3>@item.TotalPrice</h3></td>
+
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <hr />
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="text-left"><h4><strong>Total Sales : @Model.GetTodaySalesDetail.TotalCount</strong></h4></div>
+                </div>
+                @if (Model.GetTodaySalesDetail.TotalAmt != null)
+                {
+                    <div class="col-md-3">
+                        <div class="text-left"><h4><strong>Total Amt : @Model.GetTodaySalesDetail.TotalAmt</strong></h4></div>
+                    </div>
+                }
+                @if (Model.GetTodaySalesDetail.CashPaymentCollect != null)
+                {
+                    <div class="col-md-3">
+                        <div class="text-left"><h4><strong>Cash Payment : @Model.GetTodaySalesDetail.CashPaymentCollect</strong></h4></div>
+                    </div>
+                }
+                @if (Model.GetTodaySalesDetail.UPIPaymentCollect != null)
+                {
+                    <div class="col-md-3">
+                        <div class="text-left"><h4><strong>UPI Payments : @Model.GetTodaySalesDetail.UPIPaymentCollect</strong></h4></div>
+                    </div>
+                }
+                @if (Model.GetTodaySalesDetail.CardPaymentCollect != null)
+                {
+                    <div class="col-md-3">
+                        <div class="text-left"><h4><strong>Card Payment : @Model.GetTodaySalesDetail.CardPaymentCollect</strong></h4></div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-left" style="font-size:10px;">
+                    <h4>This is computer generated invoice</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="" style="display:none">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <div class="col-md-4 col-sm-4 col-4">
+                        <div class='input-group'>
+                            <input type='text' class="form-control datetimerange" name="DeliveryDate" id="deliverydate" placeholder="Select Date Range" />
+                            <span class="input-group-addon" id="DateTimeIcon" onclick="clearError();"><span class="icon-calendar"></span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    @*<script src="~/assets/scripts/print/TodaysSalesToPrint.js"></script>*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            print();
+        });
+        window.onafterprint = function () {
+            window.location.href = '/Sale/tablestate/';
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+

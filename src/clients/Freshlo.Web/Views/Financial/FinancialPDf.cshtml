@@ -1,0 +1,168 @@
+﻿@using Freshlo.Web.Models.Financial
+@using Freshlo.Web.Helpers
+@model ManageViewModel;
+@using System.Globalization
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>FinancialPDf</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    @*<link href="~/Content/app-assets/css/bootstrap.min.css" rel="stylesheet" />*@
+    <link href="~/Content/app-assets/css/invoice-css.css" rel="stylesheet" />
+    <style>
+        .toptable > tbody > tr > th {
+            border-top: none;
+        }
+
+        .toptable > tbody > tr > td {
+            border-top: none;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="text-center">
+                    <h2>Finance List</h2>
+                </div>
+            </div>
+        </div>
+
+        @*<div class="row" >
+                <div class="col-md-12 d-flex" style="display:flex !important">
+                    <div class="text-left">
+                        <h5>Today</h5>
+                        <h4 class="text-danger">Rs. 00.00 (OUT)</h4>
+                        <h4 class="text-success">Rs. 00.00 (IN)</h4>
+                    </div>
+                    <div class="text-left">
+                        <h5>This Week</h5>
+                        <h4 class="text-danger">Rs. 00.00 (OUT)</h4>
+                        <h4 class="text-success">Rs. 00.00 (IN)</h4>
+                    </div>
+                    <div class="text-left">
+                        <h5>This Month</h5>
+                        <h4 class="text-danger">Rs. 1230.00 (OUT)</h4>
+                        <h4 class="text-success">Rs. 8980.00 (IN)</h4>
+                    </div>
+                </div>
+            </div>*@
+        <hr />
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Today</th>
+                        <th>This Week</th>
+                        <th>This Month</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="text-danger" style="font-size:18px;">
+                                Rs. @Model.FinanceSummary.Result.TodaysOut (OUT)
+                            </span>
+                        </td>
+                        <td>
+                            <span class="text-danger" style="font-size:18px;">
+                                Rs.  @Model.FinanceSummary.Result.WeeklyOut (OUT)
+                            </span>
+                        </td>
+                        <td>
+                            <span class="text-danger" style="font-size:18px;">
+                                Rs. @Model.FinanceSummary.Result.MonthlyOut (OUT)
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="text-success" style="font-size:18px;">
+                                Rs. @Model.FinanceSummary.Result.TodaysInn (IN)
+                            </span>
+                        </td>
+                        <td>
+                            <span class="text-success" style="font-size:18px;">
+                                Rs. @Model.FinanceSummary.Result.WeeklyInn (IN)
+                            </span>
+                        </td>
+                        <td>
+                            <span class="text-success" style="font-size:18px;">
+                                Rs. @Model.FinanceSummary.Result.MonthlyInn (IN)
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <p style="margin-top: 50px; font-size:20px;">Product List</p>
+                <table class="table table-striped" id="financial_tblId">
+                    <thead>
+                        <tr>
+                            <th>Entry ID</th>
+                            <th>Entry Type</th>
+                            <th>Payment Person</th>
+                            <th>Total Amount</th>
+                            <th>Partial Amount</th>
+                            <th>Payment</th>
+                            <th>Payment Date</th>
+                            <th>Remark</th>
+                            <th>Created On</th>
+                        </tr>
+                    </thead>
+                    <tbody id="">
+
+
+                        @foreach (var list in Model.FinanceList)
+                        {
+
+                            <tr>
+                                <td><a href="/Financial/Detail?Id=@list.Id &opt=@list.Entry_Type" class="text-link"><span>F</span>@list.Id</a></td>
+                                <td>@list.Entry_Type_Desc</td>
+                                <td>@(list.Entry_Type == 1 ? list.Received_From : list.Paid_To)</td>
+
+                                <td>Rs. @list.Total_Amount</td>
+                                <td>Rs. @list.Partail_Amount</td>
+                                <td>
+                                    <span class="m-badge m-badge--wide m-badge--rounded m-badge--@(FinanceHelper.StatusColor.ContainsKey(list.Payment_Status) ? FinanceHelper.StatusColor[list.Payment_Status] : "danger")">@list.Payment_Status_Desc</span>
+                                </td>
+                                <td>
+                                    @list.Paid_On.ToString("dd MMMM yyyy", CultureInfo.InvariantCulture)
+                                </td>
+                                <td>
+                                    @list.Remark
+                                </td>
+                                <td>
+                                    @list.Created_On.ToString("dd-MM-yyyy hh:mm", CultureInfo.InvariantCulture)
+                                </td>
+                            </tr>
+
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+    </div>
+</body>
+</html>

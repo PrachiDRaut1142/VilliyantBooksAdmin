@@ -1,0 +1,22 @@
+﻿@using Freshlo.DomainEntities;
+@model List<BrandInfo>
+
+@foreach (var item in Model)
+{
+
+    <tr>
+        <td>
+            <a href="#" class="text-link">@item.BrandName</a>
+        </td>
+        <td>
+            <img alt="Brand Image" src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/brand/@(item.BrandId).png" onerror="this.onerror = null;
+                                                          this.src = 'https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/no-image.png';" style="width:60px;border-radius:5px;" />
+        </td>
+        <td>@item.ItemCount</td>
+        <td>@item.CreatedOn <span class="font-small-3 display-block">@item.CreatedBy</span></td>
+        <td><a href="#" class="text-dark brandDetailcls" data-toggle="modal" data-id="@item.Id"> <i class="flaticon-edit"> </i> </a></td>
+        <td><a href="#" class="text-danger BrandDeleteCls" data-id="@item.Id"> <i class="flaticon-delete deleteId"> </i></a></td>
+    </tr>
+
+}
+

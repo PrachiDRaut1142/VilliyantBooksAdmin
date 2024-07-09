@@ -1,0 +1,759 @@
+﻿@using Freshlo.Web.Models
+@using Freshlo.Web.Helpers
+@model SalesVM
+@{
+    Layout = null;
+    int count = 1;
+    int count1 = 1;
+    var currencySymbol = Model.currencyInfo.FirstOrDefault(x => x.status == 1).symbol;
+    var aliyunpath = Model.businessInfo.aliyunPath;
+
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Arabian Dastar</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <link href="~/assets/print/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/print/print.css" rel="stylesheet" />
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Oswald:wght@300&display=swap" rel="stylesheet">
+    <style>
+        .table-middle td {
+            vertical-align: middle !important
+        }
+
+        .table-borderless th, .table-borderless td, .table-borderless thead th, .table-borderless tbody + tbody {
+            border: 0 !important
+        }
+
+        .print {
+            break-inside: avoid;
+        }
+    </style>
+</head>
+<!-- end::Head -->
+<!-- begin::Body -->
+<body style="font-family: 'Open Sans';font-size: 17px;">
+    <div class="p-4" id="PrinterDta">
+        <div class="container-fluid" style="display: block; ">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="text-center">
+                        <div class="row flex-column">
+                            @*<div class="col-6"><h3>@Model.getBusinessdetails.hotel_name</h3></div>*@
+                            @if (Model.businessInfo.printlogo_url != "https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/logo/1.png" && Model.businessInfo.printlogo_url != "" && Model.businessInfo.printlogo_url != null && Model.businessInfo.printlogo_url != null)
+                            {
+                                <div class="col-6"><img src="@ViewBag.Print_logourl" alt="arabian Logo" class="img-fluid mt-1" style="width:120px;" /></div>
+                            }
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="text-center">
+                        @Model.gethublist.address1<br />
+                        @* @Model.getBusinessdetails.address2.<br>*@
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="text-left">
+                        Bill No : @Model.GetSalesOrderdetail.SalesOrderId - @Model.GetSalesOrderdetail.LastUpdatedOn.ToString("dd-MM-yyyy hh:mm tt")<br>
+                        Cashier ID : @Model.GetSalesOrderdetail.CreatedBy  - @Model.GetSalesOrderdetail.EmpName<br />
+                        Customer Name : @Model.GetSalesOrderdetail.Name <br>
+                        @if (Model.GetSalesOrderdetail.OrderType == "Dine In")
+                        {
+                            <span>Order Type: </span><span class="font-medium-4 text-bold-700"> @Model.GetSalesOrderdetail.OrderType  </span><br>
+                            <span>Table: </span><span class="font-medium-4 text-bold-700"> @Model.GetSalesOrderdetail.tableName  </span><br>
+                        }
+                        @if (Model.GetSalesOrderdetail.OrderType == "Take Away")
+                        {
+                            <span>Order Type : </span><span class="font-medium-4 text-bold-700"> @Model.GetSalesOrderdetail.OrderType  </span><br>
+                        }
+                        @if (Model.GetSalesOrderdetail.OrderType == "Home Delivery")
+                        {
+                            <span>Order Type: </span><span class="font-medium-4 text-bold-700"> @Model.GetSalesOrderdetail.OrderType  </span><br>
+                        }
+                        Address : <br>
+                        <span style="">@Model.GetSalesOrderdetail.BuildingName,@Model.GetSalesOrderdetail.RoomNo,@Model.GetSalesOrderdetail.Sector, @Model.GetSalesOrderdetail.Locality,@Model.GetSalesOrderdetail.City- @Model.GetSalesOrderdetail.ZipCode </span>
+
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="mb-0 text-center">
+                        INVOICE
+                    </p>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-condensed table-borderless table-middle mb-0">
+                        <thead style="">
+                            <tr>
+                                <th>Item</th>
+                                <th>Quantity</th>
+                                @if (Model.GetSalesOrderdetail.Discount != 0)
+                                {
+                                    <th class="text-right">Disc.</th>
+                                }
+                                else
+                                {
+                                    <th class="text-right" style="display:none">Disc.</th>
+                                }
+                                <th colspan="2" class="text-right">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody style="">
+                            @foreach (var tax in Model.GetGSTCount)
+                            {
+                                @if (Model.GetSalesOrderdetail.taxType == 1)
+                                {
+                                    <tr>
+                                        @if ((Model.GetSalesOrderdetail.taxbillType == 1 || Model.GetSalesOrderdetail.taxbillType == 2) && Model.GetSalesOrderdetail.gstTax == 0)
+                                        {
+                                            <td colspan="5">
+                                                #@tax.Id CGST @tax.CGST_Per% SGST @tax.SGST_Per%
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            @*if (count1 == 1)
+                                        {
+                                            <td colspan="5">
+                                                #@tax.Id GST @Model.GetSalesOrderdetail.gstTax %
+                                            </td>
+                                        }*@
+                                        }
+                                    </tr>
+
+                                }
+                                @if (Model.GetSalesOrderdetail.taxType == 2)
+                                {
+                                    @*<tr>
+                                    @if (count == 1)
+                                    {
+                                        <td colspan="5">
+                                            #@tax.Id VAT @Model.GetSalesOrderdetail.vatTax %
+                                        </td>
+                                    }
+                                </tr>*@
+                                }
+                                @foreach (var list in Model.GetSalesPrintList)
+                                {
+                                    @if (list.IGST_Per == Convert.ToString(tax.IGST_Per))
+                                    {
+                                        <tr>
+                                            <td>@list.PluName @list.Size<span class="display-block d-block font-medium-1" style="display:block;">@(list.ItemType == "Loose" ? list.Weight : list.Weight) @list.Measurement X @(SalesHelpers.Data) @list.PricePerMeas </span></td>
+                                            <td>@list.QuantityValue</td>
+                                            @if (Model.GetSalesOrderdetail.Discount != 0)
+                                            {
+                                                @if (list.Discount != "0")
+                                                {
+                                                    <td style="width: auto" class="text-right text-bold-700">
+                                                        @list.Discount
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td style="width: auto" class="text-right text-bold-700">
+                                                        0
+                                                    </td>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <td style="width: auto;display:none" class="text-right text-bold-700">
+                                                    0
+                                                </td>
+                                            }
+                                            <td class="text-right" colspan="2">@list.TotalPrice</td>
+                                        </tr>
+                                    }
+
+                                }
+                                count++;
+                                count1++;
+                            }
+                        </tbody>
+                        <tfoot style=" border-top: 1px dashed #cecece;">
+                            <tr>
+                                <th>Items: @Model.GetSalesOrderdetail.TotalQuantity</th>
+                                <th></th>
+                                <th></th>
+                                @*<th>Total Amount: </th>
+                            <th class="text-right">@Model.SummaryDetail.TotalAmt</th>*@
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            @if (Model.GetSalesOrderdetail.taxType == 1 && Model.GetSalesOrderdetail.gstTax == 0)
+            {
+                <div class="vatInfo">
+                    <div class="row">
+                        <hr />
+                        <div class="col-xs-12">
+                            <div class="text-center">
+                                GST Breakup Summary (INR)
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-condensed table-borderless table-middle mb-0">
+                                <thead style="">
+                                    <tr>
+                                        <th>GST IND</th>
+                                        <th>Taxable Amt</th>
+                                        <th>CGST</th>
+                                        <th>SGST</th>
+                                        <th class="text-right">Total Amt</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var tax in Model.GetGSTCount)
+                                    {
+                                        @if (tax.IGST_Per == 0)
+                                        {
+                                            <tr>
+                                                <td>@tax.Id</td>
+                                                <td>----</td>
+                                                <td>----</td>
+                                                <td>----</td>
+                                                <td class="text-right">@tax.TotalAmount</td>
+                                            </tr>
+
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td>@tax.Id</td>
+                                                <td>@tax.TaxableAmount</td>
+                                                <td>@tax.CGSTValue</td>
+                                                <td>@tax.SGSTValue</td>
+                                                <td class="text-right">@tax.TotalAmount</td>
+                                            </tr>
+                                        }
+
+                                    }
+                                </tbody>
+                                <tfoot style=" border-top: 1px dashed #cecece;">
+                                    <tr>
+                                        <th></th>
+                                        <th>@Model.TotalGST.TotalPrice</th>
+                                        <th>@Model.TotalGST.CGSTValue</th>
+                                        <th>@Model.TotalGST.SGSTValue</th>
+                                        <th class="text-right">@Model.TotalGST.TotalAmount</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            }
+            <hr />
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="text-center">
+                        Payment Summary
+                    </div>
+                </div>
+            </div>
+            <hr />
+            @if (Model.GetSalesOrderdetail.taxType == 1 && Model.GetSalesOrderdetail.taxbillType == 1 && Model.GetSalesOrderdetail.gstTax == 0)
+            {
+                @if (Model.SummaryDetail.Discount != 0)
+                {
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <div class="text-right">
+                                Total Bill Amount :
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="text-right">
+                                <span class="CurrencyData">@currencySymbol</span> @Model.SummaryDetail.TotalSaleAmount /-
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <div class="text-right">
+                                Delivery Charge :
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="text-right">
+                                <span class="CurrencyData">@currencySymbol</span> @Model.SummaryDetail.DeliveryCharges /-
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <div class="text-right">
+                                Discount :
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="text-right">
+                                <span class="CurrencyData"> @currencySymbol</span> @Model.SummaryDetail.Discount /-
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-xs-7">
+                        <div class="text-right">
+                            Inclusive GST Tax :
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div class="text-right">
+                            <span class="CurrencyData">@currencySymbol</span> @Model.TotalGST.GST_Sum /-
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-7">
+                        <div class="text-right">
+                            <strong>
+                                Total Payable :
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div id="CashReceived" class="text-right">
+                            <div class="text-right"><strong><span class="CurrencyData">@currencySymbol</span> @Model.SummaryDetail.TotalPrice/-</strong></div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (Model.GetSalesOrderdetail.taxType == 1 && Model.GetSalesOrderdetail.taxbillType == 2 && Model.GetSalesOrderdetail.gstTax == 0)
+            {
+                @if (Model.SummaryDetail.Discount != 0)
+                {
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <div class="text-right">
+                                Total Bill Amount :
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="text-right">
+                                <span class="CurrencyData">@currencySymbol</span> @Model.SummaryDetail.TotalSaleAmount /-
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <div class="text-right">
+                                Delivery Charge :
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="text-right">
+                                <span class="CurrencyData">@currencySymbol</span> @Model.SummaryDetail.DeliveryCharges /-
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <div class="text-right">
+                                Discount :
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="text-right">
+                                <span class="CurrencyData"> @currencySymbol</span> @Model.SummaryDetail.Discount /-
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-xs-7">
+                        <div class="text-right">
+                            Exlusive GST Tax:
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div class="text-right">
+                            -<span class="CurrencyData">@currencySymbol</span> @Model.TotalGST.GST_Sum /-
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-7">
+                        <div class="text-right">
+                            <strong>
+                                Total Payable :
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div id="CashReceived" class="text-right">
+                            <div class="text-right"><strong><span class="CurrencyData">@currencySymbol</span> @Model.TotalGST.TaxableAmount/-</strong></div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (Model.GetSalesOrderdetail.taxType == 1 && Model.GetSalesOrderdetail.taxbillType == 1 && Model.GetSalesOrderdetail.gstTax != 0)
+            {
+                @if (Model.SummaryDetail.Discount != 0)
+                {
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <div class="text-right">
+                                Total Bill Amount :
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="text-right">
+                                <span class="CurrencyData">@currencySymbol</span> @Model.SummaryDetail.TotalSaleAmount /-
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <div class="text-right">
+                                Delivery Charge :
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="text-right">
+                                <span class="CurrencyData">@currencySymbol</span> @Model.SummaryDetail.DeliveryCharges /-
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <div class="text-right">
+                                Discount :
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="text-right">
+                                 <span class="CurrencyData"> @currencySymbol</span> @Model.SummaryDetail.Discount /-
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-xs-7">
+                        <div class="text-right">
+                            GST (@Model.GetSalesOrderdetail.gstTax % Inclusive) :
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div class="text-right">
+                            <span class="CurrencyData"> @currencySymbol</span> @Model.TotalGST.CGSTValue /-
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-7">
+                        <div class="text-right">
+                            <strong>
+                                Total Payable :
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div id="CashReceived" class="text-right">
+                            <div class="text-right"><strong><span class="CurrencyData">@currencySymbol</span> @Model.SummaryDetail.TotalPrice/-</strong></div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (Model.GetSalesOrderdetail.taxType == 1 && Model.GetSalesOrderdetail.taxbillType == 2 && Model.GetSalesOrderdetail.gstTax != 0)
+            {
+                @if (Model.SummaryDetail.Discount != 0)
+                {
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <div class="text-right">
+                                Total Bill Amount :
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="text-right">
+                                <span class="CurrencyData">@currencySymbol</span> @Model.SummaryDetail.TotalSaleAmount /-
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <div class="text-right">
+                                Delivery Charge :
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="text-right">
+                                <span class="CurrencyData">@currencySymbol</span> @Model.SummaryDetail.DeliveryCharges /-
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <div class="text-right">
+                                Discount :
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="text-right">
+                                <span class="CurrencyData"> @currencySymbol</span> @Model.SummaryDetail.Discount /-
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-xs-7">
+                        <div class="text-right">
+                            GST (@Model.getTaxationInfo.taxPercentGST % Exclusive) :
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div class="text-right">
+                            <span class="CurrencyData"> @currencySymbol</span> @Model.TotalGST.CGSTValue /-
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-7">
+                        <div class="text-right">
+                            <strong>
+                                Total Payable :
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div id="CashReceived" class="text-right">
+                            <div class="text-right"><strong><span class="CurrencyData">@currencySymbol</span> @Model.TotalGST.TaxableAmount/-</strong></div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (Model.GetSalesOrderdetail.taxType == 2 && Model.GetSalesOrderdetail.taxbillType == 1)
+            {
+                @if (Model.SummaryDetail.Discount != 0)
+                {
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <div class="text-right">
+                                Total Bill Amount :
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="text-right">
+                                <span class="CurrencyData">@currencySymbol</span> @Model.SummaryDetail.TotalSaleAmount /-
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <div class="text-right">
+                                Delivery Charge :
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="text-right">
+                                <span class="CurrencyData">@currencySymbol</span> @Model.SummaryDetail.DeliveryCharges /-
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <div class="text-right">
+                                Discount :
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="text-right">
+                                <span class="CurrencyData"> @currencySymbol</span> @Model.SummaryDetail.Discount /-
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-xs-7">
+                        <div class="text-right">
+                            VAT (@Model.getTaxationInfo.taxPercentVAT % Inclusive):
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div class="text-right">
+                            <span class="CurrencyData"> @currencySymbol</span> @Model.TotalGST.CGSTValue /-
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-7">
+                        <div class="text-right">
+                            <strong>
+                                Total Payable :
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div id="CashReceived" class="text-right">
+                            <div class="text-right"><strong><span class="CurrencyData">@currencySymbol</span> @Model.SummaryDetail.TotalPrice/-</strong></div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (Model.GetSalesOrderdetail.taxType == 2 && Model.GetSalesOrderdetail.taxbillType == 2)
+            {
+                @if (Model.SummaryDetail.Discount != 0)
+                {
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <div class="text-right">
+                                Total Bill Amount :
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="text-right">
+                                <span class="CurrencyData">@currencySymbol</span> @Model.SummaryDetail.TotalSaleAmount /-
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <div class="text-right">
+                                Delivery Charge :
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="text-right">
+                                <span class="CurrencyData">@currencySymbol</span> @Model.SummaryDetail.DeliveryCharges /-
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <div class="text-right">
+                                Discount :
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="text-right">
+                                <span class="CurrencyData"> @currencySymbol</span>@Model.SummaryDetail.Discount /-
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-xs-7">
+                        <div class="text-right">
+                            VAT (@Model.getTaxationInfo.taxPercentVAT % Exclusive):
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div class="text-right">
+                             <span class="CurrencyData">  @currencySymbol</span> @Model.TotalGST.CGSTValue /-
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-7">
+                        <div class="text-right">
+                            <strong>
+                                Total Payable :
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div id="CashReceived" class="text-right">
+                            <div class="text-right"><strong><span class="CurrencyData">@currencySymbol</span> @Model.TotalGST.TaxableAmount/-</strong></div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <hr />
+            <div class="row">
+                <div class="col-xs-7">
+                    <div class="text-right">
+                        Payment Mode :
+                    </div>
+                </div>
+                <div class="col-xs-5">
+                    <div class="text-right">
+                        @Model.SummaryDetail.PaymentMode
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-7">
+                    <div class="text-right">
+                        Payment Status :
+                    </div>
+                </div>
+                <div class="col-xs-5">
+                    <div class="text-right">
+                        @Model.SummaryDetail.PaymentStatus
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="text-left" style="font-size:14px;">
+                        For Inquiry: + @Model.getBusinessdetails.contact_number<br />
+                        For Feedback : @Model.getBusinessdetails.business_emailaddress <br />
+                        Online Order : @Model.getBusinessdetails.website
+                    </div>
+                    <div>
+                        @if (Model.GetSalesOrderdetail.taxType == 1)
+                        {
+                            <span style="font-size:14px">GSTIN - @Model.getTaxationInfo.taxRegNo</span>
+                        }
+                        else
+                        {
+                            <span style="font-size:14px">VATNO - @Model.getTaxationInfo.vatRegNo</span>
+
+                        }
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="text-center">
+                        @Model.getBusinessdetails.thankhyouMessage
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="~/assets/scripts/print/TodaysSalesToPrint.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            window.print();
+            setTimeout("closePrintView()", 2000);
+        });
+        function closePrintView() {
+            window.location.href = '/Sale/PendingOrders/';
+        }
+    </script>
+
+</body>
+</html>
+

@@ -1,0 +1,18 @@
+﻿@using Freshlo.Web.Models.DashboardVM;
+@model GSTDashbaordVM;
+@{
+    ViewData["Title"] = "_TaxPayOnLoad";
+
+}
+@foreach (var gstlist in Model.getGstList)
+{
+
+    <tr>
+        <td>@gstlist.IGST_Per % </td>
+        <td>@gstlist.ItemCount</td>
+        <td>@gstlist.TotalCgstAmount</td>
+        <td>@gstlist.TotalSgstAmount</td>
+        <td>@gstlist.TotalIgstAmount</td>
+    </tr>
+
+}

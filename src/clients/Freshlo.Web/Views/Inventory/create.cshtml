@@ -1,0 +1,115 @@
+﻿@using Freshlo.Web.Models.InventoryVM
+@model InventoryVM
+@{
+    ViewData["Title"] = "create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<style>
+    .auditQty[disabled] {
+      background-color: #f2f3f7!important;
+    border-color: #eae5f9!important;
+    color: #575962!important;
+    }
+    .auditDiffer[disabled] {
+        background-color: #f2f3f7 !important;
+        border-color: #eae5f9 !important;
+        color: #575962 !important;
+    }
+    .auditRemark[disabled] {
+        background-color: #f2f3f7 !important;
+        border-color: #eae5f9 !important;
+        color: #575962 !important;
+    }
+</style>
+
+ <div class="m-subheader ">
+     <div class="d-flex align-items-center">
+         <div class="mr-auto">
+             <h3 class="m-subheader__title m-subheader__title--separator"> Audit </h3>
+         </div>
+         <div>
+             <button type="button" class="btn btn-dark toptouchdiv" onclick="btnsavechanges('@Model.Adhoc_Inventory.Count');"><i class="la la-save"></i> Save Changes</button>
+         </div>
+     </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon m--hide">
+                        <i class="la la-gear"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                      New Audit
+                    </h3>                 
+                </div>
+            </div>              
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table ab-table-head-bg-warning-light table-borderless table-middle">
+                            <thead>
+                                <tr>
+                                    <th style="width:2%">
+                                        <label class="m-checkbox m-checkbox--single m-checkbox--all m-checkbox--solid m-checkbox--brand">
+                                            <input type="checkbox">
+                                            <span></span>
+                                        </label>
+                                    </th>
+                                    <th style="width:28%">Item Name</th>
+                                    <th style="width:10%">Current Qty</th>
+                                    <th style="width:10%">Audit Qty</th>
+                                    <th style="width:10%">Differance</th>     
+                                    <th style="width:40%">Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblAudit"> 
+                                  @foreach (var item in Model.Adhoc_Inventory)
+                                  {
+                                <tr id="@item.AssetsId">
+                                    <td style="width:2%"> 
+                                        <div class="kt-checkbox-list">
+                                         <label class="m-checkbox m-checkbox--single m-checkbox--all m-checkbox--solid m-checkbox--brand">
+                                         <input class="messageCheckbox" id="AuditCheck_@item.AssetsId" value="@item.AssetsId" type="checkbox" name="Check[]" onchange="checkbox('@item.AssetsId')">
+                                         <span></span>
+                                         </label>
+                                         </div>
+                                    </td>                                   
+                                    <td style="width:28%">@item.AssetName</td>
+                                    <td id="Auditquantity_@item.AssetsId" style="width:10%">@item.Quantity</td>                                     
+                                    <td style="width:10%">
+                                       <input id="AuditQuanity_@item.AssetsId" name="" type="text" class="form-control m-input m-input--solid auditQty" onchange="AuitQuanity('@item.AssetsId')" style="width:82px" disabled>
+                                    </td>
+                                    <td style="width:10%">
+                                         <input class="form-control m-input m-input--solid auditDiffer" id="Auditdifferance_@item.AssetsId" value="" type="text"  >
+                                    </td>
+                                    <td style="width:40%">
+                                        <input class="form-control m-input m-input--solid auditRemark" id="Audittextarea_@item.AssetsId" value="" type="text" disabled>
+                                    </td>                                  
+                                </tr> 
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+         
+                   
+            
+        
+    </div>
+</div> 
+
+
+@section scripts {
+    <script src="~/assets/scripts/settings/index.js"></script>
+       <script src="~/assets/scripts/Inventory/Inventory.js"></script>
+}

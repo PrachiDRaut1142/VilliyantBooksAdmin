@@ -1,0 +1,230 @@
+﻿
+@{
+    ViewData["Title"] = "TimeMotion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #time_motion {
+    width: 100%;
+    height: 320px;
+    margin: 0;
+    padding: 0;
+}
+
+.anychart-credits {
+   display: none;
+}
+</style>
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Time Motion analysis</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="javascripts:;" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/Sale/Index/" class="m-nav__link">
+                        <span class="m-nav__link-text">Home</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="javascripts:;" class="m-nav__link">
+                        <span class="m-nav__link-text">Time Motion analysis</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="m-content">
+  <div class="m-portlet m-portlet--tabs">
+    <div class="m-portlet__body">
+      <div class="wrapper">
+		<div id="time_motion"></div>		
+  </div>
+    </div> 
+</div>
+</div>
+
+<div class="m-content">
+  <div class="m-portlet m-portlet--tabs">
+    <div class="m-portlet__body">
+              <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-12 col-lg-12">
+                    <div class="table-responsive">
+                         <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table">
+                            <thead>
+                                <tr>
+                                    <th>Sr. No.</th>
+                                    <th>Total Item</th>
+                                    <th>Total Feature Item</th>
+                                    <th>Total Revenue</th>                                     
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1.</td>
+                                     <td>23</td>
+                                      <td>12</td>
+                                       <td>Panding</td>
+                                </tr>
+                                <tr>
+                                    <td>2.</td>
+                                     <td>23</td>
+                                      <td>12</td>
+                                       <td>Panding</td>
+                                </tr>
+                                <tr>
+                                    <td>3.</td>
+                                     <td>23</td>
+                                      <td>12</td>
+                                       <td>Panding</td>
+                                </tr>
+                                <tr>
+                                    <td>4.</td>
+                                     <td>23</td>
+                                      <td>12</td>
+                                       <td>Panding</td>
+                                </tr>
+                                <tr>
+                                    <td>5.</td>
+                                     <td>23</td>
+                                      <td>12</td>
+                                       <td>Panding</td>
+                                </tr>
+                                <tr>
+                                    <td>6.</td>
+                                     <td>23</td>
+                                      <td>12</td>
+                                       <td>Panding</td>
+                                </tr>
+                                <tr>
+                                    <td>7.</td>
+                                     <td>23</td>
+                                      <td>12</td>
+                                       <td>Panding</td>
+                                </tr>
+                                <tr>
+                                    <td>8.</td>
+                                     <td>23</td>
+                                      <td>12</td>
+                                       <td>Panding</td>
+                                </tr>
+                                <tr>
+                                    <td>9.</td>
+                                     <td>23</td>
+                                      <td>12</td>
+                                       <td>Panding</td>
+                                </tr>
+                                <tr>
+                                    <td>10.</td>
+                                     <td>23</td>
+                                      <td>12</td>
+                                       <td>Panding</td>
+                                </tr>
+                                <tr>
+                                    <td>11.</td>
+                                     <td>23</td>
+                                      <td>12</td>
+                                       <td>Panding</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+        </div>
+    </div>
+ </div>
+    </div> 
+</div>
+</div>
+
+
+
+@section Scripts{
+    
+<script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+<script src="https://cdn.anychart.com/releases/v8/js/anychart-heatmap.min.js"></script>
+<script src="https://cdn.anychart.com/releases/v8/js/anychart-exports.min.js"></script>
+<script src="https://cdn.anychart.com/releases/v8/js/anychart-ui.min.js"></script>
+    
+   <script type="text/javascript">
+	anychart.onDocumentReady(function () {
+    // Creates Heat Map
+    var chart = anychart.heatMap([
+
+        // YESTERDAY
+        {x: "Today", y: "Total Dishcount", heat: 0, fill: "#f14038"},
+        {x: "Today", y: "Lunch", heat: 1, fill: "#f7941d"},
+        {x: "Today", y: "Dinner", heat: 2, fill: "#3bb44a"},
+
+        // TODAY
+        {x: "Yesterday", y: "Total Dishcount", heat: 0, fill: "#f14038"},
+        {x: "Yesterday", y: "Lunch", heat: 0, fill: "#f14038"},
+        {x: "Yesterday", y: "Dinner", heat: 0, fill: "#f14038"},
+
+        // LAST WEEK
+        {x: "This Week", y: "Total Dishcount", heat: 0, fill: "#f14038"},
+        {x: "This Week", y: "Lunch", heat: 0, fill: "#f14038"},
+        {x: "This Week", y: "Dinner", heat: 0, fill: "#f14038"},
+
+        // LAST MONTH 
+        {x: "Last Week", y: "Total Dishcount", heat: 0, fill: "#f14038"},
+        {x: "Last Week", y: "Lunch", heat: 0, fill: "#f14038"},
+        {x: "Last Week", y: "Dinner", heat: 0, fill: "#f14038"},
+
+    ]);
+
+    // Sets chart settings and hover chart settings
+    chart.stroke('#fff');
+    chart.hovered()
+        .stroke('1 #fff')
+        .fill('#545f69')
+        .labels().fontColor('#fff');
+
+    // Sets selection mode for single selection
+    chart.interactivity().selectionMode("none");
+
+    // Sets adjust chart labels
+    var labels = chart.labels();
+    chart.xAxis().orientation("bottom");
+    labels.enabled(true).minFontSize(14);
+    // variable with list of labels
+    var namesList = ["8 Order", "( Rs800 )", "Medium", "High", "Deepak"];
+    // Formats labels
+    labels.format(function () {
+        // replace values with words for points heat
+        return namesList[this.heat];
+    });
+
+    // Sets Axes
+    chart.yAxis().stroke(null).labels().padding([0, 15, 0, 0]);
+    chart.yAxis().ticks().enabled(false);
+
+    // Sets Tooltip
+    chart.tooltip().title().useHtml(true);
+    chart.tooltip().useHtml(true)
+        .titleFormat(function () {
+            return '<b>' + namesList[this.heat] + '</b> Time & Motion';
+        })
+        .format(function () {
+            return '<span style="color: #CECECE">Day: </span>' + this.x + '<br/>' +
+                '<span style="color: #CECECE">Duration: </span>' + this.y;
+        });
+
+    // Draws Chart
+    chart.container("time_motion");
+    chart.draw();
+});
+	</script>
+    
+}

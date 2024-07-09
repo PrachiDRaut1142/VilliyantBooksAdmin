@@ -1,0 +1,73 @@
+﻿@using Freshlo.Web.Models.DashboardVM;
+@model CustomerDashboardVM;
+@{
+        ViewData["Title"] = "_CustomerHubFilter";
+    }
+
+    <div class="row" id="HubBaseData">
+        <div class="col-md-2">
+            <a href="#" id="TotalDownload">
+                <div class="text-left">
+                    <h6>Total Downloads</h6>
+                    <h4 class="text-bold-600 mb-1 font-large-1"> @Model.GetallnewCustomerSummaryCount.TotalDownload</h4>
+
+                    <small>View Detail  --></small>
+
+                </div>
+            </a>
+        </div>
+        <div class="col-md-2">
+            <a href="#" id="Registered">
+                <div class="text-left">
+                    <h6>Total Registered </h6>
+                    <h4 class="text-bold-600 mb-1 font-large-1">@Model.GetallnewCustomerSummaryCount.TotalRegistered</h4>
+
+                    <small>View Detail  --></small>
+
+                </div>
+            </a>
+        </div>
+        <div class="col-md-2">
+            <a href="#" id="Unregistered">
+                <div class="text-left">
+                    <h6>Total Unregistered </h6>
+                    <h4 class="text-bold-600 text-danger mb-1 font-large-1">@Model.GetallnewCustomerSummaryCount.TotalUnRegistered </h4>
+
+                    <small>View Detail  --></small>
+
+                </div>
+            </a>
+        </div>
+        <div class="col-md-2">
+            <a href="#" id="RegisteredZeroOrder">
+                <div class="text-left">
+                    <h6>Registered but not ordered</h6>
+                    <h4 class="text-bold-600 text-danger mb-1 font-large-1">@Model.GetallnewCustomerSummaryCount.TotalRegistederdButNotOrderToday </h4>
+
+                    <small>View Detail  --></small>
+
+                </div>
+            </a>
+        </div>
+        <div class="col-md-2">
+            <a href="#" id="RegisteredMoreOrder">
+                <div class="text-left">
+                    <h6> Customers Ordered</h6>
+                    <h4 class="text-bold-600 mb-1 font-large-1"> @Model.GetallnewCustomerSummaryCount.TodayTotalCustomerRegistered <small class="font-medium-1"> (Rs.  @Model.GetallnewCustomerSummaryCount.TodayTotalOrderValueRegiCustomer)</small></h4>
+
+                    <small>View Detail  --></small>
+
+
+                </div>
+            </a>
+        </div>
+        <div class="col-md-2">
+            <a href="">
+                <div class="text-left">
+                    <h6> Avg. Order Value</h6>
+                    <h4 class="text-bold-600 mb-1 font-large-1"> Rs.  @Model.GetallnewCustomerSummaryCount.TodayTotalOrderValueRegiCustomerAvg </h4>
+                </div>
+            </a>
+        </div>
+    </div>
+

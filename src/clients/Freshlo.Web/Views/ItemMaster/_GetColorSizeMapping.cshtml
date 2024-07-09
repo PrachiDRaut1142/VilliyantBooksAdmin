@@ -1,0 +1,94 @@
+﻿@using Freshlo.Web.Models.ItemMaster;
+@model ItemMasterVM;
+@{
+    ViewData["Title"] = "_GetColorSizeMapping";
+}
+
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-12">
+            <h5>Color mapping with Variance</h5>
+        </div>
+    </div>
+
+    <hr />
+    <div class="row">
+        <div class="col-12">
+            @foreach (var info in Model.MapInfo)
+            {
+                <span hidden id="SpnMapId_@info.MPriceId@info.MColorId">@info.MPriceId@info.MColorId</span>
+                <span hidden id="CreatedMapId_@info.MPriceId@info.MColorId">@info.MappingId</span>
+
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped table-borderless table-middle table-white-space-th" id="MappingTbl">
+                    <thead>
+                        <tr>
+                            <th style="font-weight:bolder">Color</th>
+                            @foreach (var detail in Model.ItemSizeInfo)
+                            {
+                                if (detail.Size != "")
+                                {
+                                    <th style="font-weight:bolder">@detail.Size</th>
+                                }
+                            }
+                        </tr>
+                    </thead>
+                    <tbody id="MappBody">
+                        @foreach (var detail in Model.ItemColorInfo)
+                        {
+                            <tr>
+                                <td id="@detail.ColorId" style="font-weight:bolder">@detail.Color</td>
+
+                                @foreach (var checkbox in Model.ItemSizeInfo)
+                                {
+                                    @if (checkbox.Size != "")
+                                    {
+                                        <td id="@checkbox.PriceId">
+                                            <label class="m-checkbox m-checkbox--single m-checkbox--all m-checkbox--solid m-checkbox--brand mb-0">
+                                                <input type="checkbox" id="Checkbox_@checkbox.PriceId@detail.ColorId" data-mapId="0" value="@checkbox.PriceId,@detail.ColorId" name="MapName">
+                                                <input type="text" id="ColorId_@checkbox.PriceId,@detail.ColorId" value="@detail.ColorId" name="color">
+                                                <input type="text" id="MappingId_@checkbox.PriceId@detail.ColorId" />
+                                                <span></span>
+                                            </label>
+                                        </td>
+
+                                    }
+                                }
+
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+
+            <hr />
+            <div class="form-group text-right">
+                <button type="button" id="SubmitMapId" class="btn btn-success">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+       $.makeArray($('#MappBody tr').map(function () {
+        var cols = $("#MappingTbl").find('tr')[0].cells.length;
+        var tdColorValue = $(this).find("td").eq([0]).prop('id');
+        for (j = 1; j < cols; j++) {
+            var tdSizeValue = $(this).find("td").eq([j]).prop('id');
+            var value = tdSizeValue + tdColorValue;
+            var mapping = $('#SpnMapId_' + value).text();
+            var OgMappingId = $('#CreatedMapId_' + value).text();
+            if (mapping == value) {
+                $('#Checkbox_' + value).attr('checked', 'checked');
+                $('#Checkbox_' + value).attr("data-mapId", OgMappingId);
+            }
+        }
+    }));
+</script>

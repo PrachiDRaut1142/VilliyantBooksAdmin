@@ -1,0 +1,12 @@
+﻿@using Freshlo.Web.Models.ItemMaster;
+@using System.Globalization;
+@model ItemMasterVM;
+
+<tr>
+    <td style="overflow: hidden;">
+        <object data="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/UploadPdf/@(Model.ItemMastersDetail.ItemId).pdf#toolbar=0" type="application/pdf" width="100%" height="500px">
+            <p>PDF Preview: <a href="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/UploadPdf/@(Model.ItemMastersDetail.ItemId).pdf">Download PDF</a></p>
+        </object>
+        <iframe src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/UploadPdf/ITM06.pdf" width="100%" height="600px"></iframe>
+    </td>
+</tr>

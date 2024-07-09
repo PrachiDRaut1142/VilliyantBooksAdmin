@@ -1,0 +1,90 @@
+﻿@using Freshlo.Web.Models;
+@using Freshlo.Web.Helpers;
+@using System.Globalization;
+@model PaymentSettlementVM;
+@{
+    ViewData["Title"] = "PaymentSettlementSummary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Payment Settlement</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="javascripts:;" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/Sale/PaymentSettlementSummary" class="m-nav__link">
+                        <span class="m-nav__link-text">Payment Settlement Summary</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+        <div>
+            <button type="button" class="btn btn-outline-dark"><i class="fa fa-backward"> </i> Settlement Log</button>
+            @*<button type="button" class="btn btn-success"><i class="la la-save"></i> Save Changes</button>*@
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+
+
+<div class="m-content">
+
+    <div class="m-portlet">
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table ">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Bill Amount</th>
+                                    <th>Pending Payment Count</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var paymentlist in Model.GetPaymentListToSummary)
+                                {
+                                    <tr>
+                                        <td>
+                                            <a href="/Sale/PaymentSettlement?Id=@paymentlist.Payment_settledof &SettledBy= @(paymentlist.PaymentSettled_Name) &Settledfor=@paymentlist.PaymentSettled_for &Status=@(paymentlist.PaymentSettled_for=="Customer"?"Pending":"Paid")" class="text-link "><span class="text-bold-800 text-dark"> @(paymentlist.PaymentSettled_Name)</span></a>
+
+
+                                            <span class="font-small-3 display-block">@paymentlist.PaymentSettled_for</span>
+                                        </td>
+
+                                        <td>
+                                            <span class="font-medium-2 text-bold-600">
+                                                @(SalesHelpers.Data) @paymentlist.Payment_settledPrice
+                                            </span>
+                                        </td>
+                                        <td>
+                                            @(paymentlist.PendingPaymentCount)
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script src="~/assets/app/js/datatable.js"></script>
+    
+}
+   

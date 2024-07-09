@@ -1,0 +1,17 @@
+﻿@using Freshlo.DomainEntities;
+@model List<CustomersAddress>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@item.HubName </td>
+        <td><spam class="font-medium-1">@item.ZipCode</spam></td>
+        <td><spam class="font-medium-1">@item.StandradDeleiveryCharges</spam></td>
+        <td><span class="font-medium-1">@item.ExpressDeleiveryCharges </span></td>
+        <td><span class="font-medium-1 font-weight-bold">@item.MinOrderValue </span></td>
+        <td><span class="font-medium-1 font-weight-bold">@item.Discription </span></td>
+        <td><a href="#" data-toggle="modal" class="text-dark ziptDetailcls" data-id="@item.id"> <i class="flaticon-edit"> </i> </a></td>
+        <td><a href="#" class="text-danger zipDeleteCls" data-id="@item.id"> <i class="flaticon-delete deleteId"> </i></a></td>
+    </tr>
+}
+

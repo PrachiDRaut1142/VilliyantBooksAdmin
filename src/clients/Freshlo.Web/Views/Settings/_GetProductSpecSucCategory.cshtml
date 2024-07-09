@@ -1,0 +1,17 @@
+﻿@using Freshlo.DomainEntities;
+@model List<ProductSpecSubCatgeory>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td class="edit">@item.ProductSubCatName</td>
+        <td class="edit-save" style="width:0">
+       
+                 <div class="edit-save d-flex align-items-center">
+                         <button type="button" name="save" class="btn btn-dark mr-2 save-member" data-Id="@item.ProductSubCatId">Update</button> 
+                    <button type="button" name="edit" class="btn btn-dark mr-2 icon-bttn edit-member" data-Id="@item.ProductSubCatId"><i class="flaticon-edit"></i></button>
+                    <button type="button" name="delete" class="btn btn-danger delete-member icon-bttn" data-Id="@item.ProductSubCatId"><i class="flaticon-delete"></i></button>
+                </div>
+        </td>
+    </tr>
+}

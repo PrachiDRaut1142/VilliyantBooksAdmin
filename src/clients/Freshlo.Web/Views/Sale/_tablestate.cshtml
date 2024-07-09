@@ -1,0 +1,79 @@
+﻿@using Freshlo.Web.Models.Sale;
+@using System.Globalization;
+@using Freshlo.Web.Helpers;
+@model SalesManageVM
+@{
+
+}
+@foreach (var item in Model.AllitemSalesList)
+{
+
+<tr>
+    @if (item.status == "Pending")
+    {
+        <td>
+            <div class="kt-checkbox-list">
+                <label class="kt-checkbox">
+                    <input class="messageCheckbox" value="" type="checkbox" name="Checksd" disabled>
+                    <span></span>
+                </label>
+            </div>
+        </td>
+    }
+    @if (item.status == "Accepted")
+    {
+        <td>
+            <div class="kt-checkbox-list">
+                <label class="kt-checkbox">
+                    <input class="messageCheckbox" id="chk1" data-saleid="@item.SalesId" data-saleListid="@item.SalesListId" value="" type="checkbox" name="Check">
+                    <span></span>
+                </label>
+            </div>
+        </td>
+    }
+
+    <td class="font-medium-4">@item.tableName</td>
+    @if (item.Size != "NOVAR")
+    {
+        <td><a href="#" class="text-link font-medium-3">@item.PluName @item.Size</a></td>
+
+    }
+    @if (item.Size == "NOVAR")
+    {
+        <td><a href="#" class="text-link font-medium-3">@item.PluName</a></td>
+    }
+    <td class="font-medium-4">@item.QuantityValue</td>
+
+    @if (item.status == "Pending")
+    {
+        <td><span class="m-badge m-badge--rounded m-badge--wide font-small-3 m-badge--danger">@item.status</span></td>
+
+    }
+    else
+    {
+        <td><span class="m-badge m-badge--rounded m-badge--wide font-medium-1 m-badge--success" style="white-space: nowrap">In Preparation</span></td>
+
+    }
+    <td class="font-medium-4 text-bold-600">@item.UpdateDuration</td>
+    @if (item.status == "Pending")
+    {
+        <td style="display:block">
+            <button type="button" class="btn btn-sm btn-light btn-close" data-id="@item.SalesId" data-approval="@item.SalesListId" style="width: 130px;
+    height: 31px;" disabled>
+                Cooking
+            </button>
+        </td>
+    }
+    @if (item.status == "Accepted")
+    {
+        <td style="display:block">
+            <button type="button" class="btn btn-sm btn-dark btn-close" data-id="@item.SalesId" data-approval="@item.SalesListId" style="width: 130px;
+    height: 31px;">
+                Dish Served
+            </button>
+        </td>
+    }
+
+
+</tr>
+}

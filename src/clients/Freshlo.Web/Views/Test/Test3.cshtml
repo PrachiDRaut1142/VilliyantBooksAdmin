@@ -1,0 +1,413 @@
+﻿
+@{
+    ViewData["Title"] = "Test3";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Item Master</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="javascripts:;" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/Home/Index/" class="m-nav__link">
+                        <span class="m-nav__link-text">Home</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="javascripts:;" class="m-nav__link">
+                        <span class="m-nav__link-text">Item Master</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <div class="d-flex align-items-center">
+                <button class="btn btn-primary" type="button" id="" onclick="window.location.href='/ItemMaster/Create/'">
+                    Create New Item
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- END: Subheader -->
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="m-portlet">
+                <div class="m-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="kt-widget kt-widget--user-profile-3">
+                                <div class="kt-widget__bottom pl-4 pr-4 mt-0 mb-0" style="border-top: 0px solid #ebedf2;">
+                                    <div class="kt-widget__item pt-3 pb-3">
+                                        <div class="kt-widget__icon">
+                                            <i class="flaticon-box"></i>
+                                        </div>
+                                        <div class="kt-widget__details">
+                                            <span class="kt-widget__title">Active Items</span>
+                                            <span class="kt-widget__value"><span></span>870</span>
+                                        </div>
+                                    </div>
+                                    <div class="kt-widget__item pt-3 pb-3">
+                                        <div class="kt-widget__icon">
+                                            <i class="flaticon-box"></i>
+                                        </div>
+                                        <div class="kt-widget__details">
+                                            <span class="kt-widget__title">Pending Approvals</span>
+                                            <span class="kt-widget__value text-danger"><span></span>20</span>
+                                        </div>
+                                    </div>
+                                    <div class="kt-widget__item pt-3 pb-3">
+                                        <div class="kt-widget__icon">
+                                            <i class="flaticon-confetti"></i>
+                                        </div>
+                                        <div class="kt-widget__details">
+                                            <span class="kt-widget__title">Featured Items</span>
+                                            <span class="kt-widget__value"><span></span>6</span>
+                                        </div>
+                                    </div>
+                                    <div class="kt-widget__item pt-3 pb-3">
+                                        <div class="kt-widget__icon">
+                                            <i class="flaticon-file-2"></i>
+                                        </div>
+                                        <div class="kt-widget__details">
+                                            <span class="kt-widget__title">Coupon Excluded</span>
+                                            <span class="kt-widget__value"><span></span>40</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--begin::Portlet-->
+            <div class="m-portlet m-portlet--head-sm" m-portlet="true" id="m_portlet_tools_1">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon">
+                                <i class="fa fa-filter"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">
+                                Filters
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="m-portlet__head-tools">
+                        <ul class="m-portlet__nav">
+                            <li class="m-portlet__nav-item">
+                                <a href="#" m-portlet-tool="toggle" class="m-portlet__nav-link m-portlet__nav-link--icon"><i class="la la-angle-down"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Main Category</label>
+                                <select class="form-control m-bootstrap-select m_selectpicker m-input m-input--solid" data-live-search="true" multiple>
+                                    <option>Value 1</option>
+                                    <option>Value 2</option>
+                                    <option>Value 3</option>
+                                    <option>Value 4</option>
+                                    <option>Value 5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Category</label>
+                                <select class="form-control m-bootstrap-select m_selectpicker m-input m-input--solid" data-live-search="true" multiple>
+                                    <option>Value 1</option>
+                                    <option>Value 2</option>
+                                    <option>Value 3</option>
+                                    <option>Value 4</option>
+                                    <option>Value 5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Sub Category</label>
+                                <select class="form-control m-bootstrap-select m_selectpicker m-input m-input--solid" data-live-search="true" multiple>
+                                    <option>Value 1</option>
+                                    <option>Value 2</option>
+                                    <option>Value 3</option>
+                                    <option>Value 4</option>
+                                    <option>Value 5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Suplier</label>
+                                <select class="form-control m-bootstrap-select m_selectpicker m-input m-input--solid" data-live-search="true" multiple>
+                                    <option>Value 1</option>
+                                    <option>Value 2</option>
+                                    <option>Value 3</option>
+                                    <option>Value 4</option>
+                                    <option>Value 5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Featured</label>
+                                <select class="form-control m-bootstrap-select m_selectpicker m-input m-input--solid" multiple>
+                                    <option>YES</option>
+                                    <option>NO</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Coupon</label>
+                                <select class="form-control m-bootstrap-select m_selectpicker m-input m-input--solid" multiple>
+                                    <option>Allowed</option>
+                                    <option>Disallowed</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select class="form-control m-bootstrap-select m_selectpicker m-input m-input--solid" multiple>
+                                    <option>Approved</option>
+                                    <option>Pending</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="" style="visibility:hidden;">Action</label>
+                                <div class="d-block">
+                                    <button type="button" class="btn btn-dark">Apply</button>
+                                    <button type="button" class="btn btn-link">Clear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Portlet-->
+
+            <div class="m-portlet">
+                <ul class="nav nav-tabs  m-tabs-line m-nav-tab-account-lookup pt-4 pl-4" role="tablist">
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link active pt-0" data-toggle="tab" href="#itemMaster01" role="tab">
+                            <i class="flaticon-info"></i> Sample Name 1
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link pt-0" id="recentlyAccessed" data-toggle="tab" href="#itemMaster02" role="tab">
+                            <i class="flaticon-list-3"></i> Sample Name 2
+                        </a>
+                    </li>
+                </ul>
+                <div class="m-portlet__body">
+                    <div class="tab-content">
+                        <!--User Info START-->
+                        <div class="tab-pane active" id="itemMaster01" role="tabpanel">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <label class="m-checkbox m-checkbox--bold m-checkbox--state-success">
+                                                            <input type="checkbox"> Item Name
+                                                            <span></span>
+                                                        </label>
+                                                    </th>
+                                                    <th>Category</th>
+                                                    <th>Visibility</th>
+                                                    <th>Featured</th>
+                                                    <th>Coupon Disc.</th>
+                                                    <th>Availability</th>
+                                                    <th>Sold</th>
+                                                    <th>Max Allowed</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <label class="m-checkbox m-checkbox--bold m-checkbox--state-success font-medium-1 text-bold-700 mt-0">
+                                                            <input type="checkbox"> Onion New <small class="font-small-2 d-block">ItemOI</small>
+                                                            <span></span>
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <span class="m-widget11__title text-dark">Fruits & Vegetables</span>
+                                                        <span class="display-block font-small-1">Vegetable</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="m-widget11__title">Online</span>
+                                                    </td>
+                                                    <td><span class="badge badge-danger badge-pill font-small-3">NO</span></td>
+                                                    <td><span class="badge badge-danger badge-pill font-small-3">NO</span></td>
+                                                    <td><span class="badge badge-success badge-pill font-small-3">LIVE</span></td>
+                                                    <td>
+                                                        <span class="m-widget11__title">Rs <span class="text-bold-500 font-medium-2">55</span> </span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="m-widget11__title"><span class="text-bold-500 font-medium-2">5</span>kg </span>
+                                                    </td>
+                                                    <td><span class="badge badge-success badge-pill font-small-3">APPROVED</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <label class="m-checkbox m-checkbox--bold m-checkbox--state-success font-medium-1 text-bold-700 mt-0">
+                                                            <input type="checkbox"> Tomato <small class="font-small-2 d-block">ItemOI</small>
+                                                            <span></span>
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <span class="m-widget11__title text-dark">Fruits & Vegetables</span>
+                                                        <span class="display-block font-small-1">Vegetable</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="m-widget11__title">Both</span>
+                                                    </td>
+                                                    <td><span class="badge badge-success badge-pill font-small-3">YES</span></td>
+                                                    <td><span class="badge badge-success badge-pill font-small-3">YES</span></td>
+                                                    <td><span class="badge badge-warning badge-pill font-small-3">Unavailable</span></td>
+                                                    <td>
+                                                        <span class="m-widget11__title">Rs <span class="text-bold-500 font-medium-2">55</span> </span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="m-widget11__title"><span class="text-bold-500 font-medium-2">5</span>kg </span>
+                                                    </td>
+                                                    <td><span class="badge badge-danger badge-pill font-small-3">PENDING</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--User Info END-->
+                        <!--Recently Accessed START-->
+                        <div class="tab-pane" id="itemMaster02" role="tabpanel">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <label class="m-checkbox m-checkbox--bold m-checkbox--state-success">
+                                                            <input type="checkbox"> Item Name
+                                                            <span></span>
+                                                        </label>
+                                                    </th>
+                                                    <th>Category</th>
+                                                    <th>Visibility</th>
+                                                    <th>Featured</th>
+                                                    <th>Coupon Disc.</th>
+                                                    <th>Availability</th>
+                                                    <th>Sold</th>
+                                                    <th>Max Allowed</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <label class="m-checkbox m-checkbox--bold m-checkbox--state-success font-medium-1 text-bold-700 mt-0">
+                                                            <input type="checkbox"> Onion New <small class="font-small-2 d-block">ItemOI</small>
+                                                            <span></span>
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <span class="m-widget11__title text-dark">Fruits & Vegetables</span>
+                                                        <span class="display-block font-small-1">Vegetable</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="m-widget11__title">Online</span>
+                                                    </td>
+                                                    <td><span class="badge badge-danger badge-pill font-small-3">NO</span></td>
+                                                    <td><span class="badge badge-danger badge-pill font-small-3">NO</span></td>
+                                                    <td><span class="badge badge-success badge-pill font-small-3">LIVE</span></td>
+                                                    <td>
+                                                        <span class="m-widget11__title">Rs <span class="text-bold-500 font-medium-2">55</span> </span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="m-widget11__title"><span class="text-bold-500 font-medium-2">5</span>kg </span>
+                                                    </td>
+                                                    <td><span class="badge badge-success badge-pill font-small-3">APPROVED</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <label class="m-checkbox m-checkbox--bold m-checkbox--state-success font-medium-1 text-bold-700 mt-0">
+                                                            <input type="checkbox"> Tomato <small class="font-small-2 d-block">ItemOI</small>
+                                                            <span></span>
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <span class="m-widget11__title text-dark">Fruits & Vegetables</span>
+                                                        <span class="display-block font-small-1">Vegetable</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="m-widget11__title">Both</span>
+                                                    </td>
+                                                    <td><span class="badge badge-success badge-pill font-small-3">YES</span></td>
+                                                    <td><span class="badge badge-success badge-pill font-small-3">YES</span></td>
+                                                    <td><span class="badge badge-warning badge-pill font-small-3">Unavailable</span></td>
+                                                    <td>
+                                                        <span class="m-widget11__title">Rs <span class="text-bold-500 font-medium-2">55</span> </span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="m-widget11__title"><span class="text-bold-500 font-medium-2">5</span>kg </span>
+                                                    </td>
+                                                    <td><span class="badge badge-danger badge-pill font-small-3">PENDING</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Recently Accessed END-->
+                    </div>
+
+
+                  
+                </div>
+            </div>
+
+
+
+
+
+
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <kbd>ctrl + ,</kbd>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/assets/demo/demo6/custom/crud/forms/widgets/bootstrap-select.js" type="text/javascript"></script>
+}
+

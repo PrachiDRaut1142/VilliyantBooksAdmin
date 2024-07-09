@@ -1,0 +1,40 @@
+﻿@using Freshlo.Web.Models.Sale;
+@using Freshlo.Web.Helpers;
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor httpContextaccessor;
+@model BaseViewModel
+
+@if (Convert.ToString(User.FindFirst("userRole").Value) == "System Admin")
+{
+    var value = httpContextaccessor.HttpContext.Request.Cookies["BranchId"];
+    <div class="form-group header-bttns m-header__title-text pl-0"  style="display:block">
+        @*<label>Branch</label>*@
+        <select class="form-control m-input m-input--solid font-medium-2 text-bold-700 layoutBranch" aria-label=".form-select-lg example" id="branch">
+
+            @foreach (var item in Model.GetHubList)
+            {
+                @if (item.HubId == value)
+                {
+                    <option value="@item.HubId" selected>@item.HubName</option>
+                }
+                else
+                {
+                    <option value="@item.HubId">@item.HubName</option>
+                }
+
+            }
+
+        </select>
+    </div>
+}
+else
+{
+    <input hidden id="branchhhh" value="@User.FindFirst("branch").Value">
+}
+
+<script>
+    var branchId = $('#branchhhh').val();
+    if (branchId != undefined && branchId != "") {
+        Cookies.set('BranchId', branchId);
+    }
+</script>

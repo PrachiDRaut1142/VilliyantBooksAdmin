@@ -1,0 +1,101 @@
+﻿@using Freshlo.Web.Models.Sale;
+@using Freshlo.Web.Helpers;
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor httpContextaccessor;
+@model BaseViewModel
+@{
+    ViewData["Title"] = "ChooseBranch";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+@{
+    <style>
+        .m-login.m-login--2 .m-login__wrapper .m-login__container .m-login__form .m-form__group .form-control {
+            border-radius: 4px;
+            border: 1px solid;
+            padding: 1.5rem 1.5rem;
+            margin-top: 1.5rem;
+        }
+    </style>
+}
+
+@if (Convert.ToString(User.FindFirst("userRole").Value) == "System Admin")
+{
+    var value = httpContextaccessor.HttpContext.Request.Cookies["BranchId"];
+    <link href="~/assets/css/pages/account/account.css" rel="stylesheet" />
+    <div class="account-flex">
+        <div class="account-flex-column">
+            <div class="account-form">
+
+                <form class="m-login__form m-form enterKeyfun form" id="loginForm" action="/Account/Login/" method="post" autocomplete="off">
+                    <div class="form-header">
+                        <div class="logo">
+                            <img src="@Model.businessInfo.logo_url" alt="Logo" style="width:120px;">
+
+                        </div>
+
+                        <h3 class="pt-3 font-medium-3">Choose your branch</h3>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control m-input m-input--solid" id="branch" name="branch">
+                            <option value="0">select Branch</option>
+                            @foreach (var item in Model.GetHubList)
+                            {
+                                @if (item.HubId == value)
+                                {
+                                    <option value="@item.HubId" selected>@item.HubName</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.HubId">@item.HubName</option>
+                                }
+                            }
+                        </select>
+
+                    </div>
+                   
+                  
+                    <div class="m-login__form-action">
+                        <button type="button" class="btn btn-dark btn-block" id="choosebranchId">Proceed to Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="account-flex-column second">
+            <div class="row">
+                <a href="https://www.clouddukaan.com" target="_blank" class="top">
+                    <img class="top-logo" src="/assets/img/update/freshpos-white-logo.png" width="120px">
+                </a>
+                <div class="left-panel-content mt-4">
+
+                    <p class="font-medium-3 text-white">Welcome to FreshPOS</p>
+                    <div class="col-lg-10 col-md-12 col-sm-12">
+                        <p class="font-large-2 text-white " style="line-height: 45px">Modern and robust solution for smart &amp; growing restaurants. </p>
+                        <p class="font-medium-2 text-white" style="">Tansforming restaurants and retail businesses to go digital with the next-generation order management system.</p>
+                    </div>
+
+                </div>
+
+                <div class="left-bottom ml-5 pb-4">
+                    <a href="https://automatebuddy.com" target="_blank">
+                        <span class="text-white">Product of</span>
+                        <img src="/assets/img/automatebuddy-logo-white.png" alt="Product of AutomateBuddy">
+                    </a>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+}
+
+@section Scripts{
+    <script src="~/assets/scripts/Account/ChooseBranch.js"></script>
+}
+
+<script>
+    var branchId = $('#branchhhh').val();
+    if (branchId != undefined && branchId != "") {
+        Cookies.set('BranchId', branchId);
+    }
+</script>

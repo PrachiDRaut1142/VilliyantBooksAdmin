@@ -1,0 +1,162 @@
+﻿@using Freshlo.Web.Models.ItemMaster;
+@model ItemMasterVM;
+<div class="row">
+    <div class="col-12">
+        <div class="table-responsive">
+            <table class="table ab-table-head-bg-warning-light table-bordered table-middle m-data-table dataTable" id="textTable">
+                <thead>
+                    <tr>
+                        @*<th>
+                                    <label class="m-checkbox m-checkbox--bold m-checkbox--state-success">
+                                        <input type="checkbox"> Item Name
+                                        <span></span>
+                                    </label>
+                            </th>*@
+                        <th>Item Name</th>
+                        <th>Category</th>
+                        @*<th>Visibility</th>
+                        <th>Featured</th>
+                        <th>Coupon Disc.</th>
+                        <th>Availability</th>
+                        <th>Sold</th>*@
+                        <th>Sub-Category</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tbdyItemDetail">
+                    @foreach (var item in Model.getItemMasterList)
+                    {
+                    <tr>
+                        <td style="width:300px">
+                            <a href="/ItemMaster/Detail/@item.Id" class="text-link">
+                                @item.PluName
+                            </a>
+                            <input hidden value="@item.Id" name="ItemId" id="Id" />
+                            <input hidden value="@item.ItemId"  id="ItemId" />
+                            <input hidden value="@item.PluName" id="pluName" />
+                            <span id="hubId" hidden>@ViewBag.hubId</span>
+
+                        </td>
+                        <td>
+                            <span class="m-widget11__title text-dark">@item.MainCategory</span>
+                            @*<span class="display-block font-small-1">@item.SubCategory</span>*@
+                           @* <span class="display-block font-small-1">@item.SubCategory</span>*@
+                        </td>
+                        <td>
+                            <span class="m-widget11__title text-dark">@item.Category</span>
+                        </td>
+                        @*<td><span class="badge badge-danger badge-pill font-small-3">@(item.featured == "Y" ? "YES" : "NO")</span></td>
+        <td><span class="badge badge-danger badge-pill font-small-3">@(item.OfferId == "N" ? "NO" : "YES")</span></td>
+        <td><span class="badge badge-success badge-pill font-small-3">@(item.seasonSale == "Y" ? "LIVE" : "NO")</span></td>*@
+                        @*<td>
+                            <div class="form-group">
+                                <select class="form-control form-control-sm Feature-Cls" name="Featured" asp-for="@item.featured">
+                                    <option selected disabled>Show Featured</option>
+                                    <option value="Y">Yes</option>
+                                    <option value="N">No</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <select name="Coupen" class="form-control form-control-sm" asp-for="@item.Coupen">
+                                    <option selected disabled>Show Coupen</option>
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <select name="Avability" class="form-control form-control-sm" asp-for="@item.seasonSale">
+                                    <option selected disabled>Select Status</option>
+                                    <option value="Y">Yes</option>
+                                    <option value="N">No</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="m-widget11__title"><span class="CurrencyData"> @Model.getccurrencylist.FirstOrDefault(x => x.status == 1).symbol </span><span class="text-bold-500 font-medium-2">@item.SellingPrice</span> </span>
+                        </td>
+                        <td>
+                            <span class="m-widget11__title"><span class="text-bold-500 font-medium-2">@item.MaxQuantityAllowed</span>@item.Measurement </span>
+                        </td>*@
+                        @*<td><span class="badge badge-@(item.Approval == "Approved"?"success":"danger") badge-pill font-small-3">@item.Approval</span></td>*@
+                        <td>
+                            <div class="form-group">
+                                <select name="Status" class="form-control form-control-sm" data-pluName="@item.PluName" data-itemId="@item.ItemId" data-id="@item.Id" asp-for="@item.Approval" id="ApprovalId" style="width:100px;display:inline-block;">
+                                    @*<option selected disabled>Select Status</option>*@
+                                    <option style="background:red;" class="m-badge m-badge--wide m-badge--rounded m-badge--success" value="Approved">Approved</option>
+                                    <option class="m-badge m-badge--wide m-badge--rounded m-badge--danger" value="Pending">Pending</option>
+                                </select>
+
+                                  <a id="price_item_@item.ItemId" style="display:none" class="ml-3">Updated</a>
+                            </div>
+                            
+                        </td>
+                        @*<td>
+            <button type="button" class="btn btn-success includeBtn-cls" id="IncludeBtn" onclick="includebtn(@item.Id);" >
+               Include
+            </button>
+        </td>*@
+
+                        <td>
+
+@*                            <a href="/ItemMaster/Detail/@item.Id" class="text-dark"> <i class="flaticon-edit"></i> </a><a>   </a>
+*@                            <a href="#" class="text-danger deleteItemId" data-id="@item.ItemId"> <i class="flaticon-delete deleteItemId"> </i></a>
+
+                        </td>
+
+                    </tr>
+                    }
+                    @*<tr>
+                            <td>
+                                <label class="m-checkbox m-checkbox--bold m-checkbox--state-success font-medium-1 text-bold-700 mt-0">
+                                    <input type="checkbox"> Tomato <small class="font-small-2 d-block">ItemOI</small>
+                                    <span></span>
+                                </label>
+                            </td>
+                            <td>
+                                <span class="m-widget11__title text-dark">Fruits & Vegetables</span>
+                                <span class="display-block font-small-1">Vegetable</span>
+                            </td>
+                            <td>
+                                <span class="m-widget11__title">Both</span>
+                            </td>
+                            <td><span class="badge badge-success badge-pill font-small-3">YES</span></td>
+                            <td><span class="badge badge-success badge-pill font-small-3">YES</span></td>
+                            <td><span class="badge badge-warning badge-pill font-small-3">Unavailable</span></td>
+                            <td>
+                                <span class="m-widget11__title">Rs <span class="text-bold-500 font-medium-2">55</span> </span>
+                            </td>
+                            <td>
+                                <span class="m-widget11__title"><span class="text-bold-500 font-medium-2">5</span>kg </span>
+                            </td>
+                            <td><span class="badge badge-danger badge-pill font-small-3">PENDING</span></td>
+                        </tr>*@
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/assets/scripts/item/manage.js"></script>
+}
+
+
+
+@*@section scripts {
+
+    <script>
+        $('.table-middle').DataTable({
+            "pageLength": 10,
+            "ordering": false,
+            "sorting": true
+        });
+    </script>*@
+
+@*<script src="~/assets/scripts/category/Detail.js"></script>
+    <script src="~/assets/img_crop/js/img_crop.js"></script>
+    <script src="~/assets/img_crop/js/img_crop_main.js"></script>*@
+<link href="~/assets/main/StyleSheet.css" rel="stylesheet" />

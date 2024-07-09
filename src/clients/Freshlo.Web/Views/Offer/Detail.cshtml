@@ -1,0 +1,481 @@
+﻿@using Freshlo.Web.Models.LiveOfferVM;
+@model LiveOfferVM
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";    
+}
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Offer Management</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">               
+                <li class="m-nav__item">
+                    <a href="/Offer/Manage/" class="m-nav__link">
+                        <span class="m-nav__link-text">Offer Manage</span>
+                    </a>
+                </li>               
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="m-portlet" style="position: sticky !important;top: 80px;z-index: 1;">
+                <div class="m-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="">
+                                <div class="">
+                                    @*<div class="m-card-profile__pic-wrapper mb-2" style="border:none;">
+                                        <img src="http://the-bookworm.net/wp-content/uploads/2015/11/20pcoff.png" alt="" />
+                                    </div>*@
+                                    <div class="">
+                                        <h4 class="mb-0">@Model.OffersDetail.OfferHeading</h4>
+                                        <span class="font-small-4 white-space-nowrap" title="">Offer Name</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-4">
+                            <form class="m-form m-form--fit">
+                                <div class="row">
+                                    @*<div class="col-md-6">
+                <label>Offer ID</label>
+                <h6 class="font-medium-1 text-bold-600">F @Model.OffersDetail.Id</h6>
+            </div>*@
+                                    <div class="col-md-6">
+                                        <label>Item Type</label>
+                                        <h6 class="font-medium-1 text-bold-600"><span class="font-medium-1 badge badge-@(Model.OffersDetail.Status=="Active"?"success":"danger")">@Model.OffersDetail.Status</span></h6>
+                                    </div>
+                                </div>
+                                @*<div class="form-group row mb-0 mt-0">
+            <label class="col-md-4 col-sm-12 col-12">Status</label>
+            <div class="col-md-8 col-sm-3 col-6 ">
+                <label class="white-space-nowrap">: </label>
+            </div>
+        </div>*@
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Start Date</label>
+                                        <h6 class="font-medium-1 text-bold-600">@Model.OffersDetail.OfferStartDate.ToString("dd-MMM-yyyy hh:mm tt")</h6>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>End Date</label>
+                                        <h6 class="font-medium-1 text-bold-600">@Model.OffersDetail.OfferEndDate.ToString("dd-MMM-yyyy hh:mm tt")</h6>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Updated By</label>
+                                        <h6 class="font-medium-1 text-bold-600">@Model.OffersDetail.CreatedBy</h6>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Updated On</label>
+                                        <h6 class="font-medium-1 text-bold-600">@Model.OffersDetail.CreatedOn.ToString("dd-MMM-yyyy hh:mm")</h6>
+                                    </div>
+                                </div>
+                                <hr />
+                                @*<input hidden id="OffStart-time" value="@Model.OffersDetail.OfferStartDate.ToString("dd-MMM-yyyy hh:mm")" />
+        <input hidden id="OffEnd-time" value="@Model.OffersDetail.OfferEndDate.ToString("dd-MMM-yyyy hh:mm")" />*@
+                                <input hidden id="OffStart-time" value="@Model.OffersDetail.OfferStartDate.ToString("dd-MM-yyyy hh:mm tt")" />
+                                <input hidden id="OffEnd-time" value="@Model.OffersDetail.OfferEndDate.ToString("dd-MM-yyyy hh:mm tt")" />
+                                <input type="hidden" value="@Model.OffersDetail.Id" name="Id" data-id="@Model.OffersDetail.Id" id="OfferId" />
+                                <input type="hidden" value="@Model.OffersDetail.OfferId" name="OfferId" data-id="@Model.OffersDetail.OfferId" id="OfferIdS" />
+                                <input type="hidden" id="IdStartDate" value="@Model.OffersDetail.OfferStartDate.ToString("yyyy/MM/dd HH:mm")">
+                                <input type="hidden" value="@Model.OffersDetail.Id" name="Ids" data-id="@Model.OffersDetail.Id" id="Ids" />
+                                <input type="hidden" value="@Model.OffersDetail.OfferId" name="OfferIds" data-id="@Model.OffersDetail.OfferId" id="OfferIds" />
+                                <input type="hidden" value="@Model.OffersDetail.CreatedBy" name="CreatedBy" data-id="@Model.OffersDetail.CreatedBy" id="CreatedBy" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-12">
+                    <!--begin::Portlet-->
+                    <div class="m-portlet m-portlet--tabs">
+                        <div class="m-portlet__body">
+                            <ul class="nav nav-tabs  m-tabs-line m-nav-tab-account-lookup" role="tablist">
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link active" data-toggle="tab" href="#offerinfo" role="tab" name="offerinfo">
+                                        <i class="flaticon-info"></i> Offer Info
+                                    </a>
+                                </li>
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link MappedOfferitem" data-toggle="tab" href="#addeditem" namee="addeditem" role="tab">
+                                        <i class="flaticon-list-3"></i> Added Item
+                                    </a>
+                                </li>
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link availableitem" data-toggle="tab" href="#availableitem" name="availableitem" role="tab">
+                                        <i class="flaticon-list-2"></i> Available Item
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <!--Offer Info START-->
+                                <div class="tab-pane animated fadeIn active" id="offerinfo" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <form class="m-form m-form--fit m-form--label-align-right" asp-controller="Offer" asp-action="Detail" id="UpdateOfferFrm" method="post">
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-sm-12 col-12 col-form-label">Status</label>
+                                                    <div class="col-md-3 col-sm-3 col-6">
+                                                        <select class="form-control m-input m-input--solid" name="Status" id="StatusId" asp-for="OffersDetail.Status">
+                                                            <option selected disabled>Select Status</option>
+                                                            <option value="Active">Active</option>
+                                                            <option value="Inactive">Inactive</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                                <input type="hidden" value="@Model.OffersDetail.Id" id="Id" name="Id" />
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-sm-12 col-12 col-form-label">Offer Title  <span class="text-warning">*</span></label>
+                                                    <div class="col-md-4 col-sm-3 col-6">
+                                                        <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="OfferHeading" name="OfferHeading" placeholder="Enter Offer Title" asp-for="OffersDetail.OfferHeading" />
+                                                        <span class="text-danger font-small-3  " style="display:none;" id="SpnOfferHeading"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-sm-12 col-12 col-form-label SpaceValidation">Offer Description</label>
+                                                    <div class="col-md-4 col-sm-3 col-6">
+                                                        <textarea rows="4" class="form-control m-input m-input--solid" id="OfferDescription" name="OfferDescription" placeholder="Enter Offer Title" asp-for="OffersDetail.OfferDescription"></textarea>
+                                                        <span class="text-danger font-small-3  " style="display:none;"></span>
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-sm-12 col-12 col-form-label">Discount Percentage  <span class="text-warning">*</span></label>
+                                                    <div class="col-md-2 col-sm-2 col-2">
+                                                        <input type="text" class="form-control m-input m-input--solid SpaceValidation" id="DiscountPerctg" name="DiscountPerctg" placeholder="Enter Discount Percentage" asp-for="OffersDetail.DiscountPerctg" />
+                                                        <span class="text-danger font-small-3  " style="display:none;" id="SpnDiscountPerctg"></span>
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                                @*<div class="form-group row">
+                                                        <label class="col-md-3 col-sm-12 col-12 col-form-label">Start date <span class="text-warning">*</span></label>
+                                                        <div class="col-md-4 col-sm-3 col-6">
+                                                            <div class="input-group date">
+                                                                <input type="text" class="form-control m-input m-input--solid dateTimepicker" placeholder="Start Date & Time" id="OffStartdate" name="OffStartdate" />
+                                                                <div class="input-group-append">
+                                                                    <span class="input-group-text"><i class="la la-calendar-check-o glyphicon-th"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-md-3 col-sm-12 col-12 col-form-label">End date <span class="text-warning">*</span></label>
+                                                        <div class="col-md-4 col-sm-3 col-6">
+                                                            <div class="input-group date">
+                                                                <input type="text" class="form-control m-input m-input--solid dateTimepicker" placeholder="End Date & Time" id="OffEndtdate" name="OffEndtdate" />
+                                                                <div class="input-group-append">
+                                                                    <span class="input-group-text"><i class="la la-calendar-check-o glyphicon-th"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>*@
+                                                <div class="form-group row">
+                                                    <label for="" class="col-3 col-form-label"> Event Start Date / Time <span class="text-warning">*</span></label>
+                                                    <div class="col-3">
+                                                        <div class="input-group date">
+                                                            <input type="text" class="form-control m-input m-input--solid dateTimepickerofEnd SpaceValidation" name="OffStartdate" autocomplete="off" placeholder="Select date and time" id="OffStart-Time" value="@Model.OffersDetail.OfferStartDate"/>
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">
+                                                                    <i class="la la-calendar-check-o glyphicon-th"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <span class="errormsg text-danger" id="EventStartTimeErr" style="display:none"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="" class="col-3 col-form-label"> Event End Date / Time <span class="text-warning"></span></label>
+                                                    <div class="col-3">
+                                                        <div class="input-group date">
+                                                            <input type="text" class="form-control m-input m-input--solid dateTimepickerofEnd SpaceValidation" name="OffEndtdate" autocomplete="off" placeholder="Select date and time" id="OffEnd-Time" value="@Model.OffersDetail.OfferEndDate" />
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">
+                                                                    <i class="la la-calendar-check-o glyphicon-th"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <span class="errormsg text-danger" id="EventEndTimeErr" style="display:none"></span>
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 col-form-label"></label>
+                                                    <div class="col-md-9 col-sm-9 col-6">
+                                                        <button type="button" class="btn btn-success mr-2" id="UpdateOffer"><i class="la la-upload"></i> Submit </button>
+                                                        @*<button type="reset" class="btn btn-link" id="clearBtn"><i class="la la-times"></i> Clear</button>*@
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Offer Info END-->
+                                <!--Added START-->
+                                <div class="tab-pane animated fadeIn" id="addeditem" role="tabpanel">                                    
+                                            <div class="ml-2 mr-2">
+                                                <div class="form-group" style="margin-top: 5px;">
+                                                    <i class="la la-filter"></i> Filter :
+                                                </div>
+                                            </div>
+                                        <div class="row">
+                                        <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <select class="form-control m-input m-input--solid Maicag" id="addeditem_MainCategoryId">
+                                                        <option value="0" selected disabled>MainCategory</option>
+                                                        @foreach (var getManCategList in Model.GetMainCategoryList)
+                                                        {
+                                                            <Option value="@getManCategList.MainCatId">@getManCategList.ManCatName</Option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <select class="form-control m-input m-input--solid Catg" id="addeditem_CategoryId">
+                                                    <option value="0" selected disabled>Category</option>
+                                                    @foreach (var getCategList in Model.getCattegorylist)
+                                                    {
+                                                        <option value="@getCategList.CatId">@getCategList.Name</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <select class="form-control m-input m-input--solid Catg" id="addeditem_BrandId">
+                                                    <option value="0" selected disabled>Brand</option>
+                                                    @foreach (var getbrandlist in Model.getBrandList)
+                                                    {
+                                                        <option value="@getbrandlist.BrandId">@getbrandlist.BrandName</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <select class="form-control m-input m-input--solid Catg" id="addeditem_VendorId">
+                                                    <option value="0" selected disabled>Supplier</option>
+                                                    @foreach (var getvendorlist in Model.getVendorList)
+                                                    {
+                                                        <option value="@getvendorlist.VendorId">@getvendorlist.VendorName</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-primary filter" id="addeditem">Find</button>
+                                                <button type="button" class="btn btn-link clear" id="addeditem">Clear</button>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="float-right">
+                                                <button class="btn btn-success " type="button" id="deleteId">
+                                                    Remove Item
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" value="@Model.OffersDetail.Id" name="Ids" data-id="@Model.OffersDetail.Id" id="Ids" />
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle" id="MappedOfferItem">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Item ID</th>
+                                                            <th>Item Name</th>
+                                                            <th>Discount %</th>
+                                                            <th>Selling Price</th>
+                                                            <th>Discount Value</th>
+                                                            <th>Action</th>
+                                                            <th>
+                                                                <div class="kt-checkbox-list">
+                                                                    <label class="kt-checkbox">
+                                                                        <input type="checkbox" id="selectallid">
+                                                                        <span></span>
+                                                                    </label>
+                                                                </div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="MappedOfferItem-Id">
+                                                        @*@foreach (var list in Model.getMappedPricelist)
+                            {
+                            <tr>
+                                <td>@list.ItemId</td>
+                                <td>@list.pluName</td>
+                                <td>@list.DiscountPrice</td>
+                                <td>@list.SellingPrice</td>
+                                <td>@list.DiscountedValue</td>
+                                <td>
+                                    <div>
+                                        <button type="button" class="btn btn-sm btn-danger">Remove</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            }*@
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Added END-->
+                                <!--Available START-->
+                                <div class="tab-pane animated fadeIn" id="availableitem" role="tabpanel">
+                                    
+                                        
+                                            <div class="ml-2 mr-2">
+                                                <div class="form-group" style="margin-top: 5px;">
+                                                    <i class="la la-filter"></i> Filter :
+                                                </div>
+                                            </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <select class="form-control m-input m-input--solid" id="availableitem_MainCategoryId">
+                                                        <option value="0" selected disabled>MainCategory</option>
+                                                        @foreach (var getManCategList in Model.GetMainCategoryList)
+                                                        {
+                                                            <Option value="@getManCategList.MainCatId">@getManCategList.ManCatName</Option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <select class="form-control m-input m-input--solid" id="availableitem_CategoryId">
+                                                    <option value="0" selected disabled>Category</option>
+                                                    @foreach (var getCategList in Model.getCattegorylist)
+                                                    {
+                                                        <option value="@getCategList.CatId">@getCategList.Name</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <select class="form-control m-input m-input--solid Catg" id="availableitem_BrandId">
+                                                    <option value="0" selected disabled>Brand</option>
+                                                    @foreach (var getbrandlist in Model.getBrandList)
+                                                    {
+                                                        <option value="@getbrandlist.BrandId">@getbrandlist.BrandName</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <select class="form-control m-input m-input--solid Catg" id="availableitem_VendorId">
+                                                    <option value="0" selected disabled>Supplier</option>
+                                                    @foreach (var getvendorlist in Model.getVendorList)
+                                                    {
+                                                        <option value="@getvendorlist.VendorId">@getvendorlist.VendorName</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-primary filter" id="availableitem">Find</button>
+                                                <button type="button" class="btn btn-link clear" id="availableitem">Clear</button>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="float-right">
+                                                <button class="btn btn-success " type="button" id="AddItemId">
+                                                    Add Item
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle" id="OffertblId">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Item Id</th>
+                                                            <th>Item Name</th>
+                                                            <th>Actual Cost</th>
+                                                            <th>Selling Price</th>
+                                                            <th>Action</th>
+                                                            <th>
+                                                                <div class="kt-checkbox-list">
+                                                                    <label class="kt-checkbox">
+                                                                        <input type="checkbox" id="selectallid">
+                                                                        <span></span>
+                                                                    </label>
+                                                                </div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="PricelistBody-Id">
+                                                        @*@foreach (var list in Model.getAllpricelist)
+                            {
+                            <tr>
+                                <td>@list.ItemId</td>
+                                <td>@list.pluName</td>
+                                <td>@list.TotalPrice</td>
+                                <td>@list.SellingPrice</td>
+                                <td>
+                                    <div>
+                                        <button type="button" class="btn btn-sm btn-primary">Add</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            }*@
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Available END-->
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Portlet-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="viewMessage1" value="@(Model.ViewMessage ??"")" />
+<input type="hidden" id="errorMessage1" value="@(Model.ErrorMessage ?? "")" />
+
+@section scripts {
+    <script>
+        $('.dateTimepickerofEnd').daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            timePicker: true,
+            showMeridian: !0,
+            todayHighlight: !0,
+            autoclose: !0,
+            locale: {
+                format: "DD-MM-YYYY hh:mm A",
+            },
+            constrainInput: false,
+        });
+    </script>
+    <script src="~/assets/scripts/offer/detail.js"></script>
+}

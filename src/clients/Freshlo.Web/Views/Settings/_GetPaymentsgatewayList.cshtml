@@ -1,0 +1,14 @@
+﻿@using Freshlo.DomainEntities;
+@model List<CustomersAddress>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@item.ChannelId </td>
+        <td><spam class="font-medium-1">@item.SecretKey</spam></td>
+        <td><spam class="font-medium-1">@item.PublicKey</spam></td>
+        <td><a href="#" data-toggle="modal" class="text-dark PaymentsZDLC" data-id="@item.id"> <i class="flaticon-edit"> </i> </a></td>
+        <td><a href="#" class="text-danger PaymentsDeleteCls" data-id="@item.id"> <i class="flaticon-delete deleteId"> </i></a></td>
+    </tr>
+}
+

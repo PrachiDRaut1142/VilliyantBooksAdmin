@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BarCode" Version="2023.3.2" />
+    <PackageReference Include="EPPlus" Version="6.2.9" />
+    <PackageReference Include="Google.AdWords" Version="24.19.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Freshlo.DomainEntities\Freshlo.DomainEntities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Mvc.ViewFeatures">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.mvc.viewfeatures\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.ViewFeatures.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

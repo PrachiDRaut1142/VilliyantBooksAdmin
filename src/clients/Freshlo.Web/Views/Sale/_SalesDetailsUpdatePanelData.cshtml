@@ -1,0 +1,53 @@
+﻿@using Freshlo.Web.Models.Sale;
+@using System.Globalization;
+@using Freshlo.Web.Helpers;
+@model SalesDetailVM
+@{
+
+}
+<div>
+    <div id="TableInfoId">
+        <div class="form-group mb-0">
+            <div>
+                <a href="/Customer/Detail/@Model.SaleData.CustomerId" hidden>
+                    <h6 class="font-medium-1 text-bold-500 mb-0" id="CustomerName">@Model.SaleData.CustomerName</h6>
+                    <span class="font-small-3" id="CustId" hidden>@Model.SaleData.CustomerId</span>
+                </a>
+                <h5 class="mb-0">Customer Name: <span class="font-medium-4 font-weight-bold">@Model.SaleData.CustomerName</span></h5>
+                @if (Model.SaleData.OrderType == "Take Away")
+                {
+                    <h5 class="mb-0">Ordering for Table : <span class="font-medium-4 font-weight-bold">Take Away</span></h5>
+
+                }
+                @if (Model.SaleData.OrderType == "Home Delivery")
+                {
+                    <h5 class="mb-0">Ordering for Table : <span class="font-medium-4 font-weight-bold">Home Delivery</span></h5>
+
+                }
+                @if (Model.SaleData.OrderType == "Dine In")
+                {
+                    <h5 class="mb-0">Ordering for Table : <span class="font-medium-4 font-weight-bold">@(Model.SaleData.tableName)</span></h5>
+
+                }
+                <h5 class="mb-0" style="display:none">Ordering for Table : <span class="font-medium-4 font-weight-bold" id="TableId">@(Model.SaleData.tableId)</span></h5>
+            </div>            
+            <div class="kot-prints-btn">
+                <button class="btn btn-warning mt-1 pendingkot" data-toggle="modal" data-target="#openPendingKOT" data-Id="@Model.SaleData.SalesOrderId" data-backdrop="static" data-keyboard="false">
+                    <i class="icon fa fa-print"></i>
+                    PRINT KOT
+                </button>
+            </div>
+        </div>
+        <span hidden name="Sales_Id" id="SalesOrderId" asp-for="@Model.SaleData.SalesOrderId">@Model.SaleData.SalesOrderId</span>
+        <input type="hidden" id="CustomerIds" name="CustomerId" asp-for="SaleData.CustomerId" />
+        <input type="hidden" id="HubId" asp-for="SaleData.Hub" />
+        <input type="hidden" id="CustomerNo" asp-for="SaleData.CustomerNo" />
+        <input type="hidden" id="TransactionId" asp-for="SaleData.TransactionId" />
+        <input type="hidden" id="PaymentStatus" asp-for="SaleData.PaymentStatus" />
+    </div>
+</div>
+
+@{
+    <script></script>
+}
+

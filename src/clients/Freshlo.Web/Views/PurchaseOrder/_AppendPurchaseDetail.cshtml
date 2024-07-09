@@ -1,0 +1,28 @@
+﻿@using Freshlo.Web.Models.PurchaseVM;
+@model DetailVM
+@{
+    ViewData["Title"] = "_AppendPurchaseDetail";
+
+}
+@foreach (var list in Model.List)
+{
+    <tr id="@list.ItemId">
+        <td>
+            <div class="kt-checkbox-list">
+                <label class="kt-checkbox">
+                    <input class="messageCheckbox" id="@list.ItemId" value="@list.ItemId" type="checkbox" name="Check">
+                    <span></span>
+                </label>
+            </div>
+        </td>
+        <td id="pluName_@list.ItemId"><a href="#" class="text-link">@list.ProductName</a></td>
+        <td id="categoryName_@list.ItemId">@list.categoryName </td>
+        <td><input type="text" value="@list.Purchase_Price" id="purPrice_@list.ItemId" class="form-control m-input m-input--solid tblPurchasePrice" style="width:100px;"></td>
+        <td><input type="text" value="@list.TotalQuantity" id="ttlQty_@list.ItemId" class="form-control m-input m-input--solid tblTtlQty" style="width:100px;" placeholder=" Qty."></td>
+        <td><input type="text" value="@list.currentsock" id="itemstock_@list.ItemId" class="form-control m-input m-input--solid tblitemstock" style="width:100px;"></td>
+        <td> <a href="#" onclick=remove('@list.ItemId')><i class="flaticon-delete text-danger"></i></a></td>
+        <td><input type="text" class="form-control width-100 px-1 input-sm" id="categoryName_@list.ItemId" name="categoryName" value="@list.categoryName" style="display:none"></td>
+        <td><input type="text" class="form-control width-100 px-1 input-sm" id="Category_@list.ItemId" name="Category" value="@list.Category" style="display:none"></td>
+
+    </tr>
+}

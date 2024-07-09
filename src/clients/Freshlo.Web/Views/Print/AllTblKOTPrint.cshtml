@@ -1,0 +1,108 @@
+﻿@using Freshlo.Web.Models
+@using Freshlo.Web.Helpers
+@model SalesVM
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Arabian Dastar</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <link href="~/assets/print/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/print/print.css" rel="stylesheet" />
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Oswald:wght@300&display=swap" rel="stylesheet">
+    <style>
+
+
+        .table-middle td {
+            vertical-align: middle !important
+        }
+
+        .table-borderless th, .table-borderless td, .table-borderless thead th, .table-borderless tbody + tbody {
+            border: 0 !important
+        }
+
+        /*.print {
+            break-inside: avoid;
+        }*/
+        /*div {
+            page-break-inside: avoid;
+        }*/
+        /*table {
+            page-break-inside: avoid;
+        }*/
+
+    </style>
+
+</head>
+<!-- end::Head -->
+<!-- begin::Body -->
+<body style="font-family: 'Open Sans';font-size: 17px;">
+    @foreach (var item in Model.GetSalesPrintListDetails)
+    {
+        <div class="p-4" style="page-break-after: always;">
+            <div class="container-fluid" style="display: block;">
+                <div class="row" style="display:block">
+                    <div class="col-xs-12">
+                        <div class="text-left">
+                            Bill No : @item.SalesOrderId - @item.LastUpdateOn.ToString("dd-MM-yyyy hh:mm tt")<br>
+                            Table : <span class="font-medium-4 text-bold-700" style="font-size: 20px; font-weight: 800"> @item.tableName  ( @item.Name )</span><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-condensed table-borderless table-middle mb-0">
+                            <thead style="">
+                                <tr>
+                                    <th>Item</th>
+                                    <th class="text-right">Qty.</th>
+                                </tr>
+                            </thead>
+                            <tbody style="">
+                                @foreach (var list1 in Model.GetSalesPrintList)
+                                {
+                                    @if (list1.SalesOrderId == item.SalesOrderId)
+                                    {
+                                        @if (list1.KOT_Print == 1)
+                                        {
+                                            <tr>
+                                                <td style="font-size: 20px; font-weight: 800">@list1.PluName</td>
+                                                <td class="text-right" style="font-size: 22px; font-weight: 800">@(list1.ItemType == "Packed" ? list1.QuantityValue : list1.QuantityValue)</td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
+    }
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            window.print();
+        }
+    </script>
+    <script type="text/javascript">
+        window.onafterprint = function () {
+            window.location.href = '/Sale/tablestate/';
+        }
+    </script>
+
+</body>
+
+</html>
+

@@ -1,0 +1,276 @@
+﻿@using Freshlo.Web.Models.Sale
+@using System.Globalization
+@using Freshlo.Web.Helpers
+
+@model SalesManageVM
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Sale Management</h3>
+            @*<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="javascripts:;" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/Home/Index/" class="m-nav__link">
+                        <span class="m-nav__link-text">Home</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator"></li>
+                <li class="m-nav__item">
+                    <a href="javascripts:;" class="m-nav__link">
+                        <span class="m-nav__link-text">Sale Manage</span>
+                    </a>
+                </li>
+            </ul>*@
+        </div>
+        @*<div>
+                <button type="button" class="btn btn-dark" id="btnTotalSalePrint"><i class="la la-plus"></i>Sales Print</button>
+            </div>
+            <div>
+                <button type="button" class="btn btn-dark" style="margin-left:15px;" onclick="window.location.href='/Sale/Index/'"><i class="la la-plus"></i> Create New</button>
+            </div>*@
+        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+            Action
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="/Sale/Index/" data-toggle="kt-tooltip" title="Tooltip title" data-placement="right" data-skin="dark" data-container="body">Create New</a>
+            <a class="dropdown-item" href="#" id="SalesPrintId" @*data-toggle="modal" data-target="#dateRangePic" *@ data-id="Print" hidden>Sales Print</a>
+            <a class="dropdown-item" href="#" id="SalesExcelId" @*data-toggle="modal" data-target="#dateRangePic" *@ data-placement="left">Export Excel</a>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon m--hide">
+                        <i class="la la-gear"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                        List of Sale
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row ">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="mt-2">
+                            <p class="mb-1 mr-2"><i class="la la-filter"></i> Filter : </p>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group date">
+                                <input type="text" id="m_datetimepicker_6" class="form-control m-input m-input--solid" autocomplete="off" placeholder="Delivery Date" onclick="ClearError();" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="la la-calendar-check-o"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <select asp-items="@SalesHelpers.StatusList" autocomplete="off" class="form-control m-input m-input--solid" id="StatusId">
+                                <option value="">Select Order Status</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select asp-items="@SalesHelpers.DeliverySourceList" autocomplete="off" class="form-control m-input m-input--solid" id="Source">
+                                <option value="">Select Delivery Source</option>
+
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select asp-items="@SalesHelpers.PaymentStatusList" autocomplete="off" class="form-control m-input m-input--solid" id="Payment">
+                                <option value="">Select PaymentStatus </option>
+                            </select>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="float-left">
+                                <button type="button" class="btn btn-brand ml-2 px-4 filter">
+                                    <i class="la la-question-circle"></i> Filter
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="float-left">
+                                <button type="button" class="btn btn-success filtrExcel">
+                                    <i class="la la-file-excel-o"></i>Export Excel
+                                </button>
+                            </div>
+                        </div>
+                        <input type="text" value="@Model.a" id="date" hidden />
+                        <input type="text" value="@Model.b" id="status" hidden />
+                        <input type="text" value="@Model.c" id="hub" hidden />
+                        <input type="text" value="@Model.d" id="zipcode" hidden />
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="mb-1 mt-1" />
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table" id="sales">
+                            <thead>
+                                <tr>
+                                    <th>Sales Order ID</th>
+                                    <th>Customer Name</th>
+                                    @*<th>Zip Code</th>*@
+                                    <th>Order Date</th>
+                                    <th>Delivery Date</th>
+                                    <th>Total Item</th>
+                                    <th>Delivery Status / Source</th>
+                                    <th>Payment Status</th>
+                                    <th>Payment Mode</th>
+                                    <th>Bill Amount</th>
+                                    <th>Discount</th>
+                                    <th>Bill Print</th>
+                                </tr>
+                            </thead>
+                            <tbody id="saleslist">
+                                @foreach (var saleslist in Model.GetSalesList)
+                                {
+                                <tr>
+                                    <td class="">
+                                        <a href="/Sale/Detail/@saleslist.SalesOrderId" class="text-link">@saleslist.SalesOrderId</a>
+                                    </td>
+                                  
+                                        <td>
+                                            <a href="/Customer/Detail/@saleslist.DecodeId1" class="text-link">@(saleslist.Name == null ? "N/A" : saleslist.Name)</a><span class="font-small-3 display-block text-dark">@saleslist.ContactNo</span>
+                                        </td>
+                                    
+                                   
+                                    @*<td class="text-dark">
+            @saleslist.ZipCode
+        </td>*@
+                                    <td class="text-dark">
+                                        @saleslist.CreatedOn.ToString("dd-MMM-yyyy", CultureInfo.InvariantCulture)
+                                    </td>
+                                    <td class="text-dark">
+                                        @saleslist.DeliveryDate1.ToString("dd-MMM-yyyy", CultureInfo.InvariantCulture)
+                                    </td>
+                                    <td>
+                                        <span class="m-badge m-badge--warning m-badge--rounded m-badge--wide font-medium-1" data-container="body" data-toggle="m-popover" data-placement="top" data-content="@saleslist.ItemName" data-original-title="" title="">@saleslist.PluCount</span>
+                                    </td>
+                                    <td class="">
+                                        <span class="m-badge m-badge--rounded m-badge--wide font-small-3 m-badge--@(SalesHelpers.OrderStatusTag.ContainsKey(saleslist.OrderdStatus) ? SalesHelpers.OrderStatusTag[saleslist.OrderdStatus]:"info")">@saleslist.OrderdStatus</span>
+                                    </td>
+                                    <td> <span class="m-badge m-badge--rounded m-badge--wide font-small-3 m-badge--@(SalesHelpers.PaymentStatusTag.ContainsKey(saleslist.PaymentStatus) ? SalesHelpers.PaymentStatusTag[saleslist.PaymentStatus]:"Not Known")">@(SalesHelpers.PaymentStatus.ContainsKey(saleslist.PaymentStatus) ? SalesHelpers.PaymentStatus[saleslist.PaymentStatus] : "Not Known")</span></td>
+                                    <td class="">
+                                        @saleslist.PaymentMode
+                                    </td>
+                                    <td>
+                                        <span class="text-bold-700 text-dark">
+                                            @saleslist.currencytype. @(saleslist.TotalPrice)
+                                            
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="text-bold-700 text-dark">
+                                            @saleslist.currencytype. @(saleslist.Discount)
+
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("Index","Print",new { id1 = saleslist.SalesOrderId })">
+                                            <i class="flaticon-technology text-muted"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="dateRangePic" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Select Date</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label class="col-form-label col-lg-2 col-sm-12">Today</label>
+                    <div class="">
+                        <label class="ab-switch mt-2">
+                            <input type="checkbox" id="customdatetoggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <label class="mt-2   col-lg-3 col-sm-12 text-left">Custom Days</label>
+                </div>
+                <div class="form-group row" id="divdate" style="display:block">
+                    <label class="col-form-label col-lg-2 col-sm-12"></label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="TodayDate" value="@ViewBag.TodayDatetime"  />
+                        <span class="error font-small-4" id="SalesdateError" style="display: none; color: red;"></span>
+
+                    </div>
+                </div>
+                <div class="row" id="divddaterange" style="display:none">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-2 col-sm-12"></label>
+                            <div class="col-lg-9 col-md-9 col-sm-12">
+                                <div class='input-group' id='m_daterangepicker_2'>
+                                    <input type='text' class="form-control m-input" id="salesdaterange" readonly placeholder="Select date range" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
+                                    </div>
+
+                                </div>
+                                <span class="error font-small-4" id="SalesdaterangError" style="display: none; color: red;"></span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="SalestoPrint" style="display:none">Print</button>
+                <button type="button" class="btn btn-primary" id="SalestoExcel" style="display:none">Excel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script src="~/assets/app/js/datatable.js"></script>
+    <script src="~/assets/scripts/sales/manage.js"></script>
+}
+
+    @*<script>
+        $('#sales').DataTable({
+            "pageLength": 100,
+            "ordering": false,
+            "sorting": true
+        });
+    </script>*@

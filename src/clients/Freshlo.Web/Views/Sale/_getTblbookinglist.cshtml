@@ -1,0 +1,92 @@
+﻿@using Freshlo.Web.Models.Sale
+@using System.Globalization
+@using Freshlo.Web.Helpers
+@model SalesManageVM
+
+
+
+@if (Model.bookingCount.Result.BookingCount > 0)
+{
+<div class="advance-booking-panel" style="position: sticky !important; top: 90px; z-index: 4; background-color:#fff;">
+
+    <!-- WAITING IN QUEUE -->
+    @if (Model.bookingCount.Result.WaitingStatus > 0)
+    {
+        <div class="advance-booking-header font-medium-1">Waiting in Queue</div>
+        @foreach (var item1 in Model.bookinglist)
+        {
+            if (item1.status == "Waiting")
+            {
+                <div class="advance-booking-wrapper">
+
+                    <div class="advance-booking-body">
+                        <div class="advance-booking-list">
+                            <div class="user-name">
+                                <input id="bId" hidden value="@item1.id" />
+                                <span class="font-medium-2 name">@item1.custName</span>
+                                <span class="font-medium-1">(@item1.custNumber)</span>
+                            </div>
+                            <h3 class="font-small-4">@(item1.tblPerfernce !=null ? item1.tblPerfernce : "Any Table") </h3>
+                            <div class="font-small-4">
+                                <span class="mr-2"><i class="m-menu__link-icon flaticon-list font-medium-1 text-bold-700"></i> <span class="font-medium-1 text-bold-700">W0<span>@item1.id</span></span></span>
+                                <span class="mr-2"><img src="/assets/img/timer.png" width="16px" style="vertical-align: central"> <span class="font-medium-1 text-bold-700">@item1.slotTime @item1.timeType</span></span>
+                                <span class="mr-2"><img src="/assets/img/users.png" width="16px" style="vertical-align: central"> <span class="font-medium-1 text-bold-700">@item1.totalGuest</span></span>
+                                <span>
+                                    <a href="#!" class="assign-table btn btn-dark mr-2" id="assingAdavncebooing" data-id="@item1.perferencType" data-customerId="@item1.custId" data-bookingId="@item1.bookingId"><img src="~/assets/img/assign.png" width="16px" /><span>Assign</span></a>
+                                    <a class="annouce-icon mr-2"><i class="m-menu__link-icon la la-bullhorn"></i></a>
+                                    <a id="cancelBooking"  class="close-icon cancelBooking btn-danger" data-bid="@item1.id"><i class="m-menu__link-icon la la-close text-white " ></i></a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    }
+
+    <!-- ADVANCE BOOKING -->
+    @if (Model.bookingCount.Result.AdvanceStatus > 0)
+    {
+        <div class="advance-booking-header-advance font-medium-1">Advance Booking</div>
+        @foreach (var item in Model.bookinglist)
+        {
+            if (item.status == "Advance booking")
+            {
+                <div class="advance-booking-wrapper">
+
+                    <div class="advance-booking-body">
+                        <div class="advance-booking-list">
+                            <div class="user-name">
+                                <span class="font-medium-2 name">@item.custName</span>
+                                <span class="font-small-3">(@item.custNumber)</span>
+                            </div>
+                            <h3 class="font-small-4">@item.tblPerfernce</h3>
+                            <div class="font-small-4">
+                                <span class="mr-2">
+                                    <img src="~/assets/img/timer.png" width="16px" style="vertical-align: central" />
+                                    <span style="vertical-align: central" class="font-medium-1 text-bold-700">@item.slotTime @item.timeType</span>
+                                </span>
+                                <span class="mr-2">
+                                    <img src="~/assets/img/users.png" width="16px" style="vertical-align: central" />
+                                    <span style="vertical-align: central" class="font-medium-1 text-bold-700">@item.totalGuest </span>
+                                </span>
+                                <span hidden>
+                                    <a href="#" class="assign-table btn btn-dark" id="assingAdavncebooing" data-id="@item.perferencType" data-customerId="@item.custId" data-bookingId="@item.bookingId"><img src="~/assets/img/assign.png" width="16px" /><span>Assign</span></a>
+                                </span>
+                                @*<span>
+                                    <a id="cancelBooking" class="close-icon cancelBooking btn-danger"><i class="m-menu__link-icon la la-close text-white "></i></a>
+                                </span>*@
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+    }
+
+</div>
+
+}

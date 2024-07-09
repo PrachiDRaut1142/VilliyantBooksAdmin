@@ -1,0 +1,209 @@
+﻿@using Freshlo.Web.Models.ItemMaster;
+@model ItemMasterVM;
+@{
+    ViewData["Title"] = "StockUpdate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/assets/css/pages/stock/stock-update.css" rel="stylesheet" />
+
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Stock Update</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+            </ul>
+        </div>
+
+        <div>
+            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#upload_excel_md"><i class="la la-upload"></i> Upload Excel</button>
+            <button type="button" class="btn btn-dark" id="exportStock"><i class="la la-download"></i> Download Excel</button>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-xl-3 col-lg-4 mb-2">
+                    <div class="card card-stats mb-xl-0">
+                        <a href="#" id="PendingOrder">
+                            <div class="card-body m--bg-fill-warning">
+                                <div class="row">
+                                    <div class="col" id="itemcount">
+                                        <h6 class="card-title font-small-4 mb-1">Total Live Item</h6>
+                                        <span class="font-medium-5 font-weight-bold text-black" id="">@Model.getstockcount.Itemcount</span>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-4 mb-2">
+                    <div class="card card-stats mb-xl-0">
+                        <a href="#" id="Delivered">
+                            <div class="card-body bg-dark text-white">
+                                <div class="row">
+                                    <div class="col" id="itemcount">
+                                        <h6 class="card-title font-small-4 mb-1">Items Out of Stock</h6>
+                                        <span class="font-medium-5 font-weight-bold text-black" id="">@Model.getstockcount.Itemoutstock</span>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-4 mb-2">
+                    <div class="card card-stats mb-xl-0">
+                        <a href="#" id="Cancelled">
+                            <div class="card-body bg-danger text-white">
+                                <div class="row">
+                                    <div class="col" id="itemcount">
+                                        <h6 class="card-title font-small-4 mb-1">Items Turned Off</h6>
+                                        <span class="font-medium-5 font-weight-bold text-black" id="">@Model.getstockcount.Itemnotlive</span>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="m-portlet">
+        <div class="m-portlet__body">
+            <!-- STOCK FILER BEGIN -->
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="ml-2 mr-2">
+                            <div class="form-group" style="margin-top: 5px;">
+                                <i class="la la-filter"></i> Filter :
+                            </div>
+                        </div>
+                        <div class="ml-2 filter" style="width:75%">
+                            <div class="form-group">
+                                <select class="form-control m-input m-input--solid MainCategoryId" id="MainCategoryId">
+                                    <option value="0" selected="" disabled="">Category</option>
+                                    @foreach (var maincat in Model.GetMainCategoryList)
+                                    {
+                                        <option value="@maincat.Value">@maincat.Text</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <select class="form-control m-input m-input--solid" id="CategoryId">
+                            <option value="0" selected="" disabled="">Sub Category</option>                           
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-1" style="display:none;">
+                    <div class="form-group">
+                        <select class="form-control m-input m-input--solid" id="ApproavalType">
+                            <option value="0" disabled="">Availability</option>
+                            <option value="Y">Yes</option>
+                            <option value="N">No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" id="Filter-Id" disabled>Find</button>
+                        <button type="button" class="btn btn-link" id="Clear-Id" hidden>Clear</button>
+                    </div>
+                </div>
+                <div class="col-md-2 showdiv" style="display:none;">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-dark pull-right"><i class="la la-save"></i> Save Changes</button>
+                    </div>
+                </div>
+            </div>
+            <!-- STOCK FILTER ENDED -->
+
+
+            <!-- STOCK UPDATE TABLE BEGIN -->
+            <div class="row">
+                  <div class="col-md-12">
+                      <div class="" id="StockList" role="tabpanel">
+                        </div>
+            
+
+                </div>
+            </div>
+            <!-- STOCK UPDATE TABLE ENDED -->
+        </div>
+    </div>
+</div>
+
+
+<!-- UPLOAD EXCEL MODAL -->
+<div class="modal fade" id="upload_excel_md" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Upload Excel</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @*<div class="row mb-4 align-items-center">
+                    <div class="col-md-3">
+                        <label class="text-right d-block font-small-3 mb-0">File Name</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" placeholder="Enter File Name" name="filename" class="form-control m-input m-input--solid font-small-3" id="excelFileName" />
+                    </div>
+                </div>*@
+                    <div class="row">
+                        <div class="col-md-3">
+                        <label class="text-right d-block font-small-3 mb-0">Upload File</label>
+                        </div>
+                        <div class="col-md-8">
+                           <div class="upload-excel">
+                            <input type="file" name="uploadxl" id="uploadExcel"/>
+                            <label for="uploadxl" >
+                                <div id="uploadimage" style="display:block;">
+                                    <img src="~/img/upload-file.png" />
+                                    <p class="mb-0">Upload File</p>
+                                </div>
+                                <div id="ExcelName" style="display:none;">
+                                    <span id="UploadedFileName"></span>
+                                </div>
+                            </label>
+                           </div>
+                        </div>
+                    </div>
+            </div>
+      
+            <div class="modal-footer">
+                <div class="text-right">
+                    <button type="button" class="btn btn-success mr-2" id="SubmitStockExcel"><i class="la la-upload"></i> Submit </button>
+                    <button type="button" class="btn btn-link" data-dismiss="modal"><i class="la la-times"></i> Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="Filemodal" data-backdrop="static" data-keyboard="false">
+</div>
+
+<!-- JS CODE AND FILE -->
+@section scripts {
+    <script src="~/assets/scripts/item/manage.js"></script>
+    <script src="~/assets/scripts/stockManage/stockUpdate.js"></script>
+}

@@ -1,0 +1,193 @@
+﻿@using Freshlo.Web.Helpers
+
+@model SalesVM
+
+
+@foreach (var Item in Model.ItemList)
+{
+    <tr>
+        <td class="border-bt-class">
+            <div>
+                <div class="mr-3" style="flex:2" style="align-items: center;">
+                    <div class="item-title d-flex">
+                        <div><h3 class="mb-0 font-medium-3 font-weight-bold">@Item.PluName</h3></div>
+                        <div class="remark_bttn ml-2" style="display:block">
+                            <button type="button" class="btn btn-outline-dark btn-sm pt-1 pb-1 font-small-1 border-0" id="EditRemark" data-id="@Item.ItemId"><i class="far fa-comment"></i></button>
+                        </div>
+                        <div class="remark_field form-group ml-2 mb-0" id="editremarksclosed_@Item.ItemId" style="display: none;">
+                            <input type="text" class="form-control" placeholder="Enter kitchen instruction" id="remarkIds_@Item.ItemId" style="border-color:#f4516c;" />
+                            @*<button type="button" class="btn btn-outline-danger btn-sm pt-1 pb-1 font-small-1 remar_close" id="ClosedRemark" data-id="@Item.ItemId">close</button>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center mt-2">
+
+                <div class="qty mr-2">
+                    <div class="input-group">
+                        <div class="input-group-btn">
+                            <div class="btn-numbers low-qty" id="btn-numbers" disabled="disabled" data-type="minus" data-field="quants[1]_@Item.ItemId" data-id="@Item.ItemId">
+                                <img src="~/img/qty-left-arrow.png" alt="arrow" style="width: 12px;" />
+                            </div>
+                        </div>
+                        <input type="text" name="quants[1]_@Item.ItemId" class="form-control input-number font-medium-4 text-dark" id="input-numbers_@Item.ItemId" value="1" step="1" min="1" max="50" maxlength="2" data-id="@Item.ItemId" />
+                        <div class="input-group-btn">
+                            <div class="btn-numbers" id="btn-numbers" data-type="plus" data-field="quants[1]_@Item.ItemId" data-id="@Item.ItemId">
+                                <img src="~/img/qty-right-arrow.png" alt="arrow" style="width: 12px;" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="measured-choose">
+                    @foreach (var itemvlist in Model.ItemVarainceList)
+                    {
+                        if (itemvlist.ItemId == Item.ItemId)
+                        {
+                            if (itemvlist.Measurement == "Unit" && itemvlist.Size != "NOVAR")
+                            {
+                                <div class="measured-choose-bttn">
+                                    <button class="add_cart_bttn btn btn-dark btn-sm pt-1 pb-1 pl-2 pr-2 mr-2" type="button" id="AddCartIds" data-id="@itemvlist.PriceId" data-Itemid="@itemvlist.ItemId" data-measurment="@itemvlist.Measurement" data-size="@itemvlist.Size">
+                                        <span class="font-weight-bold font-medium-1">@itemvlist.Size </span> - @itemvlist.SellingPrice @Model.currencyInfo.FirstOrDefault(x => x.status == 1).symbol
+                                    </button>
+                                </div>
+                                <div style="display:none">
+                                    <h5><span id="SpnItemIds_@Item.ItemId" class="">@Item.Id</span></h5>
+                                    <h5><span id="SpnItempriceIds_@itemvlist.PriceId" class="">@itemvlist.PId</span></h5>
+                                    <h5><span id="SpnInputItemIds_@Item.ItemId" class="">@Item.ItemId</span></h5>
+                                    <h5><span id="SpnInputItempriceIds_@itemvlist.PriceId" class="">@itemvlist.PriceId</span></h5>
+                                    <span id="SpnCategorys_@Item.ItemId" class="">@Item.CategoryName</span>
+                                    <span id="SpnCategoryIds_@Item.ItemId" class="">@Item.Category</span>
+                                    <span id="spnPlucodes_@Item.ItemId">@Item.PluCode</span>
+                                    <h5><span id="SpnItemNames_@itemvlist.PriceId" class="">@itemvlist.PluName</span></h5>
+                                    <h5><span id="SpnItemWeights_@Item.ItemId" class="">@Item.Weight</span><span id="meaure_@Item.ItemId">@Item.Measurement</span><span hidden id="TotalItemstock_@Item.ItemId">@Item.TotalStock</span></h5>
+                                    <h5><span id="SpnItempriceWeights_@itemvlist.PriceId" class="">@itemvlist.OrderQty</span><span id="pricemeaures_@itemvlist.PriceId">@itemvlist.Measurement</span><span hidden id="TotalItemstock_@Item.ItemId">@Item.TotalStock</span></h5>
+                                    <span id="stockIds_@Item.ItemId">@Item.stockId</span>
+                                    <span id="MarketPrices_@itemvlist.PriceId">@itemvlist.MarketPrice</span>
+                                    <span id="MItemTypes_@Item.ItemId">@Item.ItemType</span>
+                                    <h5><span id="SpnItemPrices_@itemvlist.PriceId" class="">@itemvlist.SellingPrice</span></h5>
+                                    <input type="text" id="weightIds_@Item.ItemId" class="form-control" value="@Item.Weight" />
+                                    <input type="text" id="priceweightIds_@itemvlist.PriceId" class="form-control" value="@itemvlist.OrderQty" />
+                                </div>
+                                <div class="display-none">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" id="actualPrices_@itemvlist.PriceId" class="form-control form-control-lg m-input m-input--solid" value="@itemvlist.SellingPrice" readonly style="width:100px" />
+                                            <span hidden id="hdMarkets_@itemvlist.PriceId">@itemvlist.MarketPrice</span>
+                                            <input type="hidden" value="" id="item_image" />
+                                            <span hidden id="PurchasePrices_@itemvlist.PriceId">@itemvlist.Purchaseprice</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="display-none">
+                                    <div class="col-md-6 display-none">
+                                        <div class="form-group">
+                                            <input type="text" id="discountIds_@Item.Id" class="form-control form-control-lg m-input m-input--solid" placeholder="00" title="Discount" />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            if (itemvlist.Measurement != "Unit")
+                            {
+                                <div class="measured-choose-bttn">
+                                    <button class="add_cart_bttn btn btn-dark btn-sm pt-1 pb-1 pl-2 pr-2 mr-2" type="button" id="AddCartIds" data-id="@itemvlist.PriceId" data-Itemid="@itemvlist.ItemId" data-measurment="@itemvlist.Measurement" data-size="@itemvlist.Size">
+                                        @itemvlist.Size - @itemvlist.Measurement  @itemvlist.SellingPrice @SalesHelpers.Data
+                                    </button>
+                                </div>
+                                <div style="display:none">
+                                    <h5><span id="SpnItemIds_@Item.ItemId" class="">@Item.Id</span></h5>
+                                    <h5><span id="SpnItempriceIds_@itemvlist.PriceId" class="">@itemvlist.PId</span></h5>
+                                    <h5><span id="SpnInputItemIds_@Item.ItemId" class="">@Item.ItemId</span></h5>
+                                    <h5><span id="SpnInputItempriceIds_@itemvlist.PriceId" class="">@itemvlist.PriceId</span></h5>
+                                    <span id="SpnCategorys_@Item.ItemId" class="">@Item.CategoryName</span>
+                                    <span id="SpnCategoryIds_@Item.ItemId" class="">@Item.Category</span>
+                                    <span id="spnPlucodes_@Item.ItemId">@Item.PluCode</span>
+                                    <h5><span id="SpnItemNames_@itemvlist.PriceId" class="">@itemvlist.PluName</span></h5>
+                                    <h5><span id="SpnItemWeights_@Item.ItemId" class="">@Item.Weight</span><span id="meaure_@Item.ItemId">@Item.Measurement</span><span hidden id="TotalItemstock_@Item.ItemId">@Item.TotalStock</span></h5>
+                                    <h5><span id="SpnItempriceWeights_@itemvlist.PriceId" class="">@itemvlist.OrderQty</span><span id="pricemeaures_@itemvlist.PriceId">@itemvlist.Measurement</span><span hidden id="TotalItemstock_@Item.ItemId">@Item.TotalStock</span></h5>
+                                    <span id="stockIds_@Item.ItemId">@Item.stockId</span>
+                                    <span id="MarketPrices_@itemvlist.PriceId">@itemvlist.MarketPrice</span>
+                                    <span id="MItemTypes_@Item.ItemId">@Item.ItemType</span>
+                                    <h5><span id="SpnItemPrices_@itemvlist.PriceId" class="">@itemvlist.SellingPrice</span></h5>
+                                    <input type="text" id="weightIds_@Item.ItemId" class="form-control" value="@Item.Weight" />
+                                    <input type="text" id="priceweightIds_@itemvlist.PriceId" class="form-control" value="@itemvlist.OrderQty" />
+                                </div>
+                                <div class="display-none">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" id="actualPrices_@itemvlist.PriceId" class="form-control form-control-lg m-input m-input--solid" value="@itemvlist.SellingPrice" readonly style="width:100px" />
+                                            <span hidden id="hdMarkets_@itemvlist.PriceId">@itemvlist.MarketPrice</span>
+                                            <input type="hidden" value="" id="item_image" />
+                                            <span hidden id="PurchasePrices_@itemvlist.PriceId">@itemvlist.Purchaseprice</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="display-none">
+                                    <div class="col-md-6 display-none">
+                                        <div class="form-group">
+                                            <input type="text" id="discountIds_@Item.Id" class="form-control form-control-lg m-input m-input--solid" placeholder="00" title="Discount" />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            if (itemvlist.Measurement == "Unit" && itemvlist.Size == "NOVAR")
+                            {
+                                <div class="measured-choose-bttn">
+                                    <button class="add_cart_bttn btn btn-dark btn-sm pt-1 pb-1 pl-2 pr-2 mr-2" type="button" id="AddCartIds" data-id="@itemvlist.PriceId" data-Itemid="@itemvlist.ItemId" data-measurment="@itemvlist.Measurement" data-size="@itemvlist.Size">
+                                        <span class="font-small-4">Add</span>
+                                    </button>
+                                </div>
+                                <div style="display:none">
+                                    <h5><span id="SpnItemIds_@Item.ItemId" class="">@Item.Id</span></h5>
+                                    <h5><span id="SpnItempriceIds_@itemvlist.PriceId" class="">@itemvlist.PId</span></h5>
+                                    <h5><span id="SpnInputItemIds_@Item.ItemId" class="">@Item.ItemId</span></h5>
+                                    <h5><span id="SpnInputItempriceIds_@itemvlist.PriceId" class="">@itemvlist.PriceId</span></h5>
+                                    <span id="SpnCategorys_@Item.ItemId" class="">@Item.CategoryName</span>
+                                    <span id="SpnCategoryIds_@Item.ItemId" class="">@Item.Category</span>
+                                    <span id="spnPlucodes_@Item.ItemId">@Item.PluCode</span>
+                                    <h5><span id="SpnItemNames_@itemvlist.PriceId" class="">@itemvlist.PluName</span></h5>
+                                    <h5><span id="SpnItemWeights_@Item.ItemId" class="">@Item.Weight</span><span id="meaure_@Item.ItemId">@Item.Measurement</span><span hidden id="TotalItemstock_@Item.ItemId">@Item.TotalStock</span></h5>
+                                    <h5><span id="SpnItempriceWeights_@itemvlist.PriceId" class="">@itemvlist.OrderQty</span><span id="pricemeaures_@itemvlist.PriceId">@itemvlist.Measurement</span><span hidden id="TotalItemstock_@Item.ItemId">@Item.TotalStock</span></h5>
+                                    <span id="stockIds_@Item.ItemId">@Item.stockId</span>
+                                    <span id="MarketPrices_@itemvlist.PriceId">@itemvlist.MarketPrice</span>
+                                    <span id="MItemTypes_@Item.ItemId">@Item.ItemType</span>
+                                    <h5><span id="SpnItemPrices_@itemvlist.PriceId" class="">@itemvlist.SellingPrice</span></h5>
+                                    <input type="text" id="weightIds_@Item.ItemId" class="form-control" value="@Item.Weight" />
+                                    <input type="text" id="priceweightIds_@itemvlist.PriceId" class="form-control" value="@itemvlist.OrderQty" />
+                                </div>
+                                <div class="display-none">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" id="actualPrices_@itemvlist.PriceId" class="form-control form-control-lg m-input m-input--solid" value="@itemvlist.SellingPrice" readonly style="width:100px" />
+                                            <span hidden id="hdMarkets_@itemvlist.PriceId">@itemvlist.MarketPrice</span>
+                                            <input type="hidden" value="" id="item_image" />
+                                            <span hidden id="PurchasePrices_@itemvlist.PriceId">@itemvlist.Purchaseprice</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="display-none">
+                                    <div class="col-md-6 display-none">
+                                        <div class="form-group">
+                                            <input type="text" id="discountIds_@Item.Id" class="form-control form-control-lg m-input m-input--solid" placeholder="00" title="Discount" />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        }
+                    }
+                </div>
+            </div>
+        </td>
+    </tr>
+
+}
+
+@{
+    <script>
+
+    </script>
+
+}
+

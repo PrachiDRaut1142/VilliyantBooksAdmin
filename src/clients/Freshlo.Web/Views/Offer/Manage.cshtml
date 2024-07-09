@@ -1,0 +1,83 @@
+﻿@using Freshlo.Web.Models.LiveOfferVM;
+@model LiveOfferVM
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Offer Management</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+              
+            </ul>
+        </div>
+        <div>
+            <button type="button" class="btn btn-dark" onclick="window.location.href='/Offer/Create/'"><i class="la la-plus"></i> Create New</button>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon m--hide">
+                        <i class="la la-gear"></i>
+                    </span>
+                    <h3 class="m-portlet__head-text">
+                        List of Offers
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table offerManage">
+                            <thead>
+                                <tr>
+                                    <th>Offer Name</th>
+                                    <th>Offer Type</th>
+                                    <th>Start at</th>
+                                    <th>End at</th>
+                                    <th>Discount %</th>
+                                    <th>Status</th>
+                                    <th>Last Updated On</th>
+                                    <th>Edit</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.getLiveOfferList)
+                                {
+                                <tr>
+                                    <td>@item.OfferHeading</td>
+                                    <td>@item.OfferTypes</td>
+                                    <td>@(item.OfferStartDate == DateTime.Parse("1900-01-01 12:00:00 PM") ? " " : item.OfferStartDate.ToString("yyyy-MM-dd hh:mm:ss tt")) </td>
+                                    <td>@(item.OfferEndDate == DateTime.Parse("1900-01-01 12:00:00 PM") ? " " : item.OfferEndDate.ToString("yyyy-MM-dd hh:mm:ss tt"))</td>
+                                    <td>@item.DiscountPerctg</td>
+                                    <td><span class="badge badge-@(item.Status=="Active"?"success":"danger")">@item.Status</span></td>
+                                    <td>@item.LastUpdatedOn</td>
+                                    <td><a href="/Offer/Detail/@item.DecodeId" class="text-dark"> <i class="flaticon-edit"></i> </a></td>
+                                    <td><a href="#" class="text-danger deleteId" data-id="@item.Id"> <i class="flaticon-delete deleteId"> </i></a></td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="viewMessage1" value="@(Model.ViewMessage ??"")" />
+<input type="hidden" id="errorMessage1" value="@(Model.ErrorMessage ?? "")" />
+@section scripts {
+    <script src="~/assets/scripts/offer/manage.js"></script>    
+}

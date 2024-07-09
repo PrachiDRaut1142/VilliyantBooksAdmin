@@ -1,0 +1,421 @@
+﻿@using Freshlo.Web.Models
+@using Freshlo.Web.Helpers
+
+@model SalesVM
+@{
+    Layout = null;
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Freshlo</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <link href="~/assets/print/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/print/print.css" rel="stylesheet" />
+    <link href="~/assets/main/main.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div class="container-fluid" id="outprint">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center">
+                    <img src="~/assets/app/media/img/logos/logo-bw.png" alt="Freshlo Logo" class="img-fluid mt-1" style="width:250px;" />
+
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center">
+                    Freshlo <br>
+                    Shop #1, Habitat CHS,
+                    Sector 23, Seawoods<br>
+                    Navi Mumbai - 400706.
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-12">
+                @if (Model.GetSalesList != null)
+                {
+                    <div class="text-left">
+                        Bill No : @Model.GetSalesOrderdetail.SalesOrderId <br>
+                        Bill Dt : @Model.GetSalesOrderdetail.LastUpdatedOn.ToString("dd-MM-yyyy hh:mm tt") <br>
+                        Cashier ID : @Model.GetSalesOrderdetail.CreatedBy  - @Model.GetSalesOrderdetail.EmpName<br />
+                        Customer Name : @Model.GetSalesOrderdetail.Name <br>
+                        Contact Number : @Model.GetSalesOrderdetail.ContactNo <br>
+                        Address : @Model.GetSalesOrderdetail.BuildingName,@Model.GetSalesOrderdetail.RoomNo,@Model.GetSalesOrderdetail.Sector, <br>
+                        <span style="margin-left:60px">@Model.GetSalesOrderdetail.Locality,@Model.GetSalesOrderdetail.City- @Model.GetSalesOrderdetail.ZipCode</span>
+
+                    </div>
+                }
+                else
+                {
+                    <div class="text-left">
+                        Bill No : @Model.GetSalesOrderdetail2.SalesOrderId <br>
+                        Bill Dt : @Model.GetSalesOrderdetail2.LastUpdatedOn.ToString("dd-MM-yyyy hh:mm tt") <br>
+                        Cashier ID : @Model.GetSalesOrderdetail2.CreatedBy  - @Model.GetSalesOrderdetail2.EmpName
+                    </div>
+                }
+            </div>
+        </div>
+        <hr />
+        @*<div class="row">
+                <div class="col-xs-12">
+                    <div class="text-left">
+                        C Name : ***** ***** <br>
+                        C No : +91 **** *** ***
+                    </div>
+                </div>
+            </div>
+            <hr />*@
+        <div class="row">
+            <div class="col-md-12">
+                <p class="mb-0 text-center">
+                    CASH MEMO
+                </p>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-condensed mb-0" style="">
+                    <thead>
+                        <tr>
+                            <td><strong>Item</strong></td>
+                            @*<td class="text-center">N.W</td>*@
+                            <td class="text-center"><strong>Qty</strong></td>
+                            <td class="text-right"><strong>Totals</strong></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.GetSalesList != null)
+                        {
+                            @foreach (var item in Model.GetSalesList)
+                            {
+                                <tr>
+                                    <td>@item.PluName<span class="display-block d-block font-medium-1">@(item.ItemType == "Loose" ? item.Weight : item.QuantityValue) @item.Measurement X @(SalesHelpers.Data) @item.PricePerMeas </span></td>
+                                    @*<td class="text-center"></td>*@
+                                    @if (Model.GetSalesOrderdetail.Source == "App")
+                                    {
+                                        <td class="text-center">@(item.QuantityValue) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center">@(item.ItemType == "Loose" ? item.Weight : item.QuantityValue) </td>}
+                                    <td class="text-right">@item.TotalPrice</td>
+                                </tr>
+                            }
+                        }
+
+                        @if (Model.GetSalesList2 != null)
+                        {
+                            <tr>
+                                <td class="text-center">Home Delivery</td>
+                            </tr>
+
+                            @foreach (var item in Model.GetSalesList2)
+                            {
+                                <tr>
+                                    <td>@item.PluName<span class="display-block font-medium-1">@(item.ItemType == "Loose" ? item.Weight : item.QuantityValue) @item.Measurement X @(SalesHelpers.Data) @item.PricePerMeas </span></td>
+                                    @*<td class="text-center"></td>*@
+                                    @if (Model.GetSalesOrderdetail2.Source == "App")
+                                    {
+                                        <td class="text-center">@(item.QuantityValue) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center">@(item.ItemType == "Loose" ? item.Weight : item.QuantityValue) </td>}
+                                    <td class="text-right">@item.TotalPrice</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr />
+        @*<div class="row">
+                <div class="col-xs-3">
+                    <div class="text-left"><strong>Item : @Model.GetSalesList.Count</strong>,</div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="text-center"><strong>Qty : @Model.GetSalesOrderdetail.TotalQuantity</strong>,</div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="text-right"><strong>Amt : @Model.GetSalesOrderdetail.TotalPrice</strong></div>
+                </div>
+            </div>*@
+        @*<hr />
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="text-right"><strong>Delivery Charges : @(Model.Deliverycharges == null ? "0.00" : Model.Deliverycharges)</strong></div>
+                    <div class="text-right"><strong>Total Amt : @Model.Totalamt</strong></div>
+                </div>
+            </div>*@
+
+        <div class="row">
+            <div class="col-xs-3">
+                @if (Model.TotalItem != null)
+                {
+                    <div class="text-left"><strong>Total Items : @Model.TotalItem</strong>,</div>
+                }
+                else
+                {
+                    <div class="text-left"><strong>Total Items : @Model.GetSalesOrderdetail.PluCount</strong>,</div>
+                }
+
+            </div>
+            <div class="col-xs-3">
+                <div class="text-center"><strong></strong></div>
+            </div>
+            <div class="col-xs-6">
+                @if (Model.Totalamt != null)
+                {
+                    <div class="text-right"><strong>Amt : @(Model.Totalamt)</strong></div>
+                }
+                else
+                {
+                    <div class="text-right"><strong>Amt : @(Model.GetSalesOrderdetail.TotalPrice + Model.GetSalesOrderdetail.Discount) </strong></div>
+                }
+            </div>
+        </div>
+
+        <hr />
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center">
+                    Amount Details
+                </div>
+            </div>
+        </div>
+        <hr />
+        @if (Model.GetSalesOrderdetail != null)
+        {
+            if (Model.GetSalesOrderdetail.DeliveryCharges != "0")
+            {
+                <div class="row">
+                    <div class="col-xs-9">
+                        <div class="text-right">
+                            Delivery Charge:
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div id="DeliveryCharge" class="text-right">
+                            @Model.GetSalesOrderdetail.DeliveryCharges
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+        @if (Model.GetSalesOrderdetail2 != null)
+        {
+            <div class="row">
+                <div class="col-xs-9">
+                    <div class="text-right">
+                        Delivery Charge:
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div id="DeliveryCharge" class="text-right">
+                        @Model.GetSalesOrderdetail2.DeliveryCharges
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-9">
+                    <div class="text-right">
+                        Sub Total:
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div id="DeliveryCharge" class="text-right">
+                        @Model.SubTotal
+                    </div>
+                </div>
+            </div>
+        }
+        @if (Model.DiscountPercentage != null)
+        {
+            @if (Model.SubTotal == 0)
+            {
+                <div class="row">
+                    <div class="col-xs-9">
+                        <div class="text-right">
+                            SubTotal:
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div id="CashReceived" class="text-right">
+
+                            @if (Model.Totalamt != null)
+                            {
+                                @Model.Totalamt
+                            }
+                            else
+                            {
+                                @Model.GetSalesOrderdetail.TotalPrice
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="row">
+                <div class="col-xs-9">
+                    <div class="text-right">
+                        Discount Amount:
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div id="CashReceived" class="text-right">
+                        @(Model.ActualDiscountAmt)(@(Model.DiscountPercentage == null ? "00.00" : Model.DiscountPercentage )%)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-9">
+                    <div class="text-right">
+                        <strong>
+                            Total Payable :
+                        </strong>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div id="CashReceived" class="text-right">
+                        <div class="text-right"><strong>Amt : @(Model.TotalDiscountAmount )</strong></div>
+
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            if (Model.GetSalesOrderdetail2 == null)
+            {
+                <div class="row">
+                    <div class="col-xs-9">
+                        <div class="text-right">
+                            Discount Amount:
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="text-right">
+                            -  @(Model.GetSalesOrderdetail.Discount)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-9">
+                        <div class="text-right">
+                            Wallet Amount:
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="text-right">
+                            -  @(Model.GetSalesOrderdetail.Wallet)
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-xs-9">
+                        <div class="text-right">
+                            <strong>
+                                Total Payable :
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="text-right">
+                            <div class="text-right"><strong>Amt : @(Model.GetSalesOrderdetail.TotalPrice + Convert.ToDouble(Model.GetSalesOrderdetail.DeliveryCharges) - Model.GetSalesOrderdetail.Wallet)</strong></div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+        }
+
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="text-right">
+                    Amount Collected:
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div id="CashReceived" class="text-right">
+                    @(Model.CashReceieved == null ? "00.00" : Model.CashReceieved )
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="text-right">
+                    Balance Paid :
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div id="CashRemaining" class="text-right">
+                    @(Model.CashRemaining == null ? "00.00" : Model.CashRemaining)
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center">
+                    <strong>♥ ♥ Saved @(SalesHelpers.Data) @(Model.Saved == null ? "00.00" : Model.Saved)/- On MRP ♥ ♥</strong>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-left" style="font-size:12px;">
+                    No Cash Refunds <br />
+                    Terms & Condition Apply <br />
+                    Customer Care Number : +91 8879 080 108 <br />
+                    Customer Care Email : support@freshlo.co.in
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center">
+                    Thank You For Shopping With Us
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-left" style="font-size:10px;">
+                    This is computer generated invoice
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            window.print();
+        };
+        window.onafterprint = function () {
+            window.location.href = '/Sale/PendingOrders/';
+        }
+    </script>
+</body>
+</html>

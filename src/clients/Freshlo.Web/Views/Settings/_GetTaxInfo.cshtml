@@ -1,0 +1,194 @@
+﻿@using Freshlo.DomainEntities;
+@using Freshlo.Web.Helpers;
+@model TaxationInfo
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="m-portlet pb-3 mb-0">
+            <form class="m-form m-form--fit m-form--label-align-right">
+                <!-- ADDITIONAL INFO FORM -->
+                <div class="row">
+                    <div class="offset-md-2 col-md-10 pt-3 pb-1">
+                        <h3 class="m-portlet__head-text">Taxation Detail</h3>
+                    </div>
+                </div>
+                <hr class="mt-0" />
+                <div class="m-portlet__body">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Status</label>
+                        <div class="col-3">
+                            <select class="form-control m-input--solid clear-cls" id="isActive" name="isActive" asp-for="@Model.isActive">
+                                <option selected disabled>Select Status</option>
+                                <option value="0">Active</option>
+                                <option value="1">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                 
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Choose Tax Type<span class="text-danger">*</span></label>
+                        <div class="col-3">
+                            <select class="form-control m-input--solid clear-cls" id="taxType" name="taxType" asp-for="@Model.taxType">
+                                <option value="0" disabled>Select Tax Type</option>
+                                <option value="1">GST</option>
+                                <option value="2">VAT</option>
+                            </select>
+                            <span class="error font-small-3 error-empty-cls" id="GSTVATNo" style="display: none; color: red;">This field is required</span>
+                        </div>
+                        <input type="text" id="id" name="id" asp-for="@Model.id" hidden />
+                    </div>
+                    <div style="display:none" id="GSTINNo_view">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Tax Registration Number<span class="text-danger">*</span></label>
+                            <div class="col-2">
+                                <input type="text" class="form-control m-input m-input--solid clear-cls SpaceValidation" name="taxRegNo" autocomplete="off" id="taxRegNo" asp-for="@Model.taxRegNo" placeholder="Enter GST Number" />
+                                <span class="error font-small-3 error-empty-cls" id="GSTINNo" style="display: none; color: red;">This field is required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display:none" id="VATINo_view">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">VAT Registration Number<span class="text-danger">*</span></label>
+                            <div class="col-2">
+                                <input type="text" class="form-control m-input m-input--solid clear-cls SpaceValidation" name="vatRegNo" autocomplete="off" id="vatRegNo" asp-for="@Model.vatRegNo" placeholder="Enter VAT Number" />
+                                <span class="error font-small-3 error-empty-cls" id="GSTINNo" style="display: none; color: red;">This field is required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">How do you calculate tax?<span class="text-danger">*</span></label>
+                        <div class="col-3">
+                            <select class="form-control m-input--solid clear-cls" name="calcuationTaxtype" id="calcuationTaxtype" asp-for="@Model.calcuationTaxtype">
+                                <option value="0" disabled>Select Calculation Method</option>
+                                <option value="1">Charged on individual item level</option>
+                                <option value="2">Flat charges on overall Bill</option>
+                            </select>
+                            <span class="error font-small-3 error-empty-cls" id="Text_Calculation" style="display: none; color: red;">This field is required</span>
+                        </div>
+
+                        <div class="col-2" style="display: none;" id="OverallBill_ViewGST">
+                            <input type="text" class="form-control m-input m-input--solid clear-cls SpaceValidation" asp-for="@Model.taxPercentGST" name="taxPercentGST" autocomplete="off" id="taxPercentGST" placeholder="Enter %" style="width:75%" minlength="1" maxlength="3" />
+                        </div>
+
+                        <div class="col-2" style="display: none;" id="OverallBill_ViewVAT">
+                            <input type="text" class="form-control m-input m-input--solid clear-cls SpaceValidation" asp-for="@Model.taxPercentVAT" name="taxPercentVAT" autocomplete="off" id="taxPercentVAT" placeholder="Enter %" style="width:75%" minlength="1" maxlength="3" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Billing Tax  ?<span class="text-danger">*</span></label>
+                        <div class="col-3">
+                            <select class="form-control m-input--solid clear-cls" name="taxbillType" id="taxbillType" asp-for="@Model.taxbillType">
+                                <option value="0" disabled>Select Calculation Method</option>
+                                <option value="1">Inclusive Tax</option>
+                                <option value="2">Exlusive Tax</option>
+                            </select>
+                            <span class="error font-small-3 error-empty-cls" id="Text_Calculation" style="display: none; color: red;">This field is required</span>
+                        </div>
+                    </div>
+                </div>
+
+                        <hr />
+                        <!-- FORM BUTTON -->
+                        <div class="form-group row mb-0">
+                            <label class="col-md-4 col-form-label"></label>
+                            <div class="col-md-3 col-sm-9 col-6">
+                                <button type="button" class="btn btn-success" id="EditTaxationInfo">Save</button>
+                                <button type="reset" class="btn btn-link">Clear</button>
+                            </div>
+                        </div>
+</form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('document').ready(function () {
+        var taxType = $('#taxType').val();
+        var calcuationTaxtype = $('#calcuationTaxtype').val();
+        if (taxType == "1" && calcuationTaxtype == "1") {
+            $("#calcuationTaxtype").val('1');
+            $("#GSTINNo_view").css("display", "block");
+            $("#VATINo_view").css("display", "none");
+
+        }
+        if (taxType == "1" && calcuationTaxtype == "2") {
+            $("#GSTINNo_view").css("display", "block");
+            $("#VATINo_view").css("display", "none");
+            $("#OverallBill_ViewGST").css("display", "block");
+            $("#OverallBill_ViewVAT").css("display", "none");
+        }
+        if (taxType == "2" && calcuationTaxtype == "2") {
+            $("#taxType").val('2');
+            $("#VATINo_view").css("display", "block");
+            $("#GSTINNo_view").css("display", "none");
+            $("#OverallBill_ViewVAT").css("display", "block");
+        }
+        //Space Validation
+    $(".SpaceValidation").on('keypress', function (e) {
+        if ($(this).val().length == 0) {
+            if (e.which == 32) {
+                return false;
+            }
+        }
+    });
+
+        $('.taxInfodetails').on('click', '#EditTaxationInfo', function (e) {
+
+            var isActive = $("#isActive").prop('value');
+          
+            var taxconfig = {
+                taxType: $('#taxType').val(),
+                taxRegNo: $("#taxRegNo").val(),
+                vatRegNo: $("#vatRegNo").val(),
+                calcuationTaxtype: $("#calcuationTaxtype").val(),
+                taxPercentGST: $("#taxPercentGST").val(),
+                taxPercentVAT: $("#taxPercentVAT").val(),
+                taxbillType: $("#taxbillType").val(),
+                isActive: isActive
+            };
+            $.ajax({
+                url: '/Settings/_GetTaxationUpdate/',
+                type: 'POST',
+                data: taxconfig,
+                success: function (result) {
+                    if (result.IsSuccess && result.ReturnMessage === "Success" && result.Data === true) {
+                        swal({
+                            text: "Taxation details Saved Successfully",
+                            type: "success",
+                            confirmButtonText: "OK"
+                        }).then(function (e) {
+                            TaxationDeafult();
+                        });
+                    }
+                    else {
+                        swal({
+                            text: "Something went wrong",
+                            type: "error",
+                            confirmButtonText: "OK"
+                        }).then(function (e) {
+                            TaxationDeafult();
+                        });
+                    }
+                }
+            });
+        });
+
+
+
+        //$("#isActive").on('change', function () {
+        //    Cookies.set('GstActive', this.value);
+
+
+        //});
+        //if (Cookies.set('GstActive')) {
+        //    $('#isActive').val(Cookies.get('GstActive'));
+        //}
+
+
+
+
+
+    });
+</script>

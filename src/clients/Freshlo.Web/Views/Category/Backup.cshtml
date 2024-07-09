@@ -1,0 +1,981 @@
+﻿
+@{
+    ViewData["Title"] = "Backup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    .category_click tbody tr:hover {
+        cursor: pointer;
+        background-color: #ecedf2;
+        /* -webkit-box-shadow: 0 7px 12px 0 rgba(62,57,107,.16);
+        box-shadow: 0px 1px 20px 0px rgba(62,57,107,.16);*/
+    }
+</style>
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <h6 class="font-medium-1">Main Category</h6>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary mr-1 mb-3">
+                    Fresh Fruits & Vegetables
+                </button>
+                <button type="button" class="btn btn-light mr-1 mb-3">Groceries & Staple Foods</button>
+                <button type="button" class="btn btn-light mr-1 mb-3">Paramparik Organic Products</button>
+                <button type="button" class="btn btn-light mr-1 mb-3">Dairy & Bakery Products</button>
+                <button type="button" class="btn btn-light mr-1 mb-3">Flours Grains & Batters</button>
+                <button type="button" class="btn btn-light mr-1 mb-3">Frozen Foods (Ready to Cook)</button>
+                <button type="button" class="btn btn-light mr-1 mb-3">Snacks, Farsan & Biscuits</button>
+                <button type="button" class="btn btn-light mr-1 mb-3">Meats & Meat Products</button>
+                <button type="button" class="btn btn-light mr-1 mb-3">Dry Fruits, Nuts & Seeds</button>
+                <button type="button" class="btn btn-light mr-1 mb-3">Personal Care & Cosmetics</button>
+                <button type="button" class="btn btn-light mr-1 mb-3">Household Supplies</button>
+                <button type="button" class="btn btn-light mr-1 mb-3">Subscription</button>
+                <button type="button" class="btn btn-light mr-1 mb-3"><i class="fa fa-plus mr-1"></i> New Category</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="m-portlet" style="position: sticky !important;top: 80px;z-index: 1;">
+                <div class="m-portlet__body px-2">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control m-input m-input--solid" placeholder="Search Category" />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-dark">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="mt-0" />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped-even ab-table-head-bg-warning-light category_click table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th>List of Category's</th>
+                                            <th>
+                                                <div class="d-flex float-right">
+                                                    <span class="mr-2" style="margin-top:2px;">Visibility</span>
+                                                    <label class="ab-switch">
+                                                        <input type="checkbox" value="Y" class="seasonSale" name="seasonSales" id="seasonSales" checked="">
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Cooking & Edible Oil</td>
+                                            <td class="text-right">
+                                                <a href="#" class="text-bold-600">
+                                                    <i class="fa fa-eye font-small-3 text-bold-600 mr-1"></i>
+                                                    <i class="fa fa-search font-small-3 text-bold-600"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Healthy Food</td>
+                                            <td class="text-right">
+                                                <a href="#" class="text-bold-600">
+                                                    <i class="fa fa-eye font-small-3 text-bold-600 mr-1"></i>
+                                                    <i class="fa fa-search font-small-3 text-bold-600"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Masala, Spices & Chutney</td>
+                                            <td class="text-right">
+                                                <a href="#" class="text-bold-600">
+                                                    <i class="fa fa-eye font-small-3 text-bold-600 mr-1"></i>
+                                                    <i class="fa fa-search font-small-3 text-bold-600"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Rice, Dal & Pulses</td>
+                                            <td class="text-right">
+                                                <a href="#" class="text-bold-600">
+                                                    <i class="fa fa-eye font-small-3 text-bold-600 mr-1"></i>
+                                                    <i class="fa fa-search font-small-3 text-bold-600"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Traditional</td>
+                                            <td class="text-right">
+                                                <a href="#" class="text-bold-600">
+                                                    <i class="fa fa-eye-slash text-danger font-small-3 text-bold-600 mr-1"></i>
+                                                    <i class="fa fa-search font-small-3 text-bold-600"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="m-portlet">
+                <div class="m-portlet__body">
+                    <form class="">
+                        <div class="mb-3 py-2 pl-2">
+                            <h4 class="font-medium-4 text-bold-600 text-danger">Fresh Fruits & Vegetables - Cooking & Edible Oil</h4>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="m-portlet">
+                                    <div class="m-portlet__body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/ITM0140.png" alt="" class="img-fluid" />
+                                                    <a href="#">
+                                                        <span style="position: absolute; top: 85px; right: 20px; background-color: #ffffffa3; padding: 5px; border-radius: 50px; box-shadow: 0px 1px 15px 1px rgb(152 152 152);">
+                                                            <i class="fa fa-camera font-medium-4 text-muted"></i>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <label>Main Category Name</label>
+                                                    <input type="text" class="form-control m-input m-input--solid" id="" name="" value="Main Category Name" placeholder="Main Category Name" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Description</label>
+                                                    <textarea rows="4" class="form-control m-input m-input--solid" placeholder="description"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="m-portlet">
+                                    <div class="m-portlet__body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/ITM0140.png" alt="" class="img-fluid" />
+                                                    <a href="#">
+                                                        <span style=" position: absolute; bottom: 20px; right: 20px; background-color: #ffffffa3; padding: 5px; border-radius: 50px; box-shadow: 0px 1px 15px 1px rgb(152 152 152); ">
+                                                            <i class="fa fa-camera font-medium-4 text-muted"></i>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <label>Category Name</label>
+                                                    <input type="text" class="form-control m-input m-input--solid" id="" name="" value="Main Category Name" placeholder="Main Category Name" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Visibility</label>
+                                                    <label class="ab-switch d-block">
+                                                        <input type="checkbox" value="Y" class="seasonSale" name="seasonSales" id="seasonSales" checked="">
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="mb-3 py-2 pl-2">
+                                <h4 class="font-medium-4 text-bold-600 text-primary">Sub Category</h4>
+                            </div>*@
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="m-portlet">
+                                    <div class="m-portlet__head">
+                                        <div class="m-portlet__head-caption">
+                                            <div class="m-portlet__head-title">
+                                                <h3 class="m-portlet__head-text">
+                                                    List of Subcategory
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__head-tools">
+                                            <div class="">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control m-input m-input--solid" placeholder="New Subcategory" />
+                                                    <div class="input-group-append">
+                                                        <button type="button" class="btn btn-dark my-0">Add</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="m-portlet__body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="table-responsive">
+                                                    <table class="table ab-table-head-bg-warning-light table-borderless table-middle">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Sub Category Name</th>
+                                                                <th>Status</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    Daily Fresh
+                                                                </td>
+                                                                <td>
+                                                                    <span class="m-badge m-badge--rounded m-badge--wide font-small-3 m-badge--success">
+                                                                        Active
+                                                                    </span>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="javascripts:;" class="text-danger text-bold-600">
+                                                                        <i class="fa fa-trash"></i>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="addMainSubCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="nav nav-tabs  m-tabs-line m-nav-tab-account-lookup" role="tablist">
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link active pt-0" data-toggle="tab" href="#category" role="tab">
+                                    <i class="flaticon-info"></i> Category Info
+                                </a>
+                            </li>
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link pt-0" data-toggle="tab" href="#subcategory" role="tab">
+                                    <i class="flaticon-list-3"></i> Sub Category Info
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <!-- Category Info -->
+                            <div class="tab-pane active" id="category" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Main Category Name</label>
+                                            <input type="text" class="form-control m-input m-input--solid" id="" name="" value="Main Category Name" placeholder="Main Category Name" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Category Name</label>
+                                            <input type="text" class="form-control m-input m-input--solid" id="" name="" placeholder="Category Name" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <textarea rows="5" class="form-control m-input m-input--solid" placeholder="Enter Description"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Image Upload</label>
+                                            <input type="file" class="form-control m-input m-input--solid" id="" name="" placeholder="Category Name" />
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/ITM0140.png" alt="" class="img-fluid" style="width:50px;height:50px;" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- / Category Info -->
+                            <!-- Sub Category Info -->
+                            <div class="tab-pane" id="subcategory" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Category Name</label>
+                                                <input type="text" class="form-control m-input m-input--solid" id="" name="" placeholder="Category Name" readonly />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Sub Category Name</label>
+                                                <input type="text" class="form-control m-input m-input--solid" id="" name="" placeholder="Enter Sub Category Name" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Image Upload</label>
+                                                <input type="file" class="form-control m-input m-input--solid" id="" name="" placeholder="Category Name" />
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/ITM0140.png" alt="" class="img-fluid" style="width:50px;height:50px;" />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <button type="button" class="btn btn-secondary pull-right">Add</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7" style="border-left: 1px solid #f4f5f8;">
+                                        <h6>Sub Category List</h6>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/ITM0140.png" alt="" class="img-fluid" style="width:50px;height:50px;">
+                                                    <span>Mango <a href="#" class="text-danger text-bold-600">X</a></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/ITM05.png" alt="" class="img-fluid" style="width:50px;height:50px;">
+                                                    <span>Mango <a href="#" class="text-danger text-bold-600">X</a></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/ITM039.png" alt="" class="img-fluid" style="width:50px;height:50px;">
+                                                    <span>Mango <a href="#" class="text-danger text-bold-600">X</a></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/ITM0147.png" alt="" class="img-fluid" style="width:50px;height:50px;">
+                                                    <span>Mango <a href="#" class="text-danger text-bold-600">X</a></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/ITM0114.png" alt="" class="img-fluid" style="width:50px;height:50px;">
+                                                    <span>Mango <a href="#" class="text-danger text-bold-600">X</a></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/ITM048.png" alt="" class="img-fluid" style="width:50px;height:50px;">
+                                                    <span>Mango <a href="#" class="text-danger text-bold-600">X</a></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- / Sub Category Info -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section scripts {
+    <script src="~/assets/scripts/category/index.js"></script>
+}
+
+
+
+
+
+
+<div class="m-portlet__body pb-2 px-4 m--hide">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Main Category Name</label>
+                <input type="text" class="form-control m-input m-input--solid" id="" name="" value="Main Category Name" placeholder="Main Category Name" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Category Name</label>
+                <input type="text" class="form-control m-input m-input--solid" id="" name="" placeholder="Category Name" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Description</label>
+                <textarea rows="5" class="form-control m-input m-input--solid" placeholder="Enter Description"></textarea>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Image Upload</label>
+                <input type="file" class="form-control m-input m-input--solid" id="" name="" placeholder="Category Name" />
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/ITM0140.png" alt="" class="img-fluid" style="width:50px;height:50px;" />
+                </div>
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-default pull-right">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="m-portlet">
+    <ul class="nav nav-tabs m-tabs-line m-nav-tab-account-lookup" role="tablist">
+        <li class="nav-item m-tabs__item">
+            <a class="nav-link m-tabs__link active" data-toggle="tab" href="#categoryList" role="tab">
+                <i class="flaticon-list-3"></i> List of Category
+            </a>
+        </li>
+        <li class="nav-item m-tabs__item">
+            <a class="nav-link m-tabs__link " data-toggle="tab" href="#mainCategory" role="tab">
+                <i class="flaticon-info"></i> Main Category
+            </a>
+        </li>
+        <li class="nav-item m-tabs__item">
+            <a class="nav-link m-tabs__link " data-toggle="tab" href="#mainCategory" role="tab">
+                <i class="flaticon-info"></i> Change Log
+            </a>
+        </li>
+    </ul>
+    <div class="m-portlet__body">
+        <div class="tab-content">
+            <!--User Info START-->
+            <div class="tab-pane active" id="categoryList" role="tabpanel">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<ul class="nav nav-tabs  m-tabs-line m-nav-tab-account-lookup" role="tablist">
+    <li class="nav-item m-tabs__item">
+        <a class="nav-link m-tabs__link active" id="recentlyAccessed" data-toggle="tab" href="#Orderslist" role="tab">
+            <i class="flaticon-list-3"></i> List of Orders
+        </a>
+    </li>
+    <li class="nav-item m-tabs__item">
+        <a class="nav-link m-tabs__link " data-toggle="tab" href="#CustomerInfo" role="tab">
+            <i class="flaticon-info"></i> Customer Detail
+        </a>
+    </li>
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="m-portlet" style="position: sticky !important;top: 80px;z-index: 1;">
+                <div class="m-portlet__body px-2">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control m-input m-input--solid" placeholder="Search Category" />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-dark">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="mt-0" />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped-even ab-table-head-bg-warning-light category_click table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="3">List of Category's</th>
+                                            @*<th>
+                                                    <div class="d-flex float-right">
+                                                        <span class="mr-2" style="margin-top:2px;">Visibility</span>
+                                                        <label class="ab-switch">
+                                                            <input type="checkbox" value="Y" class="seasonSale" name="seasonSales" id="seasonSales" checked="">
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    </div>
+                                                </th>*@
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    <i class="fa fa-bars font-small-3"></i> 1
+                                                </a>
+                                            </td>
+                                            <td>Cooking & Edible Oil</td>
+                                            <td class="text-right">
+                                                <a href="#" class="text-bold-600">
+                                                    <i class="fa fa-eye font-small-3 text-bold-600 mr-1"></i>
+                                                    <i class="fa fa-search font-small-3 text-bold-600"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    <i class="fa fa-bars font-small-3"></i> 2
+                                                </a>
+                                            </td>
+                                            <td>Traditional</td>
+                                            <td class="text-right">
+                                                <a href="#" class="text-bold-600">
+                                                    <i class="fa fa-eye-slash text-danger font-small-3 text-bold-600 mr-1"></i>
+                                                    <i class="fa fa-search font-small-3 text-bold-600"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="m-portlet">
+                <div class="m-portlet__body">
+                    <form class="">
+                        <div class="mb-3 py-2 pl-2">
+                            <h4 class="font-medium-4 text-bold-600 text-danger">Fresh Fruits & Vegetables - Cooking & Edible Oil</h4>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="m-portlet">
+                                    <div class="m-portlet__body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/ITM0140.png" alt="" class="img-fluid" />
+                                                    <a href="#">
+                                                        <span style="position: absolute; top: 85px; right: 20px; background-color: #ffffffa3; padding: 5px; border-radius: 50px; box-shadow: 0px 1px 15px 1px rgb(152 152 152);">
+                                                            <i class="fa fa-camera font-medium-4 text-muted"></i>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <label>Main Category Name</label>
+                                                    <input type="text" class="form-control m-input m-input--solid" id="" name="" value="Main Category Name" placeholder="Main Category Name" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Description</label>
+                                                    <textarea rows="4" class="form-control m-input m-input--solid" placeholder="description"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="m-portlet">
+                                    <div class="m-portlet__body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <img src="https://freshlo.oss-ap-south-1.aliyuncs.com/HurTex/icon/ITM0140.png" alt="" class="img-fluid" />
+                                                    <a href="#">
+                                                        <span style=" position: absolute; bottom: 20px; right: 20px; background-color: #ffffffa3; padding: 5px; border-radius: 50px; box-shadow: 0px 1px 15px 1px rgb(152 152 152); ">
+                                                            <i class="fa fa-camera font-medium-4 text-muted"></i>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <label>Category Name</label>
+                                                    <input type="text" class="form-control m-input m-input--solid" id="" name="" value="Main Category Name" placeholder="Main Category Name" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Visibility</label>
+                                                    <label class="ab-switch d-block">
+                                                        <input type="checkbox" value="Y" class="seasonSale" name="seasonSales" id="seasonSales" checked="">
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="mb-3 py-2 pl-2">
+                                <h4 class="font-medium-4 text-bold-600 text-primary">Sub Category</h4>
+                            </div>*@
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="m-portlet">
+                                    <div class="m-portlet__head">
+                                        <div class="m-portlet__head-caption">
+                                            <div class="m-portlet__head-title">
+                                                <h3 class="m-portlet__head-text">
+                                                    List of Subcategory
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__head-tools">
+                                            <div class="">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control m-input m-input--solid" placeholder="New Subcategory" />
+                                                    <div class="input-group-append">
+                                                        <button type="button" class="btn btn-dark my-0">Add</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="m-portlet__body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="table-responsive">
+                                                    <table class="table ab-table-head-bg-warning-light table-borderless table-middle">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Sub Category Name</th>
+                                                                <th>Status</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    Daily Fresh
+                                                                </td>
+                                                                <td>
+                                                                    <span class="m-badge m-badge--rounded m-badge--wide font-small-3 m-badge--success">
+                                                                        Active
+                                                                    </span>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="javascripts:;" class="text-danger text-bold-600">
+                                                                        <i class="fa fa-trash"></i>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <img src="~/assets/app/media/img/products/Tomato.png" style="height:120px;width:120px;" />
+                            </div>
+                        </div>
+                        <div class="row" style="text-align:left; padding-top:50px;">
+                            <div class="col-md-12">
+                                <h3 style="font-size:22px;"><b>Main Category Name</b></h3>
+                                <p style="font-size:19px;">
+
+                                    This is the discription about the main category.
+
+                                </p>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h5>Visibility</h5>
+                            </div>
+                            <div class="col-sm-6" style="text-align:right">
+
+                                <label class="ab-switch">
+                                    <input type="checkbox" value="Y" class="seasonSale" name="seasonSales" id="seasonSales" checked="">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="m-content">
+
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <div class="table-responsive">
+                                    <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Category Name</th>
+                                                <th>Category Count</th>
+                                                <th>Visibility</th>
+                                                <th>Sequence</th>
+                                                <th>Action</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-sm-2" style="text-align:center;padding:10px;">
+                                                            <i class="fa fa-align-justify fa-3x" aria-hidden="true" style="color:gray"></i>
+                                                        </div>
+                                                        <div class="col-sm-4" style="text-align:center">
+
+                                                            <img src="~/assets/app/media/img/products/Tomato.png" style="height:60px;width:60px;" />
+                                                        </div>
+                                                        <div class="col-sm-6" style="text-align:left">
+                                                            <h5><b>Fresh Fruits & Vegetables</b></h5>
+                                                            <p>
+                                                                <b>
+                                                                    Khet se ghar tak - Buy fresh fruits and vegetables
+                                                                </b>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span class="badge-dark badge-pill">15</span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge-success badge-pill">Yes</span>
+                                                </td>
+                                                <td>
+                                                    <b>1</b>
+                                                </td>
+                                                <td>
+
+                                                    <a>
+                                                        <i class="fa fa-pen-square fa-3x" aria-hidden="true" style="color:cornflowerblue"></i>
+                                                    </a>
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="m-content">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="m-content">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <img src="~/assets/app/media/img/products/Tomato.png" style="height:120px;width:120px;" />
+                            </div>
+                        </div>
+                        <div class="row" style="text-align:left; padding-top:50px;">
+                            <div class="col-md-12">
+                                <h3 style="font-size:22px;"><b>Main Category Name</b></h3>
+                                <p style="font-size:19px;">
+                                    This is the discription about the main category.
+                                </p>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h5>Visibility</h5>
+                            </div>
+                            <div class="col-sm-6" style="text-align:right">
+                                <label class="ab-switch">
+                                    <input type="checkbox" value="Y" class="seasonSale" name="seasonSales" id="seasonSales" checked="">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="m-content">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <div class="table-responsive">
+                                    <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Category Name</th>
+                                                <th>Category Count</th>
+                                                <th>Visibility</th>
+                                                <th>Sequence</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-sm-2" style="text-align:center;padding:10px;">
+                                                            <i class="fa fa-align-justify fa-3x" aria-hidden="true" style="color:gray"></i>
+                                                        </div>
+                                                        <div class="col-sm-4" style="text-align:center">
+
+                                                            <img src="~/assets/app/media/img/products/Tomato.png" style="height:60px;width:60px;" />
+                                                        </div>
+                                                        <div class="col-sm-6" style="text-align:left">
+                                                            <h5><b>Fresh Fruits & Vegetables</b></h5>
+                                                            <p>
+                                                                <b>
+                                                                    Khet se ghar tak - Buy fresh fruits and vegetables
+                                                                </b>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span class="badge-dark badge-pill">15</span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge-success badge-pill">Yes</span>
+                                                </td>
+                                                <td>
+                                                    <b>1</b>
+                                                </td>
+                                                <td>
+                                                    <a>
+                                                        <i class="fa fa-pen-square fa-3x" aria-hidden="true" style="color:cornflowerblue"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

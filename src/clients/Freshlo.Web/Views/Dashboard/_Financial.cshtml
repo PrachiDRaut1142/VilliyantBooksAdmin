@@ -1,0 +1,463 @@
+﻿@using Freshlo.Web.Models.DashboardVM;
+@using Freshlo.Web.Helpers;
+@model FinancialDashboardVM;
+@{
+    ViewData["Title"] = "_Financial";
+    var currencySymbol = Model.getCurrencysybmollist.FirstOrDefault(x => x.status == 1).symbol;
+}
+<link href="path/to/bootstrap.min.css" rel="stylesheet">
+<link href="path/to/bootstrap-select.min.css" rel="stylesheet">
+
+
+
+
+<div id="_FianancialData">
+    <div class="pull-left">
+            <a id="staticBackdrop" class="btn btn-sm">
+                                                            <div class="btn btn-outline-dark text-bold-700" style="">
+                                                                <img class=" " src="~/assets/img/excel.png" style="width:25px; padding: 2px" alt="payment" />
+                                                                Download Report
+                                                            </div>
+             </a>
+        </div>
+    <div class="row col-md-12 ">
+
+        <div class="col-md-6">
+            <div class="m-portlet ">
+                <div class="m-portlet__head border-bottom-0">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">
+                                Todays Summary
+                            </h3>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="header pb-3 ">
+                    <div class="container-fluid">
+                        <div class="header-body" id="Itemdashboardcount1">
+                            <div class="row mt-3 mb-3">
+                                <div class="col-xl-12 col-lg-6 mb-2">
+
+                                    <div class="card card-stats mb-2 mb-xl-0">
+                                        <a href="#" id="OrderReceived">
+                                            <div class="card-body">
+                                                <div class="row">
+
+                                                    <div class="col-md-12" id="itemcount">
+                                                        <h6 class="card-title mb-1 font-small-4">Total Order Value</h6>
+                                                        <span class="font-medium-5 font-weight-bold text-black" id=""><span class="CurrencyData font-medium-1">@currencySymbol</span> @Model.GetallCountDashbaord.TotalOrderReceivedAmount.ToString("#,##0.00")<small class="font-medium-1"> (@Model.GetallCountDashbaord.TotalOrderReceived.ToString("#,##0"))</small></span>
+
+                                                    </div>
+
+
+
+
+
+                                                </div>
+
+                                            </div>
+                                        </a>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-xl-4 col-lg-6 mb-2">
+
+                                    <div class="card card-stats mb-2 mb-xl-0">
+                                        <a href="#" id="PendingOrder">
+                                            <div class="card-body m--bg-fill-warning">
+                                                <div class="row">
+                                                    <div class="col" id="itemcount">
+                                                        <h6 class="card-title font-small-4 mb-1">Ongoing Orders</h6>
+                                                        <span class="font-medium-5 font-weight-bold text-black" id=""><span class="CurrencyData font-medium-1">@currencySymbol</span> @Model.GetallCountDashbaord.TotalpendingPaymentAmount.ToString("#,##0.00")<small class="font-medium-1"> (@Model.GetallCountDashbaord.TotalPendingOrder.ToString("#,##0"))</small></span>
+
+                                                    </div>
+
+                                                </div>
+                                                @*<p class="mt-3 mb-0 text-muted text-sm">
+                                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>  3000/15000</span>
+                                                    <span class="text-nowrap">This Week</span>
+                                                    </p>*@
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-6 mb-2">
+                                    <div class="card card-stats mb-2 mb-xl-0">
+                                        <a href="#" id="Delivered">
+                                            <div class="card-body bg-success text-white">
+                                                <div class="row">
+                                                    <div class="col" id="itemcount">
+                                                        <h6 class="card-title font-small-4 mb-1">Total Delivered Order</h6>
+                                                        <span class="font-medium-5 font-weight-bold text-black" id=""><span class="CurrencyData font-medium-1">@currencySymbol</span> @Model.GetallCountDashbaord.TotalOrderDeliveredAmount.ToString("#,##0.00")<small class="font-medium-1"> (@Model.GetallCountDashbaord.TotalOrderDeliveredTotalAmountCount.ToString("#,##0"))</small></span>
+
+                                                    </div>
+
+                                                </div>
+                                                @*<p class="mt-3 mb-0 text-muted text-sm">
+                                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>  3000/15000</span>
+                                                    <span class="text-nowrap">This Week</span>
+                                                    </p>*@
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-6 mb-2">
+                                    <div class="card card-stats mb-2 mb-xl-0">
+                                        <a href="#" id="Cancelled">
+                                            <div class="card-body bg-danger text-white">
+                                                <div class="row">
+                                                    <div class="col" id="itemcount">
+                                                        <h6 class="card-title font-small-4 mb-1">Total Cancelled Orders</h6>
+                                                        <span class="font-medium-5 font-weight-bold text-black" id=""><span class="CurrencyData font-medium-1">@currencySymbol</span> @Model.GetallCountDashbaord.TotalOrderCancelledAmount.ToString("#,##0.00")<small class="font-medium-1"> (@Model.GetallCountDashbaord.TotalOrderCancelledTotalAmountCount.ToString("#,##0"))</small></span>
+
+                                                    </div>
+
+                                                </div>
+                                                @*  <p class="mt-3 mb-0 text-muted text-sm">
+                                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>  3000/15000</span>
+                                                    <span class="text-nowrap">This Week</span>
+                                                    </p>*@
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- End Box Item Dashbord -->
+
+
+            </div>
+        </div>
+        <div class="col-md-6 ">
+            <div class="m-portlet ">
+                <div class="m-portlet__head border-bottom-0">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">
+                                Sales Revenue Bifurcation
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="header pb-3">
+                    <div class="container-fluid">
+                        <div class="header-body" id="Itemdashboardcount1">
+                            <div class="row mt-3 mb-3">
+                                @*<div class="col-xl-4 col-lg-6 mb-4">
+                                    <div class="card card-stats mb-4 mb-xl-0">
+                                    <div class="card-body">
+                                    <div class="row">
+                                    <div class="col" id="itemcount">
+                                    <h6 class="card-title font-small-3 mb-1">Total Discount Orders</h6>
+                                    <span class="font-medium-5 font-weight-bold text-black" id=""><span class="CurrencyData font-medium-1">@currencySymbol</span> @Model.GetallCountDashbaord.TotalDiscountAmount.ToString("#,##0.00")<small class="font-medium-1"> (@Model.GetallCountDashbaord.TotalDiscountAmountCount.ToString("#,##0"))</small></span>
+
+                                    </div>
+
+                                    </div>
+                                    <p class="mt-3 mb-0 text-muted text-sm">
+                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>  3000/15000</span>
+                                    <span class="text-nowrap">This Week</span>
+                                    </p>
+                                    </div>
+                                    </div>
+                                    </div> *@
+                                @*<div class="col-xl-4 col-lg-6">
+                                    <div class="card card-stats mb-4 mb-xl-0">
+                                    <div class="card-body">
+                                    <div class="row">
+                                    <div class="col" id="itemcount">
+                                    <h6 class="card-title text-uppercase text-muted mb-1">Overall Tax Amount Orders</h6>
+                                    <span class="font-medium-5 font-weight-bold text-black" id=""><span class="CurrencyData font-medium-1">@currencySymbol</span> @Model.GetallCountDashbaord.totalgstitemamount.ToString("#,##0.00")<small class="font-medium-1"> (@Model.GetallCountDashbaord.totalgstitemcount.ToString("#,##0"))</small></span>
+
+                                    </div>
+
+                                    </div>
+                                    <p class="mt-3 mb-0 text-muted text-sm">
+                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>  3000/15000</span>
+                                    <span class="text-nowrap">This Week</span>
+                                    </p>
+                                    </div>
+                                    </div>
+                                    </div> *@
+                                <div class="col-xl-4 col-lg-6 mb-2">
+                                    <div class="card card-stats mb-2 mb-xl-0">
+                                        <a href="#" id="CashSaleamt">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col" id="itemcount">
+                                                        <h6 class="card-title font-small-4 mb-1">Cash Collected</h6>
+                                                        <span class="font-medium-5 font-weight-bold text-black" id=""><span class="CurrencyData font-medium-1">@currencySymbol</span> @Model.GetallCountDashbaord.TotalCashSaleTotalAmount.ToString("#,##0.00")<small class="font-medium-1"> (@Model.GetallCountDashbaord.TotalCashSaleAmountCount.ToString("#,##0"))</small></span>
+
+                                                    </div>
+
+                                                </div>
+                                                @*<p class="mt-3 mb-0 text-muted text-sm">
+                                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>  3000/15000</span>
+                                                    <span class="text-nowrap">This Week</span>
+                                                    </p>*@
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-6 mb-2">
+                                    <div class="card card-stats mb-2 mb-xl-0">
+                                        <a href="#" id="Card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col" id="itemcount">
+                                                        <h6 class="card-title font-small-4 mb-1">Card Swipped</h6>
+                                                        <span class="font-medium-5 font-weight-bold text-black" id=""><span class="CurrencyData font-medium-1">@currencySymbol</span> @Model.GetallCountDashbaord.TotalCardSaleTotalAmount.ToString("#,##0.00")<small class="font-medium-1"> (@Model.GetallCountDashbaord.TotalCardSaleAmountCount.ToString("#,##0"))</small></span>
+
+                                                    </div>
+
+                                                </div>
+                                                @*<p class="mt-3 mb-0 text-muted text-sm">
+                                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>  3000/15000</span>
+                                                    <span class="text-nowrap">This Week</span>
+                                                    </p>*@
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-6 mb-2">
+                                    <div class="card card-stats mb-2 mb-xl-0">
+                                        <a href="#" id="Gpay">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col" id="itemcount">
+                                                        <h6 class="card-title font-small-4 mb-1">UPI Payments</h6>
+                                                        <span class="font-medium-5 font-weight-bold text-black" id=""><span class="CurrencyData font-medium-1">@currencySymbol</span> @Model.GetallCountDashbaord.TotalGpaySaleTotalAmount.ToString("#,##0.00")<small class="font-medium-1"> (@Model.GetallCountDashbaord.TotalGpaySaleAmountCount.ToString("#,##0"))</small></span>
+
+                                                    </div>
+
+                                                </div>
+                                                @*<p class="mt-3 mb-0 text-muted text-sm">
+                                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>  3000/15000</span>
+                                                    <span class="text-nowrap">This Week</span>
+                                                    </p>*@
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div> <div class="col-xl-4 col-lg-6 mb-2">
+                                    <div class="card card-stats mb-2 mb-xl-0 bg-danger text-white">
+                                        <a href="#" id="Pending">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col" id="itemcount">
+                                                        <h6 class="card-title font-small-4 mb-1">Pending Amount</h6>
+                                                        <span class="font-medium-5 font-weight-bold text-black" id=""><span class="CurrencyData font-medium-1">@currencySymbol</span> @Model.GetallCountDashbaord.TotalOverallPendingPaymenttotalAmount.ToString("#,##0.00")<small class="font-medium-1"> (@Model.GetallCountDashbaord.TotalOverallPendingPaymentCount.ToString("#,##0"))</small></span>
+
+                                                    </div>
+
+                                                </div>
+                                                @*<p class="mt-3 mb-0 text-muted text-sm">
+                                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>  3000/15000</span>
+                                                    <span class="text-nowrap">This Week</span>
+                                                    </p>*@
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-6 mb-2">
+                                    <div class="card card-stats mb-2 mb-xl-0" style="background-color: #c56234; color: #fff">
+                                        <a href="#" id="DiscountAmt">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col" id="itemcount">
+                                                        <h6 class="card-title font-small-4 mb-1">Total Discount Offered</h6>
+                                                        <span class="font-medium-5 font-weight-bold text-black" id=""><span class="CurrencyData font-medium-1">@currencySymbol</span> @Model.GetallCountDashbaord.TotalDiscountAmount.ToString("#,##0.00")<small class="font-medium-1"> (@Model.GetallCountDashbaord.TotalDiscountAmountCount.ToString("#,##0"))</small></span>
+                                                    </div>
+
+                                                </div>
+                                                @*<p class="mt-3 mb-0 text-muted text-sm">
+                                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>  3000/15000</span>
+                                                    <span class="text-nowrap">This Week</span>
+                                                    </p>*@
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-6 mb-2">
+                                    <div class="card card-stats mb-2 mb-xl-0 bg-dark text-white">
+
+                                        <a href="#" id="TaxAmount">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col" id="itemcount">
+                                                        <h6 class="card-title font-small-4 mb-1">Tax Amount Collected</h6>
+                                                        <span class="font-medium-5 font-weight-bold text-black" id=""><span class="CurrencyData font-medium-1">@currencySymbol</span> @Model.GetallCountDashbaord.totalgstitemamount.ToString("#,##0.00")<small class="font-medium-1"> (@Model.GetallCountDashbaord.totalgstitemcount.ToString("#,##0"))</small></span>
+
+                                                    </div>
+
+                                                </div>
+                                                @*   <p class="mt-3 mb-0 text-muted text-sm">
+                                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>  3000/15000</span>
+                                                    <span class="text-nowrap">This Week</span>
+                                                    </p>*@
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- End Box Item Dashbord -->
+                @*   <input type="text" value="@Model.a" id="date" hidden />
+                    <input type="text" value="@Model.b" id="status" hidden />
+                    <input type="text" value="@Model.c" id="hub" hidden />
+                    <input type="text" value="@Model.d" id="zipcode" hidden />*@
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+@* Export months wise date in Excel*@
+
+<div class="modal fade" id="dateranger" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+    <div class="modal-content" >
+    <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLongTitle">Download Sales Report</h5>
+    <button type="button" id="myModal" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+    <div class="row">
+    <div class="col-md-12">
+    <div class="form-group">
+    <input type="text" class="form-control m-input m-input--solid salesIds" id="" hidden />
+    <label class="mb-1">Choose the month </label>
+    <select class="form-control m-input--solid" id="assign">
+    <option value="0" selected disabled>--Select Month--</option>
+    @foreach (var item in Model.dashboard)
+    {
+    <option value="@item.Startdate - @item.Enddate" >@item.Month @item.Year</option>
+
+    }
+
+    </select>
+    </div>
+    </div>
+    <button type="button" class="btn btn-success" id="filtrExcel">Download Now</button>
+    </div>
+
+    </div>
+    </div>
+    </div>
+    </div>
+
+@*<div>
+    <h2>
+    imthiyas
+    </h2>
+    <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+    </div>*@
+
+
+
+
+
+@*<div class="" id="filtrExcel1" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1" >
+    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+    <div class="modal-header">
+    <h5 class="modal-title" id="filtrExce">Modal 1</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+    Show a second modal and hide this one with the button below.
+    </div>
+    <div class="modal-footer">
+    <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Open second modal</button>
+    </div>
+    </div>
+    </div>
+    </div>
+*@
+
+@*<script>
+    $(document).ready(function () {
+    if (localStorage.getItem('todoData') == "" || localStorage.getItem('todoData') == null) {
+    $('.CurrencyData').text("₹");
+    }
+    if (localStorage.getItem('todoData') == 1 || localStorage.getItem('todoData') == 0) {
+    $('.CurrencyData').text("₹");
+    }
+    if (localStorage.getItem('todoData') == 2) {
+    $('.CurrencyData').text("KD");
+    }
+    if (localStorage.getItem('todoData') == 3) {
+    $('.CurrencyData').text("$");
+    }
+    });
+    </script>*@
+
+@section Scripts
+{
+
+<script src="path/to/jquery.min.js"></script>
+<script src="path/to/bootstrap.min.js"></script>
+<script src="path/to/bootstrap-select.min.js"></script>
+<script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script>
+var xyValues = [
+  {x:50, y:7},
+  {x:60, y:8},
+  {x:70, y:8},
+  {x:80, y:9},
+  {x:90, y:9},
+  {x:100, y:9},
+  {x:110, y:10},
+  {x:120, y:11},
+  {x:130, y:14},
+  {x:140, y:14},
+  {x:150, y:15}
+];
+
+new Chart("myChart", {
+  type: "scatter",
+  data: {
+    datasets: [{
+      pointRadius: 4,
+      pointBackgroundColor: "rgb(0,0,255)",
+      data: xyValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    scales: {
+      xAxes: [{ticks: {min: 40, max:160}}],
+      yAxes: [{ticks: {min: 6, max:16}}],
+    }
+  }
+});
+</script>
+}
+
+

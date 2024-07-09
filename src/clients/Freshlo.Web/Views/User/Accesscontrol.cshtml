@@ -1,0 +1,387 @@
+﻿@using Freshlo.Web.Models;
+@model EmployeeAccessVM;
+@{
+    ViewData["Title"] = "Accesscontrol";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Access Control Management</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="javascripts:;" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="/Home/Index/" class="m-nav__link">
+                        <span class="m-nav__link-text">Home</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="javascripts:;" class="m-nav__link">
+                        <span class="m-nav__link-text">Access Control  Manage</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+<!-- END: Subheader -->
+
+
+
+<div class="m-content">
+    <div class="m-portlet" id="m_portlet_loader_1" style="position: sticky !important;top: 80px;z-index: 3;">
+        <div id="m_portlet_loader_1_app"></div>
+
+        <ul class="nav nav-tabs  m-tabs-line bg-white MainUl mb-2" id="MainUl" role="tablist" style="position: sticky !important;top: 80px;z-index: 3;">
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link active" data-toggle="tab" name="accesscontrol" href="#accesscontrol" role="tab">User Access IP</a>
+            </li>
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link packed-cls" data-toggle="tab" name="globalip" href="#globalip" role="tab">Global IP</a>
+            </li>
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link packed-cls" data-toggle="tab" name="AccessLog" href="#AccessLog" role="tab">Employee Access Log</a>
+            </li>
+        </ul>
+        <div class="m-portlet__body">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tab-content">
+                        <div class="tab-pane animated fadeIn" id="globalip" role="tabpanel">
+                            <div class="row ">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="mt-2">
+                                            <div>
+                                                <a href="javascripts:;" class="btn btn-success btn-sm text-bold-600" id="globalIpId">
+                                                    Create
+                                                </a>
+                                                <a href="javascripts:;" class="btn btn-danger btn-sm text-bold-600" id="DisableglobalId">
+                                                    Disable
+                                                </a>
+                                                <a href="javascripts:;" class="btn btn-brand btn-sm" id="EnableglobalId">
+                                                    Enable
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="" />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive" id="packed_divId">
+                                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table " id="sales">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <div class="kt-checkbox-list">
+                                                            <label class="kt-checkbox">
+                                                                <input type="checkbox" id="selectallglobalid">
+                                                                <span></span>
+                                                            </label>
+                                                        </div>
+                                                    </th>
+                                                    @*<th>ID</th>*@
+                                                    <th>Global Ip </th>
+                                                    <th>Status</th>
+                                                    <th>Created On / By</th>
+                                                    <th>Updated On / By</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="saleslist">
+                                                @foreach (var globaliplist in Model.GetGlobalAccessList)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <div class="kt-checkbox-list">
+                                                                <label class="kt-checkbox">
+                                                                    <input class="globalmessageCheckbox" id="AccessId_@globaliplist.Id" value="@globaliplist.Id" type="checkbox" name="Checkglobal[]">
+                                                                    <span></span>
+                                                                </label>
+                                                            </div>
+                                                        </td>
+                                                        <td><a href="javascripts:;" class="text-link GlobalIpcontroleditId" id="GlobalIpcontroleditId" data-id="@(globaliplist.Id+"_"+globaliplist.GlobalIp)">@globaliplist.GlobalIp</a></td>
+                                                        @* <td>@globaliplist.GlobalIp</td>*@
+                                                        <td>
+                                                            <span class="m-badge m-badge--@(globaliplist.Status==1?"success":"danger") m-badge--rounded m-badge--wide">@(globaliplist.Status_Desc)</span>
+                                                        </td>
+                                                        <td>
+                                                            @globaliplist.Created_On.ToString("dd-MM-yyyy HH:mm")
+                                                            <span class="display-block font-small-2">@globaliplist.CreatedName</span>
+                                                        </td>
+                                                        <td>
+                                                            @globaliplist.Updated_On.ToString("dd-MM-yyyy HH:mm")
+                                                            <span class="display-block font-small-2">@globaliplist.UpdatedPersonName</span>
+                                                        </td>
+                                                    </tr>
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane animated fadeIn active" id="accesscontrol" role="tabpanel">
+                            <div class="row ">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="mt-2">
+                                            <div>
+                                                <a href="javascripts:;" class="btn btn-success btn-sm text-bold-600" id="accesscontrolcreate">
+                                                    Create
+                                                </a>
+                                                <a href="javascripts:;" class="btn btn-danger btn-sm text-bold-600" id="DisableId">
+                                                    Disable
+                                                </a>
+                                                <a href="javascripts:;" class="btn btn-brand btn-sm" id="EnableId">
+                                                    Enable
+                                                </a>
+                                               @*<a href="javascripts:;" class="btn btn-success btn-sm text-bold-600" id="whitelistcontrolcreate">*@
+                                                   @*Whitelist User Create
+                                                </a>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="" />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive" id="pending_divId">
+                                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle m-data-table " id="sales">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <div class="kt-checkbox-list">
+                                                            <label class="kt-checkbox">
+                                                                <input type="checkbox" id="selectallid">
+                                                                <span></span>
+                                                            </label>
+                                                        </div>
+                                                    </th>
+                                                    <th>What's my IP</th>
+                                                    <th>Employee Count</th>
+                                                    <th>Status</th>
+                                                    @*<th>Action</th>*@
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var list in Model.GetWebAccessList)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <div class="kt-checkbox-list">
+                                                                <label class="kt-checkbox">
+                                                                    <input class="messageCheckbox" @(list.Id==0?"disabled":"") id="AccessId_@list.Id" value="@list.Id" type="checkbox" name="Check[]">
+                                                                    <span></span>
+                                                                </label>
+                                                            </div>
+                                                        </td>
+                                                        @*<td>
+                                                                <a href="javascripts:;" class="text-link AccesscontroleditId" id="AccesscontroleditId" data-id="@(list.Id+"_"+list.EmployeeId+"_"+list.MacAddress+"_"+list.WhoisIp)">@list.UserName</a>
+                                                                <span class="d-block font-small-2">@(list.EmployeeId)</span>
+                                                            </td>*@
+                                                        <td>
+                                                            <a href="javascripts:;" class="text-link @(list.Id==0?"Whitelistedit":"AccesscontroleditId")" id="AccesscontroleditId" data-id="@(list.Id+"_"+list.EmployeeId+"_"+list.MacAddress+"_"+list.WhoisIp)">@(list.WhoisIp==null?"WhiteList Employee":list.WhoisIp)</a>
+
+                                                        </td>
+                                                        <td>
+                                                            @list.EmployeeCount
+                                                        </td>
+                                                        <td>
+                                                            <span class="m-badge m-badge--@(list.Status==4?"success":list.Status==1?"success":"danger") m-badge--rounded m-badge--wide">@(list.Status_Desc)</span>
+                                                        </td>
+
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane animated fadeIn" id="AccessLog" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive" id="packed_divId">
+                                        <table class="table table-striped-even ab-table-head-bg-warning-light table-borderless table-middle dataTables_length" id="sales">
+                                            <thead>
+                                                <tr>
+                                                    @*<th>ID</th>*@
+                                                    <th>Ip</th>
+                                                    <th>Employee Name</th>
+                                                    <th>Status</th>
+                                                    <th>Login On</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="saleslist">
+                                                @foreach (var list in Model.GetWebAccessLogList)
+                                                {
+                                                    <tr>
+                                                        <td><a href="javascripts:;" class="text-link">@(list.Ip)</a></td>
+                                                        @*<td>@list.Ip</td>*@
+                                                        <td>@list.EmployeeName</td>
+                                                        <td>
+                                                            <span class="m-badge m-badge--@(list.Status==true?"success":"danger") m-badge--rounded m-badge--wide">@(list.Status==true?"Done":"Failed")</span>
+                                                        </td>
+                                                        <td>
+                                                            @list.CreatedOn.ToString("dd-MM-yyyy HH:mm")
+                                                        </td>
+                                                    </tr>
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" id="accessControlEdit">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Access Control</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="kt-form kt-form--label-right" action="/User/Accesscontrol/" id="UserWebAccessformid" method="post">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label class="col-3 col-form-label">User Name / ID <span class="text-danger">*</span></label>
+                                <div class="col-9">
+                                 <select  class="form-control m-select2" id="m_select2_3" name="EmployeeId" multiple="multiple" style="width:100%;">
+                                       
+                                    </select>
+                                    <input type="hidden" class="form-control kt-input--solid" id="Id" name="Id">
+                                    @*  <input type="hidden" class="form-control kt-input--solid" id="Id" name="Id">*@
+                                    @*<select asp-items="Model.getEmployeeNameSL" id="EmployeeId" name="EmployeeId" class="form-control  m-bootstrap-select m_selectpicker" multiple>
+                                        @*<option value="0" selected="selected">Select UserName</option>*@
+                                   @* </select>*@
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;" id="EmployeeId_Err">Cannot be Empty</span>
+                                </div>
+                            </div>
+                            <div class="kt-separator kt-separator--border-dashed mt-0"></div>
+                            <div class="form-group row">
+                                <label class="col-3 col-form-label">Mac Address <span class="text-danger">*</span></label>
+                                <div class="col-5">
+                                    <input type="text" class="form-control kt-input--solid" id="MacAddress" name="MacAddress" placeholder="Mac Address">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;" id="MacAddress_Err">Cannot be Empty</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-3 col-form-label">What's my IP <span class="text-danger">*</span></label>
+                                <div class="col-5">
+                                    <input type="text" class="form-control kt-input--solid" id="WhoisIp" name="WhoisIp" placeholder="What's my IP">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;" id="WhoisIp_Err">Cannot be Empty</span>
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;" id="WhoisIpValidate_Err">What's my IP should be unique</span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                        <button type="button" id="btnSubmitId" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Model for Whilelist User-->
+<div class="modal fade" id="whitelistControlEdit">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Access Control</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="kt-form kt-form--label-right" action="/User/WhitelistAccesscontrol/" id="WhitelistformId" method="post">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label class="col-3 col-form-label">User Name / ID <span class="text-danger">*</span></label>
+                                <div class="col-9">
+                                    <select asp-items="Model.getEmployeeNameSL" class="form-control m-select2 whitelistemployee" id="whitelist_select2" name="EmployeeId" multiple="multiple" style="width:100%;"></select>
+                                  
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;" id="EmployeeIds_Err">Cannot be Empty</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                        <button type="button" id="btnWhitelistSubmitId" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Model for Global IP-->
+<!-- Modal -->
+<div class="modal fade" id="globalIpEdit">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Global IP Control</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="kt-form kt-form--label-right" action="/User/GlobalIpcontrol/" id="GlobalIpformid" method="post">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label class="col-3 col-form-label">IP Address <span class="text-danger">*</span></label>
+                                <div class="col-9">
+                                    <input type="hidden" class="form-control kt-input--solid" id="GlobalId" name="Id">
+                                    @*  <input type="hidden" class="form-control kt-input--solid" id="Id" name="Id">*@
+                                    <input type="text" class="form-control kt-input--solid" id="GlobalIp" name="GlobalIp" placeholder="Global IP">
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;" id="GlobalIp_Err">Cannot be Empty</span>
+                                    <span class="text-danger font-small-3 text-bold-600" style="display:none;" id="GlobalIpValidate_Err">Global IP should be unique</span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                        <button type="button" id="btnGlobalIpSubmitId" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/assets/scripts/user/webaccess.js"></script>
+}
+

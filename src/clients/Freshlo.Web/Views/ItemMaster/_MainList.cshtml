@@ -1,0 +1,101 @@
+﻿@using Freshlo.Web.Models.ItemMaster;
+@model ItemMasterVM;
+<div class="row">
+    <div class="col-12">
+        <div class="table-responsive">
+            <table class="table  ab-table-head-bg-warning-light table-bordered table-middle m-data-table dataTable" id="textTable">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Category</th>
+                        <th>Visibility</th>
+                        <th>Featured</th>
+                        <th>Coupon Disc.</th>
+                        <th>Availability</th>
+                        <th>Sold</th>
+                        <th>Max Allowed</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="tbdyItemDetail">
+                    @foreach (var item in Model.getItemMasterList)
+                    {
+                    <tr>
+                        <td style="width:250px">
+                            <a href="/ItemMaster/Detail/@item.Id" class="text-link">
+                                @item.PluName
+                            </a>
+                            <input hidden value="@item.Id" name="ItemId" />
+
+                        </td>
+                        <td>
+                            <span class="m-widget11__title text-dark">@item.Category</span>
+                            <span class="display-block font-small-1">@item.SubCategory</span>
+                        </td>
+                        <td>
+                            <span class="m-widget11__title">@(item.Visibility == "1" ? "Online" : item.Visibility == "2" ? "Hub" : "Both")</span>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <select class="form-control form-control-sm Feature-Cls" name="Featured" asp-for="@item.featured">
+                                    <option selected disabled>Show Featured</option>
+                                    <option value="Y">Yes</option>
+                                    <option value="N">No</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <select name="Coupen" class="form-control form-control-sm" asp-for="@item.Coupen">
+                                    <option selected disabled>Show Coupen</option>
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <select name="Avability" class="form-control form-control-sm" asp-for="@item.seasonSale">
+                                    <option selected disabled>Select Status</option>
+                                    <option value="Y">Yes</option>
+                                    <option value="N">No</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="m-widget11__title">Rs <span class="text-bold-500 font-medium-2">@item.SellingPrice</span> </span>
+                        </td>
+                        <td>
+                            <span class="m-widget11__title"><span class="text-bold-500 font-medium-2">@item.MaxQuantityAllowed</span>@item.Measurement </span>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <select name="Status" class="form-control form-control-sm" asp-for="@item.Approval">
+                                    <option selected disabled>Select Status</option>
+                                    <option style="background:red;" class="m-badge m-badge--wide m-badge--rounded m-badge--success" value="Approved">Approved</option>
+                                    <option class="m-badge m-badge--wide m-badge--rounded m-badge--danger" value="Pending">Pending</option>
+                                </select>
+                            </div>
+                        </td>                        
+                    </tr>
+                    }                  
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts {
+
+    <script>
+        $('#textTable').DataTable({
+            "pageLength": 10,
+            "ordering": false,
+            "sorting": true
+        });
+    </script>
+    }
+
+<link href="~/assets/main/StyleSheet.css" rel="stylesheet" />
